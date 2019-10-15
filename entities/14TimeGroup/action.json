@@ -1,0 +1,49 @@
+{
+  "actions": [
+    {
+      "name": "postAddTimeGroup",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-time-group{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postShowTimeGroup",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-time-group{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postSetTimeGroup",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-time-group{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postDeleteTimeGroup",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-time-group{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postShowTimeGroups",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-time-groups{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    }
+  ]
+}

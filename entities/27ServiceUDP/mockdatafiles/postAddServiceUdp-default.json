@@ -1,0 +1,44 @@
+{
+  "uid": "ad aliqua voluptate",
+  "name": "Excepteur",
+  "type": "officia dolor Excepteur",
+  "domain": {
+    "domain-type": "Duis cillum id",
+    "uid": "cupidatat",
+    "name": "consequat voluptate Excepteur et ad"
+  },
+  "meta-info": {
+    "lock": "laborum dolore et veniam",
+    "validation-state": "quis esse ullamco",
+    "last-modify-time": {
+      "posix": 61610715,
+      "iso-8601": ""
+    },
+    "last-modifier": "in e",
+    "creation-time": {
+      "posix": -65739959,
+      "iso-8601": "consequat"
+    },
+    "creator": "veniam labore aliqua"
+  },
+  "tags": [],
+  "read-only": true,
+  "comments": "aute",
+  "color": "ex ea deserunt",
+  "icon": "tempor elit",
+  "groups": [],
+  "keep-connections-open-after-policy-installation": true,
+  "session-timeout": 25069996,
+  "use-default-session-timeout": true,
+  "match-for-any": true,
+  "sync-connections-on-cluster": true,
+  "aggressive-aging": {
+    "enable": true,
+    "timeout": 38455662,
+    "use-default-timeout": true,
+    "default-timeout": 50305962
+  },
+  "port": "anim laborum eu nulla Lorem",
+  "match-by-protocol-signature": false,
+  "accept-replies": true
+}

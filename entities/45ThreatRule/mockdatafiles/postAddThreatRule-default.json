@@ -1,0 +1,70 @@
+{
+  "uid": "in",
+  "enabled": false,
+  "comments": "mollit aliqua consectetur exercitation",
+  "folder": {
+    "uid": "cillum in Lorem dolor",
+    "name": "adipisicing veniam exercitation"
+  },
+  "domain": {
+    "domain-type": "exercitation pariatur proident incididunt do",
+    "uid": "sint",
+    "name": "quis"
+  },
+  "meta-info": {
+    "lock": "aliqua in consectetur pariatur eu",
+    "validation-state": "dolor consectetur",
+    "read-only": true,
+    "last-modify-time": {
+      "posix": -89624535,
+      "iso-8601": "aliqua elit"
+    },
+    "last-modifier": "magna",
+    "creation-time": {
+      "posix": -35310931,
+      "iso-8601": "aliqua qui dolore in minim"
+    },
+    "creator": "sunt elit sint non minim"
+  },
+  "install-on": [],
+  "source": [],
+  "source-negate": false,
+  "destination": [],
+  "destination-negate": true,
+  "service": [],
+  "service-negate": false,
+  "protected-scope": [],
+  "protected-scope-negate": false,
+  "name": "",
+  "track": {
+    "folder": {
+      "uid": "mollit id ea Duis dolore",
+      "name": "adipisicing sit"
+    },
+    "domain": {
+      "domain-type": "non",
+      "uid": "laboris",
+      "name": "fugiat id"
+    },
+    "type": "ea laborum",
+    "name": "reprehenderit enim est ut",
+    "uid": "nisi veniam exercitation elit"
+  },
+  "track-settings": {
+    "packet-capture": true
+  },
+  "action": {
+    "folder": {
+      "uid": "dolor",
+      "name": "in occaecat tempor laboris"
+    },
+    "domain": {
+      "domain-type": "occaecat elit eu labore",
+      "uid": "qui",
+      "name": "aliqua ea dolor minim"
+    },
+    "type": "ut magna",
+    "name": "amet",
+    "uid": "sit Duis aute do sed"
+  }
+}

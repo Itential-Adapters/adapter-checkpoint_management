@@ -1,0 +1,49 @@
+{
+  "actions": [
+    {
+      "name": "postAddGroupWithExclusion",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-group-with-exclusion{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postShowGroupWithExclusion",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-group-with-exclusion{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postSetGroupWithExclusion",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-group-with-exclusion{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postDeleteGroupWithExclusion",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-group-with-exclusion{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postShowGroupsWithExclusion",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-groups-with-exclusion{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    }
+  ]
+}

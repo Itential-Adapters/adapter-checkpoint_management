@@ -1,0 +1,97 @@
+{
+  "actions": [
+    {
+      "name": "postShowSession",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-session{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postSetSession",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-session{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postContinueSessionInSmartconsole",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/continue-session-in-smartconsole{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postContinueSessionInSmartconsole-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowLastPublishedSession",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-last-published-session{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postPurgePublishedSessions",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/purge-published-sessions{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postSwitchSession",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/switch-session{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postAssignSession",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/assign-session{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postTakeOverSession",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/take-over-session{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postShowSessions",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-sessions{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowSessions-default.json"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "uid": "minim",
+  "name": "non sit sunt",
+  "type": "ut sed qui",
+  "domain": {
+    "domain-type": "ea et",
+    "uid": "Lorem si",
+    "name": "incididunt id eiusmod"
+  },
+  "meta-info": {
+    "lock": "ea nisi eu incididunt",
+    "validation-state": "sunt Excepteur",
+    "last-modify-time": {
+      "posix": 92991903,
+      "iso-8601": "Duis"
+    },
+    "last-modifier": "laborum irure",
+    "creation-time": {
+      "posix": -77545657,
+      "iso-8601": "et sint nisi"
+    },
+    "creator": "incididunt ut laborum ut aute"
+  },
+  "tags": [],
+  "read-only": true,
+  "comments": "enim aute",
+  "color": "velit",
+  "icon": "aliquip irure exercitation",
+  "groups": [],
+  "keep-connections-open-after-policy-installation": false,
+  "session-timeout": -67793056,
+  "use-default-session-timeout": false,
+  "match-for-any": false,
+  "sync-connections-on-cluster": true,
+  "aggressive-aging": {
+    "enable": false,
+    "timeout": -59987316,
+    "use-default-timeout": false,
+    "default-timeout": 87632422
+  },
+  "ip-protocol": -35938039,
+  "accept-replies": false
+}

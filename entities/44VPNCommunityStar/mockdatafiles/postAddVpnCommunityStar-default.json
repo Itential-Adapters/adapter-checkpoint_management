@@ -1,0 +1,44 @@
+{
+  "uid": "in laborum sed reprehenderit nulla",
+  "name": "sint",
+  "type": "ut anim Duis dolore laboris",
+  "domain": {
+    "domain-type": "eu ",
+    "uid": "eiusmod",
+    "name": "do Excepteur"
+  },
+  "meta-info": {
+    "lock": "Duis esse",
+    "validation-state": "Lorem l",
+    "last-modify-time": {
+      "posix": 42221017,
+      "iso-8601": "ut"
+    },
+    "last-modifier": "cupidatat laboris eu in sunt",
+    "creation-time": {
+      "posix": 7128034,
+      "iso-8601": "est"
+    },
+    "creator": "labore"
+  },
+  "tags": [],
+  "read-only": false,
+  "comments": "cillum",
+  "color": "aliquip amet sunt",
+  "icon": "esse laborum",
+  "use-shared-secret": true,
+  "encryption-method": "lab",
+  "encryption-suite": "sit commodo labore irure",
+  "ike-phase-1": {
+    "data-integrity": "et dolore",
+    "encryption-algorithm": "commodo",
+    "diffie-hellman-group": "volupta"
+  },
+  "ike-phase-2": {
+    "data-integrity": "id dolor",
+    "encryption-algorithm": "nulla ipsum non"
+  },
+  "center-gateways": [],
+  "satellite-gateways": [],
+  "mesh-center-gateways": false
+}

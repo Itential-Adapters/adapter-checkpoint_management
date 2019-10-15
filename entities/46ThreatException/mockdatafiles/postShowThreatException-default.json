@@ -1,0 +1,68 @@
+{
+  "uid": "cillum aliqua incididunt qui in",
+  "enabled": false,
+  "comments": "sunt tempor enim do mo",
+  "folder": {
+    "uid": "deserunt",
+    "name": "eu dolore moll"
+  },
+  "domain": {
+    "domain-type": "Lorem enim ut in",
+    "uid": "dolore dolor",
+    "name": "non"
+  },
+  "meta-info": {
+    "lock": "ad Lorem deserunt Duis",
+    "validation-state": "i",
+    "read-only": true,
+    "last-modify-time": {
+      "posix": -20447141,
+      "iso-8601": "tempor enim quis elit velit"
+    },
+    "last-modifier": "ex incididunt",
+    "creation-time": {
+      "posix": -95458805,
+      "iso-8601": "magna"
+    },
+    "creator": "sint Excepteur qui do"
+  },
+  "install-on": [],
+  "source": [],
+  "source-negate": false,
+  "destination": [],
+  "destination-negate": true,
+  "service": [],
+  "service-negate": true,
+  "protected-scope": [],
+  "protected-scope-negate": false,
+  "protection-or-site": [],
+  "name": "eu",
+  "track": {
+    "folder": {
+      "uid": "dolore est aliqua irure adipisicing",
+      "name": "est sit eiusmod minim do"
+    },
+    "domain": {
+      "domain-type": "eiusmod cillum anim",
+      "uid": "qui pariatu",
+      "name": "consectetur in"
+    },
+    "type": "ex id exercitation fugiat nostrud",
+    "name": "labore ea elit dolor Ut",
+    "uid": "fugiat"
+  },
+  "action": {
+    "folder": {
+      "uid": "minim mollit",
+      "name": "sunt non"
+    },
+    "domain": {
+      "domain-type": "in laborum",
+      "uid": "laborum aliqua consequat officia laboris",
+      "name": "Lorem"
+    },
+    "type": "commodo ipsum",
+    "name": "et Ut",
+    "uid": "veniam sunt sint"
+  }
+}

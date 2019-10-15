@@ -1,0 +1,73 @@
+{
+  "actions": [
+    {
+      "name": "postAddVpnCommunityMeshed",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-vpn-community-meshed{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postAddVpnCommunityMeshed-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowVpnCommunityMeshed",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-vpn-community-meshed{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowVpnCommunityMeshed-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postSetVpnCommunityMeshed",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-vpn-community-meshed{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postSetVpnCommunityMeshed-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postDeleteVpnCommunityMeshed",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-vpn-community-meshed{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": []
+    },
+    {
+      "name": "postShowVpnCommunitiesMeshed",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-vpn-communities-meshed{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowVpnCommunitiesMeshed-default.json"
+        }
+      ]
+    }
+  ]
+}

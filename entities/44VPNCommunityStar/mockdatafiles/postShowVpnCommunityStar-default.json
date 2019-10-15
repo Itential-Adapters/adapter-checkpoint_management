@@ -1,0 +1,44 @@
+{
+  "uid": "proident",
+  "name": "nostrud",
+  "type": "Duis culpa amet sint elit",
+  "domain": {
+    "domain-type": "non",
+    "uid": "in irure aliqua cupidatat ut",
+    "name": "et laborum ipsum do"
+  },
+  "meta-info": {
+    "lock": "aliquip ea consequat",
+    "validation-state": "nostrud consequat quis occaecat",
+    "last-modify-time": {
+      "posix": 41013881,
+      "iso-8601": "cupidatat"
+    },
+    "last-modifier": "eiusmod cupidatat labore irure",
+    "creation-time": {
+      "posix": 82758475,
+      "iso-8601": "veniam cillum ex "
+    },
+    "creator": "in"
+  },
+  "tags": [],
+  "read-only": true,
+  "comments": "Excepteur ex",
+  "color": "amet commodo irure do non",
+  "icon": "cupidatat",
+  "use-shared-secret": true,
+  "encryption-method": "dolore velit",
+  "encryption-suite": "exercitation ex reprehenderit",
+  "ike-phase-1": {
+    "data-integrity": "incididunt fugiat",
+    "encryption-algorithm": "ipsum officia",
+    "diffie-hellman-group": "sint enim"
+  },
+  "ike-phase-2": {
+    "data-integrity": "nisi do",
+    "encryption-algorithm": ""
+  },
+  "center-gateways": [],
+  "satellite-gateways": [],
+  "mesh-center-gateways": true
+}

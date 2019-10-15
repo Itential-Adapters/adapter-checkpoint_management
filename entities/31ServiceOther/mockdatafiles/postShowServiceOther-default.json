@@ -1,0 +1,43 @@
+{
+  "uid": "tempor",
+  "name": "dolore velit do consectetur",
+  "type": "cupidatat qui incididunt",
+  "domain": {
+    "domain-type": "quis exercitation in deserunt",
+    "uid": "est ex sed consequat",
+    "name": "in aliqua ut"
+  },
+  "meta-info": {
+    "lock": "non ut laboris",
+    "validation-state": "consequat Ut irure ut",
+    "last-modify-time": {
+      "posix": 59663187,
+      "iso-8601": "elit Ut esse ipsum qui"
+    },
+    "last-modifier": "in ea",
+    "creation-time": {
+      "posix": 39022971,
+      "iso-8601": "in voluptate est mollit"
+    },
+    "creator": "non amet in tempor officia"
+  },
+  "tags": [],
+  "read-only": true,
+  "comments": "sint",
+  "color": "et nulla",
+  "icon": "laboris",
+  "groups": [],
+  "keep-connections-open-after-policy-installation": true,
+  "session-timeout": 1740177,
+  "use-default-session-timeout": false,
+  "match-for-any": false,
+  "sync-connections-on-cluster": false,
+  "aggressive-aging": {
+    "enable": false,
+    "timeout": 72251617,
+    "use-default-timeout": false,
+    "default-timeout": 33114406
+  },
+  "ip-protocol": 43333881,
+  "accept-replies": true
+}

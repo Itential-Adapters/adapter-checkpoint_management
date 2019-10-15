@@ -1,0 +1,34 @@
+{
+  "actions": [
+    {
+      "name": "postShowDataCenter",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-data-center{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowDataCenter-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowDataCenters",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-data-centers{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowDataCenters-default.json"
+        }
+      ]
+    }
+  ]
+}

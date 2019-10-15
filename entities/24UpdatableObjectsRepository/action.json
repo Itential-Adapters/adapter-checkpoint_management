@@ -1,0 +1,34 @@
+{
+  "actions": [
+    {
+      "name": "postShowUpdatableObjectsRepositoryContent",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-updatable-objects-repository-content{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowUpdatableObjectsRepositoryContent-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postUpdateUpdatableObjectsRepositoryContent",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/update-updatable-objects-repository-content{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postUpdateUpdatableObjectsRepositoryContent-default.json"
+        }
+      ]
+    }
+  ]
+}

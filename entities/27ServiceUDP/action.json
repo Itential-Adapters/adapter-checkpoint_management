@@ -1,0 +1,79 @@
+{
+  "actions": [
+    {
+      "name": "postAddServiceUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-service-udp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postAddServiceUdp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowServiceUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-service-udp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowServiceUdp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postSetServiceUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-service-udp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postSetServiceUdp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postDeleteServiceUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-service-udp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postDeleteServiceUdp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowServicesUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-services-udp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowServicesUdp-default.json"
+        }
+      ]
+    }
+  ]
+}

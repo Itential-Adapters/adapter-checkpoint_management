@@ -1,0 +1,42 @@
+{
+  "uid": "dolore ipsum irure pariatur",
+  "name": "elit ut",
+  "type": "eu",
+  "domain": {
+    "domain-type": "laboris commodo aliquip fug",
+    "uid": "ni",
+    "name": "fugiat in"
+  },
+  "meta-info": {
+    "lock": "culpa reprehenderit Lorem ",
+    "validation-state": "anim voluptate",
+    "last-modify-time": {
+      "posix": 47180033,
+      "iso-8601": "cupidatat laborum consequat"
+    },
+    "last-modifier": "Ut dolore ipsum",
+    "creation-time": {
+      "posix": 95771016,
+      "iso-8601": "amet qui cillum Excepteur"
+    },
+    "creator": "sed Ut fugiat"
+  },
+  "tags": [],
+  "read-only": false,
+  "comments": "in ",
+  "color": "dolore",
+  "icon": "ut officia magna exercitation anim",
+  "groups": [],
+  "keep-connections-open-after-policy-installation": false,
+  "session-timeout": 16127650,
+  "use-default-session-timeout": true,
+  "match-for-any": false,
+  "sync-connections-on-cluster": true,
+  "aggressive-aging": {
+    "enable": false,
+    "timeout": -47230324,
+    "use-default-timeout": true,
+    "default-timeout": 56315600
+  },
+  "port": "sint pariatur aliqua laboris esse"
+}

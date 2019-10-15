@@ -1,0 +1,79 @@
+{
+  "actions": [
+    {
+      "name": "postAddServiceDceRpc",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-service-dce-rpc{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postAddServiceDceRpc-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowServiceDceRpc",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-service-dce-rpc{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowServiceDceRpc-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postSetServiceDceRpc",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-service-dce-rpc{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postSetServiceDceRpc-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postDeleteServiceDceRpc",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-service-dce-rpc{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postDeleteServiceDceRpc-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowServicesDceRpc",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-services-dce-rpc{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowServicesDceRpc-default.json"
+        }
+      ]
+    }
+  ]
+}

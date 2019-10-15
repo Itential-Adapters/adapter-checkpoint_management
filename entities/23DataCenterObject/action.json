@@ -1,0 +1,64 @@
+{
+  "actions": [
+    {
+      "name": "postAddDataCenterObject",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-data-center-object{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postAddDataCenterObject-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowDataCenterObject",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-data-center-object{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowDataCenterObject-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postDeleteDataCenterObject",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-data-center-object{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postDeleteDataCenterObject-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowDataCenterObjects",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-data-center-objects{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowDataCenterObjects-default.json"
+        }
+      ]
+    }
+  ]
+}

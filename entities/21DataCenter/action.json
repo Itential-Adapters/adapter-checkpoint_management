@@ -1,0 +1,19 @@
+{
+  "actions": [
+    {
+      "name": "postShowDataCenterContent",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-data-center-content{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowDataCenterContent-default.json"
+        }
+      ]
+    }
+  ]
+}

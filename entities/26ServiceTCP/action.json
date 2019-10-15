@@ -1,0 +1,79 @@
+{
+  "actions": [
+    {
+      "name": "postAddServiceTcp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-service-tcp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postAddServiceTcp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowServiceTcp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-service-tcp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowServiceTcp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postSetServiceTcp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-service-tcp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postSetServiceTcp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postDeleteServiceTcp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-service-tcp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postDeleteServiceTcp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowServicesTcp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-services-tcp{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowServicesTcp-default.json"
+        }
+      ]
+    }
+  ]
+}

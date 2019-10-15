@@ -1,0 +1,45 @@
+{
+  "uid": "voluptate",
+  "name": "Excepteur",
+  "type": "nisi sunt culpa",
+  "domain": {
+    "domain-type": "in fugiat",
+    "uid": "dolore ex nostrud pariatur laborum",
+    "name": "adipisicing labore consequat in esse"
+  },
+  "meta-info": {
+    "lock": "Duis et in elit",
+    "validation-state": "nisi",
+    "last-modify-time": {
+      "posix": -21932759,
+      "iso-8601": "amet fugiat nulla"
+    },
+    "last-modifier": "eiusmod et mollit ut deserunt",
+    "creation-time": {
+      "posix": -39758311,
+      "iso-8601": "adipisicing Duis"
+    },
+    "creator": "consectetur"
+  },
+  "tags": [],
+  "read-only": true,
+  "comments": "commodo consectetur",
+  "color": "amet in fugiat velit labore",
+  "icon": "laboris nisi",
+  "groups": [],
+  "keep-connections-open-after-policy-installation": true,
+  "session-timeout": 2429372,
+  "use-default-session-timeout": false,
+  "match-for-any": true,
+  "sync-connections-on-cluster": true,
+  "aggressive-aging": {
+    "enable": true,
+    "timeout": -84965540,
+    "use-default-timeout": true,
+    "default-timeout": 83548305
+  },
+  "port": "com",
+  "protocol": "consequat magna voluptate dolore",
+  "match-by-protocol-signature": false,
+  "accept-replies": false
+}

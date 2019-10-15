@@ -1,0 +1,44 @@
+{
+  "uid": "Duis Lorem",
+  "name": "ea in proident incididunt",
+  "type": "sed",
+  "domain": {
+    "domain-type": "dolore in voluptate eu quis",
+    "uid": "i",
+    "name": "do"
+  },
+  "meta-info": {
+    "lock": "laboris ut",
+    "validation-state": "magna elit non",
+    "last-modify-time": {
+      "posix": 61833180,
+      "iso-8601": "ut incididunt"
+    },
+    "last-modifier": "in Lorem commodo culpa",
+    "creation-time": {
+      "posix": 73817025,
+      "iso-8601": "laborum"
+    },
+    "creator": "labore Lorem nulla"
+  },
+  "tags": [],
+  "read-only": true,
+  "comments": "Duis cillum ex amet qui",
+  "color": "irure in laboris ullamco",
+  "icon": "ut consectetur nostrud Excepteur",
+  "groups": [],
+  "keep-connections-open-after-policy-installation": false,
+  "session-timeout": -71759879,
+  "use-default-session-timeout": false,
+  "match-for-any": true,
+  "sync-connections-on-cluster": false,
+  "aggressive-aging": {
+    "enable": false,
+    "timeout": 89148997,
+    "use-default-timeout": false,
+    "default-timeout": -50224524
+  },
+  "port": "cillum",
+  "protocol": "labore Lorem pariatur",
+  "match-by-protocol-signature": false
+}

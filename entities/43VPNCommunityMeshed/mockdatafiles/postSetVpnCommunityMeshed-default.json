@@ -1,0 +1,42 @@
+{
+  "uid": "nisi culpa",
+  "name": "occaecat dolor irure",
+  "type": "magna exercitation laboris ad dolore",
+  "domain": {
+    "domain-type": "nisi do anim",
+    "uid": "in",
+    "name": "et Duis"
+  },
+  "meta-info": {
+    "lock": "dolore in nulla",
+    "validation-state": "in sint est laboris",
+    "last-modify-time": {
+      "posix": 55098809,
+      "iso-8601": "elit in id cupidatat"
+    },
+    "last-modifier": "nisi magna minim ",
+    "creation-time": {
+      "posix": 5050052,
+      "iso-8601": "nisi laboris exercita"
+    },
+    "creator": "quis in nostrud"
+  },
+  "tags": [],
+  "read-only": false,
+  "comments": "pariatur eiusmod nulla",
+  "color": "exercitation",
+  "icon": "pariatur officia in",
+  "use-shared-secret": false,
+  "encryption-method": "dolore laboris",
+  "encryption-suite": "Lorem in occaecat reprehenderit",
+  "ike-phase-1": {
+    "data-integrity": "proident est sunt culpa nisi",
+    "encryption-algorithm": "exercitation reprehenderit aute",
+    "diffie-hellman-group": "eiusmod incididunt sed"
+  },
+  "ike-phase-2": {
+    "data-integrity": "dolore esse ad",
+    "encryption-algorithm": "dolor"
+  },
+  "gateways": []
+}

@@ -1,0 +1,32 @@
+{
+  "uid": "Lorem velit",
+  "name": "sunt elit Lorem in",
+  "type": "sit ut officia sed eiusmod",
+  "domain": {
+    "domain-type": "mollit elit cons",
+    "uid": "commodo officia velit consectetur",
+    "name": "Ut dolore dolore sit ut"
+  },
+  "icmp-type": 98761988,
+  "keep-connections-open-after-policy-installation": false,
+  "meta-info": {
+    "lock": "qui anim",
+    "validation-state": "in velit elit Excepteur",
+    "last-modify-time": {
+      "posix": -26204654,
+      "iso-8601": "non minim Excepteur nisi"
+    },
+    "last-modifier": "nisi mollit exercitation con",
+    "creation-time": {
+      "posix": 72845370,
+      "iso-8601": "occaecat reprehenderit in laboris"
+    },
+    "creator": "Lorem ad est ea voluptate"
+  },
+  "tags": [],
+  "read-only": false,
+  "comments": "officia dol",
+  "color": "ame",
+  "icon": "occaecat ut nisi irure ex",
+  "groups": []
+}

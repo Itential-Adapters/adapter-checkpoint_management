@@ -1,0 +1,79 @@
+{
+  "actions": [
+    {
+      "name": "postAddOpsecApplication",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-opsec-application{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postAddOpsecApplication-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowOpsecApplication",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-opsec-application{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowOpsecApplication-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postSetOpsecApplication",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-opsec-application{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postSetOpsecApplication-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postDeleteOpsecApplication",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-opsec-application{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postDeleteOpsecApplication-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowOpsecApplications",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-opsec-applications{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowOpsecApplications-default.json"
+        }
+      ]
+    }
+  ]
+}

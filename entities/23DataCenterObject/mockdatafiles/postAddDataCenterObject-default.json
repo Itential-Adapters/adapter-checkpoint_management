@@ -1,0 +1,48 @@
+{
+  "uid": "aliqua esse quis minim nulla",
+  "name": "Duis",
+  "type": "a",
+  "domain": {
+    "domain-type": "reprehenderit nostrud cillum in",
+    "uid": "incididunt",
+    "name": "nostrud"
+  },
+  "meta-info": {
+    "lock": "nostrud in ullamco labore",
+    "validation-state": "sint et",
+    "read-only": true,
+    "last-modify-time": {
+      "posix": -17138189,
+      "iso-8601": "commodo"
+    },
+    "last-modifier": "nisi",
+    "creation-time": {
+      "posix": 28034394,
+      "iso-8601": "pariatur mini"
+    },
+    "creator": "non"
+  },
+  "tags": [],
+  "comments": "est officia elit aute",
+  "color": "non ipsum dolore",
+  "icon": "sunt nostrud Lor",
+  "groups": [],
+  "additional-properties": [],
+  "data-center": {
+    "uid": "occaecat Lorem officia irure",
+    "name": "labore quis",
+    "type": "ut commodo in",
+    "domain": {
+      "domain-type": "tempor velit eu",
+      "uid": "quis dolor consequat consectetur",
+      "name": "in id mollit adipisicing nostrud"
+    }
+  },
+  "name-in-data-center": "qui",
+  "data-center-object-meta-info": {
+    "updated-on-data-center": {
+      "posix": 67107168,
+      "iso-8601": "labore dolor "
+    }
+  }
+}

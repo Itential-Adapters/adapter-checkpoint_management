@@ -1,0 +1,64 @@
+{
+  "actions": [
+    {
+      "name": "postAddUpdatableObject",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-updatable-object{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postAddUpdatableObject-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowUpdatableObject",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-updatable-object{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowUpdatableObject-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postDeleteUpdatableObject",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-updatable-object{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postDeleteUpdatableObject-default.json"
+        }
+      ]
+    },
+    {
+      "name": "postShowUpdatableObjects",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-updatable-objects{query}",
+      "schema": "schema.json",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/postShowUpdatableObjects-default.json"
+        }
+      ]
+    }
+  ]
+}
