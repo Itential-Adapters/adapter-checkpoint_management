@@ -1,0 +1,34 @@
+{
+  "uid": "d5379ada-c7d7-4678-bf55-0776f33b2326",
+  "name": "vCenter 1",
+  "type": "data-center",
+  "domain": {
+    "domain-type": "domain",
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User"
+  },
+  "meta-info": {
+    "lock": "unlocked",
+    "validation-state": "ok",
+    "read-only": false,
+    "last-modify-time": {
+      "posix": 1454506141609,
+      "iso-8601": "2016-02-03T08:29-0500"
+    },
+    "last-modifier": "admin",
+    "creation-time": {
+      "posix": 1454506141609,
+      "iso-8601": "2016-02-03T08:29-0500"
+    },
+    "creator": "admin"
+  },
+  "tags": [],
+  "comments": "",
+  "color": "black",
+  "icon": "NetworkObjects/ExternalDataSource",
+  "server-type": "vCenter",
+  "properties": {
+    "vCenter_Username": "user1",
+    "vCenter_Hostname": "vcenter1.host.com"
+  }
+}

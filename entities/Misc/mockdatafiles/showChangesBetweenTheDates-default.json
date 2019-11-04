@@ -1,0 +1,85 @@
+{
+  "tasks": [
+    {
+      "task-name": "Show Changes",
+      "task-id": "abcdef01-2345-6789-bd5e-98e9d5b89d9b",
+      "status": "succeeded",
+      "progress-percentage": 100,
+      "progress-description": "Operation Complete",
+      "suppressed": false,
+      "task-details": [
+        {
+          "changes": [
+            {
+              "session": {
+                "session-uid": "40b969d3-6b3c-48a0-a4d7-7cfeeea1bc5a",
+                "user-name": "aa",
+                "publish-time": {
+                  "posix": 1485930056333,
+                  "iso-8601": "2017-02-01T08:20+0200"
+                },
+                "domain-info": {
+                  "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                  "name": "SMC User",
+                  "domain-type": "domain"
+                }
+              },
+              "operations": {
+                "added-objects": [
+                  {
+                    "uid": "408c7054-eb6d-4557-8a15-cb1b6160b80b",
+                    "name": "MyRule3",
+                    "type": "access-rule",
+                    "domain": {
+                      "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                      "name": "SMC User",
+                      "domain-type": "domain"
+                    }
+                  }
+                ],
+                "modified-objects": [
+                  {
+                    "old-object": {
+                      "uid": "fad17be7-6b4e-4033-b27f-b7769520e0a1",
+                      "name": "MyRule2",
+                      "type": "access-rule",
+                      "domain": {
+                        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                        "name": "SMC User",
+                        "domain-type": "domain"
+                      }
+                    },
+                    "new-object": {
+                      "uid": "fad17be7-6b4e-4033-b27f-b7769520e0a1",
+                      "name": "MyRule4",
+                      "type": "access-rule",
+                      "domain": {
+                        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                        "name": "SMC User",
+                        "domain-type": "domain"
+                      }
+                    }
+                  }
+                ],
+                "deleted-objects": [
+                  {
+                    "uid": "7bded5dc-ad1d-4300-8405-12f9afdbdba3",
+                    "name": "MyRule1",
+                    "type": "access-rule",
+                    "domain": {
+                      "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                      "name": "SMC User",
+                      "domain-type": "domain"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "limit": 10,
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

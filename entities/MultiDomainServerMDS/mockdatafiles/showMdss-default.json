@@ -1,0 +1,21 @@
+{
+  "from": 1,
+  "to": 1,
+  "total": 1,
+  "objects": [
+    {
+      "folder": {
+        "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39e",
+        "name": "Global Objects"
+      },
+      "domain": {
+        "domain-type": "system domain",
+        "uid": "a0eebc99-afed-4ef8-bb6d-fedfedfedfed",
+        "name": "System Data"
+      },
+      "type": "mds",
+      "name": "test_mds",
+      "uid": "d4ea2802-a148-48ac-8f21-fcce69588700"
+    }
+  ]
+}

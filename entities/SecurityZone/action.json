@@ -1,0 +1,104 @@
+{
+  "actions": [
+    {
+      "name": "addSecurityZone",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-security-zone{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "showSecurityZone",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-security-zone{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "setSecurityZone",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-security-zone{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "deleteSecurityZone",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-security-zone{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "showSecurityZones",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-security-zones{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showSecurityZones-default.json"
+        }
+      ]
+    }
+  ]
+}

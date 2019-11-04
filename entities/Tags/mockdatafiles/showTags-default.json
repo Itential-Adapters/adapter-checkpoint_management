@@ -1,0 +1,217 @@
+{
+  "from": 1,
+  "to": 15,
+  "total": 15,
+  "objects": [
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "tag",
+      "name": "DMZ related",
+      "uid": "bcbace1f-aead-44da-9bff-56bdb1e4c4d2"
+    },
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "tag",
+      "name": "England",
+      "uid": "50877af4-4a17-4ff0-8f77-de0784e8f1ab"
+    },
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "tag",
+      "name": "Europe",
+      "uid": "89e6ee92-d01b-48e2-98a3-626e644d6ff9"
+    },
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "tag",
+      "name": "France",
+      "uid": "de21ae82-f7d6-4a3b-b49c-dc53a51def1d"
+    },
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "tag",
+      "name": "Important assets",
+      "uid": "c9ddb2b2-40a6-422a-a6ea-6c3214f8cf4b"
+    },
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "tag",
+      "name": "London",
+      "uid": "5a7a1f46-10b1-461d-b8c0-596c380dd05d"
+    },
+    {
+      "folder": {
+        "uid": "a25a7783-9adb-4a65-9850-b97ee7860530",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "tag",
+      "name": "My New Tag",
+      "uid": "4995cbc3-ce01-4b2e-b6ac-bb48baee89e3"
+    },
+    {
+      "folder": {
+        "uid": "a25a7783-9adb-4a65-9850-b97ee7860530",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "tag",
+      "name": "My New Tag21",
+      "uid": "728a4212-a521-46a2-a5a1-b6536a9aecd5"
+    },
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "tag",
+      "name": "New York",
+      "uid": "771878c4-990f-47b9-9249-1838163014e6"
+    },
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "tag",
+      "name": "Paris",
+      "uid": "16058757-98a1-4ed6-9926-c5fbfa192c52"
+    },
+    {
+      "folder": {
+        "uid": "a25a7783-9adb-4a65-9850-b97ee7860530",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "tag",
+      "name": "my tag",
+      "uid": "f96b37ec-e22e-4945-8bbf-d37b117914e0"
+    },
+    {
+      "folder": {
+        "uid": "a25a7783-9adb-4a65-9850-b97ee7860530",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "tag",
+      "name": "my tag1",
+      "uid": "9f51e2b6-696a-4f28-9239-5b0622fce1e5"
+    },
+    {
+      "folder": {
+        "uid": "a25a7783-9adb-4a65-9850-b97ee7860530",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "tag",
+      "name": "tag1",
+      "uid": "687715ca-674b-4642-981b-b6243fde04c0"
+    },
+    {
+      "folder": {
+        "uid": "a25a7783-9adb-4a65-9850-b97ee7860530",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "tag",
+      "name": "tag2",
+      "uid": "f1ee4a33-6577-45da-9d4f-cc352a349c80"
+    },
+    {
+      "folder": {
+        "uid": "a25a7783-9adb-4a65-9850-b97ee7860530",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "tag",
+      "name": "tag3",
+      "uid": "dda885bb-0d5b-4529-96eb-55b757847092"
+    }
+  ]
+}

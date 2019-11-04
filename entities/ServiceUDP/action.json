@@ -1,0 +1,104 @@
+{
+  "actions": [
+    {
+      "name": "addServiceUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-service-udp{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/addServiceUdp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showServiceUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-service-udp{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showServiceUdp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "setServiceUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-service-udp{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/setServiceUdp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "deleteServiceUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-service-udp{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/deleteServiceUdp-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showServicesUdp",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-services-udp{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showServicesUdp-default.json"
+        }
+      ]
+    }
+  ]
+}

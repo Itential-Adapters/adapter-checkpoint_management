@@ -1,0 +1,9 @@
+{
+  "message": "Validation failed with 1 error",
+  "code": "generic_error",
+  "errors": [
+    {
+      "message": "More than one object named 'New_RPC_Service_1' exists."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "uid": "a8c25199-7893-45d7-800d-57a2c18a3c7c",
+  "name": "New_VPN_Community_Star_1",
+  "type": "vpn-community-star",
+  "domain": {
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User",
+    "domain-type": "domain"
+  },
+  "meta-info": {
+    "lock": "unlocked",
+    "validation-state": "ok",
+    "last-modify-time": {
+      "posix": 1482231173231,
+      "iso-8601": "2016-12-20T12:52+0200"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1482228564753,
+      "iso-8601": "2016-12-20T12:09+0200"
+    },
+    "creator": "aa"
+  },
+  "tags": [],
+  "read-only": true,
+  "comments": "",
+  "color": "black",
+  "icon": "VPNCommunities/Star",
+  "use-shared-secret": false,
+  "encryption-method": "ikev2 only",
+  "encryption-suite": "custom",
+  "ike-phase-1": {
+    "encryption-algorithm": "aes-128",
+    "diffie-hellman-group": "group 19",
+    "data-integrity": "sha1"
+  },
+  "ike-phase-2": {
+    "encryption-algorithm": "aes-gcm-128",
+    "data-integrity": "aes-xcbc"
+  },
+  "center-gateways": [
+    {
+      "uid": "049bbebf-46cf-454a-999c-45bf80a29075",
+      "name": "Second_Security_Gateway",
+      "type": "simple-gateway",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      }
+    }
+  ],
+  "satellite-gateways": [],
+  "mesh-center-gateways": false
+}

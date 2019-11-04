@@ -1,0 +1,37 @@
+{
+  "from": 1,
+  "to": 3,
+  "total": 3,
+  "indicators": [
+    {
+      "uid": "7c00fba4-978e-4769-acbf-46909b88f45d",
+      "name": "My_Indicator",
+      "type": "threat-indicator",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      }
+    },
+    {
+      "uid": "4f797897-3109-43ec-9d07-340b74110f73",
+      "name": "My_Indicator2",
+      "type": "threat-indicator",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      }
+    },
+    {
+      "uid": "c3bd4f1e-3df9-4b91-b2d9-5fc66428a520",
+      "name": "My_Indicator3",
+      "type": "threat-indicator",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "from": 1,
+  "to": 1,
+  "total": 1,
+  "objects": [
+    {
+      "uid": "ab7aa902-ccac-4278-b4eb-c140c07c6170",
+      "name": ".www.example.com",
+      "type": "dns-domain",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      }
+    }
+  ]
+}

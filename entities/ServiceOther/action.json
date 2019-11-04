@@ -1,0 +1,104 @@
+{
+  "actions": [
+    {
+      "name": "addServiceOther",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-service-other{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/addServiceOther-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showServiceOther",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-service-other{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showServiceOther-default.json"
+        }
+      ]
+    },
+    {
+      "name": "setServiceOther",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-service-other{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/setServiceOther-default.json"
+        }
+      ]
+    },
+    {
+      "name": "deleteServiceOther",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-service-other{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/deleteServiceOther-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showServicesOther",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-services-other{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showServicesOther-default.json"
+        }
+      ]
+    }
+  ]
+}

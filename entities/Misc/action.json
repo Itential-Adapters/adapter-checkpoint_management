@@ -1,0 +1,284 @@
+{
+  "actions": [
+    {
+      "name": "whereUsed",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/where-used{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/whereUsed-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showTask",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-task{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "runScript",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/run-script{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "showUnusedObjects",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-unused-objects{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "export",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/export{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "showChangesBetweenTheDates",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-changes{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showChangesBetweenTheDates-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showGatewaysAndServers",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-gateways-and-servers{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showGatewaysAndServers-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showObjectsOfTypeGroup",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-objects{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "showValidations",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-validations{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showValidations-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showTasks",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-tasks{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "showApiVersions",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-api-versions{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showApiVersions-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showObject",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-object{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showObject-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showCommands",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-commands{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
+      "name": "putFile",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/put-file{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    }
+  ]
+}

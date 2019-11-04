@@ -1,0 +1,65 @@
+{
+  "uid": "63e7f3d7-f202-4149-a806-f9faf3a2d989",
+  "name": "VM1 mgmt name",
+  "type": "data-center-object",
+  "domain": {
+    "domain-type": "domain",
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User"
+  },
+  "meta-info": {
+    "lock": "locked by current session",
+    "validation-state": "ok",
+    "read-only": false,
+    "last-modify-time": {
+      "posix": 1456733825366,
+      "iso-8601": "2016-02-29T03:17-0500"
+    },
+    "last-modifier": "admin",
+    "creation-time": {
+      "posix": 1456733825366,
+      "iso-8601": "2016-02-29T03:17-0500"
+    },
+    "creator": "admin"
+  },
+  "tags": [],
+  "comments": "",
+  "color": "none",
+  "icon": "NetworkObjects/ExternalDataObject",
+  "groups": [
+    {
+      "uid": "b74b9df2-ee3c-4480-a343-cd61e55293a8",
+      "name": "Database VMs Group",
+      "type": "group",
+      "domain": {
+        "domain-type": "domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      }
+    }
+  ],
+  "additional-properties": [
+    {
+      "name": "IP",
+      "value": "172.23.34.68"
+    }
+  ],
+  "uid-in-data-center": "vm-1",
+  "data-center": {
+    "uid": "656bf2e4-c510-4935-aea5-81e51e015965",
+    "name": "vCenter 1",
+    "type": "data-center",
+    "domain": {
+      "domain-type": "domain",
+      "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+      "name": "SMC User"
+    }
+  },
+  "name-in-data-center": "My VM1",
+  "data-center-object-meta-info": {
+    "updated-on-data-center": {
+      "posix": 1456732795695,
+      "iso-8601": "2016-02-29T02:59-0500"
+    }
+  }
+}

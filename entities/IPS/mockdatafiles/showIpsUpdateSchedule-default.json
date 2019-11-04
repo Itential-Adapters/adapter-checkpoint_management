@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "time": "0:00",
+  "recurrence": {
+    "pattern": "Daily"
+  }
+}

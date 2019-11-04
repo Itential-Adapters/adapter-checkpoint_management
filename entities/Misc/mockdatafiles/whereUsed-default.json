@@ -1,0 +1,99 @@
+{
+  "used-directly": {
+    "total": 2,
+    "objects": [
+      {
+        "folder": {
+          "uid": "fafc7ed4-e021-496d-b6f9-8d0f7c81209f",
+          "name": "Global Objects"
+        },
+        "domain": {
+          "domain-type": "local domain",
+          "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+          "name": "SMC User"
+        },
+        "type": "group",
+        "name": "Network group 1",
+        "uid": "f5c7640d-92eb-4c91-b7ad-c9c972ec31d6"
+      }
+    ],
+    "threat-prevention-rules": [],
+    "nat-rules": [],
+    "access-control-rules": [
+      {
+        "rule": {
+          "folder": {
+            "uid": "fafc7ed4-e021-496d-b6f9-8d0f7c81209f",
+            "name": "Global Objects"
+          },
+          "domain": {
+            "domain-type": "local domain",
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User"
+          },
+          "type": "access-rule",
+          "name": "Access Rule 2",
+          "uid": "6c4fc003-4a45-4a09-9438-b76745c55674"
+        },
+        "position": "2",
+        "owner": {
+          "folder": {
+            "uid": "fafc7ed4-e021-496d-b6f9-8d0f7c81209f",
+            "name": "Global Objects"
+          },
+          "domain": {
+            "domain-type": "local domain",
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User"
+          },
+          "type": "layer",
+          "name": "Network",
+          "uid": "f799c262-0942-4cb7-a7da-c5daed16b27b"
+        },
+        "policy": {
+          "folder": {
+            "uid": "fafc7ed4-e021-496d-b6f9-8d0f7c81209f",
+            "name": "Global Objects"
+          },
+          "domain": {
+            "domain-type": "local domain",
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User"
+          },
+          "type": "AccessPolicy",
+          "name": "Standard",
+          "uid": "21bef0f6-026d-4730-80b2-b8159a0bc11a"
+        },
+        "layer": {
+          "folder": {
+            "uid": "fafc7ed4-e021-496d-b6f9-8d0f7c81209f",
+            "name": "Global Objects"
+          },
+          "domain": {
+            "domain-type": "local domain",
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User"
+          },
+          "type": "layer",
+          "name": "Network",
+          "uid": "f799c262-0942-4cb7-a7da-c5daed16b27b"
+        },
+        "layer-position": 0,
+        "package": {
+          "folder": {
+            "uid": "fafc7ed4-e021-496d-b6f9-8d0f7c81209f",
+            "name": "Global Objects"
+          },
+          "domain": {
+            "domain-type": "local domain",
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User"
+          },
+          "type": "package",
+          "name": "Standard",
+          "uid": "68451b5c-c330-4b5c-a9f4-4c9ff97b7b2d"
+        }
+      }
+    ]
+  }
+}

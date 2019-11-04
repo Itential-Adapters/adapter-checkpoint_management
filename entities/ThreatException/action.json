@@ -1,0 +1,104 @@
+{
+  "actions": [
+    {
+      "name": "addThreatException",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-threat-exception{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/addThreatException-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showThreatRuleExceptionRulebase",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-threat-rule-exception-rulebase{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showThreatRuleExceptionRulebase-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showThreatException",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-threat-exception{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showThreatException-default.json"
+        }
+      ]
+    },
+    {
+      "name": "setThreatException",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-threat-exception{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/setThreatException-default.json"
+        }
+      ]
+    },
+    {
+      "name": "deleteThreatException",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-threat-exception{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    }
+  ]
+}

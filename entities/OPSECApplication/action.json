@@ -1,0 +1,104 @@
+{
+  "actions": [
+    {
+      "name": "addOpsecApplication",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/add-opsec-application{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/addOpsecApplication-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showOpsecApplication",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-opsec-application{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showOpsecApplication-default.json"
+        }
+      ]
+    },
+    {
+      "name": "setOpsecApplication",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/set-opsec-application{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/setOpsecApplication-default.json"
+        }
+      ]
+    },
+    {
+      "name": "deleteOpsecApplication",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/delete-opsec-application{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/deleteOpsecApplication-default.json"
+        }
+      ]
+    },
+    {
+      "name": "showOpsecApplications",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/show-opsec-applications{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/showOpsecApplications-default.json"
+        }
+      ]
+    }
+  ]
+}

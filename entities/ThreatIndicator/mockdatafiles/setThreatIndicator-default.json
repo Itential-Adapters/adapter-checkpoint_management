@@ -1,0 +1,30 @@
+{
+  "uid": "7c00fba4-978e-4769-acbf-46909b88f45d",
+  "name": "My_Indicator",
+  "type": "threat-indicator",
+  "domain": {
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User",
+    "domain-type": "domain"
+  },
+  "meta-info": {
+    "lock": "locked by current session",
+    "validation-state": "ok",
+    "last-modify-time": {
+      "posix": 1493293547036,
+      "iso-8601": "2017-04-27T14:45+0300"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1493293547036,
+      "iso-8601": "2017-04-27T14:45+0300"
+    },
+    "creator": "aa"
+  },
+  "tags": [],
+  "read-only": false,
+  "comments": "",
+  "icon": "General/Node",
+  "action": "Prevent",
+  "number-of-observables": 1
+}

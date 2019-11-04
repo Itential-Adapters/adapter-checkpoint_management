@@ -1,0 +1,74 @@
+{
+  "from": 1,
+  "to": 2,
+  "total": 2,
+  "objects": [
+    {
+      "uid": "aec7ebba-38c1-4308-a080-2d74953ab3e8",
+      "name": "MySecondOpsecApplication",
+      "type": "opsec-application",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      },
+      "host": "SomeHost",
+      "meta-info": {
+        "lock": "unlocked",
+        "validation-state": "ok",
+        "last-modify-time": {
+          "posix": 1481004093046,
+          "iso-8601": "2016-12-06T08:01+0200"
+        },
+        "last-modifier": "aa",
+        "creation-time": {
+          "posix": 1481004089846,
+          "iso-8601": "2016-12-06T08:01+0200"
+        },
+        "creator": "aa"
+      },
+      "tags": [],
+      "read-only": false,
+      "comments": "",
+      "color": "black",
+      "icon": "OPSECapplications/OPSEC",
+      "lea": {
+        "access-permissions": "by profile",
+        "administrator-profile": "read only all"
+      }
+    },
+    {
+      "uid": "1741bb6c-3b19-456c-a635-b96c8456a0e8",
+      "name": "MyUpdatedOpsecapplication",
+      "type": "opsec-application",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      },
+      "host": "SomeHost",
+      "meta-info": {
+        "lock": "unlocked",
+        "validation-state": "ok",
+        "last-modify-time": {
+          "posix": 1481003965998,
+          "iso-8601": "2016-12-06T07:59+0200"
+        },
+        "last-modifier": "aa",
+        "creation-time": {
+          "posix": 1481003908607,
+          "iso-8601": "2016-12-06T07:58+0200"
+        },
+        "creator": "aa"
+      },
+      "tags": [],
+      "read-only": false,
+      "comments": "",
+      "color": "black",
+      "icon": "OPSECapplications/OPSEC",
+      "lea": {
+        "access-permissions": "show all"
+      }
+    }
+  ]
+}

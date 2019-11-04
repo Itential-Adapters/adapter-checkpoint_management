@@ -1,0 +1,94 @@
+{
+  "uid": "99457705-dc26-40ce-b9cd-5633eb09b1aa",
+  "domain": {
+    "domain-type": "domain",
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User"
+  },
+  "meta-info": {
+    "lock": "unlocked",
+    "validation-state": "ok",
+    "read-only": false,
+    "last-modify-time": {
+      "posix": 1451485835851,
+      "iso-8601": "2015-12-30T16:30+0200"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1451485835851,
+      "iso-8601": "2015-12-30T16:30+0200"
+    },
+    "creator": "aa"
+  },
+  "tags": [],
+  "name": "gw1",
+  "comments": "",
+  "color": "black",
+  "icon": "General/globalsNa",
+  "groups": [],
+  "ipv6-address": "::0",
+  "dynamic-ip": false,
+  "version": "R80",
+  "os-name": "Gaia",
+  "hardware": "Open server",
+  "sic-name": "",
+  "sic-state": "uninitialized",
+  "interfaces": [],
+  "firewall": true,
+  "firewall-settings": {
+    "auto-maximum-limit-for-concurrent-connections": true,
+    "maximum-limit-for-concurrent-connections": 25000,
+    "auto-calculate-connections-hash-table-size-and-memory-pool": true,
+    "connections-hash-size": 131072,
+    "memory-pool-size": 6,
+    "maximum-memory-pool-size": 30
+  },
+  "vpn": false,
+  "application-control": false,
+  "url-filtering": false,
+  "data-awareness": false,
+  "ips": false,
+  "anti-bot": false,
+  "anti-virus": false,
+  "threat-emulation": false,
+  "save-logs-locally": false,
+  "send-alerts-to-server": [
+    "test_server_1"
+  ],
+  "send-logs-to-server": [
+    "test_server_2"
+  ],
+  "send-logs-to-backup-server": [],
+  "logs-settings": {
+    "rotate-log-by-file-size": false,
+    "rotate-log-file-size-threshold": 1000,
+    "rotate-log-on-schedule": false,
+    "alert-when-free-disk-space-below-metrics": "mbytes",
+    "alert-when-free-disk-space-below": true,
+    "alert-when-free-disk-space-below-threshold": 20,
+    "alert-when-free-disk-space-below-type": "popup alert",
+    "delete-when-free-disk-space-below-metrics": "mbytes",
+    "delete-when-free-disk-space-below": true,
+    "delete-when-free-disk-space-below-threshold": 5000,
+    "before-delete-keep-logs-from-the-last-days": false,
+    "before-delete-keep-logs-from-the-last-days-threshold": 0,
+    "before-delete-run-script": false,
+    "before-delete-run-script-command": "",
+    "stop-logging-when-free-disk-space-below-metrics": "mbytes",
+    "stop-logging-when-free-disk-space-below": true,
+    "stop-logging-when-free-disk-space-below-threshold": 100,
+    "reject-connections-when-free-disk-space-below-threshold": false,
+    "reserve-for-packet-capture-metrics": "mbytes",
+    "reserve-for-packet-capture-threshold": 500,
+    "delete-index-files-when-index-size-above-metrics": "mbytes",
+    "delete-index-files-when-index-size-above": false,
+    "delete-index-files-when-index-size-above-threshold": 100000,
+    "delete-index-files-older-than-days": true,
+    "delete-index-files-older-than-days-threshold": 14,
+    "forward-logs-to-log-server": false,
+    "perform-log-rotate-before-log-forwarding": false,
+    "update-account-log-every": 3600,
+    "detect-new-citrix-ica-application-names": false,
+    "turn-on-qos-logging": true
+  }
+}

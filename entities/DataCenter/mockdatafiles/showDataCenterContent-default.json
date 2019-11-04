@@ -1,0 +1,61 @@
+{
+  "objects": [
+    {
+      "name": "VM1 mgmt name",
+      "name-in-data-center": "My VM1",
+      "uid-in-data-center": "vm-1",
+      "type-in-data-center": "VirtualMachine",
+      "data-center-object": {
+        "uid": "2ecbde51-0b30-4318-8ddd-bec3310540a2",
+        "name": "VM1 mgmt name",
+        "type": "data-center-object",
+        "domain": {
+          "name": "SMC User",
+          "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+          "domain-type": "domain"
+        }
+      },
+      "additional-properties": [
+        {
+          "name": "IP",
+          "value": "10.0.0.1"
+        },
+        {
+          "name": "Path",
+          "value": "/Datacenters/VMs"
+        }
+      ]
+    },
+    {
+      "name": "My VM2",
+      "name-in-data-center": "My VM2",
+      "uid-in-data-center": "vm-2",
+      "type-in-data-center": "VirtualMachine",
+      "additional-properties": [
+        {
+          "name": "IP",
+          "value": "10.0.0.2"
+        },
+        {
+          "name": "Path",
+          "value": "/Datacenters/VMs"
+        }
+      ]
+    },
+    {
+      "name": "My VM3",
+      "name-in-data-center": "My VM3",
+      "uid-in-data-center": "vm-3",
+      "type-in-data-center": "VirtualMachine",
+      "additional-properties": [
+        {
+          "name": "Path",
+          "value": "/Datacenters/VMs"
+        }
+      ]
+    }
+  ],
+  "from": 1,
+  "to": 3,
+  "total": 3
+}

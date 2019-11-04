@@ -1,0 +1,156 @@
+{
+  "uid": "1df8a4b0-fa8b-428b-b649-626b74bf7f81",
+  "name": "Rule 1",
+  "type": "access-rule",
+  "domain": {
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User",
+    "domain-type": "domain"
+  },
+  "enabled": true,
+  "comments": "",
+  "meta-info": {
+    "lock": "locked by current session",
+    "validation-state": "ok",
+    "last-modify-time": {
+      "posix": 1482659046483,
+      "iso-8601": "2016-12-25T11:44+0200"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1482659046483,
+      "iso-8601": "2016-12-25T11:44+0200"
+    },
+    "creator": "aa"
+  },
+  "install-on": [
+    {
+      "uid": "6c488338-8eec-4103-ad21-cd461ac2c476",
+      "name": "Policy Targets",
+      "type": "Global",
+      "domain": {
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data",
+        "domain-type": "data domain"
+      }
+    }
+  ],
+  "source": [
+    {
+      "uid": "97aeb369-9aea-11d5-bd16-0090272ccb30",
+      "name": "Any",
+      "type": "CpmiAnyObject",
+      "domain": {
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data",
+        "domain-type": "data domain"
+      }
+    }
+  ],
+  "source-negate": false,
+  "destination": [
+    {
+      "uid": "97aeb369-9aea-11d5-bd16-0090272ccb30",
+      "name": "Any",
+      "type": "CpmiAnyObject",
+      "domain": {
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data",
+        "domain-type": "data domain"
+      }
+    }
+  ],
+  "destination-negate": false,
+  "service": [
+    {
+      "uid": "97aeb3d9-9aea-11d5-bd16-0090272ccb30",
+      "name": "smtp",
+      "type": "service-tcp",
+      "domain": {
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data",
+        "domain-type": "data domain"
+      },
+      "port": "25"
+    },
+    {
+      "uid": "97aeb44f-9aea-11d5-bd16-0090272ccb30",
+      "name": "AOL",
+      "type": "service-tcp",
+      "domain": {
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data",
+        "domain-type": "data domain"
+      },
+      "port": "5190"
+    }
+  ],
+  "service-negate": false,
+  "vpn": [
+    {
+      "uid": "8fcd975f-33b1-4322-b033-6fb251554d45",
+      "name": "MyIntranet",
+      "type": "vpn-community-meshed",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      }
+    }
+  ],
+  "action": {
+    "uid": "6c488338-8eec-4103-ad21-cd461ac2c473",
+    "name": "Drop",
+    "type": "RulebaseAction",
+    "domain": {
+      "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+      "name": "Check Point Data",
+      "domain-type": "data domain"
+    }
+  },
+  "action-settings": {
+    "enable-identity-captive-portal": false
+  },
+  "content": [
+    {
+      "uid": "97aeb369-9aea-11d5-bd16-0090272ccb30",
+      "name": "Any",
+      "type": "CpmiAnyObject",
+      "domain": {
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data",
+        "domain-type": "data domain"
+      }
+    }
+  ],
+  "content-negate": false,
+  "content-direction": "any",
+  "track": {
+    "uid": "29e53e3d-23bf-48fe-b6b1-d59bd88036f9",
+    "name": "None",
+    "type": "Track",
+    "domain": {
+      "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+      "name": "Check Point Data",
+      "domain-type": "data domain"
+    }
+  },
+  "track-alert": "none",
+  "time": [
+    {
+      "uid": "97aeb369-9aea-11d5-bd16-0090272ccb30",
+      "name": "Any",
+      "type": "CpmiAnyObject",
+      "domain": {
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data",
+        "domain-type": "data domain"
+      }
+    }
+  ],
+  "custom-fields": {
+    "field-1": "",
+    "field-2": "",
+    "field-3": ""
+  }
+}

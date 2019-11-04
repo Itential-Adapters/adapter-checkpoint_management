@@ -1,0 +1,145 @@
+{
+  "uid": "30c77c86-42ca-401a-a550-b5e49f5b1fff",
+  "enabled": true,
+  "comments": "",
+  "folder": {
+    "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+    "name": "/Global Objects"
+  },
+  "domain": {
+    "domain-type": "local domain",
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User"
+  },
+  "meta-info": {
+    "lock": "locked by current session",
+    "validation-state": "ok",
+    "read-only": false,
+    "last-modify-time": {
+      "posix": 1435739620963,
+      "iso-8601": "2015-07-01T11:33+0300"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1435739620187,
+      "iso-8601": "2015-07-01T11:33+0300"
+    },
+    "creator": "aa"
+  },
+  "install-on": [
+    {
+      "folder": {
+        "uid": "a7a569db-cd04-4f1c-bc8d-94dbfc22b150",
+        "name": "Check Point Settings"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "Global",
+      "name": "Policy Targets",
+      "uid": "6c488338-8eec-4103-ad21-cd461ac2c476"
+    }
+  ],
+  "source": [
+    {
+      "folder": {
+        "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+        "name": "Global Objects"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "CpmiAnyObject",
+      "name": "Any",
+      "uid": "97aeb369-9aea-11d5-bd16-0090272ccb30"
+    }
+  ],
+  "source-negate": false,
+  "destination": [
+    {
+      "folder": {
+        "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+        "name": "Global Objects"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "CpmiAnyObject",
+      "name": "Any",
+      "uid": "97aeb369-9aea-11d5-bd16-0090272ccb30"
+    }
+  ],
+  "destination-negate": false,
+  "service": [
+    {
+      "folder": {
+        "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+        "name": "Global Objects"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "CpmiAnyObject",
+      "name": "Any",
+      "uid": "97aeb369-9aea-11d5-bd16-0090272ccb30"
+    }
+  ],
+  "service-negate": false,
+  "protected-scope": [
+    {
+      "folder": {
+        "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "address-range",
+      "name": "All_Internet",
+      "uid": "62c2030b-d590-4f47-b274-c3a76ed18376"
+    }
+  ],
+  "protected-scope-negate": false,
+  "name": "First threat rule",
+  "track": {
+    "folder": {
+      "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+      "name": "Global Objects"
+    },
+    "domain": {
+      "domain-type": "data domain",
+      "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+      "name": "Check Point Data"
+    },
+    "type": "",
+    "name": "None",
+    "uid": "fb4e70c5-f8dc-4ab4-aa58-3613b3827826"
+  },
+  "track-settings": {
+    "packet-capture": true
+  },
+  "action": {
+    "folder": {
+      "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+      "name": "Global Objects"
+    },
+    "domain": {
+      "domain-type": "data domain",
+      "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+      "name": "Check Point Data"
+    },
+    "type": "threat-profile",
+    "name": "Recommended_Profile",
+    "uid": "44b83c65-e73c-4d63-aa55-4cdcea4a6d4b"
+  }
+}

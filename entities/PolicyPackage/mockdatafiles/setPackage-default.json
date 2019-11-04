@@ -1,0 +1,128 @@
+{
+  "uid": "5b33bf86-1349-4ad6-ba41-592706f47e54",
+  "folder": {
+    "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+    "name": "/Global Objects"
+  },
+  "domain": {
+    "domain-type": "local domain",
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User"
+  },
+  "meta-info": {
+    "lock": "unlocked",
+    "validation-state": "ok",
+    "read-only": false,
+    "last-modify-time": {
+      "posix": 1435741821828,
+      "iso-8601": "2015-07-01T12:10+0300"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1435646381592,
+      "iso-8601": "2015-06-30T09:39+0300"
+    },
+    "creator": "Check Point"
+  },
+  "tags": [],
+  "name": "Standard",
+  "comments": "",
+  "color": "black",
+  "icon": "Blades/Access",
+  "access": true,
+  "access-layers": [
+    {
+      "folder": {
+        "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "access-layer",
+      "name": "Network",
+      "uid": "5d9b6eab-fefa-4a9e-92d3-3b7721c3a20c"
+    },
+    {
+      "folder": {
+        "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "access-layer",
+      "name": "New Access Layer 1",
+      "uid": "61842a83-e39c-41d7-9ad0-ca88a3cdb7e9"
+    }
+  ],
+  "threat-layers": [
+    {
+      "folder": {
+        "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "threat-layer",
+      "name": "Threat Prevention",
+      "uid": "7c69ed00-4f6d-4215-aa65-abcb4ed2a205"
+    },
+    {
+      "folder": {
+        "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "threat-layer",
+      "name": "L1",
+      "uid": "ec5e08b2-27f3-4099-8965-7d9cd4a48139"
+    },
+    {
+      "folder": {
+        "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "threat-layer",
+      "name": "IPS",
+      "uid": "c6e44726-5195-4c04-a1a8-c4be143118c0"
+    },
+    {
+      "folder": {
+        "uid": "3b1764a5-363a-4f63-a2ab-2ef90746c70c",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "threat-layer",
+      "name": "New Layer 1",
+      "uid": "f769db97-5a7b-4290-a898-ba4a2582181d"
+    }
+  ],
+  "vpn-traditional-mode": false,
+  "nat-policy": true,
+  "qos": false,
+  "qos-policy-type": "recommended",
+  "desktop-security": false,
+  "threat-prevention": true,
+  "installation-targets": "all"
+}

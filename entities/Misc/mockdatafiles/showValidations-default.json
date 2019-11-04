@@ -1,0 +1,16 @@
+{
+  "warnings-total": 1,
+  "errors-total": 1,
+  "blocking-errors-total": 0,
+  "warnings": [
+    {
+      "message": "IPv4 address is invalid. IP address suggestion: 192.0.2.0"
+    }
+  ],
+  "errors": [
+    {
+      "message": "More than one object named 'New Host 1' exists."
+    }
+  ],
+  "blocking-errors": []
+}

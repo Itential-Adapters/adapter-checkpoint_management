@@ -1,0 +1,32 @@
+{
+  "uid": "b0a07e2a-87d9-4ded-a17b-e83d61611f64",
+  "name": "New_DCE-RPC_Service_3",
+  "type": "service-dce-rpc",
+  "domain": {
+    "domain-type": "domain",
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User"
+  },
+  "meta-info": {
+    "lock": "unlocked",
+    "validation-state": "ok",
+    "read-only": false,
+    "last-modify-time": {
+      "posix": 1453627648931,
+      "iso-8601": "2016-01-24T11:27+0200"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1453627571910,
+      "iso-8601": "2016-01-24T11:26+0200"
+    },
+    "creator": "aa"
+  },
+  "tags": [],
+  "comments": "",
+  "color": "green",
+  "icon": "Services/DCEService",
+  "groups": [],
+  "keep-connections-open-after-policy-installation": false,
+  "interface-uuid": "44aeb460-9aea-11d5-bd16-009027266b30"
+}

@@ -1,0 +1,17 @@
+{
+  "from": 1,
+  "to": 1,
+  "total": 1,
+  "objects": [
+    {
+      "uid": "d5379ada-c7d7-4678-bf55-0776f33b2326",
+      "name": "vCenter 1",
+      "type": "data-center",
+      "domain": {
+        "domain-type": "domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      }
+    }
+  ]
+}

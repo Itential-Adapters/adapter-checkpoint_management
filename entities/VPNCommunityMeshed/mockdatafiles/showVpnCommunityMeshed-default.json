@@ -1,0 +1,42 @@
+{
+  "uid": "283a3c73-0760-4876-8907-f8b4a14c0d76",
+  "name": "New_VPN_Community_Meshed_1",
+  "type": "vpn-community-meshed",
+  "domain": {
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User",
+    "domain-type": "domain"
+  },
+  "meta-info": {
+    "lock": "locked by current session",
+    "validation-state": "ok",
+    "last-modify-time": {
+      "posix": 1482234163988,
+      "iso-8601": "2016-12-20T13:42+0200"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1482234126842,
+      "iso-8601": "2016-12-20T13:42+0200"
+    },
+    "creator": "aa"
+  },
+  "tags": [],
+  "read-only": false,
+  "comments": "",
+  "color": "black",
+  "icon": "VPNCommunities/Meshed",
+  "use-shared-secret": false,
+  "encryption-method": "ikev2 only",
+  "encryption-suite": "custom",
+  "ike-phase-1": {
+    "encryption-algorithm": "aes-128",
+    "diffie-hellman-group": "group 19",
+    "data-integrity": "sha1"
+  },
+  "ike-phase-2": {
+    "encryption-algorithm": "aes-gcm-128",
+    "data-integrity": "aes-xcbc"
+  },
+  "gateways": []
+}

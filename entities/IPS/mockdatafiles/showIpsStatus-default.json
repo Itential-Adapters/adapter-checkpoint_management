@@ -1,0 +1,17 @@
+{
+  "last-updated": {
+    "posix": 1444285828000,
+    "iso-8601": "2015-10-08T09:30+0300"
+  },
+  "installed-version": "635155796",
+  "installed-version-creation-time": {
+    "posix": 1440928800000,
+    "iso-8601": "2015-08-30T13:00+0300"
+  },
+  "update-available": true,
+  "latest-version": "635156726",
+  "latest-version-creation-time": {
+    "posix": 1444276800000,
+    "iso-8601": "2015-10-08T07:00+0300"
+  }
+}

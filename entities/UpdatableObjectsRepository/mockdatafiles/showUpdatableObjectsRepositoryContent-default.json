@@ -1,0 +1,17 @@
+{
+  "from": 1,
+  "to": 1,
+  "total": 123,
+  "objects": [
+    {
+      "name-in-updatable-objects-repository": "Amazon",
+      "uid-in-updatable-objects-repository": "9f838ccf-4376-11e7-948e-005056c0000c",
+      "additional-properties": {
+        "description": "Amazon Web Services (abbreviated AWS) is a collection of remote computing services (also called web services) that together make up a cloud computing platform, offered over the Internet by Amazon.com.",
+        "info-text": "Amazon Web Services IP address ranges info page",
+        "info-url": "http://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html",
+        "uri": "/Updatable Objects/Amazon Web Services"
+      }
+    }
+  ]
+}

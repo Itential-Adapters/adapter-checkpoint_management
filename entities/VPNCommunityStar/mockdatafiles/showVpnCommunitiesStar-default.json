@@ -1,0 +1,195 @@
+{
+  "from": 1,
+  "to": 2,
+  "total": 2,
+  "objects": [
+    {
+      "uid": "e66826a5-f659-4493-af90-7a6256e45416",
+      "name": "AdamStar",
+      "type": "vpn-community-star",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      },
+      "meta-info": {
+        "lock": "locked by other session",
+        "validation-state": "ok",
+        "last-modify-time": {
+          "posix": 1482228216345,
+          "iso-8601": "2016-12-20T12:03+0200"
+        },
+        "last-modifier": "aa",
+        "creation-time": {
+          "posix": 1482218708467,
+          "iso-8601": "2016-12-20T09:25+0200"
+        },
+        "creator": "aa"
+      },
+      "tags": [],
+      "read-only": false,
+      "comments": "",
+      "color": "black",
+      "icon": "VPNCommunities/Star",
+      "use-shared-secret": false,
+      "encryption-method": "prefer ikev2, support ikev1",
+      "encryption-suite": "vpn b",
+      "ike-phase-1": {
+        "encryption-algorithm": "aes-256",
+        "diffie-hellman-group": "group 2",
+        "data-integrity": "sha1"
+      },
+      "ike-phase-2": {
+        "encryption-algorithm": "aes-128",
+        "data-integrity": "sha1"
+      },
+      "center-gateways": [],
+      "satellite-gateways": [],
+      "mesh-center-gateways": false
+    },
+    {
+      "uid": "a8c25199-7893-45d7-800d-57a2c18a3c7c",
+      "name": "New_VPN_Community_Star_1",
+      "type": "vpn-community-star",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      },
+      "meta-info": {
+        "lock": "locked by current session",
+        "validation-state": "ok",
+        "last-modify-time": {
+          "posix": 1482231173231,
+          "iso-8601": "2016-12-20T12:52+0200"
+        },
+        "last-modifier": "aa",
+        "creation-time": {
+          "posix": 1482228564753,
+          "iso-8601": "2016-12-20T12:09+0200"
+        },
+        "creator": "aa"
+      },
+      "tags": [],
+      "read-only": false,
+      "comments": "",
+      "color": "black",
+      "icon": "VPNCommunities/Star",
+      "use-shared-secret": false,
+      "encryption-method": "ikev2 only",
+      "encryption-suite": "custom",
+      "ike-phase-1": {
+        "encryption-algorithm": "aes-128",
+        "diffie-hellman-group": "group 19",
+        "data-integrity": "sha1"
+      },
+      "ike-phase-2": {
+        "encryption-algorithm": "aes-gcm-128",
+        "data-integrity": "aes-xcbc"
+      },
+      "center-gateways": [
+        {
+          "uid": "049bbebf-46cf-454a-999c-45bf80a29075",
+          "name": "Second_Security_Gateway",
+          "type": "simple-gateway",
+          "domain": {
+            "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+            "name": "SMC User",
+            "domain-type": "domain"
+          },
+          "meta-info": {
+            "lock": "locked by current session",
+            "validation-state": "ok",
+            "last-modify-time": {
+              "posix": 1482228560514,
+              "iso-8601": "2016-12-20T12:09+0200"
+            },
+            "last-modifier": "aa",
+            "creation-time": {
+              "posix": 1482228169047,
+              "iso-8601": "2016-12-20T12:02+0200"
+            },
+            "creator": "aa"
+          },
+          "tags": [],
+          "read-only": false,
+          "comments": "",
+          "color": "black",
+          "icon": "NetworkObjects/CheckPoint/GWs/xGW_CP",
+          "groups": [],
+          "ipv4-address": "1.1.1.1",
+          "dynamic-ip": false,
+          "version": "R80",
+          "os-name": "Gaia",
+          "hardware": "Open server",
+          "sic-name": "",
+          "sic-state": "uninitialized",
+          "interfaces": [],
+          "firewall": true,
+          "firewall-settings": {
+            "auto-maximum-limit-for-concurrent-connections": true,
+            "maximum-limit-for-concurrent-connections": 25000,
+            "auto-calculate-connections-hash-table-size-and-memory-pool": true,
+            "connections-hash-size": 131072,
+            "memory-pool-size": 6,
+            "maximum-memory-pool-size": 30
+          },
+          "vpn": true,
+          "vpn-settings": {
+            "maximum-concurrent-ike-negotiations": 1000,
+            "maximum-concurrent-tunnels": 10000
+          },
+          "application-control": false,
+          "url-filtering": false,
+          "data-awareness": false,
+          "ips": false,
+          "anti-bot": false,
+          "anti-virus": false,
+          "threat-emulation": false,
+          "save-logs-locally": false,
+          "send-alerts-to-server": [
+            "hugo1-take-264"
+          ],
+          "send-logs-to-server": [
+            "hugo1-take-264"
+          ],
+          "send-logs-to-backup-server": [],
+          "logs-settings": {
+            "rotate-log-by-file-size": false,
+            "rotate-log-file-size-threshold": 1000,
+            "rotate-log-on-schedule": false,
+            "alert-when-free-disk-space-below-metrics": "mbytes",
+            "alert-when-free-disk-space-below": true,
+            "alert-when-free-disk-space-below-threshold": 20,
+            "alert-when-free-disk-space-below-type": "popup alert",
+            "delete-when-free-disk-space-below-metrics": "mbytes",
+            "delete-when-free-disk-space-below": true,
+            "delete-when-free-disk-space-below-threshold": 5000,
+            "before-delete-keep-logs-from-the-last-days": false,
+            "before-delete-keep-logs-from-the-last-days-threshold": 0,
+            "before-delete-run-script": false,
+            "before-delete-run-script-command": "",
+            "stop-logging-when-free-disk-space-below-metrics": "mbytes",
+            "stop-logging-when-free-disk-space-below": false,
+            "stop-logging-when-free-disk-space-below-threshold": 100,
+            "reject-connections-when-free-disk-space-below-threshold": false,
+            "reserve-for-packet-capture-metrics": "mbytes",
+            "reserve-for-packet-capture-threshold": 500,
+            "delete-index-files-when-index-size-above-metrics": "mbytes",
+            "delete-index-files-when-index-size-above": false,
+            "delete-index-files-when-index-size-above-threshold": 100000,
+            "delete-index-files-older-than-days": false,
+            "delete-index-files-older-than-days-threshold": 14,
+            "forward-logs-to-log-server": false,
+            "perform-log-rotate-before-log-forwarding": false,
+            "update-account-log-every": 3600,
+            "detect-new-citrix-ica-application-names": false,
+            "turn-on-qos-logging": true
+          }
+        }
+      ],
+      "satellite-gateways": [],
+      "mesh-center-gateways": false
+    }
+  ]
+}

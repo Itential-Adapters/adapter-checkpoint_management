@@ -1,0 +1,72 @@
+{
+  "object": {
+    "name": "Vulnerability Effect",
+    "uid": "cc35627d-e1ad-d04c-bbc4-87da80602869",
+    "values": [
+      {
+        "name": "Privilege Escalation",
+        "uid": "e23b95b3-4c4b-d046-8868-7c514f7c0856"
+      },
+      {
+        "name": "Variable Manipulation",
+        "uid": "74488737-f644-af44-976f-d553da34f8c6"
+      },
+      {
+        "name": "Cross-Site Scripting",
+        "uid": "5c2a9b1d-16c2-0d47-a807-2c0bc58eb200"
+      },
+      {
+        "name": "Boot Code Dump",
+        "uid": "b760d74f-11c8-2641-b35b-ecd4b3d1354e"
+      },
+      {
+        "name": "Information Disclosure",
+        "uid": "bae691cd-0d3e-824a-8ab5-d10b7cdeff42"
+      },
+      {
+        "name": "File Upload / Access / Execution",
+        "uid": "ca6a3a33-3b7d-df40-9105-478aaa459b9c"
+      },
+      {
+        "name": "Code Execution",
+        "uid": "a9e0c4f4-4557-f740-899e-bbec6f856098"
+      },
+      {
+        "name": "Memory Corruption",
+        "uid": "9b1526d3-14d2-0041-87bb-b2758d326f2f"
+      },
+      {
+        "name": "Directory Traversal",
+        "uid": "7a2af117-0e26-4548-8be4-348e25407101"
+      },
+      {
+        "name": "Authentication Bypass",
+        "uid": "d0e79192-9f67-fd4c-93ff-62d6bbee7f8b"
+      },
+      {
+        "name": "Denial of Service",
+        "uid": "4378886a-9163-f640-bfba-feae3b8ea235"
+      },
+      {
+        "name": "Command Execution",
+        "uid": "422221ba-4294-6b47-8b6b-7ecce8b6ed60"
+      },
+      {
+        "name": "Shell Upload",
+        "uid": "7147fd4f-73a4-6c48-b543-0c399b9b9c9d"
+      },
+      {
+        "name": "Stack Corruption",
+        "uid": "8e221b61-439b-724b-9536-2c6b7cb3cdeb"
+      },
+      {
+        "name": "File Deletion and Overwriting",
+        "uid": "23d10a6b-ae0e-484d-a03f-24408ceb33b1"
+      },
+      {
+        "name": "Cross-Site Request Forgery",
+        "uid": "c38c3bed-aef9-0240-9900-a0173608d883"
+      }
+    ]
+  }
+}

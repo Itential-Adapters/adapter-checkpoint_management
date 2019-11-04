@@ -1,0 +1,56 @@
+{
+  "uid": "38b4ed6e-711c-49fa-b9f4-638290d621be",
+  "folder": {
+    "uid": "3a1d42e8-b138-4f91-bf9e-4c79247d2ded",
+    "name": "/Global Objects"
+  },
+  "domain": {
+    "domain-type": "local domain",
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User"
+  },
+  "meta-info": {
+    "lock": "unlocked",
+    "validation-state": "ok",
+    "read-only": false,
+    "last-modify-time": {
+      "posix": 1430896142009,
+      "iso-8601": "2015-05-06T10:09+0300"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1430896142009,
+      "iso-8601": "2015-05-06T10:09+0300"
+    },
+    "creator": "aa"
+  },
+  "tags": [],
+  "name": "New Standard Package 1",
+  "comments": "My Comments",
+  "color": "green",
+  "icon": "Blades/Access",
+  "access": true,
+  "access-layers": [
+    {
+      "folder": {
+        "uid": "3a1d42e8-b138-4f91-bf9e-4c79247d2ded",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "layer",
+      "name": "New Standard Package 1 Network",
+      "uid": "0029eebd-27a3-4a9f-a9e4-20e083226555"
+    }
+  ],
+  "vpn-traditional-mode": false,
+  "nat-policy": true,
+  "qos": false,
+  "qos-policy-type": "recommended",
+  "desktop-security": false,
+  "threat-prevention": false,
+  "installation-targets": "all"
+}

@@ -1,0 +1,77 @@
+{
+  "from": 1,
+  "to": 5,
+  "total": 5,
+  "objects": [
+    {
+      "folder": {
+        "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+        "name": "Global Objects"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "security-zone",
+      "name": "DMZZone",
+      "uid": "8c4041ea-ff14-4e4b-a9d9-4183d18c790a"
+    },
+    {
+      "folder": {
+        "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+        "name": "Global Objects"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "security-zone",
+      "name": "ExternalZone",
+      "uid": "237a4cbc-7fb6-4d50-872a-4904468271c4"
+    },
+    {
+      "folder": {
+        "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+        "name": "Global Objects"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "security-zone",
+      "name": "InternalZone",
+      "uid": "e8131db2-8388-42a5-924a-82de32db20f7"
+    },
+    {
+      "folder": {
+        "uid": "a25a7783-9adb-4a65-9850-b97ee7860530",
+        "name": "/Global Objects"
+      },
+      "domain": {
+        "domain-type": "local domain",
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User"
+      },
+      "type": "security-zone",
+      "name": "SZone1",
+      "uid": "cecd7d2e-c5bb-40d2-bd34-7afe8c37a062"
+    },
+    {
+      "folder": {
+        "uid": "a3a104fc-3987-4d22-9bf1-3fdbec0af39b",
+        "name": "Global Objects"
+      },
+      "domain": {
+        "domain-type": "data domain",
+        "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+        "name": "Check Point Data"
+      },
+      "type": "security-zone",
+      "name": "WirelessZone",
+      "uid": "57de3848-3675-48ed-b045-41378f4babb3"
+    }
+  ]
+}

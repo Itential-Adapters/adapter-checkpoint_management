@@ -1,0 +1,32 @@
+{
+  "uid": "81d9cfda-c7c9-4a72-9a35-10cacc2dc0a3",
+  "name": "New Multicast Address Range",
+  "type": "multicast-address-range",
+  "domain": {
+    "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "name": "SMC User",
+    "domain-type": "domain"
+  },
+  "meta-info": {
+    "lock": "locked by current session",
+    "validation-state": "ok",
+    "last-modify-time": {
+      "posix": 1483966472100,
+      "iso-8601": "2017-01-09T14:54+0200"
+    },
+    "last-modifier": "aa",
+    "creation-time": {
+      "posix": 1483966470781,
+      "iso-8601": "2017-01-09T14:54+0200"
+    },
+    "creator": "aa"
+  },
+  "tags": [],
+  "read-only": false,
+  "comments": "",
+  "color": "black",
+  "icon": "Objects/ip",
+  "groups": [],
+  "ipv4-address-first": "224.0.0.7",
+  "ipv4-address-last": "224.0.0.10"
+}

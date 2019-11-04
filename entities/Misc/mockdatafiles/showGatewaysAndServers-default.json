@@ -1,0 +1,111 @@
+{
+  "from": 1,
+  "to": 2,
+  "total": 2,
+  "objects": [
+    {
+      "uid": "302bcc2c-b3f1-405b-93dc-a5884288e499",
+      "name": "gw_192.0.2.14",
+      "type": "simple-gateway",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      },
+      "meta-info": {
+        "lock": "unlocked",
+        "validation-state": "ok",
+        "last-modify-time": {
+          "posix": 1479302713354,
+          "iso-8601": "2016-11-16T15:25+0200"
+        },
+        "last-modifier": "aa",
+        "creation-time": {
+          "posix": 1479292558134,
+          "iso-8601": "2016-11-16T12:35+0200"
+        },
+        "creator": "aa"
+      },
+      "tags": [],
+      "read-only": true,
+      "comments": "",
+      "color": "black",
+      "icon": "NetworkObjects/CheckPoint/GWs/xGW_CP",
+      "groups": [],
+      "ipv4-address": "192.0.2.14",
+      "operating-system": "Gaia",
+      "hardware": "Open server",
+      "version": "R80",
+      "sic-status": "uninitialized",
+      "policy": {},
+      "network-security-blades": {
+        "firewall": true
+      },
+      "management-blades": {},
+      "vpn-encryption-domain": "addresses_behind_gw"
+    },
+    {
+      "uid": "844d7c07-66ff-f34b-8a53-71eae36dae9a",
+      "name": "mgmt_192.0.2.201",
+      "type": "CpmiHostCkp",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      },
+      "meta-info": {
+        "lock": "unlocked",
+        "validation-state": "ok",
+        "last-modify-time": {
+          "posix": 1479284861834,
+          "iso-8601": "2016-11-16T10:27+0200"
+        },
+        "last-modifier": "System",
+        "creation-time": {
+          "posix": 1479284857837,
+          "iso-8601": "2016-11-16T10:27+0200"
+        },
+        "creator": "System"
+      },
+      "tags": [],
+      "read-only": true,
+      "comments": "",
+      "color": "black",
+      "icon": "NetworkObjects/CheckPoint/Hosts/xHost_CP",
+      "groups": [],
+      "ipv4-address": "192.0.2.201",
+      "operating-system": "Gaia",
+      "hardware": "Open server",
+      "version": "R80",
+      "sic-status": "communicating",
+      "interfaces": [
+        {
+          "interface-name": "eth0",
+          "ipv4-address": "192.0.2.201",
+          "ipv4-network-mask": "255.255.255.0",
+          "ipv4-mask-length": 24,
+          "topology": {
+            "security-zone": {
+              "uid": "237a4cbc-7fb6-4d50-872a-4904468271c4",
+              "name": "ExternalZone",
+              "type": "security-zone",
+              "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+              }
+            },
+            "leads-to-internet": true
+          },
+          "dynamic-ip": false
+        }
+      ],
+      "policy": {},
+      "network-security-blades": {},
+      "management-blades": {
+        "logging-and-status": true,
+        "network-policy-management": true
+      }
+    }
+  ]
+}

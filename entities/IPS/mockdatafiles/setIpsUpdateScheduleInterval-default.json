@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "recurrence": {
+    "pattern": "Interval",
+    "minutes": 45
+  }
+}

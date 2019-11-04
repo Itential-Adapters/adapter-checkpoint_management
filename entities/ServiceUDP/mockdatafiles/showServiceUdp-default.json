@@ -1,0 +1,55 @@
+{
+  "uid": "97aeb3eb-9aea-11d5-bd16-0090272ccb30",
+  "name": "bootp",
+  "type": "service-udp",
+  "domain": {
+    "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+    "name": "Check Point Data",
+    "domain-type": "data domain"
+  },
+  "meta-info": {
+    "lock": "unlocked",
+    "validation-state": "ok",
+    "last-modify-time": {
+      "posix": 1479284426972,
+      "iso-8601": "2016-11-16T10:20+0200"
+    },
+    "last-modifier": "System",
+    "creation-time": {
+      "posix": 1479284426972,
+      "iso-8601": "2016-11-16T10:20+0200"
+    },
+    "creator": "System"
+  },
+  "tags": [],
+  "read-only": false,
+  "comments": "Bootstrap Protocol Server, users automatically configured ",
+  "color": "black",
+  "icon": "Services/UDPService",
+  "groups": [
+    {
+      "uid": "0f27e52f-8540-4bd0-9cc8-cba000d9979d",
+      "name": "Allow_Trusted_IP_Action",
+      "type": "",
+      "domain": {
+        "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+        "name": "SMC User",
+        "domain-type": "domain"
+      }
+    }
+  ],
+  "keep-connections-open-after-policy-installation": false,
+  "session-timeout": 40,
+  "use-default-session-timeout": true,
+  "match-for-any": true,
+  "sync-connections-on-cluster": true,
+  "aggressive-aging": {
+    "enable": true,
+    "timeout": 15,
+    "use-default-timeout": true,
+    "default-timeout": 0
+  },
+  "port": "67",
+  "match-by-protocol-signature": false,
+  "accept-replies": true
+}

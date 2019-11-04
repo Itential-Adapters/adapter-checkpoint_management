@@ -1,0 +1,124 @@
+{
+  "actions": [
+    {
+      "name": "login",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/login{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/login-default.json"
+        }
+      ]
+    },
+    {
+      "name": "publish",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/publish{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/publish-default.json"
+        }
+      ]
+    },
+    {
+      "name": "discard",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/discard{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/discard-default.json"
+        }
+      ]
+    },
+    {
+      "name": "logout",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/logout{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/logout-default.json"
+        }
+      ]
+    },
+    {
+      "name": "disconnect",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/disconnect{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/disconnect-default.json"
+        }
+      ]
+    },
+    {
+      "name": "keepalive",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/keepalive{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": "mockdatafiles/keepalive-default.json"
+        }
+      ]
+    }
+  ]
+}
