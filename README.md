@@ -63,7 +63,7 @@ winston
 The following provides a local copy of the repository along with adapter dependencies.
 
 ```json
-git clone git@gitlab.com:\@itentialopensource/adapters/adapter-checkpoint_Management
+git clone git@gitlab.com:\@itentialopensource/adapters/adapter-checkpoint_management
 npm install
 ```
 
@@ -302,13 +302,13 @@ if the @itentialopensource directory does not exist, create it:
 
 ```json
 cd \@itentialopensource
-git clone git@gitlab.com:\@itentialopensource/adapters/adapter-checkpoint_Management
+git clone git@gitlab.com:\@itentialopensource/adapters/adapter-checkpoint_management
 ```
 
 1. Install the dependencies for the adapter.
 
 ```json
-cd adapter-checkpoint_Management
+cd adapter-checkpoint_management
 npm install
 ```
 

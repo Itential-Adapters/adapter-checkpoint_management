@@ -1,5 +1,5 @@
 {
-  "id": "Adapter-checkpoint_Management",
+  "id": "Adapter-checkpoint_management",
   "properties": {
     "protocol": "https",
     "host": "localhost",

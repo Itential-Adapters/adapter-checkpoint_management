@@ -41,7 +41,7 @@ global.pronghornProps = {
   },
   adapterProps: {
     adapters: [{
-      id: 'Test-checkpoint_Management',
+      id: 'Test-checkpoint_management',
       type: 'CheckpointManagement',
       properties: {
         host,
@@ -573,7 +573,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -629,7 +629,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -657,7 +657,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -683,7 +683,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -709,7 +709,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -770,7 +770,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -799,7 +799,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -830,7 +830,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -856,7 +856,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -925,7 +925,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -955,7 +955,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -983,7 +983,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1013,7 +1013,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1043,7 +1043,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1071,7 +1071,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1104,7 +1104,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1132,7 +1132,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1162,7 +1162,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1192,7 +1192,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1220,7 +1220,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1253,7 +1253,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1281,7 +1281,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1311,7 +1311,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1383,7 +1383,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1415,7 +1415,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1443,7 +1443,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1473,7 +1473,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1503,7 +1503,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1531,7 +1531,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1564,7 +1564,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1592,7 +1592,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1622,7 +1622,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1835,7 +1835,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1863,7 +1863,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1893,7 +1893,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1921,7 +1921,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -1951,7 +1951,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2039,7 +2039,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2074,7 +2074,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2102,7 +2102,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2132,7 +2132,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2162,7 +2162,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2190,7 +2190,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2219,7 +2219,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2247,7 +2247,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2329,7 +2329,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2357,7 +2357,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2398,7 +2398,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2426,7 +2426,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2456,7 +2456,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2484,7 +2484,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2512,7 +2512,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2543,7 +2543,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2571,7 +2571,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2601,7 +2601,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2633,7 +2633,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2661,7 +2661,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2691,7 +2691,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2719,7 +2719,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2747,7 +2747,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2947,7 +2947,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -2975,7 +2975,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -3006,7 +3006,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -3034,7 +3034,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -3064,7 +3064,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -3131,7 +3131,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5313,7 +5313,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5341,7 +5341,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5372,7 +5372,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5400,7 +5400,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5430,7 +5430,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5467,7 +5467,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5495,7 +5495,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5537,7 +5537,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5565,7 +5565,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5595,7 +5595,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5624,7 +5624,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5652,7 +5652,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5683,7 +5683,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5713,7 +5713,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5741,7 +5741,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5772,7 +5772,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5800,7 +5800,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5832,7 +5832,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5860,7 +5860,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -5890,7 +5890,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6333,7 +6333,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6367,7 +6367,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6396,7 +6396,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6463,7 +6463,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6492,7 +6492,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6522,7 +6522,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6551,7 +6551,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6619,7 +6619,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6691,7 +6691,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6721,7 +6721,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6757,7 +6757,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6786,7 +6786,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6819,7 +6819,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6848,7 +6848,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6915,7 +6915,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6944,7 +6944,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -6974,7 +6974,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7003,7 +7003,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7085,7 +7085,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7300,7 +7300,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7515,7 +7515,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7595,7 +7595,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7715,7 +7715,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7872,7 +7872,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7900,7 +7900,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7930,7 +7930,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7958,7 +7958,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -7988,7 +7988,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8045,7 +8045,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8081,7 +8081,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8109,7 +8109,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8139,7 +8139,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8180,7 +8180,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8208,7 +8208,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8252,7 +8252,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8280,7 +8280,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8310,7 +8310,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8355,7 +8355,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8383,7 +8383,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8521,7 +8521,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8549,7 +8549,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8578,7 +8578,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8606,7 +8606,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8875,7 +8875,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8903,7 +8903,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -8980,7 +8980,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9070,7 +9070,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9100,7 +9100,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9133,7 +9133,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9161,7 +9161,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9190,7 +9190,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9218,7 +9218,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9248,7 +9248,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9277,7 +9277,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9305,7 +9305,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9333,7 +9333,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9429,7 +9429,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9458,7 +9458,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9487,7 +9487,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9518,7 +9518,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9547,7 +9547,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9577,7 +9577,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9605,7 +9605,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9638,7 +9638,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9670,7 +9670,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9752,7 +9752,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9846,7 +9846,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9874,7 +9874,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9904,7 +9904,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -9934,7 +9934,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -10027,7 +10027,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -10055,7 +10055,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -10085,7 +10085,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -10113,7 +10113,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -10143,7 +10143,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -10171,7 +10171,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -10199,7 +10199,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }
@@ -10225,7 +10225,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
             try {
               if (stub) {
                 const displayE = 'Error 400 received on request';
-                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_Management-connectorRest-handleEndResponse', displayE);
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
               } else {
                 runCommonAsserts(data, error);
               }

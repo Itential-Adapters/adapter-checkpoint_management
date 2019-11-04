@@ -1,5 +1,5 @@
 {
-  "id": "@itentialopensource/adapter-checkpoint_Management",
+  "id": "@itentialopensource/adapter-checkpoint_management",
   "type": "Adapter",
   "export": "CheckpointManagement",
   "displayName": "Checkpoint_Management",
