@@ -608,7 +608,7 @@
       ],
       "allOf": [
         {
-          "if": { 
+          "if": {
             "properties": {
               "enabled": {
                 "enum": [

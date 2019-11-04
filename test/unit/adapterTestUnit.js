@@ -112,7 +112,7 @@ global.pronghornProps = {
           host: '',
           port: 0,
           database: '',
-          username: '',
+          username,
           password: ''
         }
       }

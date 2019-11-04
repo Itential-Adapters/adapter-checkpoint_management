@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "This adapter integrates with system described as: checkpointManagementApi.",
   "main": "adapter.js",
-  "wizardVersion": "2.40.0",
+  "wizardVersion": "2.41.0",
   "engineVersion": "1.44.0",
   "scripts": {
     "artifactize": "npm i && node utils/packModificationScript.js",
@@ -23,7 +23,9 @@
     "Integration",
     "App-Artifacts",
     "Adapter",
-    "checkpoint_Management",
+    "Security",
+    "Checkpoint",
+    "Checkpoint Management",
     "Pre-Release"
   ],
   "license": "Apache-2.0",
@@ -32,10 +34,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:itentialopensource/adapters/adapter-checkpoint_Management.git"
+    "url": "git@gitlab.com:itentialopensource/adapters/security/adapter-checkpoint_Management.git"
   },
   "author": "Itential",
-  "homepage": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_Management#readme",
+  "homepage": "https://gitlab.com/itentialopensource/adapters/security/adapter-checkpoint_Management#readme",
   "dependencies": {
     "@itentialopensource/adapter-utils": "^4.24.1",
     "ajv": "^6.10.0",
