@@ -1,5 +1,5 @@
 {
-  "$id": "adapter-checkpoint",
+  "$id": "adapter-checkpoint_Management",
   "type": "object",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
@@ -31,7 +31,9 @@
       "description": "api version this adapter integrates with",
       "default": "",
       "examples": [
-        "v1", "v2.6", "4.5.1"
+        "v1",
+        "v2.6",
+        "4.5.1"
       ]
     },
     "cache_location": {
@@ -39,8 +41,15 @@
       "description": "Where cache of information should be located redis or local memory",
       "default": "none",
       "enum": [
-        "redis", "local", "none"
+        "redis",
+        "local",
+        "none"
       ]
+    },
+    "save_metric": {
+      "type": "boolean",
+      "description": "When true the metrics collected by the adapter will be stored in mongo or on the filesystem",
+      "default": false
     },
     "stub": {
       "type": "boolean",
@@ -52,7 +61,8 @@
       "description": "the protocol to use to connect to server",
       "default": "http",
       "enum": [
-        "http", "https"
+        "http",
+        "https"
       ]
     },
     "authentication": {
@@ -72,9 +82,17 @@
     },
     "ssl": {
       "$ref": "#/definitions/ssl"
+    },
+    "mongo": {
+      "$ref": "#/definitions/mongo"
     }
   },
-  "required": ["host", "port", "authentication", "healthcheck"],
+  "required": [
+    "host",
+    "port",
+    "authentication",
+    "healthcheck"
+  ],
   "definitions": {
     "authentication": {
       "type": "object",
@@ -84,7 +102,10 @@
           "description": "The authentication method for requests",
           "default": "basic user_password",
           "enum": [
-            "basic user_password", "static_token", "request_token", "no_authentication"
+            "basic user_password",
+            "static_token",
+            "request_token",
+            "no_authentication"
           ]
         },
         "username": {
@@ -100,7 +121,9 @@
           "description": "The password used for requests. If it was retrieved through the encrypt password call, use the exact return including the {code} or {crypt}",
           "default": "",
           "examples": [
-            "password", "{code}password", "{crypt}password"
+            "password",
+            "{code}password",
+            "{crypt}password"
           ]
         },
         "token": {
@@ -162,15 +185,20 @@
           "description": "Whether tokens should be stored in redis or local memory",
           "default": "local",
           "enum": [
-            "redis", "local"
+            "redis",
+            "local"
           ]
         },
         "auth_field": {
           "type": "string",
-          "description": "The header field in which to pass the token",
+          "description": "The field in which to pass the token",
           "default": "header.headers.X-AUTH-TOKEN",
           "examples": [
-            "header.headers.X-AUTH-TOKEN", "header.headers.Authorization", "header.auth"
+            "header.headers.X-AUTH-TOKEN",
+            "header.headers.Authorization",
+            "header.auth",
+            "body.token",
+            "url"
           ]
         },
         "auth_field_format": {
@@ -178,23 +206,73 @@
           "description": "The format used to pass the authentication -- variables {token}, {username}, {password} will be replaced with the proper values. {b64}...{/b64} will base64 encode everything between the start and end tag.",
           "default": "{token}",
           "examples": [
-            "{token}", "Token {token}", "{username}:{password}", "Basic {b64}{username}:{password}{/b64}"
+            "{token}",
+            "Token {token}",
+            "{username}:{password}",
+            "Basic {b64}{username}:{password}{/b64}",
+            "token={token}"
           ]
         }
       },
-      "required": ["auth_method"],
+      "required": [
+        "auth_method"
+      ],
       "allOf": [
         {
-          "if" : { "properties" : { "auth_method": { "enum": ["basic user_password"] } } },
-          "then" : { "required" : ["username", "password", "auth_field", "auth_field_format"] }
+          "if": {
+            "properties": {
+              "auth_method": {
+                "enum": [
+                  "basic user_password"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "username",
+              "password",
+              "auth_field",
+              "auth_field_format"
+            ]
+          }
         },
         {
-          "if" : { "properties" : { "auth_method": { "enum": ["request_token"] } } },
-          "then" : { "required" : ["username", "password", "auth_field", "auth_field_format"] }
+          "if": {
+            "properties": {
+              "auth_method": {
+                "enum": [
+                  "request_token"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "username",
+              "password",
+              "auth_field",
+              "auth_field_format"
+            ]
+          }
         },
         {
-          "if" : { "properties" : { "auth_method": { "enum": ["static_token"] } } },
-          "then" : { "required" : ["token", "auth_field", "auth_field_format"] }
+          "if": {
+            "properties": {
+              "auth_method": {
+                "enum": [
+                  "static_token"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "token",
+              "auth_field",
+              "auth_field_format"
+            ]
+          }
         }
       ]
     },
@@ -206,7 +284,9 @@
           "description": "The type of healthcheck to run",
           "default": "intermittent",
           "enum": [
-            "none", "startup", "intermittent"
+            "none",
+            "startup",
+            "intermittent"
           ]
         },
         "frequency": {
@@ -233,11 +313,25 @@
           ]
         }
       },
-      "required": ["type"],
+      "required": [
+        "type"
+      ],
       "allOf": [
         {
-          "if" : { "properties" : { "type": { "enum": ["intermittent"] } } },
-          "then" : { "required" : ["frequency"] }
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "intermittent"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "frequency"
+            ]
+          }
         }
       ]
     },
@@ -261,7 +355,8 @@
           "description": "should the queue handle request synchronously or asynchronously",
           "default": "sync",
           "examples": [
-            "async", "sync"
+            "async",
+            "sync"
           ]
         },
         "max_in_queue": {
@@ -273,7 +368,7 @@
         },
         "concurrent_max": {
           "type": "integer",
-          "description": "defines the number of request that Pronghorn can send to Ansible Tower at one time",
+          "description": "defines the number of request that Pronghorn can send checkpoint_Management at one time",
           "default": 1,
           "minimum": 1,
           "maximum": 1000
@@ -287,23 +382,49 @@
         },
         "avg_runtime": {
           "type": "integer",
-          "description": "an approximate average of how long it takes Ansible Tower to handle each request",
+          "description": "an approximate average of how long it takes checkpoint_Management to handle each request",
           "default": 200,
           "minimum": 50,
           "maximum": 60000
         }
       },
-      "throttle_enabled": ["enabled"],
+      "required": [
+        "throttle_enabled"
+      ],
       "allOf": [
         {
-          "if" : { "properties" : { "throttle_enabled": { "enum": [true] } } },
-          "then" : { "required" : ["number_pronghorns", "sync_async", "max_in_queue", "concurrent_max", "expire_timeout", "avg_runtime"] }
+          "if": {
+            "properties": {
+              "throttle_enabled": {
+                "enum": [
+                  true
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "number_pronghorns",
+              "sync_async",
+              "max_in_queue",
+              "concurrent_max",
+              "expire_timeout",
+              "avg_runtime"
+            ]
+          }
         }
       ]
     },
     "request": {
       "type": "object",
       "properties": {
+        "number_redirects": {
+          "type": "integer",
+          "description": "how many redirects before it gives up on the request",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 20
+        },
         "number_retries": {
           "type": "integer",
           "description": "how many attempt to make before it gives up on the request",
@@ -330,11 +451,38 @@
           "description": "how long Pronghorn should wait before aborting the attempt",
           "default": 5000,
           "minimum": 1000,
-          "maximum": 300000
+          "maximum": 3600000
+        },
+        "global_request": {
+          "type": "object",
+          "description": "Global Request data that is overriden by the request object",
+          "properties": {
+            "payload": {
+              "type": "object",
+              "description": "payload fields that will be appended to the provided payload (excluding GET calls)"
+            },
+            "uriOptions": {
+              "type": "object",
+              "description": "options that will be appended to all GET calls"
+            },
+            "addlHeaders": {
+              "type": "object",
+              "description": "headers that will be appended to the headers for the call"
+            },
+            "authData": {
+              "type": "object",
+              "description": "authentication data that will be appended to the payload for authentication calls"
+            }
+          }
         },
         "healthcheck_on_timeout": {
           "type": "boolean",
           "description": "Should the system run a healthcheck on timeout",
+          "default": false
+        },
+        "return_raw": {
+          "type": "boolean",
+          "description": "Will include the raw response with the data that is returned",
           "default": false
         },
         "archiving": {
@@ -343,7 +491,12 @@
           "default": false
         }
       },
-      "required": ["number_retries", "limit_retry_error", "attempt_timeout", "healthcheck_on_timeout"]
+      "required": [
+        "number_retries",
+        "limit_retry_error",
+        "attempt_timeout",
+        "healthcheck_on_timeout"
+      ]
     },
     "proxy": {
       "type": "object",
@@ -373,15 +526,33 @@
           "description": "the protocol to use to connect to the proxy",
           "default": "http",
           "enum": [
-            "http", "https", "socks4", "socks5"
+            "http",
+            "https",
+            "socks4",
+            "socks5"
           ]
         }
       },
-      "required": ["enabled"],
+      "required": [
+        "enabled"
+      ],
       "allOf": [
         {
-          "if" : { "properties" : { "enabled": { "enum": [true] } } },
-          "then" : { "required" : ["host", "port"] }
+          "if": {
+            "properties": {
+              "enabled": {
+                "enum": [
+                  true
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "host",
+              "port"
+            ]
+          }
         }
       ]
     },
@@ -419,7 +590,8 @@
           "description": "What protocol to set on the ssl request",
           "default": "",
           "examples": [
-            "SSLv2_method", "SSLv3_method"
+            "SSLv2_method",
+            "SSLv3_method"
           ]
         },
         "ciphers": {
@@ -431,20 +603,101 @@
           ]
         }
       },
-      "required": ["enabled"],
+      "required": [
+        "enabled"
+      ],
       "allOf": [
         {
-          "if" : { "properties" : { "enabled": { "enum": [true] } } },
-          "then" : { "required" : ["accept_invalid_cert", "ciphers"] }
+          "if": { 
+            "properties": {
+              "enabled": {
+                "enum": [
+                  true
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "accept_invalid_cert",
+              "ciphers"
+            ]
+          }
         },
         {
-          "if" : { "allOf": [
-            { "properties" : { "enabled": { "enum": [true] } } },
-            { "properties" : { "accept_invalid_cert": { "enum": [ false ] } } }
-          ] },
-          "then" : { "required" : ["ca_file"] }
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "enabled": {
+                    "enum": [
+                      true
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "accept_invalid_cert": {
+                    "enum": [
+                      false
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "ca_file"
+            ]
+          }
         }
       ]
+    },
+    "mongo": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "description": "host where mongo database can be found",
+          "default": "",
+          "examples": [
+            "localhost"
+          ]
+        },
+        "port": {
+          "type": "integer",
+          "description": "port on which to connect to the mongo database",
+          "default": 443,
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "database": {
+          "type": "string",
+          "description": "The name of the database to store adapter information in",
+          "default": "",
+          "examples": [
+            "adapter-xyz"
+          ]
+        },
+        "username": {
+          "type": "string",
+          "description": "The user to connect to the database with",
+          "default": "",
+          "examples": [
+            "username"
+          ]
+        },
+        "password": {
+          "type": "string",
+          "description": "The password to connect to the database with",
+          "default": "",
+          "examples": [
+            "password"
+          ]
+        }
+      }
     }
   }
 }

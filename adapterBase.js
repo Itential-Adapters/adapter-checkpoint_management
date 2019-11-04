@@ -4,6 +4,8 @@
 /* global log */
 /* eslint class-methods-use-this:warn */
 /* eslint import/no-dynamic-require: warn */
+/* eslint no-loop-func: warn */
+/* eslint no-cond-assign: warn */
 
 /* Required libraries.  */
 const fs = require('fs-extra');
@@ -14,9 +16,8 @@ const EventEmitterCl = require('events').EventEmitter;
 const AjvCl = require('ajv');
 
 /* Fetch in the other needed components for the this Adaptor */
-const PropUtilCl = require(path.join(__dirname, '/node_modules/@itential/adapter-utils/lib/propertyUtil.js'));
-const RequestHandlerCl = require(path.join(__dirname, '/node_modules/@itential/adapter-utils/lib/requestHandler.js'));
-
+const PropUtilCl = require('@itentialopensource/adapter-utils').PropertyUtility;
+const RequestHandlerCl = require('@itentialopensource/adapter-utils').RequestHandler;
 
 /* GENERAL ADAPTER FUNCTIONS THESE SHOULD NOT BE DIRECTLY MODIFIED */
 /* IF YOU NEED MODIFICATIONS, REDEFINE THEM IN adapter.js!!! */
@@ -29,25 +30,27 @@ class AdapterBase extends EventEmitterCl {
     // Instantiate the EventEmitter super class
     super();
 
-    // Capture the adapter id
-    this.id = prongid;
-    this.propUtilInst = new PropUtilCl(prongid, __dirname);
-
-    this.alive = false;
-    this.healthy = false;
-    this.caching = false;
-    this.repeatCacheCount = 0;
-    this.allowFailover = 'AD.300';
-    this.noFailover = 'AD.500';
-
-    // set up the properties I care about
-    this.refreshProperties(properties);
-
-    // Instantiate the other components for this Adapter
     try {
+      // Capture the adapter id
+      this.id = prongid;
+      this.propUtilInst = new PropUtilCl(prongid, __dirname);
+
+      this.alive = false;
+      this.healthy = false;
+      this.caching = false;
+      this.repeatCacheCount = 0;
+      this.allowFailover = 'AD.300';
+      this.noFailover = 'AD.500';
+
+      // set up the properties I care about
+      this.refreshProperties(properties);
+
+      // Instantiate the other components for this Adapter
       this.requestHandlerInst = new RequestHandlerCl(this.id, this.allProps, __dirname);
     } catch (e) {
-      log.error(e);
+      // handle any exception
+      const origin = `${this.id}-adapterBase-constructor`;
+      log.error(`${origin}: Adapter may not have started properly. ${e}`);
     }
   }
 
@@ -88,49 +91,58 @@ class AdapterBase extends EventEmitterCl {
    * @param {boolean} init - are we initializing -- is so no need to refresh throtte engine
    */
   refreshProperties(properties) {
-    // Read the properties schema from the file system
-    const propertiesSchema = JSON.parse(fs.readFileSync(path.join(__dirname, 'propertiesSchema.json'), 'utf-8'));
+    const meth = 'adapterBase-refreshProperties';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
 
-    // add any defaults to the data
-    const defProps = this.propUtilInst.setDefaults(propertiesSchema);
-    this.allProps = this.propUtilInst.mergeProperties(properties, defProps);
+    try {
+      // Read the properties schema from the file system
+      const propertiesSchema = JSON.parse(fs.readFileSync(path.join(__dirname, 'propertiesSchema.json'), 'utf-8'));
 
-    // validate the entity against the schema
-    const ajvInst = new AjvCl();
-    const validate = ajvInst.compile(propertiesSchema);
-    const result = validate(this.allProps);
+      // add any defaults to the data
+      const defProps = this.propUtilInst.setDefaults(propertiesSchema);
+      this.allProps = this.propUtilInst.mergeProperties(properties, defProps);
 
-    // if invalid properties throw an error
-    if (!result) {
-      log.error(`Error on validation of properties: ${JSON.stringify(validate.errors)}`);
-      throw new Error(validate.errors[0].message);
-    }
+      // validate the entity against the schema
+      const ajvInst = new AjvCl();
+      const validate = ajvInst.compile(propertiesSchema);
+      const result = validate(this.allProps);
 
-    // properties that this code cares about
-    this.healthcheckType = this.allProps.healthcheck.type;
-    this.healthcheckInterval = this.allProps.healthcheck.frequency;
+      // if invalid properties throw an error
+      if (!result) {
+        const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Properties', [JSON.stringify(validate.errors)], null, null, null);
+        log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+        throw new Error(JSON.stringify(errorObj));
+      }
 
-    // set the failover codes from properties
-    if (this.allProps.request.failover_codes) {
-      if (Array.isArray(this.allProps.request.failover_codes)) {
-        this.failoverCodes = this.allProps.request.failover_codes;
+      // properties that this code cares about
+      this.healthcheckType = this.allProps.healthcheck.type;
+      this.healthcheckInterval = this.allProps.healthcheck.frequency;
+
+      // set the failover codes from properties
+      if (this.allProps.request.failover_codes) {
+        if (Array.isArray(this.allProps.request.failover_codes)) {
+          this.failoverCodes = this.allProps.request.failover_codes;
+        } else {
+          this.failoverCodes = [this.allProps.request.failover_codes];
+        }
       } else {
-        this.failoverCodes = [this.allProps.request.failover_codes];
+        this.failoverCodes = [];
       }
-    } else {
-      this.failoverCodes = [];
-    }
 
-    // set the caching flag from properties
-    if (this.allProps.cache_location) {
-      if (this.allProps.cache_location === 'redis' || this.allProps.cache_location === 'local') {
-        this.caching = true;
+      // set the caching flag from properties
+      if (this.allProps.cache_location) {
+        if (this.allProps.cache_location === 'redis' || this.allProps.cache_location === 'local') {
+          this.caching = true;
+        }
       }
-    }
 
-    // if this is truly a refresh and we have a request handler, refresh it
-    if (this.requestHandlerInst) {
-      this.requestHandlerInst.refreshProperties(properties);
+      // if this is truly a refresh and we have a request handler, refresh it
+      if (this.requestHandlerInst) {
+        this.requestHandlerInst.refreshProperties(properties);
+      }
+    } catch (e) {
+      log.error(`${origin}: Properties may not have been set properly. ${e}`);
     }
   }
 
@@ -140,6 +152,9 @@ class AdapterBase extends EventEmitterCl {
    * @function connect
    */
   connect() {
+    const origin = `${this.id}-adapterBase-connect`;
+    log.trace(origin);
+
     // initially set as off
     this.emit('OFFLINE', { id: this.id });
     this.alive = true;
@@ -156,8 +171,8 @@ class AdapterBase extends EventEmitterCl {
     // (intermittent runs on startup and after that)
     if (this.healthcheckType === 'startup' || this.healthcheckType === 'intermittent') {
       // run an initial healthcheck
-      this.healthCheck((status) => {
-        log.debug(status);
+      this.healthCheck(null, (status) => {
+        log.spam(`${origin}: ${status}`);
       });
     }
 
@@ -166,8 +181,8 @@ class AdapterBase extends EventEmitterCl {
       // run the healthcheck in an interval
       setInterval(() => {
         // try to see if mongo is available
-        this.healthCheck((status) => {
-          log.debug(status);
+        this.healthCheck(null, (status) => {
+          log.spam(`${origin}: ${status}`);
         });
       }, this.healthcheckInterval);
     }
@@ -178,19 +193,23 @@ class AdapterBase extends EventEmitterCl {
    *
    * @function healthCheck
    */
-  healthCheck(callback) {
+  healthCheck(reqObj, callback) {
+    const origin = `${this.id}-adapterBase-healthCheck`;
+    log.trace(origin);
+
     // call to the healthcheck in connector
-    return this.requestHandlerInst.identifyHealthcheck(null, (res, error) => {
+    return this.requestHandlerInst.identifyHealthcheck(reqObj, (res, error) => {
       // unhealthy
       if (error) {
         // if we were healthy, toggle health
         if (this.healthy) {
           this.emit('OFFLINE', { id: this.id });
+          this.emit('DEGRADED', { id: this.id });
           this.healthy = false;
-          log.error(`${this.id} HEALTH CHECK - Error ${error}`);
+          log.error(`${origin}: HEALTH CHECK - Error ${error}`);
         } else {
           // still log but set the level to trace
-          log.trace(`${this.id} HEALTH CHECK - Still Errors ${error}`);
+          log.trace(`${origin}: HEALTH CHECK - Still Errors ${error}`);
         }
 
         return callback(false);
@@ -198,16 +217,65 @@ class AdapterBase extends EventEmitterCl {
 
       // if we were unhealthy, toggle health
       if (!this.healthy) {
+        this.emit('FIXED', { id: this.id });
         this.emit('ONLINE', { id: this.id });
         this.healthy = true;
-        log.info(`${this.id} HEALTH CHECK SUCCESSFUL`);
+        log.info(`${origin}: HEALTH CHECK SUCCESSFUL`);
       } else {
         // still log but set the level to trace
-        log.trace(`${this.id} HEALTH CHECK STILL SUCCESSFUL`);
+        log.trace(`${origin}: HEALTH CHECK STILL SUCCESSFUL`);
       }
 
       return callback(true);
     });
+  }
+
+  /**
+   * getAllFunctions is used to get all of the exposed function in the adapter
+   *
+   * @function getAllFunctions
+   */
+  getAllFunctions() {
+    let myfunctions = [];
+    let obj = this;
+
+    // find the functions in this class
+    do {
+      const l = Object.getOwnPropertyNames(obj)
+        .concat(Object.getOwnPropertySymbols(obj).map(s => s.toString()))
+        .sort()
+        .filter((p, i, arr) => typeof obj[p] === 'function' && p !== 'constructor' && (i === 0 || p !== arr[i - 1]) && myfunctions.indexOf(p) === -1);
+      myfunctions = myfunctions.concat(l);
+    }
+    while (
+      (obj = Object.getPrototypeOf(obj)) && Object.getPrototypeOf(obj)
+    );
+
+    return myfunctions;
+  }
+
+  /**
+   * getWorkflowFunctions is used to get all of the workflow function in the adapter
+   *
+   * @function getAllFunctions
+   */
+  getWorkflowFunctions() {
+    const myfunctions = this.getAllFunctions();
+    const wffunctions = [];
+
+    // remove the functions that should not be in a Workflow
+    for (let m = 0; m < myfunctions.length; m += 1) {
+      if (myfunctions[m] === 'addEntityCache') {
+        // got to the second tier (adapterBase)
+        break;
+      }
+      if (myfunctions[m] !== 'hasEntity' && myfunctions[m] !== 'verifyCapability'
+          && myfunctions[m] !== 'updateEntityCache') {
+        wffunctions.push(myfunctions[m]);
+      }
+    }
+
+    return wffunctions;
   }
 
   /**
@@ -216,7 +284,7 @@ class AdapterBase extends EventEmitterCl {
    * @function checkActionFiles
    */
   checkActionFiles() {
-    const origin = `${this.myid}-requestHandler-checkActionFiles`;
+    const origin = `${this.id}-adapterBase-checkActionFiles`;
     log.trace(origin);
 
     // validate the action files for the adapter
@@ -234,6 +302,9 @@ class AdapterBase extends EventEmitterCl {
    * @param {Callback} callback - a callback function to return the result (Queue) or the error
    */
   getQueue(callback) {
+    const origin = `${this.id}-adapterBase-getQueue`;
+    log.trace(origin);
+
     return this.requestHandlerInst.getQueue(callback);
   }
 
@@ -249,9 +320,12 @@ class AdapterBase extends EventEmitterCl {
    *                              Encrypted String or the Error
    */
   encryptProperty(property, technique, callback) {
+    const origin = `${this.id}-adapterBase-encryptProperty`;
+    log.trace(origin);
+
     // Make the call -
     // encryptProperty(property, technique, callback)
-    this.requestHandlerInst.encryptProperty(property, technique, callback);
+    return this.requestHandlerInst.encryptProperty(property, technique, callback);
   }
 
   /**
@@ -266,6 +340,10 @@ class AdapterBase extends EventEmitterCl {
    *                              desired capability or an error
    */
   addEntityCache(entityType, entities, key, callback) {
+    const meth = 'adapterBase-addEntityCache';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
     // list containing the items to add to the cache
     const entityIds = [];
 
@@ -278,8 +356,13 @@ class AdapterBase extends EventEmitterCl {
 
     // add the entities to the cache
     return this.requestHandlerInst.addEntityCache(entityType, entityIds, (loaded, error) => {
+      if (error) {
+        return callback(null, error);
+      }
       if (!loaded) {
-        return callback(null, `Could not load ${entityType} into cache - ${error}`);
+        const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Entity Cache Not Loading', [entityType], null, null, null);
+        log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+        return callback(null, errorObj);
       }
 
       return callback(loaded);
@@ -296,7 +379,10 @@ class AdapterBase extends EventEmitterCl {
    * @param {Callback} callback - An array of whether the adapter can has the
    *                              desired capability or an error
    */
-  entityInList(entityId, data, callback) {
+  entityInList(entityId, data) {
+    const origin = `${this.id}-adapterBase-entityInList`;
+    log.trace(origin);
+
     // need to check on the entities that were passed in
     if (Array.isArray(entityId)) {
       const resEntity = [];
@@ -309,11 +395,11 @@ class AdapterBase extends EventEmitterCl {
         }
       }
 
-      return callback(resEntity);
+      return resEntity;
     }
 
     // does the entity list include the specific entity
-    return callback([data.includes(entityId)]);
+    return [data.includes(entityId)];
   }
 
   /**
@@ -326,16 +412,23 @@ class AdapterBase extends EventEmitterCl {
    *                              desired capability or an error
    */
   capabilityResults(results, callback) {
+    const meth = 'adapterBase-getQueue';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
     let locResults = results;
 
     if (locResults && locResults[0] === 'needupdate') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Entity Cache Not Loading', ['unknown'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
       this.repeatCacheCount += 1;
-      return callback(null, 'Could not update entity cache');
+      return callback(null, errorObj);
     }
 
     // if an error occured, return the error
     if (locResults && locResults[0] === 'error') {
-      return callback(null, 'Error verifying entity - please check the logs');
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Error Verifying Entity Cache', null, null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
     }
 
     // go through the response and change to true/false
@@ -375,9 +468,15 @@ class AdapterBase extends EventEmitterCl {
    * @return {Array} - containing the entities and the actions available on each entity
    */
   getAllCapabilities() {
-    // Make the call -
-    // getAllCapabilities()
-    return this.requestHandlerInst.getAllCapabilities();
+    const origin = `${this.id}-adapterBase-getAllCapabilities`;
+    log.trace(origin);
+
+    // validate the capabilities for the adapter
+    try {
+      return this.requestHandlerInst.getAllCapabilities();
+    } catch (e) {
+      return [];
+    }
   }
 }
 

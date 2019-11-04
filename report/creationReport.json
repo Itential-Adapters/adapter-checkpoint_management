@@ -1,0 +1,1919 @@
+{
+  "errors": [],
+  "statistics": [
+    {
+      "owner": "errorJson",
+      "description": "Standard adapter errors available for use",
+      "value": 29
+    },
+    {
+      "owner": "packageJson",
+      "description": "Number of production dependencies",
+      "value": 6
+    },
+    {
+      "owner": "packageJson",
+      "description": "Number of development dependencies",
+      "value": 9
+    },
+    {
+      "owner": "packageJson",
+      "description": "Number of npm scripts",
+      "value": 9
+    },
+    {
+      "owner": "packageJson",
+      "description": "Runtime Library dependency",
+      "value": "^4.24.1"
+    },
+    {
+      "owner": "propertiesSchemaJson",
+      "description": "Adapter properties defined in the propertiesSchema file",
+      "value": 52
+    },
+    {
+      "owner": "adapterJS",
+      "description": "Lines of code generated in adapter.js",
+      "value": 25294
+    },
+    {
+      "owner": "adapterJS",
+      "description": "Number of Functions added to adapter.js",
+      "value": 295
+    },
+    {
+      "owner": "pronghornJson",
+      "description": "Number of Methods added to pronghorn.json",
+      "value": 295
+    },
+    {
+      "owner": "readmeMd",
+      "description": "Number of lines in the README.md",
+      "value": 450
+    },
+    {
+      "owner": "unitTestJS",
+      "description": "Number of lines of code in unit tests",
+      "value": 9254
+    },
+    {
+      "owner": "unitTestJS",
+      "description": "Number of unit tests",
+      "value": 617
+    },
+    {
+      "owner": "integrationTestJS",
+      "description": "Number of lines of code in integration tests",
+      "value": 10247
+    },
+    {
+      "owner": "integrationTestJS",
+      "description": "Number of integration tests",
+      "value": 300
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for SessionManagement entity",
+      "value": 6
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Session entity",
+      "value": 9
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for LoginMessage entity",
+      "value": 2
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Host entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Network entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Wildcard entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Group entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for AddressRange entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for MulticastAddressRange entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for GroupWithExclusion entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for SimpleGateway entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for SecurityZone entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Time entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for TimeGroup entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for AccessRole entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for DynamicObject entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for TrustedClient entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Tags entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for DNSDomain entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for OPSECApplication entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for DataCenter entity",
+      "value": 3
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for DataCenterObject entity",
+      "value": 4
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for UpdatableObjectsRepository entity",
+      "value": 2
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for UpdatableObject entity",
+      "value": 4
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceTCP entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceUDP entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceICMP entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceICMP6 entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceSCTP entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceOther entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceGroup entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Application entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ApplicationCategory entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ApplicationGroup entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceDCERPC entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ServiceRPC entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for AccessRule entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for AccessSection entity",
+      "value": 4
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for AccessLayer entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for NATRule entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for NATSection entity",
+      "value": 4
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for VPNCommunityMeshed entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for VPNCommunityStar entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ThreatRule entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ThreatException entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ThreatExceptionGroup entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ThreatProtection entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ThreatProfile entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ThreatIndicator entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ThreatLayer entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for IPS entity",
+      "value": 4
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for IPSExtendedAttributes entity",
+      "value": 2
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for ThreatEmulation entity",
+      "value": 1
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Policy entity",
+      "value": 2
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for PolicyPackage entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Domain entity",
+      "value": 5
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for GlobalDomain entity",
+      "value": 2
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for MultiDomainServerMDS entity",
+      "value": 2
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Placeholder entity",
+      "value": 1
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for GlobalAssignment entity",
+      "value": 6
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Misc entity",
+      "value": 14
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for Administrator entity",
+      "value": 6
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for APISettings entity",
+      "value": 2
+    },
+    {
+      "owner": "actionJson",
+      "description": "Total number of actions",
+      "value": 295
+    },
+    {
+      "owner": "actionJson",
+      "description": "Total number of entities",
+      "value": 63
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for SessionManagement entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Session entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for LoginMessage entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Host entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Network entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Wildcard entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Group entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for AddressRange entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for MulticastAddressRange entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for GroupWithExclusion entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for SimpleGateway entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for SecurityZone entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Time entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for TimeGroup entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for AccessRole entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for DynamicObject entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for TrustedClient entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Tags entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for DNSDomain entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for OPSECApplication entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for DataCenter entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for DataCenterObject entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for UpdatableObjectsRepository entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for UpdatableObject entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceTCP entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceUDP entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceICMP entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceICMP6 entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceSCTP entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceOther entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceGroup entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Application entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ApplicationCategory entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ApplicationGroup entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceDCERPC entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ServiceRPC entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for AccessRule entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for AccessSection entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for AccessLayer entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for NATRule entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for NATSection entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for VPNCommunityMeshed entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for VPNCommunityStar entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ThreatRule entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ThreatException entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ThreatExceptionGroup entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ThreatProtection entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ThreatProfile entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ThreatIndicator entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ThreatLayer entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for IPS entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for IPSExtendedAttributes entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for ThreatEmulation entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Policy entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for PolicyPackage entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Domain entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for GlobalDomain entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for MultiDomainServerMDS entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Placeholder entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for GlobalAssignment entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Misc entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for Administrator entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for APISettings entity",
+      "value": 1
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Total number of schemas",
+      "value": 63
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for SessionManagement entity",
+      "value": 6
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Session entity",
+      "value": 2
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for LoginMessage entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Host entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Network entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Wildcard entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Group entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for AddressRange entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for MulticastAddressRange entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for GroupWithExclusion entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for SimpleGateway entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for SecurityZone entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Time entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for TimeGroup entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for AccessRole entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for DynamicObject entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for TrustedClient entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Tags entity",
+      "value": 4
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for DNSDomain entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for OPSECApplication entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for DataCenter entity",
+      "value": 3
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for DataCenterObject entity",
+      "value": 4
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for UpdatableObjectsRepository entity",
+      "value": 2
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for UpdatableObject entity",
+      "value": 4
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceTCP entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceUDP entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceICMP entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceICMP6 entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceSCTP entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceOther entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceGroup entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Application entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ApplicationCategory entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ApplicationGroup entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceDCERPC entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ServiceRPC entity",
+      "value": 5
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for AccessRule entity",
+      "value": 2
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for AccessSection entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for AccessLayer entity",
+      "value": 2
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for NATRule entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for NATSection entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for VPNCommunityMeshed entity",
+      "value": 4
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for VPNCommunityStar entity",
+      "value": 4
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ThreatRule entity",
+      "value": 3
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ThreatException entity",
+      "value": 4
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ThreatExceptionGroup entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ThreatProtection entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ThreatProfile entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ThreatIndicator entity",
+      "value": 3
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ThreatLayer entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for IPS entity",
+      "value": 4
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for IPSExtendedAttributes entity",
+      "value": 2
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for ThreatEmulation entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Policy entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for PolicyPackage entity",
+      "value": 2
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Domain entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for GlobalDomain entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for MultiDomainServerMDS entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Placeholder entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for GlobalAssignment entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Misc entity",
+      "value": 6
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for Administrator entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for APISettings entity",
+      "value": 0
+    },
+    {
+      "owner": "mockdata",
+      "description": "Total number of mock data files",
+      "value": 131
+    },
+    {
+      "owner": "actionJson",
+      "description": "Number of actions for .system entity",
+      "value": 2
+    },
+    {
+      "owner": "schemaJson",
+      "description": "Number of schemas for .system entity",
+      "value": 1
+    },
+    {
+      "owner": "mockdata",
+      "description": "Number of mock data files for .system entity",
+      "value": 2
+    },
+    {
+      "owner": "System",
+      "description": "System entity files",
+      "value": 4
+    },
+    {
+      "owner": "usecases",
+      "description": "Number of workflows",
+      "value": 0
+    },
+    {
+      "owner": "staticFile",
+      "description": "Number of lines of code in adapterBase.js",
+      "value": 484
+    },
+    {
+      "owner": "staticFile",
+      "description": "Number of static files added",
+      "value": 19
+    },
+    {
+      "owner": "Overall",
+      "description": "Total lines of Code",
+      "value": 45279
+    },
+    {
+      "owner": "Overall",
+      "description": "Total Tests",
+      "value": 917
+    },
+    {
+      "owner": "Overall",
+      "description": "Total Files",
+      "value": 288
+    }
+  ],
+  "apiParsingReport": {
+    "no_mockdata": [
+      {
+        "fnName": "showSession",
+        "method": "post",
+        "path": "/show-session"
+      },
+      {
+        "fnName": "setSession",
+        "method": "post",
+        "path": "/set-session"
+      },
+      {
+        "fnName": "showLastPublishedSession",
+        "method": "post",
+        "path": "/show-last-published-session"
+      },
+      {
+        "fnName": "purgePublishedSessionsByCount",
+        "method": "post",
+        "path": "/purge-published-sessions"
+      },
+      {
+        "fnName": "switchSession",
+        "method": "post",
+        "path": "/switch-session"
+      },
+      {
+        "fnName": "assignSession",
+        "method": "post",
+        "path": "/assign-session"
+      },
+      {
+        "fnName": "takeOverSession",
+        "method": "post",
+        "path": "/take-over-session"
+      },
+      {
+        "fnName": "showLoginMessage",
+        "method": "post",
+        "path": "/show-login-message"
+      },
+      {
+        "fnName": "setLoginMessage",
+        "method": "post",
+        "path": "/set-login-message"
+      },
+      {
+        "fnName": "showHost",
+        "method": "post",
+        "path": "/show-host"
+      },
+      {
+        "fnName": "setHost",
+        "method": "post",
+        "path": "/set-host"
+      },
+      {
+        "fnName": "deleteHost",
+        "method": "post",
+        "path": "/delete-host"
+      },
+      {
+        "fnName": "showHosts",
+        "method": "post",
+        "path": "/show-hosts"
+      },
+      {
+        "fnName": "addNetwork",
+        "method": "post",
+        "path": "/add-network"
+      },
+      {
+        "fnName": "showNetwork",
+        "method": "post",
+        "path": "/show-network"
+      },
+      {
+        "fnName": "setNetwork",
+        "method": "post",
+        "path": "/set-network"
+      },
+      {
+        "fnName": "deleteNetwork",
+        "method": "post",
+        "path": "/delete-network"
+      },
+      {
+        "fnName": "showNetworks",
+        "method": "post",
+        "path": "/show-networks"
+      },
+      {
+        "fnName": "addWildcard",
+        "method": "post",
+        "path": "/add-wildcard"
+      },
+      {
+        "fnName": "showWildcard",
+        "method": "post",
+        "path": "/show-wildcard"
+      },
+      {
+        "fnName": "setWildcard",
+        "method": "post",
+        "path": "/set-wildcard"
+      },
+      {
+        "fnName": "deleteWildcard",
+        "method": "post",
+        "path": "/delete-wildcard"
+      },
+      {
+        "fnName": "showWildcards",
+        "method": "post",
+        "path": "/show-wildcards"
+      },
+      {
+        "fnName": "showGroup",
+        "method": "post",
+        "path": "/show-group"
+      },
+      {
+        "fnName": "setGroup",
+        "method": "post",
+        "path": "/set-group"
+      },
+      {
+        "fnName": "deleteGroup",
+        "method": "post",
+        "path": "/delete-group"
+      },
+      {
+        "fnName": "showGroups",
+        "method": "post",
+        "path": "/show-groups"
+      },
+      {
+        "fnName": "addAddressRange",
+        "method": "post",
+        "path": "/add-address-range"
+      },
+      {
+        "fnName": "showAddressRange",
+        "method": "post",
+        "path": "/show-address-range"
+      },
+      {
+        "fnName": "setAddressRange",
+        "method": "post",
+        "path": "/set-address-range"
+      },
+      {
+        "fnName": "deleteAddressRange",
+        "method": "post",
+        "path": "/delete-address-range"
+      },
+      {
+        "fnName": "showAddressRanges",
+        "method": "post",
+        "path": "/show-address-ranges"
+      },
+      {
+        "fnName": "addGroupWithExclusion",
+        "method": "post",
+        "path": "/add-group-with-exclusion"
+      },
+      {
+        "fnName": "showGroupWithExclusion",
+        "method": "post",
+        "path": "/show-group-with-exclusion"
+      },
+      {
+        "fnName": "setGroupWithExclusion",
+        "method": "post",
+        "path": "/set-group-with-exclusion"
+      },
+      {
+        "fnName": "deleteGroupWithExclusion",
+        "method": "post",
+        "path": "/delete-group-with-exclusion"
+      },
+      {
+        "fnName": "showGroupsWithExclusion",
+        "method": "post",
+        "path": "/show-groups-with-exclusion"
+      },
+      {
+        "fnName": "showSimpleGateway",
+        "method": "post",
+        "path": "/show-simple-gateway"
+      },
+      {
+        "fnName": "setSimpleGateway",
+        "method": "post",
+        "path": "/set-simple-gateway"
+      },
+      {
+        "fnName": "deleteSimpleGateway",
+        "method": "post",
+        "path": "/delete-simple-gateway"
+      },
+      {
+        "fnName": "showSimpleGateways",
+        "method": "post",
+        "path": "/show-simple-gateways"
+      },
+      {
+        "fnName": "addSecurityZone",
+        "method": "post",
+        "path": "/add-security-zone"
+      },
+      {
+        "fnName": "showSecurityZone",
+        "method": "post",
+        "path": "/show-security-zone"
+      },
+      {
+        "fnName": "setSecurityZone",
+        "method": "post",
+        "path": "/set-security-zone"
+      },
+      {
+        "fnName": "deleteSecurityZone",
+        "method": "post",
+        "path": "/delete-security-zone"
+      },
+      {
+        "fnName": "addTime",
+        "method": "post",
+        "path": "/add-time"
+      },
+      {
+        "fnName": "showTime",
+        "method": "post",
+        "path": "/show-time"
+      },
+      {
+        "fnName": "setTime",
+        "method": "post",
+        "path": "/set-time"
+      },
+      {
+        "fnName": "deleteTime",
+        "method": "post",
+        "path": "/delete-time"
+      },
+      {
+        "fnName": "showTimes",
+        "method": "post",
+        "path": "/show-times"
+      },
+      {
+        "fnName": "addTimeGroup",
+        "method": "post",
+        "path": "/add-time-group"
+      },
+      {
+        "fnName": "showTimeGroup",
+        "method": "post",
+        "path": "/show-time-group"
+      },
+      {
+        "fnName": "setTimeGroup",
+        "method": "post",
+        "path": "/set-time-group"
+      },
+      {
+        "fnName": "deleteTimeGroup",
+        "method": "post",
+        "path": "/delete-time-group"
+      },
+      {
+        "fnName": "showTimeGroups",
+        "method": "post",
+        "path": "/show-time-groups"
+      },
+      {
+        "fnName": "addAccessRole",
+        "method": "post",
+        "path": "/add-access-role"
+      },
+      {
+        "fnName": "showAccessRole",
+        "method": "post",
+        "path": "/show-access-role"
+      },
+      {
+        "fnName": "setAccessRole",
+        "method": "post",
+        "path": "/set-access-role"
+      },
+      {
+        "fnName": "deleteAccessRole",
+        "method": "post",
+        "path": "/delete-access-role"
+      },
+      {
+        "fnName": "showAccessRoles",
+        "method": "post",
+        "path": "/show-access-roles"
+      },
+      {
+        "fnName": "addTrustedClient",
+        "method": "post",
+        "path": "/add-trusted-client"
+      },
+      {
+        "fnName": "showTrustedClient",
+        "method": "post",
+        "path": "/show-trusted-client"
+      },
+      {
+        "fnName": "setTrustedClient",
+        "method": "post",
+        "path": "/set-trusted-client"
+      },
+      {
+        "fnName": "deleteTrustedClient",
+        "method": "post",
+        "path": "/delete-trusted-client"
+      },
+      {
+        "fnName": "showTrustedClients",
+        "method": "post",
+        "path": "/show-trusted-clients"
+      },
+      {
+        "fnName": "deleteTag",
+        "method": "post",
+        "path": "/delete-tag"
+      },
+      {
+        "fnName": "addServiceGroup",
+        "method": "post",
+        "path": "/add-service-group"
+      },
+      {
+        "fnName": "showServiceGroup",
+        "method": "post",
+        "path": "/show-service-group"
+      },
+      {
+        "fnName": "setServiceGroup",
+        "method": "post",
+        "path": "/set-service-group"
+      },
+      {
+        "fnName": "deleteServiceGroup",
+        "method": "post",
+        "path": "/delete-service-group"
+      },
+      {
+        "fnName": "showServiceGroups",
+        "method": "post",
+        "path": "/show-service-groups"
+      },
+      {
+        "fnName": "addApplicationSite",
+        "method": "post",
+        "path": "/add-application-site"
+      },
+      {
+        "fnName": "showApplicationSite",
+        "method": "post",
+        "path": "/show-application-site"
+      },
+      {
+        "fnName": "setApplicationSite",
+        "method": "post",
+        "path": "/set-application-site"
+      },
+      {
+        "fnName": "deleteApplicationSite",
+        "method": "post",
+        "path": "/delete-application-site"
+      },
+      {
+        "fnName": "showApplicationSites",
+        "method": "post",
+        "path": "/show-application-sites"
+      },
+      {
+        "fnName": "addApplicationSiteCategory",
+        "method": "post",
+        "path": "/add-application-site-category"
+      },
+      {
+        "fnName": "showApplicationSiteCategory",
+        "method": "post",
+        "path": "/show-application-site-category"
+      },
+      {
+        "fnName": "setApplicationSiteCategory",
+        "method": "post",
+        "path": "/set-application-site-category"
+      },
+      {
+        "fnName": "deleteApplicationSiteCategory",
+        "method": "post",
+        "path": "/delete-application-site-category"
+      },
+      {
+        "fnName": "showApplicationSiteCategories",
+        "method": "post",
+        "path": "/show-application-site-categories"
+      },
+      {
+        "fnName": "addApplicationSiteGroup",
+        "method": "post",
+        "path": "/add-application-site-group"
+      },
+      {
+        "fnName": "showApplicationSiteGroup",
+        "method": "post",
+        "path": "/show-application-site-group"
+      },
+      {
+        "fnName": "setApplicationSiteGroup",
+        "method": "post",
+        "path": "/set-application-site-group"
+      },
+      {
+        "fnName": "deleteApplicationSiteGroup",
+        "method": "post",
+        "path": "/delete-application-site-group"
+      },
+      {
+        "fnName": "showApplicationSiteGroups",
+        "method": "post",
+        "path": "/show-application-site-groups"
+      },
+      {
+        "fnName": "showAccessRule",
+        "method": "post",
+        "path": "/show-access-rule"
+      },
+      {
+        "fnName": "setAccessRule",
+        "method": "post",
+        "path": "/set-access-rule"
+      },
+      {
+        "fnName": "deleteAccessRule",
+        "method": "post",
+        "path": "/delete-access-rule"
+      },
+      {
+        "fnName": "addAccessSection",
+        "method": "post",
+        "path": "/add-access-section"
+      },
+      {
+        "fnName": "showAccessSection",
+        "method": "post",
+        "path": "/show-access-section"
+      },
+      {
+        "fnName": "setAccessSection",
+        "method": "post",
+        "path": "/set-access-section"
+      },
+      {
+        "fnName": "deleteAccessSection",
+        "method": "post",
+        "path": "/delete-access-section"
+      },
+      {
+        "fnName": "showAccessLayer",
+        "method": "post",
+        "path": "/show-access-layer"
+      },
+      {
+        "fnName": "deleteAccessLayer",
+        "method": "post",
+        "path": "/delete-access-layer"
+      },
+      {
+        "fnName": "showAccessLayers",
+        "method": "post",
+        "path": "/show-access-layers"
+      },
+      {
+        "fnName": "addNatRule",
+        "method": "post",
+        "path": "/add-nat-rule"
+      },
+      {
+        "fnName": "showNatRule",
+        "method": "post",
+        "path": "/show-nat-rule"
+      },
+      {
+        "fnName": "setNatRule",
+        "method": "post",
+        "path": "/set-nat-rule"
+      },
+      {
+        "fnName": "deleteNatRule",
+        "method": "post",
+        "path": "/delete-nat-rule"
+      },
+      {
+        "fnName": "addNatSection",
+        "method": "post",
+        "path": "/add-nat-section"
+      },
+      {
+        "fnName": "showNatSection",
+        "method": "post",
+        "path": "/show-nat-section"
+      },
+      {
+        "fnName": "setNatSection",
+        "method": "post",
+        "path": "/set-nat-section"
+      },
+      {
+        "fnName": "deleteNatSection",
+        "method": "post",
+        "path": "/delete-nat-section"
+      },
+      {
+        "fnName": "deleteVpnCommunityMeshed",
+        "method": "post",
+        "path": "/delete-vpn-community-meshed"
+      },
+      {
+        "fnName": "deleteVpnCommunityStar",
+        "method": "post",
+        "path": "/delete-vpn-community-star"
+      },
+      {
+        "fnName": "showThreatRule",
+        "method": "post",
+        "path": "/show-threat-rule"
+      },
+      {
+        "fnName": "deleteThreatRule",
+        "method": "post",
+        "path": "/delete-threat-rule"
+      },
+      {
+        "fnName": "deleteThreatException",
+        "method": "post",
+        "path": "/delete-threat-exception"
+      },
+      {
+        "fnName": "addExceptionGroup",
+        "method": "post",
+        "path": "/add-exception-group"
+      },
+      {
+        "fnName": "showExceptionGroup",
+        "method": "post",
+        "path": "/show-exception-group"
+      },
+      {
+        "fnName": "setExceptionGroup",
+        "method": "post",
+        "path": "/set-exception-group"
+      },
+      {
+        "fnName": "deleteExceptionGroup",
+        "method": "post",
+        "path": "/delete-exception-group"
+      },
+      {
+        "fnName": "showExceptionGroups",
+        "method": "post",
+        "path": "/show-exception-groups"
+      },
+      {
+        "fnName": "showThreatProtection",
+        "method": "post",
+        "path": "/show-threat-protection"
+      },
+      {
+        "fnName": "setThreatProtection",
+        "method": "post",
+        "path": "/set-threat-protection"
+      },
+      {
+        "fnName": "showThreatProtections",
+        "method": "post",
+        "path": "/show-threat-protections"
+      },
+      {
+        "fnName": "deleteThreatProtections",
+        "method": "post",
+        "path": "/delete-threat-protections"
+      },
+      {
+        "fnName": "addThreatProfile",
+        "method": "post",
+        "path": "/add-threat-profile"
+      },
+      {
+        "fnName": "showThreatProfile",
+        "method": "post",
+        "path": "/show-threat-profile"
+      },
+      {
+        "fnName": "setThreatProfile",
+        "method": "post",
+        "path": "/set-threat-profile"
+      },
+      {
+        "fnName": "deleteThreatProfile",
+        "method": "post",
+        "path": "/delete-threat-profile"
+      },
+      {
+        "fnName": "showThreatProfiles",
+        "method": "post",
+        "path": "/show-threat-profiles"
+      },
+      {
+        "fnName": "addThreatIndicator",
+        "method": "post",
+        "path": "/add-threat-indicator"
+      },
+      {
+        "fnName": "deleteThreatIndicator",
+        "method": "post",
+        "path": "/delete-threat-indicator"
+      },
+      {
+        "fnName": "addThreatLayer",
+        "method": "post",
+        "path": "/add-threat-layer"
+      },
+      {
+        "fnName": "showThreatLayer",
+        "method": "post",
+        "path": "/show-threat-layer"
+      },
+      {
+        "fnName": "setThreatLayer",
+        "method": "post",
+        "path": "/set-threat-layer"
+      },
+      {
+        "fnName": "deleteThreatLayer",
+        "method": "post",
+        "path": "/delete-threat-layer"
+      },
+      {
+        "fnName": "verifyPolicy",
+        "method": "post",
+        "path": "/verify-policy"
+      },
+      {
+        "fnName": "installPolicy",
+        "method": "post",
+        "path": "/install-policy"
+      },
+      {
+        "fnName": "showPackage",
+        "method": "post",
+        "path": "/show-package"
+      },
+      {
+        "fnName": "deletePackage",
+        "method": "post",
+        "path": "/delete-package"
+      },
+      {
+        "fnName": "showPackages",
+        "method": "post",
+        "path": "/show-packages"
+      },
+      {
+        "fnName": "addDomain",
+        "method": "post",
+        "path": "/add-domain"
+      },
+      {
+        "fnName": "showDomain",
+        "method": "post",
+        "path": "/show-domain"
+      },
+      {
+        "fnName": "setDomain",
+        "method": "post",
+        "path": "/set-domain"
+      },
+      {
+        "fnName": "deleteDomain",
+        "method": "post",
+        "path": "/delete-domain"
+      },
+      {
+        "fnName": "showDomains",
+        "method": "post",
+        "path": "/show-domains"
+      },
+      {
+        "fnName": "showGlobalDomain",
+        "method": "post",
+        "path": "/show-global-domain"
+      },
+      {
+        "fnName": "setGlobalDomain",
+        "method": "post",
+        "path": "/set-global-domain"
+      },
+      {
+        "fnName": "showMds",
+        "method": "post",
+        "path": "/show-mds"
+      },
+      {
+        "fnName": "addGlobalAssignment",
+        "method": "post",
+        "path": "/add-global-assignment"
+      },
+      {
+        "fnName": "showGlobalAssignment",
+        "method": "post",
+        "path": "/show-global-assignment"
+      },
+      {
+        "fnName": "setGlobalAssignment",
+        "method": "post",
+        "path": "/set-global-assignment"
+      },
+      {
+        "fnName": "deleteGlobalAssignment",
+        "method": "post",
+        "path": "/delete-global-assignment"
+      },
+      {
+        "fnName": "showGlobalAssignments",
+        "method": "post",
+        "path": "/show-global-assignments"
+      },
+      {
+        "fnName": "assignGlobalAssignment",
+        "method": "post",
+        "path": "/assign-global-assignment"
+      },
+      {
+        "fnName": "showTask",
+        "method": "post",
+        "path": "/show-task"
+      },
+      {
+        "fnName": "runScript",
+        "method": "post",
+        "path": "/run-script"
+      },
+      {
+        "fnName": "showUnusedObjects",
+        "method": "post",
+        "path": "/show-unused-objects"
+      },
+      {
+        "fnName": "export",
+        "method": "post",
+        "path": "/export"
+      },
+      {
+        "fnName": "showObjectsOfTypeGroup",
+        "method": "post",
+        "path": "/show-objects"
+      },
+      {
+        "fnName": "showTasks",
+        "method": "post",
+        "path": "/show-tasks"
+      },
+      {
+        "fnName": "showCommands",
+        "method": "post",
+        "path": "/show-commands"
+      },
+      {
+        "fnName": "putFile",
+        "method": "post",
+        "path": "/put-file"
+      },
+      {
+        "fnName": "addAdministrator",
+        "method": "post",
+        "path": "/add-administrator"
+      },
+      {
+        "fnName": "showAdministrator",
+        "method": "post",
+        "path": "/show-administrator"
+      },
+      {
+        "fnName": "setAdministrator",
+        "method": "post",
+        "path": "/set-administrator"
+      },
+      {
+        "fnName": "deleteAdministrator",
+        "method": "post",
+        "path": "/delete-administrator"
+      },
+      {
+        "fnName": "showAdministrators",
+        "method": "post",
+        "path": "/show-administrators"
+      },
+      {
+        "fnName": "unlockAdministrator",
+        "method": "post",
+        "path": "/unlock-administrator"
+      },
+      {
+        "fnName": "showApiSettings",
+        "method": "post",
+        "path": "/show-api-settings"
+      },
+      {
+        "fnName": "setApiSettings",
+        "method": "post",
+        "path": "/set-api-settings"
+      }
+    ],
+    "errors": [],
+    "warnings": [],
+    "callsTotal": 295,
+    "callsConverted": 295,
+    "no_mockdata_num": 164
+  }
+}

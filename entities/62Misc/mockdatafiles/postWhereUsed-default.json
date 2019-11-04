@@ -1,9 +1,0 @@
-{
-  "used-directly": {
-    "total": -87828249,
-    "objects": [],
-    "threat-prevention-rules": [],
-    "nat-rules": [],
-    "access-control-rules": []
-  }
-}

@@ -13,6 +13,12 @@
       "recommendation": "Verify the database connectivity, schema and permissions"
     },
     {
+      "key": "Database Credentials",
+      "icode": "AD.102",
+      "displayString": "Database Error: Invalid Credentials",
+      "recommendation": "Verify the database credentials"
+    },
+    {
       "key": "No Queue Item",
       "icode": "AD.110",
       "displayString": "Queue Item $VARIABLE$ not found in queue",
@@ -85,6 +91,12 @@
       "recommendation": "Verify the action file"
     },
     {
+      "key": "Invalid Properties",
+      "icode": "AD.305",
+      "displayString": "Invalid properties: $VARIABLE$",
+      "recommendation": "Verify the properties for the adapter"
+    },
+    {
       "key": "Query Not Translated",
       "icode": "AD.310",
       "displayString": "Query Not Translated",
@@ -101,6 +113,18 @@
       "icode": "AD.312",
       "displayString": "Schema validation failed on $VARIABLE$",
       "recommendation": "Verify the information provided is in the correct format with everything required"
+    },
+    {
+      "key": "Entity Cache Not Loading",
+      "icode": "AD.320",
+      "displayString": "Could not load entity: $VARIABLE$, into cache",
+      "recommendation": "Verify the cache is working properly"
+    },
+    {
+      "key": "Error Verifying Entity Cache",
+      "icode": "AD.321",
+      "displayString": "Could not verify entity in cache",
+      "recommendation": "Verify the cache is working properly"
     },
     {
       "key": "Unable To Authenticate",
@@ -125,6 +149,24 @@
       "icode": "AD.500",
       "displayString": "Error $VARIABLE$ received on request",
       "recommendation": "Verify the request is accurate via debug logs and postman"
+    },
+    {
+      "key": "Request Timeout",
+      "icode": "AD.501",
+      "displayString": "The Adapter has run out of time for the request",
+      "recommendation": "Increase your adapter request.attempt_timeout property"
+    },
+    {
+      "key": "Invalid Response",
+      "icode": "AD.502",
+      "displayString": "Invalid response received for $VARIABLE$",
+      "recommendation": "Verify the request is accurate via debug logs and postman"
+    },
+    {
+      "key": "Failure Response",
+      "icode": "AD.503",
+      "displayString": "Failure response received for $VARIABLE$",
+      "recommendation": "Check the reason for failure in the stack trace"
     },
     {
       "key": "Caught Exception",
