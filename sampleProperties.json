@@ -1,35 +1,77 @@
 {
   "id": "Adapter-checkpoint_management",
+  "type": "CheckpointManagement",
   "properties": {
-    "protocol": "https",
     "host": "localhost",
     "port": 443,
-    "version": "v1.0",
     "base_path": "/api",
+    "version": "v1.0",
+    "cache_location": "none",
+    "save_metric": true,
     "stub": true,
+    "protocol": "https",
     "authentication": {
+      "auth_method": "basic user_password",
       "username": "username",
       "password": "password",
-      "auth_method": "basic user_password",
+      "token": "",
+      "token_timeout": 180000,
+      "token_cache": "local",
+      "invalid_token_error": 401,
       "auth_field": "header.headers.Authorization",
       "auth_field_format": "Basic {b64}{username}:{password}{/b64}"
     },
     "healthcheck": {
-      "type": "startup"
+      "type": "startup",
+      "frequency": 60000
     },
-    "request": {},
     "throttle": {
-      "throttle_enabled": false
+      "throttle_enabled": false,
+      "number_pronghorns": 1,
+      "sync_async": "sync",
+      "max_in_queue": 1000,
+      "concurrent_max": 1,
+      "expire_timeout": 0,
+      "avg_runtime": 200
+    },
+    "request": {
+      "number_redirects": 0,
+      "number_retries": 3,
+      "limit_retry_error": 0,
+      "failover_codes": [],
+      "attempt_timeout": 5000,
+      "global_request": {
+        "payload": {},
+        "uriOptions": {},
+        "addlHeaders": {},
+        "authData": {}
+      },
+      "healthcheck_on_timeout": true,
+      "return_raw": false,
+      "archiving": false
     },
     "proxy": {
-      "enabled": false
+      "enabled": false,
+      "host": "",
+      "port": 1,
+      "protocol": "http"
     },
     "ssl": {
-      "enabled": false
+      "ecdhCurve": "",
+      "enabled": false,
+      "accept_invalid_cert": true,
+      "ca_file": "",
+      "secure_protocol": "",
+      "ciphers": ""
     },
-    "cache_location": "none"
+    "mongo": {
+      "host": "",
+      "port": 0,
+      "database": "",
+      "username": "",
+      "password": ""
+    }
   },
-  "type": "CheckpointManagement",
   "groups": [],
   "brokers": [],
   "logLevel": "none",
