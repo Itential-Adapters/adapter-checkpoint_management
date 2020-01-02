@@ -2,7 +2,6 @@
   "id": "@itentialopensource/adapter-checkpoint_management",
   "type": "Adapter",
   "export": "CheckpointManagement",
-  "displayName": "Checkpoint_Management",
   "title": "Checkpoint_Management",
   "src": "adapter.js",
   "roles": [
@@ -18,13 +17,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -44,13 +51,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -70,13 +85,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -96,13 +119,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -122,13 +153,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -148,13 +187,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -174,13 +221,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -200,13 +255,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -226,13 +289,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -252,13 +323,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -278,13 +357,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -304,13 +391,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -330,13 +425,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -356,13 +459,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -382,13 +493,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -408,13 +527,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -434,13 +561,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -460,13 +595,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -486,13 +629,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -512,13 +663,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -538,13 +697,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -564,13 +731,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -590,13 +765,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -616,13 +799,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -642,13 +833,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -668,13 +867,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -694,13 +901,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -720,13 +935,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -746,13 +969,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -772,13 +1003,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -798,13 +1037,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -824,13 +1071,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -850,13 +1105,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -876,13 +1139,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -902,13 +1173,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -928,13 +1207,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -954,13 +1241,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -980,13 +1275,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1006,13 +1309,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1032,13 +1343,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1058,13 +1377,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1084,13 +1411,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1110,13 +1445,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1136,13 +1479,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1162,13 +1513,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1188,13 +1547,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1214,13 +1581,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1240,13 +1615,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1266,13 +1649,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1292,13 +1683,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1318,13 +1717,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1344,13 +1751,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1370,13 +1785,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1396,13 +1819,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1422,13 +1853,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1448,13 +1887,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1474,13 +1921,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1500,13 +1955,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1526,13 +1989,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1552,13 +2023,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1578,13 +2057,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1604,13 +2091,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1630,13 +2125,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1656,13 +2159,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1682,13 +2193,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1708,13 +2227,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1734,13 +2261,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1760,13 +2295,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1786,13 +2329,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1812,13 +2363,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1838,13 +2397,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1864,13 +2431,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1890,13 +2465,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1916,13 +2499,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1942,13 +2533,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1968,13 +2567,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -1994,13 +2601,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2020,13 +2635,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2046,13 +2669,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2072,13 +2703,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2098,13 +2737,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2124,13 +2771,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2150,13 +2805,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2176,13 +2839,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2202,13 +2873,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2228,13 +2907,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2254,13 +2941,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2280,13 +2975,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2306,13 +3009,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2332,13 +3043,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2358,13 +3077,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2384,13 +3111,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2410,13 +3145,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2436,13 +3179,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2462,13 +3213,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2488,13 +3247,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2514,13 +3281,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2540,13 +3315,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2566,13 +3349,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2592,13 +3383,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2618,13 +3417,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2644,13 +3451,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2670,13 +3485,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2696,13 +3519,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2722,13 +3553,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2748,13 +3587,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2774,13 +3621,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2800,13 +3655,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2826,13 +3689,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2852,13 +3723,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2878,13 +3757,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2904,13 +3791,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2930,13 +3825,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2956,13 +3859,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -2982,13 +3893,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3008,13 +3927,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3034,13 +3961,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3060,13 +3995,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3086,13 +4029,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3112,13 +4063,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3138,13 +4097,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3164,13 +4131,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3190,13 +4165,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3216,13 +4199,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3242,13 +4233,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3268,13 +4267,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3294,13 +4301,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3320,13 +4335,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3346,13 +4369,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3372,13 +4403,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3398,13 +4437,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3424,13 +4471,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3450,13 +4505,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3476,13 +4539,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3502,13 +4573,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3528,13 +4607,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3554,13 +4641,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3580,13 +4675,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3606,13 +4709,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3632,13 +4743,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3658,13 +4777,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3684,13 +4811,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3710,13 +4845,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3736,13 +4879,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3762,13 +4913,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3788,13 +4947,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3814,13 +4981,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3840,13 +5015,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3866,13 +5049,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3892,13 +5083,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3918,13 +5117,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3944,13 +5151,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3970,13 +5185,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -3996,13 +5219,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4022,13 +5253,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4048,13 +5287,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4074,13 +5321,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4100,13 +5355,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4126,13 +5389,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4152,13 +5423,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4178,13 +5457,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4204,13 +5491,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4230,13 +5525,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4256,13 +5559,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4282,13 +5593,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4308,13 +5627,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4334,13 +5661,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4360,13 +5695,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4386,13 +5729,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4412,13 +5763,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4438,13 +5797,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4464,13 +5831,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4490,13 +5865,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4516,13 +5899,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4542,13 +5933,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4568,13 +5967,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4594,13 +6001,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4620,13 +6035,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4646,13 +6069,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4672,13 +6103,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4698,13 +6137,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4724,13 +6171,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4750,13 +6205,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4776,13 +6239,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4802,13 +6273,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4828,13 +6307,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4854,13 +6341,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4880,13 +6375,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4906,13 +6409,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4932,13 +6443,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4958,13 +6477,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -4984,13 +6511,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5010,13 +6545,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5036,13 +6579,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5062,13 +6613,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5088,13 +6647,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5114,13 +6681,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5140,13 +6715,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5166,13 +6749,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5192,13 +6783,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5218,13 +6817,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5244,13 +6851,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5270,13 +6885,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5296,13 +6919,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5322,13 +6953,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5348,13 +6987,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5374,13 +7021,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5400,13 +7055,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5426,13 +7089,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5452,13 +7123,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5478,13 +7157,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5504,13 +7191,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5530,13 +7225,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5556,13 +7259,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5582,13 +7293,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5608,13 +7327,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5634,13 +7361,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5660,13 +7395,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5686,13 +7429,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5712,13 +7463,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5738,13 +7497,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5764,13 +7531,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5790,13 +7565,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5816,13 +7599,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5842,13 +7633,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5868,13 +7667,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5894,13 +7701,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5920,13 +7735,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5946,13 +7769,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5972,13 +7803,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -5998,13 +7837,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6024,13 +7871,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6050,13 +7905,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6076,13 +7939,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6102,13 +7973,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6128,13 +8007,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6154,13 +8041,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6180,13 +8075,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6206,13 +8109,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6232,13 +8143,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6258,13 +8177,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6284,13 +8211,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6310,13 +8245,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6336,13 +8279,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6362,13 +8313,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6388,13 +8347,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6414,13 +8381,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6440,13 +8415,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6466,13 +8449,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6492,13 +8483,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6518,13 +8517,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6544,13 +8551,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6570,13 +8585,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6596,13 +8619,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6622,13 +8653,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6648,13 +8687,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6674,13 +8721,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6700,13 +8755,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6726,13 +8789,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6752,13 +8823,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6778,13 +8857,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6804,13 +8891,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6830,13 +8925,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6856,13 +8959,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6882,13 +8993,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6908,13 +9027,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6934,13 +9061,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6960,13 +9095,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -6986,13 +9129,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7012,13 +9163,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7038,13 +9197,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7064,13 +9231,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7090,13 +9265,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7116,13 +9299,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7142,13 +9333,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7168,13 +9367,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7194,13 +9401,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7220,13 +9435,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7246,13 +9469,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7272,13 +9503,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7298,13 +9537,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7324,13 +9571,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7350,13 +9605,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7376,13 +9639,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7402,13 +9673,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7428,13 +9707,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7454,13 +9741,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7480,13 +9775,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7506,13 +9809,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7532,13 +9843,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7558,13 +9877,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7584,13 +9911,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7610,13 +9945,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7636,13 +9979,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"
@@ -7662,13 +10013,21 @@
           "name": "body",
           "type": "object",
           "info": ": object",
-          "required": true
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result"
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
       },
       "roles": [
         "admin"

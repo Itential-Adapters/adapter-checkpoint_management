@@ -21,7 +21,7 @@ let logLevel = 'none';
 const stub = true;
 const isRapidFail = false;
 const isSaveMockData = false;
-const attemptTimeout = 30000;
+const attemptTimeout = 5000;
 
 // these variables can be changed to run in integrated mode so easier to set them here
 // always check these in with bogus data!!!
@@ -103,6 +103,8 @@ global.pronghornProps = {
           enabled: sslenable,
           accept_invalid_cert: sslinvalid,
           ca_file: '',
+          key_file: '',
+          cert_file: '',
           secure_protocol: '',
           ciphers: ''
         },
@@ -111,7 +113,15 @@ global.pronghornProps = {
           port: 0,
           database: '',
           username,
-          password: ''
+          password: '',
+          replSet: '',
+          db_ssl: {
+            enabled: false,
+            accept_invalid_cert: false,
+            ca_file: '',
+            key_file: '',
+            cert_file: ''
+          }
         }
       }
     }]
