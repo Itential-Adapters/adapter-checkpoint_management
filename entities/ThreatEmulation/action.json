@@ -4,7 +4,7 @@
       "name": "runThreatEmulationFileTypesOfflineUpdate",
       "protocol": "REST",
       "method": "POST",
-      "entitypath": "{base_path}/{version}/run-threat-emulation-file-types-offline-update{query}",
+      "entitypath": "{base_path}/{version}/run-threat-emulation-file-types-offline-update?{query}",
       "requestSchema": "schema.json",
       "responseSchema": "schema.json",
       "timeout": 0,

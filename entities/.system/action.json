@@ -30,7 +30,7 @@
       "name": "healthcheck",
       "protocol": "REST",
       "method": "GET",
-      "entitypath": "{base_path}/{version}/healthcheck{query}",
+      "entitypath": "{base_path}/{version}/healthcheck?{query}",
       "requestSchema": "schema.json",
       "responseSchema": "schema.json",
       "timeout": 0,
