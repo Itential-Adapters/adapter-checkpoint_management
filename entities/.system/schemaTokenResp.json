@@ -24,18 +24,7 @@
         "type": "AES",
         "key": ""
       },
-      "external_name": "token"
-    },
-    "expires": {
-      "type": "string",
-      "description": "when the token will expire",
-      "parse": false,
-      "encode": false,
-      "encrypt": {
-        "type": "AES",
-        "key": ""
-      },
-      "external_name": "expires"
+      "external_name": "sid"
     }
   },
   "definitions": {}

@@ -4,22 +4,22 @@
   "properties": {
     "host": "localhost",
     "port": 443,
-    "base_path": "/api",
-    "version": "v1.0",
+    "base_path": "/web_api",
+    "version": "",
     "cache_location": "none",
     "save_metric": true,
     "stub": true,
     "protocol": "https",
     "authentication": {
-      "auth_method": "basic user_password",
+      "auth_method": "request_token",
       "username": "username",
       "password": "password",
       "token": "",
-      "token_timeout": 180000,
+      "token_timeout": 600000,
       "token_cache": "local",
       "invalid_token_error": 401,
-      "auth_field": "header.headers.Authorization",
-      "auth_field_format": "Basic {b64}{username}:{password}{/b64}"
+      "auth_field": "header.headers.X-chkp-sid",
+      "auth_field_format": "{token}"
     },
     "healthcheck": {
       "type": "startup",
