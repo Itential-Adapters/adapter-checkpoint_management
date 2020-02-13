@@ -34,7 +34,7 @@
         "type": "AES",
         "key": ""
       },
-      "external_name": "passwd"
+      "external_name": "password"
     }
   },
   "required": [
