@@ -1,4 +1,12 @@
 
+## 0.2.4 [07-07-2020]
+
+* migration
+
+See merge request itentialopensource/adapters/security/adapter-checkpoint_management!4
+
+---
+
 ## 0.2.3 [02-13-2020]
 
 * changes to authentication and sample properties based on findings
