@@ -64,11 +64,13 @@ global.pronghornProps = {
           token_timeout: -1,
           token_cache: 'local',
           auth_field: 'header.headers.Authorization',
-          auth_field_format: 'Basic {b64}{username}:{password}{/b64}'
+          auth_field_format: 'Basic {b64}{username}:{password}{/b64}',
+          auth_logging: false
         },
         healthcheck: {
           type: 'startup',
-          frequency: 60000
+          frequency: 60000,
+          query_object: {}
         },
         throttle: {
           throttle_enabled: false,
@@ -99,13 +101,16 @@ global.pronghornProps = {
           },
           healthcheck_on_timeout: false,
           return_raw: true,
-          archiving: false
+          archiving: false,
+          return_request: false
         },
         proxy: {
           enabled: false,
           host: '',
           port: 1,
-          protocol: 'http'
+          protocol: 'http',
+          username: '',
+          password: ''
         },
         ssl: {
           ecdhCurve: '',
@@ -264,7 +269,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
     describe('#getWorkflowFunctions', () => {
       it('should retrieve workflow functions', (done) => {
         try {
-          wffunctions = a.getWorkflowFunctions();
+          wffunctions = a.getWorkflowFunctions([]);
 
           try {
             assert.notEqual(0, wffunctions.length);
@@ -370,7 +375,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
                 let wfparams = [];
 
                 if (methLine && methLine.indexOf('(') >= 0 && methLine.indexOf(')') >= 0) {
-                  const temp = methLine.substring(methLine.indexOf('(') + 1, methLine.indexOf(')'));
+                  const temp = methLine.substring(methLine.indexOf('(') + 1, methLine.lastIndexOf(')'));
                   wfparams = temp.split(',');
 
                   for (let t = 0; t < wfparams.length; t += 1) {
