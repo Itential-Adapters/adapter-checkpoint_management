@@ -80,6 +80,24 @@ class CheckpointManagement extends AdapterBaseCl {
   }
 
   /**
+   * @getWorkflowFunctions
+   */
+  getWorkflowFunctions(inIgnore) {
+    let myIgnore = [];
+    if (!inIgnore && Array.isArray(inIgnore)) {
+      myIgnore = inIgnore;
+    } else if (!inIgnore && typeof inIgnore === 'string') {
+      myIgnore = [inIgnore];
+    }
+
+    // The generic adapter functions should already be ignored (e.g. healthCheck)
+    // you can add specific methods that you do not want to be workflow functions to ignore like below
+    // myIgnore.push('myMethodNotInWorkflow');
+
+    return super.getWorkflowFunctions(myIgnore);
+  }
+
+  /**
    * updateAdapterConfiguration is used to update any of the adapter configuration files. This
    * allows customers to make changes to adapter configuration without having to be on the
    * file system.
@@ -93,33 +111,141 @@ class CheckpointManagement extends AdapterBaseCl {
    * @param {Callback} callback - The results of the call
    */
   updateAdapterConfiguration(configFile, changes, entity, type, action, callback) {
+    const origin = `${this.id}-adapter-updateAdapterConfiguration`;
+    log.trace(origin);
     super.updateAdapterConfiguration(configFile, changes, entity, type, action, callback);
   }
 
   /**
-   * @callback healthCallback
-   * @param {Object} result - the result of the get request (contains an id and a status)
+   * See if the API path provided is found in this adapter
+   *
+   * @function findPath
+   * @param {string} apiPath - the api path to check on
+   * @param {Callback} callback - The results of the call
    */
+  findPath(apiPath, callback) {
+    const origin = `${this.id}-adapter-findPath`;
+    log.trace(origin);
+    super.findPath(apiPath, callback);
+  }
+
   /**
-   * @callback getCallback
-   * @param {Object} result - the result of the get request (entity/ies)
-   * @param {String} error - any error that occurred
-   */
+    * @summary Suspends adapter
+    *
+    * @function suspend
+    * @param {Callback} callback - callback function
+    */
+  suspend(mode, callback) {
+    const origin = `${this.id}-adapter-suspend`;
+    log.trace(origin);
+    try {
+      return super.suspend(mode, callback);
+    } catch (error) {
+      log.error(`${origin}: ${error}`);
+      return callback(null, error);
+    }
+  }
+
   /**
-   * @callback createCallback
-   * @param {Object} item - the newly created entity
-   * @param {String} error - any error that occurred
-   */
+    * @summary Unsuspends adapter
+    *
+    * @function unsuspend
+    * @param {Callback} callback - callback function
+    */
+  unsuspend(callback) {
+    const origin = `${this.id}-adapter-unsuspend`;
+    log.trace(origin);
+    try {
+      return super.unsuspend(callback);
+    } catch (error) {
+      log.error(`${origin}: ${error}`);
+      return callback(null, error);
+    }
+  }
+
   /**
-   * @callback updateCallback
-   * @param {String} status - the status of the update action
-   * @param {String} error - any error that occurred
-   */
+    * @summary Get the Adaoter Queue
+    *
+    * @function getQueue
+    * @param {Callback} callback - callback function
+    */
+  getQueue(callback) {
+    const origin = `${this.id}-adapter-getQueue`;
+    log.trace(origin);
+    return super.getQueue(callback);
+  }
+
   /**
-   * @callback deleteCallback
-   * @param {String} status - the status of the delete action
-   * @param {String} error - any error that occurred
-   */
+  * @summary Runs troubleshoot scripts for adapter
+  *
+  * @function troubleshoot
+  * @param {Object} props - the connection, healthcheck and authentication properties
+  *
+  * @param {boolean} persistFlag - whether the adapter properties should be updated
+  * @param {Callback} callback - The results of the call
+  */
+  troubleshoot(props, persistFlag, callback) {
+    const origin = `${this.id}-adapter-troubleshoot`;
+    log.trace(origin);
+    try {
+      return super.troubleshoot(props, persistFlag, this, callback);
+    } catch (error) {
+      log.error(`${origin}: ${error}`);
+      return callback(null, error);
+    }
+  }
+
+  /**
+    * @summary runs healthcheck script for adapter
+    *
+    * @function runHealthcheck
+    * @param {Adapter} adapter - adapter instance to troubleshoot
+    * @param {Callback} callback - callback function
+    */
+  runHealthcheck(callback) {
+    const origin = `${this.id}-adapter-runHealthcheck`;
+    log.trace(origin);
+    try {
+      return super.runHealthcheck(this, callback);
+    } catch (error) {
+      log.error(`${origin}: ${error}`);
+      return callback(null, error);
+    }
+  }
+
+  /**
+    * @summary runs connectivity check script for adapter
+    *
+    * @function runConnectivity
+    * @param {Callback} callback - callback function
+    */
+  runConnectivity(callback) {
+    const origin = `${this.id}-adapter-runConnectivity`;
+    log.trace(origin);
+    try {
+      return super.runConnectivity(callback);
+    } catch (error) {
+      log.error(`${origin}: ${error}`);
+      return callback(null, error);
+    }
+  }
+
+  /**
+    * @summary runs basicGet script for adapter
+    *
+    * @function runBasicGet
+    * @param {Callback} callback - callback function
+    */
+  runBasicGet(callback) {
+    const origin = `${this.id}-adapter-runBasicGet`;
+    log.trace(origin);
+    try {
+      return super.runBasicGet(callback);
+    } catch (error) {
+      log.error(`${origin}: ${error}`);
+      return callback(null, error);
+    }
+  }
 
   /**
    * @summary Determines if this adapter supports the specific entity
@@ -291,6 +417,141 @@ class CheckpointManagement extends AdapterBaseCl {
   }
 
   /**
+   * Makes the requested generic call
+   *
+   * @function genericAdapterRequest
+   * @param {String} uriPath - the path of the api call - do not include the host, port, base path or version (required)
+   * @param {String} restMethod - the rest method (GET, POST, PUT, PATCH, DELETE) (required)
+   * @param {Object} queryData - the parameters to be put on the url (optional).
+   *                 Can be a stringified Object.
+   * @param {Object} requestBody - the body to add to the request (optional).
+   *                 Can be a stringified Object.
+   * @param {Object} addlHeaders - additional headers to be put on the call (optional).
+   *                 Can be a stringified Object.
+   * @param {getCallback} callback - a callback function to return the result (Generics)
+   *                 or the error
+   */
+  genericAdapterRequest(uriPath, restMethod, queryData, requestBody, addlHeaders, callback) {
+    const meth = 'adapter-genericAdapterRequest';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (uriPath === undefined || uriPath === null || uriPath === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['uriPath'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+    if (restMethod === undefined || restMethod === null || restMethod === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['restMethod'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    // remove any leading / and split the uripath into path variables
+    let myPath = uriPath;
+    while (myPath.indexOf('/') === 0) {
+      myPath = myPath.substring(1);
+    }
+    const pathVars = myPath.split('/');
+    const queryParamsAvailable = queryData;
+    const queryParams = {};
+    const bodyVars = requestBody;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+          && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams,
+      uriOptions: {}
+    };
+    // add headers if provided
+    if (addlHeaders) {
+      reqObj.addlHeaders = addlHeaders;
+    }
+
+    // determine the call and return flag
+    let action = 'getGenerics';
+    let returnF = true;
+    if (restMethod.toUpperCase() === 'POST') {
+      action = 'createGeneric';
+    } else if (restMethod.toUpperCase() === 'PUT') {
+      action = 'updateGeneric';
+    } else if (restMethod.toUpperCase() === 'PATCH') {
+      action = 'patchGeneric';
+    } else if (restMethod.toUpperCase() === 'DELETE') {
+      action = 'deleteGeneric';
+      returnF = false;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('.generic', action, reqObj, returnF, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['genericAdapterRequest'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @callback healthCallback
+   * @param {Object} result - the result of the get request (contains an id and a status)
+   */
+  /**
+   * @callback getCallback
+   * @param {Object} result - the result of the get request (entity/ies)
+   * @param {String} error - any error that occurred
+   */
+  /**
+   * @callback createCallback
+   * @param {Object} item - the newly created entity
+   * @param {String} error - any error that occurred
+   */
+  /**
+   * @callback updateCallback
+   * @param {String} status - the status of the update action
+   * @param {String} error - any error that occurred
+   */
+  /**
+   * @callback deleteCallback
+   * @param {String} status - the status of the delete action
+   * @param {String} error - any error that occurred
+   */
+
+  /**
    * @summary login
    *
    * @function login
@@ -302,6 +563,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-login';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -370,6 +637,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-publish';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -456,6 +729,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -540,6 +819,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-logout';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -626,6 +911,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -710,6 +1001,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-keepalive';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -796,6 +1093,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -880,6 +1183,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setSession';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -966,6 +1275,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -1050,6 +1365,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showLastPublishedSession';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -1136,6 +1457,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -1220,6 +1547,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-switchSession';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -1306,6 +1639,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -1390,6 +1729,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-takeOverSession';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -1476,6 +1821,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -1560,6 +1911,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showLoginMessage';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -1646,6 +2003,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -1730,6 +2093,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addHost';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -1816,6 +2185,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -1900,6 +2275,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setHost';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -1986,6 +2367,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -2070,6 +2457,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showHosts';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -2156,6 +2549,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -2240,6 +2639,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showNetwork';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -2326,6 +2731,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -2410,6 +2821,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteNetwork';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -2496,6 +2913,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -2580,6 +3003,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addWildcard';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -2666,6 +3095,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -2750,6 +3185,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setWildcard';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -2836,6 +3277,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -2920,6 +3367,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showWildcards';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -3006,6 +3459,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -3090,6 +3549,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -3176,6 +3641,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -3260,6 +3731,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -3346,6 +3823,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -3430,6 +3913,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addAddressRange';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -3516,6 +4005,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -3600,6 +4095,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setAddressRange';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -3686,6 +4187,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -3770,6 +4277,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showAddressRanges';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -3856,6 +4369,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -3940,6 +4459,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showMulticastAddressRange';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -4026,6 +4551,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -4110,6 +4641,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteMulticastAddressRange';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -4196,6 +4733,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -4280,6 +4823,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addGroupWithExclusion';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -4366,6 +4915,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -4450,6 +5005,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setGroupWithExclusion';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -4536,6 +5097,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -4620,6 +5187,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showGroupsWithExclusion';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -4706,6 +5279,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -4790,6 +5369,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showSimpleGateway';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -4876,6 +5461,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -4960,6 +5551,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteSimpleGateway';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -5046,6 +5643,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -5130,6 +5733,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addSecurityZone';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -5216,6 +5825,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -5300,6 +5915,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setSecurityZone';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -5386,6 +6007,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -5470,6 +6097,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showSecurityZones';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -5556,6 +6189,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -5640,6 +6279,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showTime';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -5726,6 +6371,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -5810,6 +6461,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteTime';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -5896,6 +6553,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -5980,6 +6643,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addTimeGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -6066,6 +6735,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -6150,6 +6825,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setTimeGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -6236,6 +6917,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -6320,6 +7007,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showTimeGroups';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -6406,6 +7099,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -6490,6 +7189,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showAccessRole';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -6576,6 +7281,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -6660,6 +7371,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteAccessRole';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -6746,6 +7463,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -6830,6 +7553,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addDynamicObject';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -6916,6 +7645,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -7000,6 +7735,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setDynamicObject';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -7086,6 +7827,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -7170,6 +7917,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showDynamicObjects';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -7256,6 +8009,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -7340,6 +8099,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showTrustedClient';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -7426,6 +8191,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -7510,6 +8281,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteTrustedClient';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -7596,6 +8373,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -7680,6 +8463,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addTag';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -7766,6 +8555,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -7850,6 +8645,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setTag';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -7936,6 +8737,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -8020,6 +8827,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showTags';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -8106,6 +8919,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -8190,6 +9009,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showDnsDomain';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -8276,6 +9101,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -8360,6 +9191,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteDnsDomain';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -8446,6 +9283,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -8530,6 +9373,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addOpsecApplication';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -8616,6 +9465,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -8700,6 +9555,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setOpsecApplication';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -8786,6 +9647,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -8870,6 +9737,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showOpsecApplications';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -8956,6 +9829,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -9040,6 +9919,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showDataCenter';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -9126,6 +10011,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -9210,6 +10101,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addDataCenterObjectWithGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -9296,6 +10193,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -9380,6 +10283,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteDataCenterObject';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -9466,6 +10375,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -9550,6 +10465,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showUpdatableObjectsRepositoryContent';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -9636,6 +10557,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -9720,6 +10647,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addUpdatableObject';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -9806,6 +10739,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -9890,6 +10829,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteUpdatableObject';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -9976,6 +10921,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -10060,6 +11011,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addServiceTcp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -10146,6 +11103,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -10230,6 +11193,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setServiceTcp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -10316,6 +11285,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -10400,6 +11375,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServicesTcp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -10486,6 +11467,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -10570,6 +11557,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServiceUdp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -10656,6 +11649,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -10740,6 +11739,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteServiceUdp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -10826,6 +11831,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -10910,6 +11921,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addServiceIcmp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -10996,6 +12013,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -11080,6 +12103,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setServiceIcmp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -11166,6 +12195,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -11250,6 +12285,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServicesIcmp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -11336,6 +12377,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -11420,6 +12467,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServiceIcmp6';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -11506,6 +12559,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -11590,6 +12649,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteServiceIcmp6';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -11676,6 +12741,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -11760,6 +12831,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addServiceSctp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -11846,6 +12923,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -11930,6 +13013,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setServiceSctp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -12016,6 +13105,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -12100,6 +13195,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServicesSctp';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -12186,6 +13287,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -12270,6 +13377,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServiceOther';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -12356,6 +13469,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -12440,6 +13559,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteServiceOther';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -12526,6 +13651,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -12610,6 +13741,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addServiceGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -12696,6 +13833,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -12780,6 +13923,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setServiceGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -12866,6 +14015,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -12950,6 +14105,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServiceGroups';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -13036,6 +14197,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -13120,6 +14287,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showApplicationSite';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -13206,6 +14379,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -13290,6 +14469,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteApplicationSite';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -13376,6 +14561,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -13460,6 +14651,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addApplicationSiteCategory';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -13546,6 +14743,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -13630,6 +14833,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setApplicationSiteCategory';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -13716,6 +14925,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -13800,6 +15015,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showApplicationSiteCategories';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -13886,6 +15107,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -13970,6 +15197,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showApplicationSiteGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -14056,6 +15289,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -14140,6 +15379,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteApplicationSiteGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -14226,6 +15471,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -14310,6 +15561,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addServiceDceRpc';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -14396,6 +15653,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -14480,6 +15743,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setServiceDceRpc';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -14566,6 +15835,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -14650,6 +15925,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServicesDceRpc';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -14736,6 +16017,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -14820,6 +16107,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showServiceRpc';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -14906,6 +16199,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -14990,6 +16289,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteServiceRpc';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -15076,6 +16381,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -15160,6 +16471,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addAccessRule';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -15246,6 +16563,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -15330,6 +16653,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showAccessRule';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -15416,6 +16745,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -15500,6 +16835,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteAccessRule';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -15586,6 +16927,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -15670,6 +17017,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showAccessSection';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -15756,6 +17109,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -15840,6 +17199,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteAccessSection';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -15926,6 +17291,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -16010,6 +17381,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showAccessLayer';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -16096,6 +17473,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -16180,6 +17563,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteAccessLayer';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -16266,6 +17655,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -16350,6 +17745,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addNatRule';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -16436,6 +17837,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -16520,6 +17927,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showNatRule';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -16606,6 +18019,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -16690,6 +18109,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteNatRule';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -16776,6 +18201,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -16860,6 +18291,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showNatSection';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -16946,6 +18383,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -17030,6 +18473,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteNatSection';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -17116,6 +18565,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -17200,6 +18655,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showVpnCommunityMeshed';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -17286,6 +18747,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -17370,6 +18837,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteVpnCommunityMeshed';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -17456,6 +18929,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -17540,6 +19019,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addVpnCommunityStar';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -17626,6 +19111,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -17710,6 +19201,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setVpnCommunityStar';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -17796,6 +19293,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -17880,6 +19383,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showVpnCommunitiesStar';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -17966,6 +19475,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -18050,6 +19565,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showThreatRulebase';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -18136,6 +19657,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -18220,6 +19747,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setThreatRule';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -18306,6 +19839,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -18390,6 +19929,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addThreatException';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -18476,6 +20021,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -18560,6 +20111,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showThreatException';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -18646,6 +20203,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -18730,6 +20293,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteThreatException';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -18816,6 +20385,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -18900,6 +20475,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showExceptionGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -18986,6 +20567,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -19070,6 +20657,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteExceptionGroup';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -19156,6 +20749,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -19240,6 +20839,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showThreatProtection';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -19326,6 +20931,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -19410,6 +21021,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showThreatProtections';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -19496,6 +21113,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -19580,6 +21203,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteThreatProtections';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -19666,6 +21295,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -19750,6 +21385,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showThreatProfile';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -19836,6 +21477,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -19920,6 +21567,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteThreatProfile';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -20006,6 +21659,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -20090,6 +21749,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addThreatIndicator';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -20176,6 +21841,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -20260,6 +21931,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setThreatIndicator';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -20346,6 +22023,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -20430,6 +22113,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showThreatIndicators';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -20516,6 +22205,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -20600,6 +22295,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showThreatLayer';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -20686,6 +22387,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -20770,6 +22477,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deleteThreatLayer';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -20856,6 +22569,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -20940,6 +22659,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showIpsUpdateSchedule';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -21026,6 +22751,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -21110,6 +22841,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-runIpsUpdate';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -21196,6 +22933,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -21280,6 +23023,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showIpsProtectionExtendedAttribute';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -21366,6 +23115,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -21450,6 +23205,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-runThreatEmulationFileTypesOfflineUpdate';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -21536,6 +23297,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -21620,6 +23387,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-installPolicy';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -21706,6 +23479,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -21790,6 +23569,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showPackage';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -21876,6 +23661,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -21960,6 +23751,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-deletePackage';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -22046,6 +23843,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -22130,6 +23933,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addDomain';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -22216,6 +24025,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -22300,6 +24115,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setDomain';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -22386,6 +24207,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -22470,6 +24297,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showDomains';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -22556,6 +24389,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -22640,6 +24479,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setGlobalDomain';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -22726,6 +24571,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -22810,6 +24661,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showMdss';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -22896,6 +24753,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -22980,6 +24843,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addGlobalAssignment';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -23066,6 +24935,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -23150,6 +25025,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setGlobalAssignment';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -23236,6 +25117,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -23320,6 +25207,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showGlobalAssignments';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -23406,6 +25299,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -23490,6 +25389,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-whereUsed';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -23576,6 +25481,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -23660,6 +25571,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-runScript';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -23746,6 +25663,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -23830,6 +25753,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-export';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -23916,6 +25845,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -24000,6 +25935,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showGatewaysAndServers';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -24086,6 +26027,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -24170,6 +26117,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showValidations';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -24256,6 +26209,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -24340,6 +26299,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showApiVersions';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -24426,6 +26391,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -24510,6 +26481,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showCommands';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -24596,6 +26573,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -24680,6 +26663,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-addAdministrator';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -24766,6 +26755,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -24850,6 +26845,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setAdministrator';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -24936,6 +26937,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -25020,6 +27027,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-showAdministrators';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
@@ -25106,6 +27119,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -25191,6 +27210,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
@@ -25275,6 +27300,12 @@ class CheckpointManagement extends AdapterBaseCl {
     const meth = 'adapter-setApiSettings';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
 
     /* HERE IS WHERE YOU VALIDATE DATA */
     if (body === undefined || body === null || body === '') {
