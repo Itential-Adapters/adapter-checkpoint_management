@@ -8,7 +8,7 @@
       "requestSchema": "schema.json",
       "responseSchema": "schema.json",
       "timeout": 0,
-      "sendEmpty": false,
+      "sendEmpty": true,
       "sendGetBody": false,
       "requestDatatype": "JSON",
       "responseDatatype": "JSON",

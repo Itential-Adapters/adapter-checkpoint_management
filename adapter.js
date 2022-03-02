@@ -83,7 +83,7 @@ class CheckpointManagement extends AdapterBaseCl {
    * @getWorkflowFunctions
    */
   getWorkflowFunctions(inIgnore) {
-    let myIgnore = [];
+    let myIgnore = ['hasEntities', 'hasDevices'];
     if (!inIgnore && Array.isArray(inIgnore)) {
       myIgnore = inIgnore;
     } else if (!inIgnore && typeof inIgnore === 'string') {
@@ -244,6 +244,24 @@ class CheckpointManagement extends AdapterBaseCl {
     } catch (error) {
       log.error(`${origin}: ${error}`);
       return callback(null, error);
+    }
+  }
+
+  /**
+   * @summary moves entites into Mongo DB
+   *
+   * @function moveEntitiesToDB
+   * @param {getCallback} callback - a callback function to return the result (Generics)
+   *                                  or the error
+   */
+  moveEntitiesToDB(callback) {
+    const origin = `${this.id}-adapter-moveEntitiesToDB`;
+    log.trace(origin);
+    try {
+      return super.moveEntitiesToDB(callback);
+    } catch (err) {
+      log.error(`${origin}: ${err}`);
+      return callback(null, err);
     }
   }
 
@@ -518,6 +536,456 @@ class CheckpointManagement extends AdapterBaseCl {
         /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
         // return the response
         return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /* BROKER CALLS */
+  /**
+   * @summary Determines if this adapter supports any in a list of entities
+   *
+   * @function hasEntities
+   * @param {String} entityType - the entity type to check for
+   * @param {Array} entityList - the list of entities we are looking for
+   *
+   * @param {Callback} callback - A map where the entity is the key and the
+   *                              value is true or false
+   */
+  hasEntities(entityType, entityList, callback) {
+    const origin = `${this.id}-adapter-hasEntities`;
+    log.trace(origin);
+
+    switch (entityType) {
+      case 'Device':
+        return this.hasDevices(entityList, callback);
+      default:
+        return callback(null, `${this.id} does not support entity ${entityType}`);
+    }
+  }
+
+  /**
+   * @summary Helper method for hasEntities for the specific device case
+   *
+   * @param {Array} deviceList - array of unique device identifiers
+   * @param {Callback} callback - A map where the device is the key and the
+   *                              value is true or false
+   */
+  hasDevices(deviceList, callback) {
+    const origin = `${this.id}-adapter-hasDevices`;
+    log.trace(origin);
+
+    const findings = deviceList.reduce((map, device) => {
+      // eslint-disable-next-line no-param-reassign
+      map[device] = false;
+      log.debug(`In reduce: ${JSON.stringify(map)}`);
+      return map;
+    }, {});
+    const apiCalls = deviceList.map((device) => new Promise((resolve) => {
+      this.getDevice(device, (result, error) => {
+        if (error) {
+          log.debug(`In map error: ${JSON.stringify(device)}`);
+          return resolve({ name: device, found: false });
+        }
+        log.debug(`In map: ${JSON.stringify(device)}`);
+        return resolve({ name: device, found: true });
+      });
+    }));
+    Promise.all(apiCalls).then((results) => {
+      results.forEach((device) => {
+        findings[device.name] = device.found;
+      });
+      log.debug(`FINDINGS: ${JSON.stringify(findings)}`);
+      return callback(findings);
+    }).catch((errors) => {
+      log.error('Unable to do device lookup.');
+      return callback(null, { code: 503, message: 'Unable to do device lookup.', error: errors });
+    });
+  }
+
+  /**
+   * @summary Get Appliance that match the deviceName
+   *
+   * @function getDevice
+   * @param {String} deviceName - the deviceName to find (required)
+   *
+   * @param {getCallback} callback - a callback function to return the result
+   *                                 (appliance) or the error
+   */
+  getDevice(deviceName, callback) {
+    const meth = 'adapter-getDevice';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (deviceName === undefined || deviceName === null || deviceName === '' || deviceName.length === 0) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['deviceName'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    try {
+      // need to get the device so we can convert the deviceName to an id
+      // !! if we can do a lookup by name the getDevicesFiltered may not be necessary
+      const opts = {
+        filter: {
+          name: deviceName
+        }
+      };
+      return this.getDevicesFiltered(opts, (devs, ferr) => {
+        // if we received an error or their is no response on the results return an error
+        if (ferr) {
+          return callback(null, ferr);
+        }
+        if (devs.list.length < 1) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, `Did Not Find Device ${deviceName}`, [], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+        // get the uuid from the device
+        const { uuid } = devs.list[0];
+
+        // !! using Generic makes it easier on the Adapter Builder (just need to change the path)
+        // !! you can also replace with a specific call if that is easier
+        const uriPath = `/call/toget/device/${uuid}`;
+        return this.genericAdapterRequest(uriPath, 'GET', {}, {}, {}, (result, error) => {
+          // if we received an error or their is no response on the results return an error
+          if (error) {
+            return callback(null, error);
+          }
+          if (!result.response || !result.response.applianceMo) {
+            const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['getDevice'], null, null, null);
+            log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+            return callback(null, errorObj);
+          }
+
+          // return the response
+          // !! format the data we send back
+          // !! these fields are config manager fields you need to map to the data we receive
+          const thisDevice = result.response;
+          thisDevice.name = thisDevice.systemName;
+          thisDevice.ostype = `System-${thisDevice.systemType}`;
+          thisDevice.port = thisDevice.systemPort;
+          thisDevice.ipaddress = thisDevice.systemIP;
+          return callback(thisDevice);
+        });
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @summary Get Appliances that match the filter
+   *
+   * @function getDevicesFiltered
+   * @param {Object} options - the data to use to filter the appliances (optional)
+   *
+   * @param {getCallback} callback - a callback function to return the result
+   *                                 (appliances) or the error
+   */
+  getDevicesFiltered(options, callback) {
+    const meth = 'adapter-getDevicesFiltered';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    // verify the required fields have been provided
+    if (options === undefined || options === null || options === '' || options.length === 0) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['options'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+    log.debug(`Device Filter Options: ${JSON.stringify(options)}`);
+
+    // TODO - get pagination working
+    // const nextToken = options.start;
+    // const maxResults = options.limit;
+
+    // set up the filter of Device Names
+    let filterName = [];
+    if (options && options.filter && options.filter.name) {
+      // when this hack is removed, remove the lint ignore above
+      if (Array.isArray(options.filter.name)) {
+        // eslint-disable-next-line prefer-destructuring
+        filterName = options.filter.name;
+      } else {
+        filterName = [options.filter.name];
+      }
+    }
+
+    // TODO - get sort and order working
+    /*
+    if (options && options.sort) {
+      reqObj.uriOptions.sort = JSON.stringify(options.sort);
+    }
+    if (options && options.order) {
+      reqObj.uriOptions.order = options.order;
+    }
+    */
+    try {
+      // !! using Generic makes it easier on the Adapter Builder (just need to change the path)
+      // !! you can also replace with a specific call if that is easier
+      const uriPath = '/call/toget/devices';
+      return this.genericAdapterRequest(uriPath, 'GET', {}, {}, {}, (result, error) => {
+        // if we received an error or their is no response on the results return an error
+        if (error) {
+          return callback(null, error);
+        }
+        if (!result.response) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['getDevicesFiltered'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        // !! go through the response - may have to look for sub object
+        // handle an array of devices
+        if (Array.isArray(result.response)) {
+          const myDevices = [];
+
+          for (let d = 0; d < result.response.length; d += 1) {
+            // !! format the data we send back
+            // !! these fields are config manager fields you need to map to the data we receive
+            const thisDevice = result.response;
+            thisDevice.name = thisDevice.systemName;
+            thisDevice.ostype = `System-${thisDevice.systemType}`;
+            thisDevice.port = thisDevice.systemPort;
+            thisDevice.ipaddress = thisDevice.systemIP;
+
+            // if there is no filter - return the device
+            if (filterName.length === 0) {
+              myDevices.push(thisDevice);
+            } else {
+              // if we have to match a filter
+              let found = false;
+              for (let f = 0; f < filterName.length; f += 1) {
+                if (thisDevice.name.indexOf(filterName[f]) >= 0) {
+                  found = true;
+                  break;
+                }
+              }
+              // matching device
+              if (found) {
+                myDevices.push(thisDevice);
+              }
+            }
+          }
+          log.debug(`${origin}: Found #${myDevices.length} devices.`);
+          log.debug(`Devices: ${JSON.stringify(myDevices)}`);
+          return callback({ total: myDevices.length, list: myDevices });
+        }
+        // handle a single device response
+        // !! format the data we send back
+        // !! these fields are config manager fields you need to map to the data we receive
+        const thisDevice = result.response;
+        thisDevice.name = thisDevice.systemName;
+        thisDevice.ostype = `System-${thisDevice.systemType}`;
+        thisDevice.port = thisDevice.systemPort;
+        thisDevice.ipaddress = thisDevice.systemIP;
+
+        // if there is no filter - return the device
+        if (filterName.length === 0) {
+          log.debug(`${origin}: Found #1 device.`);
+          log.debug(`Device: ${JSON.stringify(thisDevice)}`);
+          return callback({ total: 1, list: [thisDevice] });
+        }
+
+        // if there is a filter need to check for matching device
+        let found = false;
+        for (let f = 0; f < filterName.length; f += 1) {
+          if (thisDevice.name.indexOf(filterName[f]) >= 0) {
+            found = true;
+            break;
+          }
+        }
+        // matching device
+        if (found) {
+          log.debug(`${origin}: Found #1 device.`);
+          log.debug(`Device Found: ${JSON.stringify(thisDevice)}`);
+          return callback({ total: 1, list: [thisDevice] });
+        }
+        // not a matching device
+        log.debug(`${origin}: No matching device found.`);
+        return callback({ total: 0, list: [] });
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @summary Gets the status for the provided appliance
+   *
+   * @function isAlive
+   * @param {String} deviceName - the deviceName of the appliance. (required)
+   *
+   * @param {configCallback} callback - callback function to return the result
+   *                                    (appliance isAlive) or the error
+   */
+  isAlive(deviceName, callback) {
+    const meth = 'adapter-isAlive';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    // verify the required fields have been provided
+    if (deviceName === undefined || deviceName === null || deviceName === '' || deviceName.length === 0) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['deviceName'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    try {
+      // need to get the device so we can convert the deviceName to an id
+      // !! if we can do a lookup by name the getDevicesFiltered may not be necessary
+      const opts = {
+        filter: {
+          name: deviceName
+        }
+      };
+      return this.getDevicesFiltered(opts, (devs, ferr) => {
+        // if we received an error or their is no response on the results return an error
+        if (ferr) {
+          return callback(null, ferr);
+        }
+        if (devs.list.length < 1) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, `Did Not Find Device ${deviceName}`, [], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+        // get the uuid from the device
+        const { uuid } = devs.list[0];
+
+        // !! using Generic makes it easier on the Adapter Builder (just need to change the path)
+        // !! you can also replace with a specific call if that is easier
+        const uriPath = `/call/toget/status/${uuid}`;
+        return this.genericAdapterRequest(uriPath, 'GET', {}, {}, {}, (result, error) => {
+          // if we received an error or their is no response on the results return an error
+          if (error) {
+            return callback(null, error);
+          }
+          // !! should update this to make sure we are checking for the appropriate object/field
+          if (!result.response || !result.response.returnObj || !Object.hasOwnProperty.call(result.response.returnObj, 'statusField')) {
+            const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['isAlive'], null, null, null);
+            log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+            return callback(null, errorObj);
+          }
+
+          // !! return the response - Update to the appropriate object/field
+          return callback(!result.response.returnObj.statusField);
+        });
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @summary Gets a config for the provided Appliance
+   *
+   * @function getConfig
+   * @param {String} deviceName - the deviceName of the appliance. (required)
+   * @param {String} format - the desired format of the config. (optional)
+   *
+   * @param {configCallback} callback - callback function to return the result
+   *                                    (appliance config) or the error
+   */
+  getConfig(deviceName, format, callback) {
+    const meth = 'adapter-getConfig';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    // verify the required fields have been provided
+    if (deviceName === undefined || deviceName === null || deviceName === '' || deviceName.length === 0) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['deviceName'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    try {
+      // need to get the device so we can convert the deviceName to an id
+      // !! if we can do a lookup by name the getDevicesFiltered may not be necessary
+      const opts = {
+        filter: {
+          name: deviceName
+        }
+      };
+      return this.getDevicesFiltered(opts, (devs, ferr) => {
+        // if we received an error or their is no response on the results return an error
+        if (ferr) {
+          return callback(null, ferr);
+        }
+        if (devs.list.length < 1) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, `Did Not Find Device ${deviceName}`, [], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+        // get the uuid from the device
+        const { uuid } = devs.list[0];
+
+        // !! using Generic makes it easier on the Adapter Builder (just need to change the path)
+        // !! you can also replace with a specific call if that is easier
+        const uriPath = `/call/toget/config/${uuid}`;
+        return this.genericAdapterRequest(uriPath, 'GET', {}, {}, {}, (result, error) => {
+          // if we received an error or their is no response on the results return an error
+          if (error) {
+            return callback(null, error);
+          }
+
+          // return the result
+          const newResponse = {
+            response: JSON.stringify(result.response, null, 2)
+          };
+          return callback(newResponse);
+        });
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @summary Gets the device count from the system
+   *
+   * @function getCount
+   *
+   * @param {getCallback} callback - callback function to return the result
+   *                                    (count) or the error
+   */
+  getCount(callback) {
+    const meth = 'adapter-getCount';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    // verify the required fields have been provided
+
+    try {
+      // !! using Generic makes it easier on the Adapter Builder (just need to change the path)
+      // !! you can also replace with a specific call if that is easier
+      const uriPath = '/call/toget/count';
+      return this.genericAdapterRequest(uriPath, 'GET', {}, {}, {}, (result, error) => {
+        // if we received an error or their is no response on the results return an error
+        if (error) {
+          return callback(null, error);
+        }
+
+        // return the result
+        return callback({ count: result.response });
       });
     } catch (ex) {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);

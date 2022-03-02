@@ -100,8 +100,8 @@ module.exports = {
    *
    * @function decryptProperties
    */
-  decryptProperties: (props, dirname, discovery) => {
-    const propertyEncryptionClassPath = path.join(dirname, '../../../@itential/pronghorn-core/core/PropertyEncryption.js');
+  decryptProperties: (props, iapDir, discovery) => {
+    const propertyEncryptionClassPath = path.join(iapDir, 'node_modules/@itential/pronghorn-core/core/PropertyEncryption.js');
     const isEncrypted = props.pathProps.encrypted;
     const PropertyEncryption = discovery.require(propertyEncryptionClassPath, isEncrypted);
     const propertyEncryption = new PropertyEncryption({
@@ -177,12 +177,12 @@ module.exports = {
   verifyInstallationDir: (dirname, name) => {
     const pathArray = dirname.split(path.sep);
     const expectedPath = `node_modules/${name}`;
-    const currentPath = pathArray.slice(pathArray.length - 4, pathArray.length - 1).join('/');
-    if (expectedPath !== currentPath) {
-      throw new Error(`adapter should be installed under ${expectedPath}`);
+    const currentPath = pathArray.slice(pathArray.length - 3, pathArray.length).join('/');
+    if (currentPath.trim() !== expectedPath.trim()) {
+      throw new Error(`adapter should be installed under ${expectedPath} but is installed under ${currentPath}`);
     }
 
-    const serverFile = path.join(dirname, '../../../..', 'server.js');
+    const serverFile = path.join(dirname, '../../../', 'server.js');
     if (!fs.existsSync(serverFile)) {
       throw new Error(`adapter should be installed under IAP/${expectedPath}`);
     }
@@ -304,21 +304,70 @@ module.exports = {
    * @param {Object} adapterPronghorn - ./pronghorn.json in adapter dir
    * @param {Object} sampleProperties - './sampleProperties.json' in adapter dir
    */
-  createAdapter: (pronghornProps, profileItem, sampleProperties, adapterPronghorn) => {
-    const adapter = {
-      mongoProps: pronghornProps.mongoProps,
-      isEncrypted: pronghornProps.pathProps.encrypted,
-      model: adapterPronghorn.id,
-      name: sampleProperties.id,
-      type: adapterPronghorn.type,
-      properties: sampleProperties,
-      redisProps: profileItem.redisProps,
-      loggerProps: profileItem.loggerProps,
-      rabbitmq: profileItem.rabbitmq
-    };
+  createAdapter: function createAdapter(pronghornProps, profileItem, sampleProperties, adapterPronghorn) {
+    const dirname = this.getDirname();
+    const packagePath = `${dirname.split('node_modules')[0]}package.json`;
+    const info = JSON.parse(fs.readFileSync(packagePath));
+    const version = parseInt(info.version.split('.')[0], 10);
+
+    let adapter = {};
+    if (version >= 2020) {
+      adapter = {
+        isEncrypted: pronghornProps.pathProps.encrypted,
+        model: adapterPronghorn.id,
+        name: sampleProperties.id,
+        type: adapterPronghorn.type,
+        properties: sampleProperties,
+        loggerProps: profileItem.loggerProps
+      };
+    } else {
+      adapter = {
+        mongoProps: pronghornProps.mongoProps,
+        isEncrypted: pronghornProps.pathProps.encrypted,
+        model: adapterPronghorn.id,
+        name: sampleProperties.id,
+        type: adapterPronghorn.type,
+        properties: sampleProperties,
+        redisProps: profileItem.redisProps,
+        loggerProps: profileItem.loggerProps,
+        rabbitmq: profileItem.rabbitmq
+      };
+      adapter.mongoProps.pdb = true;
+    }
+
     adapter.loggerProps.log_filename = `adapter-${adapter.name}.log`;
-    adapter.mongoProps.pdb = true;
     return adapter;
+  },
+
+  getPronghornProps: function getPronghornProps(iapDir) {
+    console.log('Retrieving properties.json file...');
+    const rawProps = require(path.join(iapDir, 'properties.json'));
+    console.log('Decrypting properties...');
+    const { Discovery } = require(path.join(iapDir, 'node_modules/@itential/itential-utils'));
+    const discovery = new Discovery();
+    const pronghornProps = this.decryptProperties(rawProps, iapDir, discovery);
+    console.log('Found properties.\n');
+    return pronghornProps;
+  },
+
+  // get database connection and existing adapter config
+  getAdapterConfig: async function getAdapterConfig() {
+    const newDirname = this.getDirname();
+    let iapDir;
+    if (this.withinIAP(newDirname)) { // when this script is called from IAP
+      iapDir = newDirname;
+    } else {
+      iapDir = path.join(this.getDirname(), 'utils', '../../../../');
+    }
+    const pronghornProps = this.getPronghornProps(iapDir);
+    console.log('Connecting to Database...');
+    const database = await this.connect(iapDir, pronghornProps);
+    console.log('Connection established.');
+    const { name } = require(path.join(__dirname, '..', 'package.json'));
+    const serviceItem = await database.collection(this.SERVICE_CONFIGS_COLLECTION).findOne(
+      { model: name }
+    );
+    return { database, serviceItem, pronghornProps };
   },
 
   /**
@@ -368,5 +417,35 @@ module.exports = {
     } catch (error) {
       return false;
     }
+  },
+
+  /**
+   * @summary Used to determine the proper dirname to return in case adapter reference is
+   * symlinked withink IAP
+   * @returns the symlinked path (using pwd command) of the adapter in case properties.json
+   * is not found in the original path
+   * @function getDirname
+   */
+  getDirname: function getDirname() {
+    if (this.withinIAP(path.join(__dirname, '../../../../'))) {
+      return __dirname;
+    }
+    const { stdout } = this.systemSync('pwd', true);
+    return stdout.trim();
+  },
+
+  /**
+   * @summary connect to mongodb
+   *
+   * @function connect
+   * @param {Object} properties - pronghornProps
+   */
+  connect: async function connect(iapDir, properties) {
+    // Connect to Mongo
+    const { MongoDBConnection } = require(path.join(iapDir, 'node_modules/@itential/database'));
+    const connection = new MongoDBConnection(properties.mongoProps);
+    const database = await connection.connect(true);
+    return database;
   }
+
 };

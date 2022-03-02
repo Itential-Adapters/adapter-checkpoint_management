@@ -232,6 +232,21 @@
           "type": "boolean",
           "description": "This property turns on logging of Authentication Information and should only be true when debugging authentication and connectivity",
           "default": false
+        },
+        "client_id": {
+          "type": "string",
+          "description": "The client id for OAuth requests - can also use username depending on schema",
+          "default": ""
+        },
+        "client_secret": {
+          "type": "string",
+          "description": "The client secret for OAuth requests - can also use password depending on schema",
+          "default": ""
+        },
+        "grant_type": {
+          "type": "string",
+          "description": "The grant type for OAuth requests - can also provide in schema",
+          "default": ""
         }
       },
       "required": [
