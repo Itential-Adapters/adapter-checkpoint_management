@@ -15,13 +15,18 @@ const basicGet = require('./basicGet');
 const { name } = require('../package.json');
 const sampleProperties = require('../sampleProperties.json');
 const adapterPronghorn = require('../pronghorn.json');
+const { addAuthInfo } = require('./addAuth');
 
-const { troubleshoot, getAdapterConfig, offline } = require('./troubleshootingAdapter');
+const { troubleshoot, offline } = require('./troubleshootingAdapter');
 
 const main = async (command) => {
-  const iapDir = path.join(__dirname, '../../../../');
+  const dirname = utils.getDirname();
+  const iapDir = path.join(dirname, '../../../');
   if (!utils.withinIAP(iapDir)) {
-    if (command === 'connectivity') {
+    if (command === 'install') {
+      console.log('Not currently in IAP directory - installation not possible');
+      process.exit(0);
+    } else if (command === 'connectivity') {
       const { host } = sampleProperties.properties;
       console.log(`perform networking diagnositics to ${host}`);
       await utils.runConnectivity(host);
@@ -43,7 +48,7 @@ const main = async (command) => {
   if (command === undefined) {
     await troubleshoot({}, true, true);
   } else if (command === 'install') {
-    const { database, serviceItem, pronghornProps } = await getAdapterConfig();
+    const { database, serviceItem, pronghornProps } = await utils.getAdapterConfig();
     const filter = { id: pronghornProps.id };
     const profileItem = await database.collection(utils.IAP_PROFILES_COLLECTION).findOne(filter);
     if (!profileItem) {
@@ -74,14 +79,16 @@ const main = async (command) => {
         process.exit(0);
       }
     } else {
-      utils.verifyInstallationDir(__dirname, name);
-      utils.npmInstall();
+      utils.verifyInstallationDir(dirname, name);
       utils.runTest();
       if (rls.keyInYN(`Do you want to install ${name} to IAP?`)) {
         console.log('Creating database entries...');
         const adapter = utils.createAdapter(
           pronghornProps, profileItem, sampleProperties, adapterPronghorn
         );
+
+        adapter.properties.properties = await addAuthInfo(adapter.properties.properties);
+
         await database.collection(utils.SERVICE_CONFIGS_COLLECTION).insertOne(adapter);
         profileItem.services.push(adapter.name);
         const update = { $set: { services: profileItem.services } };
@@ -94,7 +101,7 @@ const main = async (command) => {
       process.exit(0);
     }
   } else if (['healthcheck', 'basicget', 'connectivity'].includes(command)) {
-    const { serviceItem } = await getAdapterConfig();
+    const { serviceItem } = await utils.getAdapterConfig();
     if (serviceItem) {
       const adapter = serviceItem;
       const a = basicGet.getAdapterInstance(adapter);
@@ -154,7 +161,6 @@ program.parse(process.argv);
 if (process.argv.length < 3) {
   main();
 }
-
 const allowedParams = ['install', 'healthcheck', 'basicget', 'connectivity'];
 if (process.argv.length === 3 && !allowedParams.includes(process.argv[2])) {
   console.log(`unknown parameter ${process.argv[2]}`);

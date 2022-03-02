@@ -22,6 +22,7 @@ const AjvCl = require('ajv');
 const PropUtilCl = require('@itentialopensource/adapter-utils').PropertyUtility;
 const RequestHandlerCl = require('@itentialopensource/adapter-utils').RequestHandler;
 
+const entitiesToDB = require(path.join(__dirname, 'utils/entitiesToDB'));
 const troubleshootingAdapter = require(path.join(__dirname, 'utils/troubleshootingAdapter'));
 const tbUtils = require(path.join(__dirname, 'utils/tbUtils'));
 
@@ -659,7 +660,7 @@ class AdapterBase extends EventEmitterCl {
     }
 
     // make sure the entities directory exists
-    const entitydir = path.join(__dirname, '../entities');
+    const entitydir = path.join(__dirname, 'entities');
     if (!fs.statSync(entitydir).isDirectory()) {
       log.error('Could not find the entities directory');
       result.found = false;
@@ -687,7 +688,7 @@ class AdapterBase extends EventEmitterCl {
               log.info(`          method: ${actions.actions[a].method} path: ${actions.actions[a].entitypath}`);
               const fitem = {
                 entity: entities[e],
-                action: actions[a].name,
+                action: actions.actions[a].name,
                 method: actions.actions[a].method,
                 path: actions.actions[a].entitypath
               };
@@ -821,7 +822,7 @@ class AdapterBase extends EventEmitterCl {
    */
   async runConnectivity(callback) {
     try {
-      const { serviceItem } = await troubleshootingAdapter.getAdapterConfig();
+      const { serviceItem } = await tbUtils.getAdapterConfig();
       const { host } = serviceItem.properties.properties;
       const result = tbUtils.runConnectivity(host, false);
       if (result.failCount > 0) {
@@ -999,6 +1000,27 @@ class AdapterBase extends EventEmitterCl {
       return this.requestHandlerInst.getAllCapabilities();
     } catch (e) {
       return [];
+    }
+  }
+
+  /**
+   * @summary moves entities to mongo database
+   *
+   * @function moveEntitiesToDB
+   *
+   * @return {Callback} - containing the response from the mongo transaction
+   */
+  moveEntitiesToDB(callback) {
+    const meth = 'adapterBase-moveEntitiesToDB';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    try {
+      return callback(entitiesToDB.moveEntitiesToDB(__dirname, { pronghornProps: this.allProps, id: this.id }), null);
+    } catch (err) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, err);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
     }
   }
 }

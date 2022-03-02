@@ -23,7 +23,7 @@ const anything = td.matchers.anything();
 let logLevel = 'none';
 const stub = true;
 const isRapidFail = false;
-const attemptTimeout = 120000;
+const attemptTimeout = 600000;
 
 // these variables can be changed to run in integrated mode so easier to set them here
 // always check these in with bogus data!!!
@@ -65,7 +65,10 @@ global.pronghornProps = {
           token_cache: 'local',
           auth_field: 'header.headers.Authorization',
           auth_field_format: 'Basic {b64}{username}:{password}{/b64}',
-          auth_logging: false
+          auth_logging: false,
+          client_id: '',
+          client_secret: '',
+          grant_type: ''
         },
         healthcheck: {
           type: 'startup',
@@ -198,7 +201,7 @@ function runErrorAsserts(data, error, code, origin, displayStr) {
 }
 
 // require the adapter that we are going to be using
-const CheckpointManagement = require('../../adapter.js');
+const CheckpointManagement = require('../../adapter');
 
 // delete the .DS_Store directory in entities -- otherwise this will cause errors
 const dirPath = path.join(__dirname, '../../entities/.DS_Store');
@@ -240,6 +243,8 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
         try {
           assert.notEqual(null, a);
           assert.notEqual(undefined, a);
+          const checkId = global.pronghornProps.adapterProps.adapters[0].id;
+          assert.equal(checkId, a.id);
           assert.notEqual(null, a.allProps);
           const check = global.pronghornProps.adapterProps.adapters[0].properties.healthcheck.type;
           assert.equal(check, a.healthcheckType);
@@ -321,13 +326,103 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           done(error);
         }
       });
-      it('package.json should be customized', (done) => {
+      it('package.json standard fields should be customized', (done) => {
         try {
           const packageDotJson = require('../../package.json');
           assert.notEqual(-1, packageDotJson.name.indexOf('checkpoint_management'));
           assert.notEqual(undefined, packageDotJson.version);
           assert.notEqual(null, packageDotJson.version);
           assert.notEqual('', packageDotJson.version);
+          assert.notEqual(undefined, packageDotJson.description);
+          assert.notEqual(null, packageDotJson.description);
+          assert.notEqual('', packageDotJson.description);
+          assert.equal('adapter.js', packageDotJson.main);
+          assert.notEqual(undefined, packageDotJson.wizardVersion);
+          assert.notEqual(null, packageDotJson.wizardVersion);
+          assert.notEqual('', packageDotJson.wizardVersion);
+          assert.notEqual(undefined, packageDotJson.engineVersion);
+          assert.notEqual(null, packageDotJson.engineVersion);
+          assert.notEqual('', packageDotJson.engineVersion);
+          assert.equal('http', packageDotJson.adapterType);
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('package.json proper scripts should be provided', (done) => {
+        try {
+          const packageDotJson = require('../../package.json');
+          assert.notEqual(undefined, packageDotJson.scripts);
+          assert.notEqual(null, packageDotJson.scripts);
+          assert.notEqual('', packageDotJson.scripts);
+          assert.equal('node utils/setup.js && npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions', packageDotJson.scripts.preinstall);
+          assert.equal('node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js . --ext .json --ext .js', packageDotJson.scripts.lint);
+          assert.equal('node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js . --ext .json --ext .js --quiet', packageDotJson.scripts['lint:errors']);
+          assert.equal('mocha test/unit/adapterBaseTestUnit.js --LOG=error', packageDotJson.scripts['test:baseunit']);
+          assert.equal('mocha test/unit/adapterTestUnit.js --LOG=error', packageDotJson.scripts['test:unit']);
+          assert.equal('mocha test/integration/adapterTestIntegration.js --LOG=error', packageDotJson.scripts['test:integration']);
+          assert.equal('nyc --reporter html --reporter text mocha --reporter dot test/*', packageDotJson.scripts['test:cover']);
+          assert.equal('npm run test:baseunit && npm run test:unit && npm run test:integration', packageDotJson.scripts.test);
+          assert.equal('npm publish --registry=https://registry.npmjs.org --access=public', packageDotJson.scripts.deploy);
+          assert.equal('npm run deploy', packageDotJson.scripts.build);
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('package.json proper directories should be provided', (done) => {
+        try {
+          const packageDotJson = require('../../package.json');
+          assert.notEqual(undefined, packageDotJson.repository);
+          assert.notEqual(null, packageDotJson.repository);
+          assert.notEqual('', packageDotJson.repository);
+          assert.equal('git', packageDotJson.repository.type);
+          assert.equal('git@gitlab.com:itentialopensource/adapters/', packageDotJson.repository.url.substring(0, 43));
+          assert.equal('https://gitlab.com/itentialopensource/adapters/', packageDotJson.homepage.substring(0, 47));
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('package.json proper dependencies should be provided', (done) => {
+        try {
+          const packageDotJson = require('../../package.json');
+          assert.notEqual(undefined, packageDotJson.dependencies);
+          assert.notEqual(null, packageDotJson.dependencies);
+          assert.notEqual('', packageDotJson.dependencies);
+          assert.equal('^6.12.0', packageDotJson.dependencies.ajv);
+          assert.equal('^0.21.0', packageDotJson.dependencies.axios);
+          assert.equal('^2.20.0', packageDotJson.dependencies.commander);
+          assert.equal('^8.1.0', packageDotJson.dependencies['fs-extra']);
+          assert.equal('^9.0.1', packageDotJson.dependencies.mocha);
+          assert.equal('^2.0.1', packageDotJson.dependencies['mocha-param']);
+          assert.equal('^0.5.3', packageDotJson.dependencies['network-diagnostics']);
+          assert.equal('^15.1.0', packageDotJson.dependencies.nyc);
+          assert.equal('^1.4.10', packageDotJson.dependencies['readline-sync']);
+          assert.equal('^7.3.2', packageDotJson.dependencies.semver);
+          assert.equal('^3.3.3', packageDotJson.dependencies.winston);
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('package.json proper dev dependencies should be provided', (done) => {
+        try {
+          const packageDotJson = require('../../package.json');
+          assert.notEqual(undefined, packageDotJson.devDependencies);
+          assert.notEqual(null, packageDotJson.devDependencies);
+          assert.notEqual('', packageDotJson.devDependencies);
+          assert.equal('^4.3.4', packageDotJson.devDependencies.chai);
+          assert.equal('^7.29.0', packageDotJson.devDependencies.eslint);
+          assert.equal('^14.2.1', packageDotJson.devDependencies['eslint-config-airbnb-base']);
+          assert.equal('^2.23.4', packageDotJson.devDependencies['eslint-plugin-import']);
+          assert.equal('^3.0.0', packageDotJson.devDependencies['eslint-plugin-json']);
+          assert.equal('^0.6.3', packageDotJson.devDependencies['package-json-validator']);
+          assert.equal('^3.16.1', packageDotJson.devDependencies.testdouble);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -352,8 +447,34 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
         try {
           const pronghornDotJson = require('../../pronghorn.json');
           assert.notEqual(-1, pronghornDotJson.id.indexOf('checkpoint_management'));
+          assert.equal('Adapter', pronghornDotJson.type);
           assert.equal('CheckpointManagement', pronghornDotJson.export);
           assert.equal('Checkpoint_Management', pronghornDotJson.title);
+          assert.equal('adapter.js', pronghornDotJson.src);
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('pronghorn.json should contain generic adapter methods', (done) => {
+        try {
+          const pronghornDotJson = require('../../pronghorn.json');
+          assert.notEqual(undefined, pronghornDotJson.methods);
+          assert.notEqual(null, pronghornDotJson.methods);
+          assert.notEqual('', pronghornDotJson.methods);
+          assert.equal(true, Array.isArray(pronghornDotJson.methods));
+          assert.notEqual(0, pronghornDotJson.methods.length);
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'updateAdapterConfiguration'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'findPath'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'troubleshoot'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'runHealthcheck'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'runConnectivity'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'runBasicGet'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'suspend'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'unsuspend'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'getQueue'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'genericAdapterRequest'));
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -492,6 +613,117 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
         try {
           const propertiesDotJson = require('../../propertiesSchema.json');
           assert.equal('adapter-checkpoint_management', propertiesDotJson.$id);
+          assert.equal('object', propertiesDotJson.type);
+          assert.equal('http://json-schema.org/draft-07/schema#', propertiesDotJson.$schema);
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('propertiesSchema.json should contain generic adapter properties', (done) => {
+        try {
+          const propertiesDotJson = require('../../propertiesSchema.json');
+          assert.notEqual(undefined, propertiesDotJson.properties);
+          assert.notEqual(null, propertiesDotJson.properties);
+          assert.notEqual('', propertiesDotJson.properties);
+          assert.equal('string', propertiesDotJson.properties.host.type);
+          assert.equal('integer', propertiesDotJson.properties.port.type);
+          assert.equal('boolean', propertiesDotJson.properties.stub.type);
+          assert.notEqual(undefined, propertiesDotJson.definitions.authentication);
+          assert.notEqual(null, propertiesDotJson.definitions.authentication);
+          assert.notEqual('', propertiesDotJson.definitions.authentication);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.auth_method.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.username.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.password.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.token.type);
+          assert.equal('integer', propertiesDotJson.definitions.authentication.properties.invalid_token_error.type);
+          assert.equal('integer', propertiesDotJson.definitions.authentication.properties.token_timeout.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.token_cache.type);
+          assert.equal(true, Array.isArray(propertiesDotJson.definitions.authentication.properties.auth_field.type));
+          assert.equal(true, Array.isArray(propertiesDotJson.definitions.authentication.properties.auth_field_format.type));
+          assert.equal('boolean', propertiesDotJson.definitions.authentication.properties.auth_logging.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.client_id.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.client_secret.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.grant_type.type);
+          assert.notEqual('', propertiesDotJson.definitions.ssl);
+          assert.equal('string', propertiesDotJson.definitions.ssl.properties.ecdhCurve.type);
+          assert.equal('boolean', propertiesDotJson.definitions.ssl.properties.enabled.type);
+          assert.equal('boolean', propertiesDotJson.definitions.ssl.properties.accept_invalid_cert.type);
+          assert.equal('string', propertiesDotJson.definitions.ssl.properties.ca_file.type);
+          assert.equal('string', propertiesDotJson.definitions.ssl.properties.key_file.type);
+          assert.equal('string', propertiesDotJson.definitions.ssl.properties.cert_file.type);
+          assert.equal('string', propertiesDotJson.definitions.ssl.properties.secure_protocol.type);
+          assert.equal('string', propertiesDotJson.definitions.ssl.properties.ciphers.type);
+          assert.equal('string', propertiesDotJson.properties.base_path.type);
+          assert.equal('string', propertiesDotJson.properties.version.type);
+          assert.equal('string', propertiesDotJson.properties.cache_location.type);
+          assert.equal('boolean', propertiesDotJson.properties.encode_pathvars.type);
+          assert.equal(true, Array.isArray(propertiesDotJson.properties.save_metric.type));
+          assert.equal('string', propertiesDotJson.properties.protocol.type);
+          assert.notEqual(undefined, propertiesDotJson.definitions);
+          assert.notEqual(null, propertiesDotJson.definitions);
+          assert.notEqual('', propertiesDotJson.definitions);
+          assert.notEqual(undefined, propertiesDotJson.definitions.healthcheck);
+          assert.notEqual(null, propertiesDotJson.definitions.healthcheck);
+          assert.notEqual('', propertiesDotJson.definitions.healthcheck);
+          assert.equal('string', propertiesDotJson.definitions.healthcheck.properties.type.type);
+          assert.equal('integer', propertiesDotJson.definitions.healthcheck.properties.frequency.type);
+          assert.equal('object', propertiesDotJson.definitions.healthcheck.properties.query_object.type);
+          assert.notEqual(undefined, propertiesDotJson.definitions.throttle);
+          assert.notEqual(null, propertiesDotJson.definitions.throttle);
+          assert.notEqual('', propertiesDotJson.definitions.throttle);
+          assert.equal('boolean', propertiesDotJson.definitions.throttle.properties.throttle_enabled.type);
+          assert.equal('integer', propertiesDotJson.definitions.throttle.properties.number_pronghorns.type);
+          assert.equal('string', propertiesDotJson.definitions.throttle.properties.sync_async.type);
+          assert.equal('integer', propertiesDotJson.definitions.throttle.properties.max_in_queue.type);
+          assert.equal('integer', propertiesDotJson.definitions.throttle.properties.concurrent_max.type);
+          assert.equal('integer', propertiesDotJson.definitions.throttle.properties.expire_timeout.type);
+          assert.equal('integer', propertiesDotJson.definitions.throttle.properties.avg_runtime.type);
+          assert.equal('array', propertiesDotJson.definitions.throttle.properties.priorities.type);
+          assert.notEqual(undefined, propertiesDotJson.definitions.request);
+          assert.notEqual(null, propertiesDotJson.definitions.request);
+          assert.notEqual('', propertiesDotJson.definitions.request);
+          assert.equal('integer', propertiesDotJson.definitions.request.properties.number_redirects.type);
+          assert.equal('integer', propertiesDotJson.definitions.request.properties.number_retries.type);
+          assert.equal(true, Array.isArray(propertiesDotJson.definitions.request.properties.limit_retry_error.type));
+          assert.equal('array', propertiesDotJson.definitions.request.properties.failover_codes.type);
+          assert.equal('integer', propertiesDotJson.definitions.request.properties.attempt_timeout.type);
+          assert.equal('object', propertiesDotJson.definitions.request.properties.global_request.type);
+          assert.equal('object', propertiesDotJson.definitions.request.properties.global_request.properties.payload.type);
+          assert.equal('object', propertiesDotJson.definitions.request.properties.global_request.properties.uriOptions.type);
+          assert.equal('object', propertiesDotJson.definitions.request.properties.global_request.properties.addlHeaders.type);
+          assert.equal('object', propertiesDotJson.definitions.request.properties.global_request.properties.authData.type);
+          assert.equal('boolean', propertiesDotJson.definitions.request.properties.healthcheck_on_timeout.type);
+          assert.equal('boolean', propertiesDotJson.definitions.request.properties.return_raw.type);
+          assert.equal('boolean', propertiesDotJson.definitions.request.properties.archiving.type);
+          assert.equal('boolean', propertiesDotJson.definitions.request.properties.return_request.type);
+          assert.notEqual(undefined, propertiesDotJson.definitions.proxy);
+          assert.notEqual(null, propertiesDotJson.definitions.proxy);
+          assert.notEqual('', propertiesDotJson.definitions.proxy);
+          assert.equal('boolean', propertiesDotJson.definitions.proxy.properties.enabled.type);
+          assert.equal('string', propertiesDotJson.definitions.proxy.properties.host.type);
+          assert.equal('integer', propertiesDotJson.definitions.proxy.properties.port.type);
+          assert.equal('string', propertiesDotJson.definitions.proxy.properties.protocol.type);
+          assert.equal('string', propertiesDotJson.definitions.proxy.properties.username.type);
+          assert.equal('string', propertiesDotJson.definitions.proxy.properties.password.type);
+          assert.notEqual(undefined, propertiesDotJson.definitions.ssl);
+          assert.notEqual(null, propertiesDotJson.definitions.ssl);
+          assert.notEqual(undefined, propertiesDotJson.definitions.mongo);
+          assert.notEqual(null, propertiesDotJson.definitions.mongo);
+          assert.notEqual('', propertiesDotJson.definitions.mongo);
+          assert.equal('string', propertiesDotJson.definitions.mongo.properties.host.type);
+          assert.equal('integer', propertiesDotJson.definitions.mongo.properties.port.type);
+          assert.equal('string', propertiesDotJson.definitions.mongo.properties.database.type);
+          assert.equal('string', propertiesDotJson.definitions.mongo.properties.username.type);
+          assert.equal('string', propertiesDotJson.definitions.mongo.properties.password.type);
+          assert.equal('string', propertiesDotJson.definitions.mongo.properties.replSet.type);
+          assert.equal('object', propertiesDotJson.definitions.mongo.properties.db_ssl.type);
+          assert.equal('boolean', propertiesDotJson.definitions.mongo.properties.db_ssl.properties.enabled.type);
+          assert.equal('boolean', propertiesDotJson.definitions.mongo.properties.db_ssl.properties.accept_invalid_cert.type);
+          assert.equal('string', propertiesDotJson.definitions.mongo.properties.db_ssl.properties.ca_file.type);
+          assert.equal('string', propertiesDotJson.definitions.mongo.properties.db_ssl.properties.key_file.type);
+          assert.equal('string', propertiesDotJson.definitions.mongo.properties.db_ssl.properties.cert_file.type);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -512,6 +744,50 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           done(error);
         }
       });
+      it('error.json should have standard adapter errors', (done) => {
+        try {
+          const errorDotJson = require('../../error.json');
+          assert.notEqual(undefined, errorDotJson.errors);
+          assert.notEqual(null, errorDotJson.errors);
+          assert.notEqual('', errorDotJson.errors);
+          assert.equal(true, Array.isArray(errorDotJson.errors));
+          assert.notEqual(0, errorDotJson.errors.length);
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.100'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.101'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.102'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.110'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.111'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.112'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.113'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.114'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.115'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.116'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.300'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.301'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.302'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.303'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.304'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.305'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.310'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.311'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.312'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.320'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.321'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.400'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.401'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.402'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.500'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.501'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.502'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.503'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.600'));
+          assert.notEqual(undefined, errorDotJson.errors.find((e) => e.icode === 'AD.900'));
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
     });
 
     describe('sampleProperties.json', () => {
@@ -521,6 +797,119 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
             assert.equal(true, val);
             done();
           });
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('sampleProperties.json should contain generic adapter properties', (done) => {
+        try {
+          const sampleDotJson = require('../../sampleProperties.json');
+          assert.notEqual(-1, sampleDotJson.id.indexOf('checkpoint_management'));
+          assert.equal('CheckpointManagement', sampleDotJson.type);
+          assert.notEqual(undefined, sampleDotJson.properties);
+          assert.notEqual(null, sampleDotJson.properties);
+          assert.notEqual('', sampleDotJson.properties);
+          assert.notEqual(undefined, sampleDotJson.properties.host);
+          assert.notEqual(undefined, sampleDotJson.properties.port);
+          assert.notEqual(undefined, sampleDotJson.properties.stub);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication);
+          assert.notEqual(null, sampleDotJson.properties.authentication);
+          assert.notEqual('', sampleDotJson.properties.authentication);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.auth_method);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.username);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.password);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.token);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.invalid_token_error);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.token_timeout);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.token_cache);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.auth_field);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.auth_field_format);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.auth_logging);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.client_id);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.client_secret);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.grant_type);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl);
+          assert.notEqual(null, sampleDotJson.properties.ssl);
+          assert.notEqual('', sampleDotJson.properties.ssl);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl.ecdhCurve);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl.enabled);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl.accept_invalid_cert);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl.ca_file);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl.key_file);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl.cert_file);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl.secure_protocol);
+          assert.notEqual(undefined, sampleDotJson.properties.ssl.ciphers);
+
+          assert.notEqual(undefined, sampleDotJson.properties.base_path);
+          assert.notEqual(undefined, sampleDotJson.properties.version);
+          assert.notEqual(undefined, sampleDotJson.properties.cache_location);
+          assert.notEqual(undefined, sampleDotJson.properties.encode_pathvars);
+          assert.notEqual(undefined, sampleDotJson.properties.save_metric);
+          assert.notEqual(undefined, sampleDotJson.properties.protocol);
+          assert.notEqual(undefined, sampleDotJson.properties.stub);
+          assert.notEqual(undefined, sampleDotJson.properties.stub);
+          assert.notEqual(undefined, sampleDotJson.properties.stub);
+          assert.notEqual(undefined, sampleDotJson.properties.stub);
+          assert.notEqual(undefined, sampleDotJson.properties.healthcheck);
+          assert.notEqual(null, sampleDotJson.properties.healthcheck);
+          assert.notEqual('', sampleDotJson.properties.healthcheck);
+          assert.notEqual(undefined, sampleDotJson.properties.healthcheck.type);
+          assert.notEqual(undefined, sampleDotJson.properties.healthcheck.frequency);
+          assert.notEqual(undefined, sampleDotJson.properties.healthcheck.query_object);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle);
+          assert.notEqual(null, sampleDotJson.properties.throttle);
+          assert.notEqual('', sampleDotJson.properties.throttle);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle.throttle_enabled);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle.number_pronghorns);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle.sync_async);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle.max_in_queue);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle.concurrent_max);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle.expire_timeout);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle.avg_runtime);
+          assert.notEqual(undefined, sampleDotJson.properties.throttle.priorities);
+          assert.notEqual(undefined, sampleDotJson.properties.request);
+          assert.notEqual(null, sampleDotJson.properties.request);
+          assert.notEqual('', sampleDotJson.properties.request);
+          assert.notEqual(undefined, sampleDotJson.properties.request.number_redirects);
+          assert.notEqual(undefined, sampleDotJson.properties.request.number_retries);
+          assert.notEqual(undefined, sampleDotJson.properties.request.limit_retry_error);
+          assert.notEqual(undefined, sampleDotJson.properties.request.failover_codes);
+          assert.notEqual(undefined, sampleDotJson.properties.request.attempt_timeout);
+          assert.notEqual(undefined, sampleDotJson.properties.request.global_request);
+          assert.notEqual(undefined, sampleDotJson.properties.request.global_request.payload);
+          assert.notEqual(undefined, sampleDotJson.properties.request.global_request.uriOptions);
+          assert.notEqual(undefined, sampleDotJson.properties.request.global_request.addlHeaders);
+          assert.notEqual(undefined, sampleDotJson.properties.request.global_request.authData);
+          assert.notEqual(undefined, sampleDotJson.properties.request.healthcheck_on_timeout);
+          assert.notEqual(undefined, sampleDotJson.properties.request.return_raw);
+          assert.notEqual(undefined, sampleDotJson.properties.request.archiving);
+          assert.notEqual(undefined, sampleDotJson.properties.request.return_request);
+          assert.notEqual(undefined, sampleDotJson.properties.proxy);
+          assert.notEqual(null, sampleDotJson.properties.proxy);
+          assert.notEqual('', sampleDotJson.properties.proxy);
+          assert.notEqual(undefined, sampleDotJson.properties.proxy.enabled);
+          assert.notEqual(undefined, sampleDotJson.properties.proxy.host);
+          assert.notEqual(undefined, sampleDotJson.properties.proxy.port);
+          assert.notEqual(undefined, sampleDotJson.properties.proxy.protocol);
+          assert.notEqual(undefined, sampleDotJson.properties.proxy.username);
+          assert.notEqual(undefined, sampleDotJson.properties.proxy.password);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo);
+          assert.notEqual(null, sampleDotJson.properties.mongo);
+          assert.notEqual('', sampleDotJson.properties.mongo);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.host);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.port);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.database);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.username);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.password);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.replSet);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl.enabled);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl.accept_invalid_cert);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl.ca_file);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl.key_file);
+          assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl.cert_file);
+          done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
           done(error);
@@ -605,6 +994,148 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       it('should have a healthCheck function', (done) => {
         try {
           assert.equal(true, typeof a.healthCheck === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#updateAdapterConfiguration', () => {
+      it('should have a updateAdapterConfiguration function', (done) => {
+        try {
+          assert.equal(true, typeof a.updateAdapterConfiguration === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#findPath', () => {
+      it('should have a findPath function', (done) => {
+        try {
+          assert.equal(true, typeof a.findPath === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('findPath should find atleast one path that matches', (done) => {
+        try {
+          a.findPath('{base_path}/{version}', (data, error) => {
+            try {
+              assert.equal(undefined, error);
+              assert.notEqual(undefined, data);
+              assert.notEqual(null, data);
+              assert.equal(true, data.found);
+              assert.notEqual(undefined, data.foundIn);
+              assert.notEqual(null, data.foundIn);
+              assert.notEqual(0, data.foundIn.length);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#suspend', () => {
+      it('should have a suspend function', (done) => {
+        try {
+          assert.equal(true, typeof a.suspend === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#unsuspend', () => {
+      it('should have a unsuspend function', (done) => {
+        try {
+          assert.equal(true, typeof a.unsuspend === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#getQueue', () => {
+      it('should have a getQueue function', (done) => {
+        try {
+          assert.equal(true, typeof a.getQueue === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#troubleshoot', () => {
+      it('should have a troubleshoot function', (done) => {
+        try {
+          assert.equal(true, typeof a.troubleshoot === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#runHealthcheck', () => {
+      it('should have a runHealthcheck function', (done) => {
+        try {
+          assert.equal(true, typeof a.runHealthcheck === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#runConnectivity', () => {
+      it('should have a runConnectivity function', (done) => {
+        try {
+          assert.equal(true, typeof a.runConnectivity === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#runBasicGet', () => {
+      it('should have a runBasicGet function', (done) => {
+        try {
+          assert.equal(true, typeof a.runBasicGet === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#moveEntitiesToDB', () => {
+      it('should have a moveEntitiesToDB function', (done) => {
+        try {
+          assert.equal(true, typeof a.moveEntitiesToDB === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -741,6 +1272,90 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
     //     }
     //   }).timeout(attemptTimeout);
     // });
+
+    describe('#hasEntities', () => {
+      it('should have a hasEntities function', (done) => {
+        try {
+          assert.equal(true, typeof a.hasEntities === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#hasDevices', () => {
+      it('should have a hasDevices function', (done) => {
+        try {
+          assert.equal(true, typeof a.hasDevices === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#getDevice', () => {
+      it('should have a getDevice function', (done) => {
+        try {
+          assert.equal(true, typeof a.getDevice === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#getDevicesFiltered', () => {
+      it('should have a getDevicesFiltered function', (done) => {
+        try {
+          assert.equal(true, typeof a.getDevicesFiltered === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#isAlive', () => {
+      it('should have a isAlive function', (done) => {
+        try {
+          assert.equal(true, typeof a.isAlive === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#getConfig', () => {
+      it('should have a getConfig function', (done) => {
+        try {
+          assert.equal(true, typeof a.getConfig === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#getCount', () => {
+      it('should have a getCount function', (done) => {
+        try {
+          assert.equal(true, typeof a.getCount === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
 
     /*
     -----------------------------------------------------------------------

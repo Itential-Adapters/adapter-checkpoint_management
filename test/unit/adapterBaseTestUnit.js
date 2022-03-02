@@ -61,7 +61,10 @@ global.pronghornProps = {
           token_cache: 'local',
           auth_field: 'header.headers.Authorization',
           auth_field_format: 'Basic {b64}{username}:{password}{/b64}',
-          auth_logging: false
+          auth_logging: false,
+          client_id: '',
+          client_secret: '',
+          grant_type: ''
         },
         healthcheck: {
           type: 'none',
@@ -194,7 +197,7 @@ function runErrorAsserts(data, error, code, origin, displayStr) {
 }
 
 // require the adapter that we are going to be using
-const AdapterBase = require('../../adapterBase.js');
+const AdapterBase = require('../../adapterBase');
 
 // delete the .DS_Store directory in entities -- otherwise this will cause errors
 const dirPath = path.join(__dirname, '../../entities/.DS_Store');
@@ -314,7 +317,7 @@ describe('[unit] Adapter Base Test', () => {
       });
       it('should return a list of functions', (done) => {
         const returnedFunctions = ['addEntityCache', 'capabilityResults', 'checkActionFiles', 'checkProperties', 'connect', 'encryptProperty',
-          'entityInList', 'findPath', 'getAllCapabilities', 'getAllFunctions', 'getQueue', 'getWorkflowFunctions', 'healthCheck',
+          'entityInList', 'findPath', 'getAllCapabilities', 'getAllFunctions', 'getQueue', 'getWorkflowFunctions', 'healthCheck', 'moveEntitiesToDB',
           'refreshProperties', 'runBasicGet', 'runConnectivity', 'runHealthcheck', 'suspend', 'troubleshoot', 'unsuspend', 'updateAdapterConfiguration', 'addListener',
           'emit', 'eventNames', 'getMaxListeners', 'listenerCount', 'listeners', 'off', 'on', 'once', 'prependListener',
           'prependOnceListener', 'rawListeners', 'removeAllListeners', 'removeListener', 'setMaxListeners'];

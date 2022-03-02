@@ -13,7 +13,10 @@ const winston = require('winston');
 const { expect } = require('chai');
 const { use } = require('chai');
 const td = require('testdouble');
+const util = require('util');
+const pronghorn = require('../../pronghorn.json');
 
+pronghorn.methodsByName = pronghorn.methods.reduce((result, meth) => ({ ...result, [meth.name]: meth }), {});
 const anything = td.matchers.anything();
 
 // stub and attemptTimeout are used throughout the code so set them here
@@ -63,7 +66,10 @@ global.pronghornProps = {
           token_cache: 'local',
           auth_field: 'header.headers.Authorization',
           auth_field_format: 'Basic {b64}{username}:{password}{/b64}',
-          auth_logging: false
+          auth_logging: false,
+          client_id: '',
+          client_secret: '',
+          grant_type: ''
         },
         healthcheck: {
           type: 'startup',
@@ -310,7 +316,7 @@ function saveMockData(entityName, actionName, descriptor, responseData) {
 }
 
 // require the adapter that we are going to be using
-const CheckpointManagement = require('../../adapter.js');
+const CheckpointManagement = require('../../adapter');
 
 // begin the testing - these should be pretty well defined between the describe and the it!
 describe('[integration] Checkpoint_Management Adapter Test', () => {
@@ -341,6 +347,8 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
         try {
           assert.notEqual(null, a);
           assert.notEqual(undefined, a);
+          const checkId = global.pronghornProps.adapterProps.adapters[0].id;
+          assert.equal(checkId, a.id);
           assert.notEqual(null, a.allProps);
           const check = global.pronghornProps.adapterProps.adapters[0].properties.healthcheck.type;
           assert.equal(check, a.healthcheckType);

@@ -387,6 +387,198 @@
       "task": true
     },
     {
+      "name": "moveEntitiesToDB",
+      "summary": "Moves entities from an adapter into the IAP database",
+      "description": "Moves entities from an adapter into the IAP database",
+      "input": [],
+      "output": {
+        "name": "res",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the response from the mongo transaction",
+        "schema": {
+          "title": "res",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/moveEntitiesToDB"
+      },
+      "task": true
+    },
+    {
+      "name": "getDevice",
+      "summary": "Get the Appliance",
+      "description": "Get the Appliance",
+      "input": [
+        {
+          "name": "deviceName",
+          "type": "string",
+          "info": "An Appliance Device Name",
+          "required": true,
+          "schema": {
+            "title": "deviceName",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/getDevice"
+      },
+      "task": false
+    },
+    {
+      "name": "getDevicesFiltered",
+      "summary": "Get Appliances that match the filter",
+      "description": "Get Appliances that match the filter",
+      "input": [
+        {
+          "name": "options",
+          "type": "object",
+          "info": "options - e.g. { 'start': 1, 'limit': 20, 'filter': { 'name': 'abc123' } }",
+          "required": true,
+          "schema": {
+            "title": "options",
+            "type": "object"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "array",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "array"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/getDevicesFiltered"
+      },
+      "task": false
+    },
+    {
+      "name": "isAlive",
+      "summary": "Checks the status for the provided Appliance",
+      "description": "Checks the status for the provided Appliance",
+      "input": [
+        {
+          "name": "deviceName",
+          "type": "string",
+          "info": "An Appliance Device Name",
+          "required": true,
+          "schema": {
+            "title": "deviceName",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "boolean",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "boolean"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/isAlive"
+      },
+      "task": false
+    },
+    {
+      "name": "getConfig",
+      "summary": "Gets a config for the provided Appliance",
+      "description": "Gets a config for the provided Appliance",
+      "input": [
+        {
+          "name": "deviceName",
+          "type": "string",
+          "info": "An Appliance Device Name",
+          "required": true,
+          "schema": {
+            "title": "deviceName",
+            "type": "string"
+          }
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "info": "The format to be returned - this is ignored as we always return json",
+          "required": false,
+          "schema": {
+            "title": "format",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/getConfig"
+      },
+      "task": false
+    },
+    {
+      "name": "getCount",
+      "summary": "Gets a device count from the system",
+      "description": "Gets a device count from the system",
+      "input": [],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/getCount"
+      },
+      "task": false
+    },
+    {
       "name": "login",
       "summary": "login",
       "description": "Login request to receive session token.",

@@ -169,6 +169,12 @@
       "recommendation": "Check the reason for failure in the stack trace"
     },
     {
+      "key": "Suspended Adapter",
+      "icode": "AD.600",
+      "displayString": "Adapter is suspended",
+      "recommendation": "Check if external system is functional and unsuspend if appropriate"
+    },
+    {
       "key": "Caught Exception",
       "icode": "AD.900",
       "displayString": "Caught Exception $VARIABLE$",

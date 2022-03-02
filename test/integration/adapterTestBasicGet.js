@@ -14,7 +14,7 @@ const itParam = require('mocha-param');
 
 const utils = require('../../utils/tbUtils');
 const basicGet = require('../../utils/basicGet');
-const { name } = require('../../package');
+const { name } = require('../../package.json');
 const { methods } = require('../../pronghorn.json');
 
 const getPronghornProps = (iapDir) => {
