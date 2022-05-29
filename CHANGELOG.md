@@ -1,4 +1,12 @@
 
+## 0.3.0 [05-29-2022]
+
+* Migration to the latest Adapter Foundation
+
+See merge request itentialopensource/adapters/security/adapter-checkpoint_management!7
+
+---
+
 ## 0.2.6 [03-02-2022]
 
 - Improve sample properties with tested config
