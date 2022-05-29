@@ -3,6 +3,8 @@
 // Set globals
 /* global describe it log pronghornProps */
 /* eslint no-unused-vars: warn */
+/* eslint no-underscore-dangle: warn  */
+/* eslint import/no-dynamic-require:warn */
 
 // include required items for testing & logging
 const assert = require('assert');
@@ -14,27 +16,38 @@ const { expect } = require('chai');
 const { use } = require('chai');
 const td = require('testdouble');
 const util = require('util');
-const pronghorn = require('../../pronghorn.json');
 
-pronghorn.methodsByName = pronghorn.methods.reduce((result, meth) => ({ ...result, [meth.name]: meth }), {});
 const anything = td.matchers.anything();
 
 // stub and attemptTimeout are used throughout the code so set them here
 let logLevel = 'none';
-const stub = true;
 const isRapidFail = false;
 const isSaveMockData = false;
-const attemptTimeout = 5000;
+
+// read in the properties from the sampleProperties files
+let adaptdir = __dirname;
+if (adaptdir.endsWith('/test/integration')) {
+  adaptdir = adaptdir.substring(0, adaptdir.length - 17);
+} else if (adaptdir.endsWith('/test/unit')) {
+  adaptdir = adaptdir.substring(0, adaptdir.length - 10);
+}
+const samProps = require(`${adaptdir}/sampleProperties.json`).properties;
 
 // these variables can be changed to run in integrated mode so easier to set them here
 // always check these in with bogus data!!!
-const host = 'replace.hostorip.here';
-const username = 'username';
-const password = 'password';
-const protocol = 'http';
-const port = 80;
-const sslenable = false;
-const sslinvalid = false;
+samProps.stub = true;
+samProps.host = 'replace.hostorip.here';
+samProps.authentication.username = 'username';
+samProps.authentication.password = 'password';
+samProps.protocol = 'http';
+samProps.port = 80;
+samProps.ssl.enabled = false;
+samProps.ssl.accept_invalid_cert = false;
+if (samProps.request.attempt_timeout < 30000) {
+  samProps.request.attempt_timeout = 30000;
+}
+const attemptTimeout = samProps.request.attempt_timeout;
+const { stub } = samProps;
 
 // these are the adapter properties. You generally should not need to alter
 // any of these after they are initially set up
@@ -46,102 +59,7 @@ global.pronghornProps = {
     adapters: [{
       id: 'Test-checkpoint_management',
       type: 'CheckpointManagement',
-      properties: {
-        host,
-        port,
-        base_path: '/api',
-        version: 'v1.0',
-        cache_location: 'none',
-        encode_pathvars: true,
-        save_metric: false,
-        stub,
-        protocol,
-        authentication: {
-          auth_method: 'basic user_password',
-          username,
-          password,
-          token: '',
-          invalid_token_error: 401,
-          token_timeout: -1,
-          token_cache: 'local',
-          auth_field: 'header.headers.Authorization',
-          auth_field_format: 'Basic {b64}{username}:{password}{/b64}',
-          auth_logging: false,
-          client_id: '',
-          client_secret: '',
-          grant_type: ''
-        },
-        healthcheck: {
-          type: 'startup',
-          frequency: 60000,
-          query_object: {}
-        },
-        throttle: {
-          throttle_enabled: false,
-          number_pronghorns: 1,
-          sync_async: 'sync',
-          max_in_queue: 1000,
-          concurrent_max: 1,
-          expire_timeout: 0,
-          avg_runtime: 200,
-          priorities: [
-            {
-              value: 0,
-              percent: 100
-            }
-          ]
-        },
-        request: {
-          number_redirects: 0,
-          number_retries: 3,
-          limit_retry_error: 0,
-          failover_codes: [],
-          attempt_timeout: attemptTimeout,
-          global_request: {
-            payload: {},
-            uriOptions: {},
-            addlHeaders: {},
-            authData: {}
-          },
-          healthcheck_on_timeout: false,
-          return_raw: true,
-          archiving: false,
-          return_request: false
-        },
-        proxy: {
-          enabled: false,
-          host: '',
-          port: 1,
-          protocol: 'http',
-          username: '',
-          password: ''
-        },
-        ssl: {
-          ecdhCurve: '',
-          enabled: sslenable,
-          accept_invalid_cert: sslinvalid,
-          ca_file: '',
-          key_file: '',
-          cert_file: '',
-          secure_protocol: '',
-          ciphers: ''
-        },
-        mongo: {
-          host: '',
-          port: 0,
-          database: '',
-          username,
-          password: '',
-          replSet: '',
-          db_ssl: {
-            enabled: false,
-            accept_invalid_cert: false,
-            ca_file: '',
-            key_file: '',
-            cert_file: ''
-          }
-        }
-      }
+      properties: samProps
     }]
   }
 };

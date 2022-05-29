@@ -317,8 +317,10 @@ describe('[unit] Adapter Base Test', () => {
       });
       it('should return a list of functions', (done) => {
         const returnedFunctions = ['addEntityCache', 'capabilityResults', 'checkActionFiles', 'checkProperties', 'connect', 'encryptProperty',
-          'entityInList', 'findPath', 'getAllCapabilities', 'getAllFunctions', 'getQueue', 'getWorkflowFunctions', 'healthCheck', 'moveEntitiesToDB',
-          'refreshProperties', 'runBasicGet', 'runConnectivity', 'runHealthcheck', 'suspend', 'troubleshoot', 'unsuspend', 'updateAdapterConfiguration', 'addListener',
+          'entityInList', 'getAllCapabilities', 'getAllFunctions', 'getConfig', 'getDevice', 'getDevicesFiltered', 'hasDevices', 'hasEntities',
+          'healthCheck', 'iapFindAdapterPath', 'iapGetAdapterQueue', 'iapGetAdapterWorkflowFunctions', 'iapGetDeviceCount', 'iapMakeBrokerCall',
+          'iapMoveAdapterEntitiesToDB', 'iapRunAdapterBasicGet', 'iapRunAdapterConnectivity', 'iapRunAdapterHealthcheck', 'iapSuspendAdapter',
+          'iapTroubleshootAdapter', 'iapUnsuspendAdapter', 'iapUpdateAdapterConfiguration', 'isAlive', 'refreshProperties', 'addListener',
           'emit', 'eventNames', 'getMaxListeners', 'listenerCount', 'listeners', 'off', 'on', 'once', 'prependListener',
           'prependOnceListener', 'rawListeners', 'removeAllListeners', 'removeListener', 'setMaxListeners'];
         try {
@@ -337,10 +339,10 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
     });
 
-    describe('#getWorkflowFunctions', () => {
-      it('should have a getWorkflowFunctions function', (done) => {
+    describe('#iapGetAdapterWorkflowFunctions', () => {
+      it('should have a iapGetAdapterWorkflowFunctions function', (done) => {
         try {
-          assert.equal(true, typeof a.getWorkflowFunctions === 'function');
+          assert.equal(true, typeof a.iapGetAdapterWorkflowFunctions === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -349,7 +351,7 @@ describe('[unit] Adapter Base Test', () => {
       });
       it('should retrieve workflow functions', (done) => {
         try {
-          const expectedFunctions = a.getWorkflowFunctions([]);
+          const expectedFunctions = a.iapGetAdapterWorkflowFunctions([]);
           try {
             assert.equal(0, expectedFunctions.length);
             done();
@@ -426,10 +428,10 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
     });
 
-    describe('#getQueue', () => {
-      it('should have a getQueue function', (done) => {
+    describe('#iapGetAdapterQueue', () => {
+      it('should have a iapGetAdapterQueue function', (done) => {
         try {
-          assert.equal(true, typeof a.getQueue === 'function');
+          assert.equal(true, typeof a.iapGetAdapterQueue === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -438,7 +440,7 @@ describe('[unit] Adapter Base Test', () => {
       });
       it('should get information for all of the requests currently in the queue', (done) => {
         try {
-          const expectedFunctions = a.getQueue();
+          const expectedFunctions = a.iapGetAdapterQueue();
           try {
             assert.equal(0, expectedFunctions.length);
             done();
@@ -817,12 +819,17 @@ describe('[unit] Adapter Base Test', () => {
           try {
             assert.notEqual(0, expectedCapabilities.length);
             assert.equal('.generic', expectedCapabilities[0].entity);
-            assert.equal(5, expectedCapabilities[0].actions.length);
+            assert.equal(10, expectedCapabilities[0].actions.length);
             assert.equal('getGenerics', expectedCapabilities[0].actions[0]);
             assert.equal('createGeneric', expectedCapabilities[0].actions[1]);
             assert.equal('updateGeneric', expectedCapabilities[0].actions[2]);
             assert.equal('patchGeneric', expectedCapabilities[0].actions[3]);
             assert.equal('deleteGeneric', expectedCapabilities[0].actions[4]);
+            assert.equal('getGenericsNoBase', expectedCapabilities[0].actions[5]);
+            assert.equal('createGenericNoBase', expectedCapabilities[0].actions[6]);
+            assert.equal('updateGenericNoBase', expectedCapabilities[0].actions[7]);
+            assert.equal('patchGenericNoBase', expectedCapabilities[0].actions[8]);
+            assert.equal('deleteGenericNoBase', expectedCapabilities[0].actions[9]);
             assert.equal('.system', expectedCapabilities[1].entity);
             assert.equal(2, expectedCapabilities[1].actions.length);
             assert.equal('getToken', expectedCapabilities[1].actions[0]);
@@ -843,12 +850,10 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
     });
 
-    // const returnedFunctions = ['updateAdapterConfiguration'];
-
-    describe('#updateAdapterConfiguration', () => {
-      it('should have a updateAdapterConfiguration function', (done) => {
+    describe('#iapUpdateAdapterConfiguration', () => {
+      it('should have a iapUpdateAdapterConfiguration function', (done) => {
         try {
-          assert.equal(true, typeof a.updateAdapterConfiguration === 'function');
+          assert.equal(true, typeof a.iapUpdateAdapterConfiguration === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -857,7 +862,7 @@ describe('[unit] Adapter Base Test', () => {
       });
       it('should return no updated if no changes are provided', (done) => {
         try {
-          a.updateAdapterConfiguration(null, null, null, null, null, (data, error) => {
+          a.iapUpdateAdapterConfiguration(null, null, null, null, null, (data, error) => {
             try {
               assert.equal('No configuration updates to make', data.response);
               done();
@@ -873,10 +878,10 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
       it('should throw an error if missing configuration file', (done) => {
         try {
-          a.updateAdapterConfiguration(null, { name: 'fakeChange' }, null, null, null, (data, error) => {
+          a.iapUpdateAdapterConfiguration(null, { name: 'fakeChange' }, null, null, null, (data, error) => {
             try {
               const displayE = 'configFile is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-Base-adapterBase-updateAdapterConfiguration', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-Base-adapterBase-iapUpdateAdapterConfiguration', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -890,10 +895,10 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
       it('if not package.json, entity is required', (done) => {
         try {
-          a.updateAdapterConfiguration('notPackage', { name: 'fakeChange' }, null, null, null, (data, error) => {
+          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, null, null, null, (data, error) => {
             try {
               const displayE = 'Unsupported Configuration Change or Missing Entity';
-              runErrorAsserts(data, error, 'AD.999', 'Test-Base-adapterBase-updateAdapterConfiguration', displayE);
+              runErrorAsserts(data, error, 'AD.999', 'Test-Base-adapterBase-iapUpdateAdapterConfiguration', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -907,10 +912,10 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
       it('if not package.json, type is required', (done) => {
         try {
-          a.updateAdapterConfiguration('notPackage', { name: 'fakeChange' }, 'entity', null, null, (data, error) => {
+          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, 'entity', null, null, (data, error) => {
             try {
               const displayE = 'type is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-Base-adapterBase-updateAdapterConfiguration', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-Base-adapterBase-iapUpdateAdapterConfiguration', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -924,10 +929,10 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
       it('if not package.json, entity must be valid', (done) => {
         try {
-          a.updateAdapterConfiguration('notPackage', { name: 'fakeChange' }, 'fakeEntity', 'fakeType', null, (data, error) => {
+          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, 'fakeEntity', 'fakeType', null, (data, error) => {
             try {
               const displayE = 'Incomplete Configuration Change: Invalid Entity - fakeEntity';
-              runErrorAsserts(data, error, 'AD.999', 'Test-Base-adapterBase-updateAdapterConfiguration', displayE);
+              runErrorAsserts(data, error, 'AD.999', 'Test-Base-adapterBase-iapUpdateAdapterConfiguration', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
