@@ -34,7 +34,7 @@ describe('[integration] Adapter BasicGET Test', () => {
   context('Testing GET calls without query parameters', () => {
     before(async () => {
       const iapDir = path.join(__dirname, '../../../../../');
-      if (!utils.withinIAP(iapDir)) {
+      if (!utils.areWeUnderIAPinstallationDirectory()) {
         const sampleProperties = require('../../sampleProperties.json');
         const adapter = { properties: sampleProperties };
         a = basicGet.getAdapterInstance(adapter);

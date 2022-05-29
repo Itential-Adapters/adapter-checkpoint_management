@@ -3,6 +3,7 @@
 /* eslint import/no-extraneous-dependencies: warn */
 /* eslint global-require: warn */
 /* eslint import/no-dynamic-require: warn */
+/* eslint-disable no-console */
 
 const path = require('path');
 const fs = require('fs-extra');
@@ -305,9 +306,9 @@ module.exports = {
    * @param {Object} sampleProperties - './sampleProperties.json' in adapter dir
    */
   createAdapter: function createAdapter(pronghornProps, profileItem, sampleProperties, adapterPronghorn) {
-    const dirname = this.getDirname();
-    const packagePath = `${dirname.split('node_modules')[0]}package.json`;
-    const info = JSON.parse(fs.readFileSync(packagePath));
+    const iapDir = this.getIAPHome();
+    const packageFile = path.join(iapDir, 'package.json');
+    const info = JSON.parse(fs.readFileSync(packageFile));
     const version = parseInt(info.version.split('.')[0], 10);
 
     let adapter = {};
@@ -352,13 +353,7 @@ module.exports = {
 
   // get database connection and existing adapter config
   getAdapterConfig: async function getAdapterConfig() {
-    const newDirname = this.getDirname();
-    let iapDir;
-    if (this.withinIAP(newDirname)) { // when this script is called from IAP
-      iapDir = newDirname;
-    } else {
-      iapDir = path.join(this.getDirname(), 'utils', '../../../../');
-    }
+    const iapDir = this.getIAPHome();
     const pronghornProps = this.getPronghornProps(iapDir);
     console.log('Connecting to Database...');
     const database = await this.connect(iapDir, pronghornProps);
@@ -405,33 +400,42 @@ module.exports = {
   },
 
   /**
-   * @summary Check whether adapter is located within IAP node_modules
-   *          by loading properties.json. If not, return false.
-   * @function withinIAP
-   * @param {String} iapDir root directory of IAP
+   * @summary Obtain the IAP installation directory depending on how adapter is used:
+   * by IAP, or by npm run CLI interface
+   * @returns IAP installation directory or null if adapter running without IAP
+   * @function getIAPHome
    */
-  withinIAP: (iapDir) => {
-    try {
-      const rawProps = require(path.join(iapDir, 'properties.json'));
-      return rawProps;
-    } catch (error) {
-      return false;
+  getIAPHome: function getIAPHome() {
+    let IAPHomePath = null;
+    // check if adapter started via IAP, use path injected by core
+    if (process.env.iap_home) IAPHomePath = process.env.iap_home;
+    // check if adapter started via CLI `npm run <command>` so we have to be located under
+    // <IAP_HOME>/node_modules/@itentialopensource/<adapter_name>/ directory
+    const currentExecutionPath = this.getCurrentExecutionPath();
+    if (currentExecutionPath.indexOf('/node_modules') >= 0) {
+      [IAPHomePath] = currentExecutionPath.split('/node_modules');
     }
+    return IAPHomePath;
   },
 
   /**
-   * @summary Used to determine the proper dirname to return in case adapter reference is
-   * symlinked withink IAP
-   * @returns the symlinked path (using pwd command) of the adapter in case properties.json
-   * is not found in the original path
-   * @function getDirname
+   * @summary get current execution path without resolving symbolic links,
+   * use `pwd` command wihout '-P' option (resolving symlinks) https://linux.die.net/man/1/pwd
+   * @returns
+   * @function getCurrentExecutionPAth
    */
-  getDirname: function getDirname() {
-    if (this.withinIAP(path.join(__dirname, '../../../../'))) {
-      return __dirname;
-    }
+  getCurrentExecutionPath: function getCurrentExecutionPAth() {
     const { stdout } = this.systemSync('pwd', true);
     return stdout.trim();
+  },
+
+  /**
+   * @summary checks if command executed from <IAP_HOME>/node_modules/@itentialopensource/<adapter_name>/ location
+   * @returns true if command executed under <IAP_HOME>/node_modules/@itentialopensource/<adapter_name>/ path
+   * @function areWeUnderIAPinstallationDirectory
+   */
+  areWeUnderIAPinstallationDirectory: function areWeUnderIAPinstallationDirectory() {
+    return path.join(this.getCurrentExecutionPath(), '../../..') === this.getIAPHome();
   },
 
   /**
@@ -441,9 +445,23 @@ module.exports = {
    * @param {Object} properties - pronghornProps
    */
   connect: async function connect(iapDir, properties) {
-    // Connect to Mongo
+    let dbConnectionProperties = {};
+    if (properties.mongoProps) {
+      dbConnectionProperties = properties.mongoProps;
+    } else if (properties.mongo) {
+      if (properties.mongo.url) {
+        dbConnectionProperties.url = properties.mongo.url;
+      } else {
+        dbConnectionProperties.url = `mongodb://${properties.mongo.host}:${properties.mongo.port}`;
+      }
+      dbConnectionProperties.db = properties.mongo.database;
+    }
+    if (!dbConnectionProperties.url || !dbConnectionProperties.db) {
+      throw new Error('Mongo properties are not specified in IAP configuration!');
+    }
+
     const { MongoDBConnection } = require(path.join(iapDir, 'node_modules/@itential/database'));
-    const connection = new MongoDBConnection(properties.mongoProps);
+    const connection = new MongoDBConnection(dbConnectionProperties);
     const database = await connection.connect(true);
     return database;
   }

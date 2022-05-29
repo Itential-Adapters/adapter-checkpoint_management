@@ -1,4 +1,4 @@
-/* eslint no-console: warn */
+/* eslint-disable no-console */
 /* eslint import/no-unresolved: warn */
 /* eslint global-require: warn */
 
@@ -7,7 +7,6 @@
 /* eslint import/no-extraneous-dependencies: warn */
 /* eslint import/no-dynamic-require: warn */
 
-const path = require('path');
 const program = require('commander');
 const rls = require('readline-sync');
 const utils = require('./tbUtils');
@@ -19,32 +18,39 @@ const { addAuthInfo } = require('./addAuth');
 
 const { troubleshoot, offline } = require('./troubleshootingAdapter');
 
-const main = async (command) => {
-  const dirname = utils.getDirname();
-  const iapDir = path.join(dirname, '../../../');
-  if (!utils.withinIAP(iapDir)) {
-    if (command === 'install') {
-      console.log('Not currently in IAP directory - installation not possible');
-      process.exit(0);
-    } else if (command === 'connectivity') {
+const executeInStandaloneMode = async (command) => {
+  console.info('\n> Executing the script outside of IAP installation directory');
+  console.info('> Using sampleProperties.json configuration');
+  switch (command) {
+    case 'install': {
+      console.error('Not currently in IAP directory - installation not possible');
+      break;
+    }
+    case 'connectivity': {
       const { host } = sampleProperties.properties;
       console.log(`perform networking diagnositics to ${host}`);
-      await utils.runConnectivity(host);
-      process.exit(0);
-    } else if (command === 'healthcheck') {
+      utils.runConnectivity(host);
+      break;
+    }
+    case 'healthcheck': {
       const a = basicGet.getAdapterInstance({ properties: sampleProperties });
       await utils.healthCheck(a);
-      process.exit(0);
-    } else if (command === 'basicget') {
-      await utils.runBasicGet();
-      process.exit(0);
+      break;
     }
-    if (rls.keyInYN('Troubleshooting without IAP?')) {
-      await offline();
+    case 'basicget': {
+      utils.runBasicGet();
+      break;
     }
-    process.exit(0);
+    default: {
+      if (rls.keyInYN('Troubleshooting without IAP?')) {
+        await offline();
+      }
+    }
   }
+  process.exit(0);
+};
 
+const executeUnderIAPInstallationDirectory = async (command) => {
   if (command === undefined) {
     await troubleshoot({}, true, true);
   } else if (command === 'install') {
@@ -79,6 +85,7 @@ const main = async (command) => {
         process.exit(0);
       }
     } else {
+      const dirname = utils.getCurrentExecutionPath();
       utils.verifyInstallationDir(dirname, name);
       utils.runTest();
       if (rls.keyInYN(`Do you want to install ${name} to IAP?`)) {
@@ -120,6 +127,14 @@ const main = async (command) => {
       console.log(`${name} not installed. Run npm \`run install:adapter\` to install.`);
       process.exit(0);
     }
+  }
+};
+
+const main = async (command) => {
+  if (!utils.areWeUnderIAPinstallationDirectory()) {
+    executeInStandaloneMode(command); // configuration from sampleproperties.json
+  } else {
+    executeUnderIAPInstallationDirectory(command); // configuration from $IAP_HOME/properties.json
   }
 };
 

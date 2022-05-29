@@ -14,10 +14,8 @@
  */
 
 const fs = require('fs');
-const { MongoClient } = require('mongodb');
 const path = require('path');
-// const { argv } = require('process');
-// const { string } = require('yargs');
+const utils = require('./tbUtils');
 
 // get the pronghorn database information
 const getPronghornProps = async (iapDir) => {
@@ -99,7 +97,7 @@ const optionsHandler = (options) => {
 /**
  *  Function used to put the adapter configuration into the provided database
  */
-const moveEntitiesToDB = (targetPath, options) => {
+const moveEntitiesToDB = async (targetPath, options) => {
   // set local variables
   let myOpts = options;
   let myPath = targetPath;
@@ -120,25 +118,7 @@ const moveEntitiesToDB = (targetPath, options) => {
   }
 
   // get the pronghorn database properties
-  optionsHandler(options).then((currentProps) => {
-    let mongoUrl;
-    let dbName;
-
-    // find the mongo properties so we can connect
-    if (currentProps.mongoProps) {
-      mongoUrl = currentProps.mongoProps.url;
-      dbName = currentProps.mongoProps.db;
-    } else if (currentProps.mongo) {
-      if (currentProps.mongo.url) {
-        mongoUrl = currentProps.mongo.url;
-      } else {
-        mongoUrl = `mongodb://${currentProps.mongo.host}:${currentProps.mongo.port}`;
-      }
-      dbName = currentProps.mongo.database;
-    } else {
-      throw new Error('Mongo properties are not specified in adapter preferences!');
-    }
-
+  return optionsHandler(options).then(async (currentProps) => {
     // Check valid filepath provided
     if (!myPath) {
       // if no path use the current directory without the utils
@@ -184,41 +164,16 @@ const moveEntitiesToDB = (targetPath, options) => {
     });
 
     // Upload documents to db collection
-    MongoClient.connect(mongoUrl, (err, db) => {
-      if (err) {
-        log.error(JSON.stringify(err));
-        throw err;
-      }
-
-      // get the proper collection
-      const collection = db.db(dbName).collection(myOpts.targetCollection);
-      // insert the documents into the collection
-      collection.insertMany(docs, { checkKeys: false }, (error, res) => {
-        if (error) {
-          log.error(JSON.stringify(error));
-          throw error;
-        }
-        // log the insertion, close the database and return
-        log.debug(`Inserted ${docs.length} documents to ${dbName}.${myOpts.targetCollection} with response ${JSON.stringify(res)}`);
-        db.close();
-        return res;
-      });
-    });
+    const iapDir = utils.getIAPHome();
+    const db = await utils.connect(iapDir, currentProps).catch((err) => { console.error(err); throw err; });
+    if (!db) {
+      console.error('Error occured when connectiong to database', currentProps);
+      throw new Error('Database not found');
+    }
+    const collection = db.collection(myOpts.targetCollection);
+    const res = await collection.insertMany(docs, { checkKeys: false }).catch((err) => { console.error(err); throw err; });
+    return res;
   });
 };
-
-// const args = process.argv.slice(2);
-
-// throw new SyntaxError(args[0]);
-
-// if (args.length === 0) {
-//   console.error('ERROR: target path not specified!');
-// } else if (args[0] === 'help') {
-//   log.trace('node ./entitiesToDB <target path> <options object: {iapDir: string, pronghornProps: string, targetCollection: string}>');
-// } else if (args.length === 1) {
-//   console.error('ERROR: IAP directory not specified');
-// } else {
-//   moveEntitiesToDB(args[0], args[1]);
-// }
 
 module.exports = { moveEntitiesToDB };

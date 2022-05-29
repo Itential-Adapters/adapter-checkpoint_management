@@ -4,6 +4,7 @@
 /* global describe it log pronghornProps */
 /* eslint global-require: warn */
 /* eslint no-unused-vars: warn */
+/* eslint import/no-dynamic-require:warn */
 
 // include required items for testing & logging
 const assert = require('assert');
@@ -18,22 +19,31 @@ const { use } = require('chai');
 const td = require('testdouble');
 
 const anything = td.matchers.anything();
-
-// stub and attemptTimeout are used throughout the code so set them here
 let logLevel = 'none';
-const stub = true;
 const isRapidFail = false;
-const attemptTimeout = 600000;
+
+// read in the properties from the sampleProperties files
+let adaptdir = __dirname;
+if (adaptdir.endsWith('/test/integration')) {
+  adaptdir = adaptdir.substring(0, adaptdir.length - 17);
+} else if (adaptdir.endsWith('/test/unit')) {
+  adaptdir = adaptdir.substring(0, adaptdir.length - 10);
+}
+const samProps = require(`${adaptdir}/sampleProperties.json`).properties;
 
 // these variables can be changed to run in integrated mode so easier to set them here
 // always check these in with bogus data!!!
-const host = 'replace.hostorip.here';
-const username = 'username';
-const password = 'password';
-const protocol = 'http';
-const port = 80;
-const sslenable = false;
-const sslinvalid = false;
+samProps.stub = true;
+samProps.host = 'replace.hostorip.here';
+samProps.authentication.username = 'username';
+samProps.authentication.password = 'password';
+samProps.protocol = 'http';
+samProps.port = 80;
+samProps.ssl.enabled = false;
+samProps.ssl.accept_invalid_cert = false;
+samProps.request.attempt_timeout = 60000;
+const attemptTimeout = samProps.request.attempt_timeout;
+const { stub } = samProps;
 
 // these are the adapter properties. You generally should not need to alter
 // any of these after they are initially set up
@@ -45,102 +55,7 @@ global.pronghornProps = {
     adapters: [{
       id: 'Test-checkpoint_management',
       type: 'CheckpointManagement',
-      properties: {
-        host,
-        port,
-        base_path: '/api',
-        version: 'v1.0',
-        cache_location: 'none',
-        encode_pathvars: true,
-        save_metric: false,
-        stub,
-        protocol,
-        authentication: {
-          auth_method: 'basic user_password',
-          username,
-          password,
-          token: '',
-          invalid_token_error: 401,
-          token_timeout: -1,
-          token_cache: 'local',
-          auth_field: 'header.headers.Authorization',
-          auth_field_format: 'Basic {b64}{username}:{password}{/b64}',
-          auth_logging: false,
-          client_id: '',
-          client_secret: '',
-          grant_type: ''
-        },
-        healthcheck: {
-          type: 'startup',
-          frequency: 60000,
-          query_object: {}
-        },
-        throttle: {
-          throttle_enabled: false,
-          number_pronghorns: 1,
-          sync_async: 'sync',
-          max_in_queue: 1000,
-          concurrent_max: 1,
-          expire_timeout: 0,
-          avg_runtime: 200,
-          priorities: [
-            {
-              value: 0,
-              percent: 100
-            }
-          ]
-        },
-        request: {
-          number_redirects: 0,
-          number_retries: 3,
-          limit_retry_error: 0,
-          failover_codes: [],
-          attempt_timeout: attemptTimeout,
-          global_request: {
-            payload: {},
-            uriOptions: {},
-            addlHeaders: {},
-            authData: {}
-          },
-          healthcheck_on_timeout: false,
-          return_raw: true,
-          archiving: false,
-          return_request: false
-        },
-        proxy: {
-          enabled: false,
-          host: '',
-          port: 1,
-          protocol: 'http',
-          username: '',
-          password: ''
-        },
-        ssl: {
-          ecdhCurve: '',
-          enabled: sslenable,
-          accept_invalid_cert: sslinvalid,
-          ca_file: '',
-          key_file: '',
-          cert_file: '',
-          secure_protocol: '',
-          ciphers: ''
-        },
-        mongo: {
-          host: '',
-          port: 0,
-          database: '',
-          username,
-          password: '',
-          replSet: '',
-          db_ssl: {
-            enabled: false,
-            accept_invalid_cert: false,
-            ca_file: '',
-            key_file: '',
-            cert_file: ''
-          }
-        }
-      }
+      properties: samProps
     }]
   }
 };
@@ -271,10 +186,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
     });
 
     let wffunctions = [];
-    describe('#getWorkflowFunctions', () => {
+    describe('#iapGetAdapterWorkflowFunctions', () => {
       it('should retrieve workflow functions', (done) => {
         try {
-          wffunctions = a.getWorkflowFunctions([]);
+          wffunctions = a.iapGetAdapterWorkflowFunctions([]);
 
           try {
             assert.notEqual(0, wffunctions.length);
@@ -465,16 +380,17 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual('', pronghornDotJson.methods);
           assert.equal(true, Array.isArray(pronghornDotJson.methods));
           assert.notEqual(0, pronghornDotJson.methods.length);
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'updateAdapterConfiguration'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'findPath'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'troubleshoot'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'runHealthcheck'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'runConnectivity'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'runBasicGet'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'suspend'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'unsuspend'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'getQueue'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapUpdateAdapterConfiguration'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapFindAdapterPath'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapTroubleshootAdapter'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRunAdapterHealthcheck'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRunAdapterConnectivity'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRunAdapterBasicGet'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapSuspendAdapter'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapUnsuspendAdapter'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapGetAdapterQueue'));
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'genericAdapterRequest'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'genericAdapterRequestNoBasePath'));
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -646,6 +562,8 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('string', propertiesDotJson.definitions.authentication.properties.client_id.type);
           assert.equal('string', propertiesDotJson.definitions.authentication.properties.client_secret.type);
           assert.equal('string', propertiesDotJson.definitions.authentication.properties.grant_type.type);
+          assert.notEqual(undefined, propertiesDotJson.definitions.ssl);
+          assert.notEqual(null, propertiesDotJson.definitions.ssl);
           assert.notEqual('', propertiesDotJson.definitions.ssl);
           assert.equal('string', propertiesDotJson.definitions.ssl.properties.ecdhCurve.type);
           assert.equal('boolean', propertiesDotJson.definitions.ssl.properties.enabled.type);
@@ -659,6 +577,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('string', propertiesDotJson.properties.version.type);
           assert.equal('string', propertiesDotJson.properties.cache_location.type);
           assert.equal('boolean', propertiesDotJson.properties.encode_pathvars.type);
+          assert.equal('boolean', propertiesDotJson.properties.encode_queryvars.type);
           assert.equal(true, Array.isArray(propertiesDotJson.properties.save_metric.type));
           assert.equal('string', propertiesDotJson.properties.protocol.type);
           assert.notEqual(undefined, propertiesDotJson.definitions);
@@ -707,8 +626,6 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('string', propertiesDotJson.definitions.proxy.properties.protocol.type);
           assert.equal('string', propertiesDotJson.definitions.proxy.properties.username.type);
           assert.equal('string', propertiesDotJson.definitions.proxy.properties.password.type);
-          assert.notEqual(undefined, propertiesDotJson.definitions.ssl);
-          assert.notEqual(null, propertiesDotJson.definitions.ssl);
           assert.notEqual(undefined, propertiesDotJson.definitions.mongo);
           assert.notEqual(null, propertiesDotJson.definitions.mongo);
           assert.notEqual('', propertiesDotJson.definitions.mongo);
@@ -724,6 +641,12 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('string', propertiesDotJson.definitions.mongo.properties.db_ssl.properties.ca_file.type);
           assert.equal('string', propertiesDotJson.definitions.mongo.properties.db_ssl.properties.key_file.type);
           assert.equal('string', propertiesDotJson.definitions.mongo.properties.db_ssl.properties.cert_file.type);
+          assert.notEqual('', propertiesDotJson.definitions.devicebroker);
+          assert.equal('array', propertiesDotJson.definitions.devicebroker.properties.getDevice.type);
+          assert.equal('array', propertiesDotJson.definitions.devicebroker.properties.getDevicesFiltered.type);
+          assert.equal('array', propertiesDotJson.definitions.devicebroker.properties.isAlive.type);
+          assert.equal('array', propertiesDotJson.definitions.devicebroker.properties.getConfig.type);
+          assert.equal('array', propertiesDotJson.definitions.devicebroker.properties.getCount.type);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -840,17 +763,13 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, sampleDotJson.properties.ssl.cert_file);
           assert.notEqual(undefined, sampleDotJson.properties.ssl.secure_protocol);
           assert.notEqual(undefined, sampleDotJson.properties.ssl.ciphers);
-
           assert.notEqual(undefined, sampleDotJson.properties.base_path);
           assert.notEqual(undefined, sampleDotJson.properties.version);
           assert.notEqual(undefined, sampleDotJson.properties.cache_location);
           assert.notEqual(undefined, sampleDotJson.properties.encode_pathvars);
+          assert.notEqual(undefined, sampleDotJson.properties.encode_queryvars);
           assert.notEqual(undefined, sampleDotJson.properties.save_metric);
           assert.notEqual(undefined, sampleDotJson.properties.protocol);
-          assert.notEqual(undefined, sampleDotJson.properties.stub);
-          assert.notEqual(undefined, sampleDotJson.properties.stub);
-          assert.notEqual(undefined, sampleDotJson.properties.stub);
-          assert.notEqual(undefined, sampleDotJson.properties.stub);
           assert.notEqual(undefined, sampleDotJson.properties.healthcheck);
           assert.notEqual(null, sampleDotJson.properties.healthcheck);
           assert.notEqual('', sampleDotJson.properties.healthcheck);
@@ -909,6 +828,12 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl.ca_file);
           assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl.key_file);
           assert.notEqual(undefined, sampleDotJson.properties.mongo.db_ssl.cert_file);
+          assert.notEqual(undefined, sampleDotJson.properties.devicebroker);
+          assert.notEqual(undefined, sampleDotJson.properties.devicebroker.getDevice);
+          assert.notEqual(undefined, sampleDotJson.properties.devicebroker.getDevicesFiltered);
+          assert.notEqual(undefined, sampleDotJson.properties.devicebroker.isAlive);
+          assert.notEqual(undefined, sampleDotJson.properties.devicebroker.getConfig);
+          assert.notEqual(undefined, sampleDotJson.properties.devicebroker.getCount);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1002,10 +927,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#updateAdapterConfiguration', () => {
-      it('should have a updateAdapterConfiguration function', (done) => {
+    describe('#iapUpdateAdapterConfiguration', () => {
+      it('should have a iapUpdateAdapterConfiguration function', (done) => {
         try {
-          assert.equal(true, typeof a.updateAdapterConfiguration === 'function');
+          assert.equal(true, typeof a.iapUpdateAdapterConfiguration === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1014,19 +939,19 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#findPath', () => {
-      it('should have a findPath function', (done) => {
+    describe('#iapFindAdapterPath', () => {
+      it('should have a iapFindAdapterPath function', (done) => {
         try {
-          assert.equal(true, typeof a.findPath === 'function');
+          assert.equal(true, typeof a.iapFindAdapterPath === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
           done(error);
         }
       });
-      it('findPath should find atleast one path that matches', (done) => {
+      it('iapFindAdapterPath should find atleast one path that matches', (done) => {
         try {
-          a.findPath('{base_path}/{version}', (data, error) => {
+          a.iapFindAdapterPath('{base_path}/{version}', (data, error) => {
             try {
               assert.equal(undefined, error);
               assert.notEqual(undefined, data);
@@ -1048,10 +973,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       }).timeout(attemptTimeout);
     });
 
-    describe('#suspend', () => {
-      it('should have a suspend function', (done) => {
+    describe('#iapSuspendAdapter', () => {
+      it('should have a iapSuspendAdapter function', (done) => {
         try {
-          assert.equal(true, typeof a.suspend === 'function');
+          assert.equal(true, typeof a.iapSuspendAdapter === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1060,10 +985,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#unsuspend', () => {
-      it('should have a unsuspend function', (done) => {
+    describe('#iapUnsuspendAdapter', () => {
+      it('should have a iapUnsuspendAdapter function', (done) => {
         try {
-          assert.equal(true, typeof a.unsuspend === 'function');
+          assert.equal(true, typeof a.iapUnsuspendAdapter === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1072,10 +997,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#getQueue', () => {
-      it('should have a getQueue function', (done) => {
+    describe('#iapGetAdapterQueue', () => {
+      it('should have a iapGetAdapterQueue function', (done) => {
         try {
-          assert.equal(true, typeof a.getQueue === 'function');
+          assert.equal(true, typeof a.iapGetAdapterQueue === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1084,10 +1009,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#troubleshoot', () => {
-      it('should have a troubleshoot function', (done) => {
+    describe('#iapTroubleshootAdapter', () => {
+      it('should have a iapTroubleshootAdapter function', (done) => {
         try {
-          assert.equal(true, typeof a.troubleshoot === 'function');
+          assert.equal(true, typeof a.iapTroubleshootAdapter === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1096,10 +1021,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#runHealthcheck', () => {
-      it('should have a runHealthcheck function', (done) => {
+    describe('#iapRunAdapterHealthcheck', () => {
+      it('should have a iapRunAdapterHealthcheck function', (done) => {
         try {
-          assert.equal(true, typeof a.runHealthcheck === 'function');
+          assert.equal(true, typeof a.iapRunAdapterHealthcheck === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1108,10 +1033,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#runConnectivity', () => {
-      it('should have a runConnectivity function', (done) => {
+    describe('#iapRunAdapterConnectivity', () => {
+      it('should have a iapRunAdapterConnectivity function', (done) => {
         try {
-          assert.equal(true, typeof a.runConnectivity === 'function');
+          assert.equal(true, typeof a.iapRunAdapterConnectivity === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1120,10 +1045,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#runBasicGet', () => {
-      it('should have a runBasicGet function', (done) => {
+    describe('#iapRunAdapterBasicGet', () => {
+      it('should have a iapRunAdapterBasicGet function', (done) => {
         try {
-          assert.equal(true, typeof a.runBasicGet === 'function');
+          assert.equal(true, typeof a.iapRunAdapterBasicGet === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1132,10 +1057,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#moveEntitiesToDB', () => {
-      it('should have a moveEntitiesToDB function', (done) => {
+    describe('#iapMoveAdapterEntitiesToDB', () => {
+      it('should have a iapMoveAdapterEntitiesToDB function', (done) => {
         try {
-          assert.equal(true, typeof a.moveEntitiesToDB === 'function');
+          assert.equal(true, typeof a.iapMoveAdapterEntitiesToDB === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1229,10 +1154,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       }).timeout(attemptTimeout);
     });
 
-    // describe('#hasEntity', () => {
-    //   it('should have a hasEntity function', (done) => {
+    // describe('#iapHasAdapterEntity', () => {
+    //   it('should have a iapHasAdapterEntity function', (done) => {
     //     try {
-    //       assert.equal(true, typeof a.hasEntity === 'function');
+    //       assert.equal(true, typeof a.iapHasAdapterEntity === 'function');
     //       done();
     //     } catch (error) {
     //       log.error(`Test Failure: ${error}`);
@@ -1241,7 +1166,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
     //   });
     //   it('should find entity', (done) => {
     //     try {
-    //       a.hasEntity('template_entity', // 'a9e9c33dc61122760072455df62663d2', (data) => {
+    //       a.iapHasAdapterEntity('template_entity', // 'a9e9c33dc61122760072455df62663d2', (data) => {
     //         try {
     //           assert.equal(true, data[0]);
     //           done();
@@ -1257,7 +1182,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
     //   }).timeout(attemptTimeout);
     //   it('should not find entity', (done) => {
     //     try {
-    //       a.hasEntity('template_entity', 'blah', (data) => {
+    //       a.iapHasAdapterEntity('template_entity', 'blah', (data) => {
     //         try {
     //           assert.equal(false, data[0]);
     //           done();
@@ -1277,18 +1202,6 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       it('should have a hasEntities function', (done) => {
         try {
           assert.equal(true, typeof a.hasEntities === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-    });
-
-    describe('#hasDevices', () => {
-      it('should have a hasDevices function', (done) => {
-        try {
-          assert.equal(true, typeof a.hasDevices === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1345,10 +1258,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#getCount', () => {
-      it('should have a getCount function', (done) => {
+    describe('#iapGetDeviceCount', () => {
+      it('should have a iapGetDeviceCount function', (done) => {
         try {
-          assert.equal(true, typeof a.getCount === 'function');
+          assert.equal(true, typeof a.iapGetDeviceCount === 'function');
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
