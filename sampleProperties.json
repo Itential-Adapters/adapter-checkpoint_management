@@ -22,7 +22,7 @@
       "token_result_field": "sid",
       "token_URI_path": "/login",
       "invalid_token_error": 400,
-      "token_timeout": 300000,
+      "token_timeout": 3600000,
       "token_cache": "local",
       "auth_field": "header.headers.x-chkp-sid",
       "auth_field_format": "{token}",
@@ -61,7 +61,10 @@
         "payload": {},
         "uriOptions": {},
         "addlHeaders": {},
-        "authData": {}
+        "authData": {
+          "session-timeout": 3600,
+          "domain": "INSERT LOGIN DOMAIN"
+        }
       },
       "healthcheck_on_timeout": true,
       "return_raw": false,
