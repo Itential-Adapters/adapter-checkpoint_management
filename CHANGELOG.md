@@ -1,4 +1,12 @@
 
+## 0.3.1 [06-21-2022]
+
+* Changes for Authentication and Healthcheck
+
+See merge request itentialopensource/adapters/security/adapter-checkpoint_management!8
+
+---
+
 ## 0.3.0 [05-29-2022]
 
 * Migration to the latest Adapter Foundation
