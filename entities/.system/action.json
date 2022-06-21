@@ -30,7 +30,7 @@
       "name": "healthcheck",
       "protocol": "REST",
       "method": "POST",
-      "entitypath": "{base_path}/{version}/show-session?{query}",
+      "entitypath": "{base_path}/{version}/keepalive?{query}",
       "requestSchema": "schema.json",
       "responseSchema": "schema.json",
       "timeout": 0,

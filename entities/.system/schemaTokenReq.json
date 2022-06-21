@@ -35,6 +35,30 @@
         "key": ""
       },
       "external_name": "password"
+    },
+    "session-timeout": {
+      "type": "number",
+      "description": "time for the session to remain open",
+      "default": 3600,
+      "parse": false,
+      "encode": false,
+      "encrypt": {
+        "type": "AES",
+        "key": ""
+      },
+      "external_name": "session-timeout"
+    },
+    "domain": {
+      "type": "string",
+      "description": "domain to authenticate against",
+      "default": "",
+      "parse": false,
+      "encode": false,
+      "encrypt": {
+        "type": "AES",
+        "key": ""
+      },
+      "external_name": "domain"
     }
   },
   "required": [
