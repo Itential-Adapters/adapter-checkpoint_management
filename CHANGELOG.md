@@ -1,4 +1,12 @@
 
+## 0.4.0 [08-08-2022]
+
+* Add Session Management Capability
+
+See merge request itentialopensource/adapters/security/adapter-checkpoint_management!9
+
+---
+
 ## 0.3.1 [06-21-2022]
 
 * Changes for Authentication and Healthcheck
