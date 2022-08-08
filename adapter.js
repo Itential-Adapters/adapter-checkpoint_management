@@ -867,12 +867,24 @@ class CheckpointManagement extends AdapterBaseCl {
       log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
       return callback(null, errorObj);
     }
+    // if no user or apikey in what we are provided
+    const mybody = body;
+    if (!mybody.username && !mybody['api-key']) {
+      // if the adapter properties have a username then use the props to set the username and password
+      if (this.allProps.authentication && this.allProps.authentication.username) {
+        mybody.user = this.allProps.authentication.username;
+        mybody.password = this.allProps.authentication.password;
+      } else if (this.allProps.authentication && this.allProps.authentication.token) {
+        // if the adapter properties have a token then use the props to set the api-key
+        mybody['api-key'] = this.allProps.authentication.token;
+      }
+    }
 
     /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
     const queryParamsAvailable = {};
     const queryParams = {};
     const pathVars = [];
-    const bodyVars = body;
+    const bodyVars = mybody;
 
     // loop in template. long callback arg name to avoid identifier conflicts
     Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
@@ -925,7 +937,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   publish(body, callback) {
-    const meth = 'adapter-publish';
+    this.publishWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary publishWithSid
+   *
+   * @function publishWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  publishWithSid(sid, body, callback) {
+    const meth = 'adapter-publishWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -979,6 +1004,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -991,7 +1019,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['publish'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['publishWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1016,7 +1044,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   discard(body, callback) {
-    const meth = 'adapter-discard';
+    this.discardWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary discardWithSid
+   *
+   * @function discardWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  discardWithSid(sid, body, callback) {
+    const meth = 'adapter-discardWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1070,6 +1111,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1082,7 +1126,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['discard'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['discardWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1107,7 +1151,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   logout(body, callback) {
-    const meth = 'adapter-logout';
+    this.logoutWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary logoutWithSid
+   *
+   * @function logoutWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  logoutWithSid(sid, body, callback) {
+    const meth = 'adapter-logoutWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1161,6 +1218,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1173,7 +1233,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['logout'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['logoutWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1198,7 +1258,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   disconnect(body, callback) {
-    const meth = 'adapter-disconnect';
+    this.disconnectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary disconnectWithSid
+   *
+   * @function disconnectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  disconnectWithSid(sid, body, callback) {
+    const meth = 'adapter-disconnectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1252,6 +1325,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1264,7 +1340,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['disconnect'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['disconnectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1289,7 +1365,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   keepalive(body, callback) {
-    const meth = 'adapter-keepalive';
+    this.keepaliveWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary keepaliveWithSid
+   *
+   * @function keepaliveWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  keepaliveWithSid(sid, body, callback) {
+    const meth = 'adapter-keepaliveWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1343,6 +1432,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1355,7 +1447,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['keepalive'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['keepaliveWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1380,7 +1472,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showSession(body, callback) {
-    const meth = 'adapter-showSession';
+    this.showSessionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-session
+   *
+   * @function showSessionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showSessionWithSid(sid, body, callback) {
+    const meth = 'adapter-showSessionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1434,6 +1539,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1446,7 +1554,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSession'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSessionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1471,7 +1579,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setSession(body, callback) {
-    const meth = 'adapter-setSession';
+    this.setSessionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-session
+   *
+   * @function setSessionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setSessionWithSid(sid, body, callback) {
+    const meth = 'adapter-setSessionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1525,6 +1646,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1537,7 +1661,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setSession'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setSessionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1562,7 +1686,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   continueSessionInSmartconsole(body, callback) {
-    const meth = 'adapter-continueSessionInSmartconsole';
+    this.continueSessionInSmartconsoleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary continue-session-in-smartconsole
+   *
+   * @function continueSessionInSmartconsoleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  continueSessionInSmartconsoleWithSid(sid, body, callback) {
+    const meth = 'adapter-continueSessionInSmartconsoleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1616,6 +1753,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1628,7 +1768,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['continueSessionInSmartconsole'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['continueSessionInSmartconsoleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1653,7 +1793,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showLastPublishedSession(body, callback) {
-    const meth = 'adapter-showLastPublishedSession';
+    this.showLastPublishedSessionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-last-published-session
+   *
+   * @function showLastPublishedSessionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showLastPublishedSessionWithSid(sid, body, callback) {
+    const meth = 'adapter-showLastPublishedSessionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1707,6 +1860,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1719,7 +1875,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showLastPublishedSession'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showLastPublishedSessionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1744,7 +1900,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   purgePublishedSessionsByCount(body, callback) {
-    const meth = 'adapter-purgePublishedSessionsByCount';
+    this.purgePublishedSessionsByCountWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary purge-published-sessions by count
+   *
+   * @function purgePublishedSessionsByCountWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  purgePublishedSessionsByCountWithSid(sid, body, callback) {
+    const meth = 'adapter-purgePublishedSessionsByCountWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1798,6 +1967,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1810,7 +1982,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['purgePublishedSessionsByCount'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['purgePublishedSessionsByCountWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1835,7 +2007,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   switchSession(body, callback) {
-    const meth = 'adapter-switchSession';
+    this.switchSessionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary switch-session
+   *
+   * @function switchSessionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  switchSessionWithSid(sid, body, callback) {
+    const meth = 'adapter-switchSessionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1889,6 +2074,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1901,7 +2089,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['switchSession'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['switchSessionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -1926,7 +2114,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   assignSession(body, callback) {
-    const meth = 'adapter-assignSession';
+    this.assignSessionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary assign-session
+   *
+   * @function assignSessionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  assignSessionWithSid(sid, body, callback) {
+    const meth = 'adapter-assignSessionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -1980,6 +2181,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -1992,7 +2196,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['assignSession'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['assignSessionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2017,7 +2221,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   takeOverSession(body, callback) {
-    const meth = 'adapter-takeOverSession';
+    this.takeOverSessionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary take-over-session
+   *
+   * @function takeOverSessionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  takeOverSessionWithSid(sid, body, callback) {
+    const meth = 'adapter-takeOverSessionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2071,6 +2288,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2083,7 +2303,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['takeOverSession'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['takeOverSessionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2108,7 +2328,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showSessions(body, callback) {
-    const meth = 'adapter-showSessions';
+    this.showSessionsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-sessions
+   *
+   * @function showSessionsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showSessionsWithSid(sid, body, callback) {
+    const meth = 'adapter-showSessionsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2162,6 +2395,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2174,7 +2410,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSessions'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSessionsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2199,7 +2435,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showLoginMessage(body, callback) {
-    const meth = 'adapter-showLoginMessage';
+    this.showLoginMessageWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-login-message
+   *
+   * @function showLoginMessageWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showLoginMessageWithSid(sid, body, callback) {
+    const meth = 'adapter-showLoginMessageWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2253,6 +2502,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2265,7 +2517,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showLoginMessage'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showLoginMessageWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2290,7 +2542,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setLoginMessage(body, callback) {
-    const meth = 'adapter-setLoginMessage';
+    this.setLoginMessageWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-login-message
+   *
+   * @function setLoginMessageWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setLoginMessageWithSid(sid, body, callback) {
+    const meth = 'adapter-setLoginMessageWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2344,6 +2609,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2356,7 +2624,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setLoginMessage'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setLoginMessageWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2381,7 +2649,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addHost(body, callback) {
-    const meth = 'adapter-addHost';
+    this.addHostWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-host
+   *
+   * @function addHostWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addHostWithSid(sid, body, callback) {
+    const meth = 'adapter-addHostWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2435,6 +2716,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2447,7 +2731,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addHost'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addHostWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2472,7 +2756,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showHost(body, callback) {
-    const meth = 'adapter-showHost';
+    this.showHostWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-host
+   *
+   * @function showHostWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showHostWithSid(sid, body, callback) {
+    const meth = 'adapter-showHostWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2526,6 +2823,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2538,7 +2838,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showHost'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showHostWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2563,7 +2863,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setHost(body, callback) {
-    const meth = 'adapter-setHost';
+    this.setHostWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-host
+   *
+   * @function setHostWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setHostWithSid(sid, body, callback) {
+    const meth = 'adapter-setHostWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2617,6 +2930,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2629,7 +2945,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setHost'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setHostWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2654,7 +2970,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteHost(body, callback) {
-    const meth = 'adapter-deleteHost';
+    this.deleteHostWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-host
+   *
+   * @function deleteHostWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteHostWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteHostWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2708,6 +3037,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2720,7 +3052,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteHost'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteHostWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2745,7 +3077,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showHosts(body, callback) {
-    const meth = 'adapter-showHosts';
+    this.showHostsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-hosts
+   *
+   * @function showHostsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showHostsWithSid(sid, body, callback) {
+    const meth = 'adapter-showHostsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2799,6 +3144,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2811,7 +3159,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showHosts'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showHostsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2836,7 +3184,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addNetwork(body, callback) {
-    const meth = 'adapter-addNetwork';
+    this.addNetworkWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-network
+   *
+   * @function addNetworkWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addNetworkWithSid(sid, body, callback) {
+    const meth = 'adapter-addNetworkWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2890,6 +3251,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2902,7 +3266,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addNetwork'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addNetworkWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -2927,7 +3291,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showNetwork(body, callback) {
-    const meth = 'adapter-showNetwork';
+    this.showNetworkWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-network
+   *
+   * @function showNetworkWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showNetworkWithSid(sid, body, callback) {
+    const meth = 'adapter-showNetworkWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -2981,6 +3358,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -2993,7 +3373,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNetwork'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNetworkWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3018,7 +3398,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setNetwork(body, callback) {
-    const meth = 'adapter-setNetwork';
+    this.setNetworkWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-network
+   *
+   * @function setNetworkWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setNetworkWithSid(sid, body, callback) {
+    const meth = 'adapter-setNetworkWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3072,6 +3465,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3084,7 +3480,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setNetwork'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setNetworkWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3109,7 +3505,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteNetwork(body, callback) {
-    const meth = 'adapter-deleteNetwork';
+    this.deleteNetworkWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-network
+   *
+   * @function deleteNetworkWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteNetworkWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteNetworkWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3163,6 +3572,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3175,7 +3587,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteNetwork'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteNetworkWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3200,7 +3612,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showNetworks(body, callback) {
-    const meth = 'adapter-showNetworks';
+    this.showNetworksWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-networks
+   *
+   * @function showNetworksWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showNetworksWithSid(sid, body, callback) {
+    const meth = 'adapter-showNetworksWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3254,6 +3679,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3266,7 +3694,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNetworks'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNetworksWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3291,7 +3719,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addWildcard(body, callback) {
-    const meth = 'adapter-addWildcard';
+    this.addWildcardWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-wildcard
+   *
+   * @function addWildcardWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addWildcardWithSid(sid, body, callback) {
+    const meth = 'adapter-addWildcardWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3345,6 +3786,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3357,7 +3801,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addWildcard'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addWildcardWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3382,7 +3826,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showWildcard(body, callback) {
-    const meth = 'adapter-showWildcard';
+    this.showWildcardWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-wildcard
+   *
+   * @function showWildcardWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showWildcardWithSid(sid, body, callback) {
+    const meth = 'adapter-showWildcardWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3436,6 +3893,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3448,7 +3908,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showWildcard'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showWildcardWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3473,7 +3933,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setWildcard(body, callback) {
-    const meth = 'adapter-setWildcard';
+    this.setWildcardWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-wildcard
+   *
+   * @function setWildcardWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setWildcardWithSid(sid, body, callback) {
+    const meth = 'adapter-setWildcardWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3527,6 +4000,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3539,7 +4015,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setWildcard'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setWildcardWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3564,7 +4040,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteWildcard(body, callback) {
-    const meth = 'adapter-deleteWildcard';
+    this.deleteWildcardWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-wildcard
+   *
+   * @function deleteWildcardWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteWildcardWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteWildcardWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3618,6 +4107,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3630,7 +4122,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteWildcard'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteWildcardWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3655,7 +4147,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showWildcards(body, callback) {
-    const meth = 'adapter-showWildcards';
+    this.showWildcardsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-wildcards
+   *
+   * @function showWildcardsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showWildcardsWithSid(sid, body, callback) {
+    const meth = 'adapter-showWildcardsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3709,6 +4214,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3721,7 +4229,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showWildcards'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showWildcardsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3746,7 +4254,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addGroupWithGroup(body, callback) {
-    const meth = 'adapter-addGroupWithGroup';
+    this.addGroupWithGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-group with group
+   *
+   * @function addGroupWithGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addGroupWithGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-addGroupWithGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3800,6 +4321,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3812,7 +4336,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addGroupWithGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addGroupWithGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3837,7 +4361,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showGroup(body, callback) {
-    const meth = 'adapter-showGroup';
+    this.showGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-group
+   *
+   * @function showGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-showGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3891,6 +4428,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3903,7 +4443,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -3928,7 +4468,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setGroup(body, callback) {
-    const meth = 'adapter-setGroup';
+    this.setGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-group
+   *
+   * @function setGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-setGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -3982,6 +4535,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -3994,7 +4550,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4019,7 +4575,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteGroup(body, callback) {
-    const meth = 'adapter-deleteGroup';
+    this.deleteGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-group
+   *
+   * @function deleteGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4073,6 +4642,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4085,7 +4657,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4110,7 +4682,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showGroups(body, callback) {
-    const meth = 'adapter-showGroups';
+    this.showGroupsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-groups
+   *
+   * @function showGroupsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showGroupsWithSid(sid, body, callback) {
+    const meth = 'adapter-showGroupsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4164,6 +4749,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4176,7 +4764,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGroups'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGroupsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4201,7 +4789,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addAddressRange(body, callback) {
-    const meth = 'adapter-addAddressRange';
+    this.addAddressRangeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-address-range
+   *
+   * @function addAddressRangeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addAddressRangeWithSid(sid, body, callback) {
+    const meth = 'adapter-addAddressRangeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4255,6 +4856,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4267,7 +4871,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAddressRange'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAddressRangeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4292,7 +4896,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAddressRange(body, callback) {
-    const meth = 'adapter-showAddressRange';
+    this.showAddressRangeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-address-range
+   *
+   * @function showAddressRangeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAddressRangeWithSid(sid, body, callback) {
+    const meth = 'adapter-showAddressRangeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4346,6 +4963,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4358,7 +4978,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAddressRange'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAddressRangeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4383,7 +5003,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setAddressRange(body, callback) {
-    const meth = 'adapter-setAddressRange';
+    this.setAddressRangeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-address-range
+   *
+   * @function setAddressRangeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setAddressRangeWithSid(sid, body, callback) {
+    const meth = 'adapter-setAddressRangeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4437,6 +5070,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4449,7 +5085,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAddressRange'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAddressRangeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4474,7 +5110,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteAddressRange(body, callback) {
-    const meth = 'adapter-deleteAddressRange';
+    this.deleteAddressRangeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-address-range
+   *
+   * @function deleteAddressRangeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteAddressRangeWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteAddressRangeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4528,6 +5177,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4540,7 +5192,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAddressRange'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAddressRangeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4565,7 +5217,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAddressRanges(body, callback) {
-    const meth = 'adapter-showAddressRanges';
+    this.showAddressRangesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-address-ranges
+   *
+   * @function showAddressRangesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAddressRangesWithSid(sid, body, callback) {
+    const meth = 'adapter-showAddressRangesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4619,6 +5284,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4631,7 +5299,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAddressRanges'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAddressRangesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4656,7 +5324,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addMulticastAddressRangeIpRange(body, callback) {
-    const meth = 'adapter-addMulticastAddressRangeIpRange';
+    this.addMulticastAddressRangeIpRangeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-multicast-address-range-ip-range
+   *
+   * @function addMulticastAddressRangeIpRangeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addMulticastAddressRangeIpRangeWithSid(sid, body, callback) {
+    const meth = 'adapter-addMulticastAddressRangeIpRangeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4710,6 +5391,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4722,7 +5406,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addMulticastAddressRangeIpRange'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addMulticastAddressRangeIpRangeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4747,7 +5431,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showMulticastAddressRange(body, callback) {
-    const meth = 'adapter-showMulticastAddressRange';
+    this.showMulticastAddressRangeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-multicast-address-range
+   *
+   * @function showMulticastAddressRangeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showMulticastAddressRangeWithSid(sid, body, callback) {
+    const meth = 'adapter-showMulticastAddressRangeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4801,6 +5498,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4813,7 +5513,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showMulticastAddressRange'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showMulticastAddressRangeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4838,7 +5538,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setMulticastAddressRange(body, callback) {
-    const meth = 'adapter-setMulticastAddressRange';
+    this.setMulticastAddressRangeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-multicast-address-range
+   *
+   * @function setMulticastAddressRangeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setMulticastAddressRangeWithSid(sid, body, callback) {
+    const meth = 'adapter-setMulticastAddressRangeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4892,6 +5605,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4904,7 +5620,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setMulticastAddressRange'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setMulticastAddressRangeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -4929,7 +5645,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteMulticastAddressRange(body, callback) {
-    const meth = 'adapter-deleteMulticastAddressRange';
+    this.deleteMulticastAddressRangeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-multicast-address-range
+   *
+   * @function deleteMulticastAddressRangeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteMulticastAddressRangeWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteMulticastAddressRangeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -4983,6 +5712,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -4995,7 +5727,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteMulticastAddressRange'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteMulticastAddressRangeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5020,7 +5752,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showMulticastAddressRanges(body, callback) {
-    const meth = 'adapter-showMulticastAddressRanges';
+    this.showMulticastAddressRangesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-multicast-address-ranges
+   *
+   * @function showMulticastAddressRangesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showMulticastAddressRangesWithSid(sid, body, callback) {
+    const meth = 'adapter-showMulticastAddressRangesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5074,6 +5819,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5086,7 +5834,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showMulticastAddressRanges'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showMulticastAddressRangesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5111,7 +5859,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addGroupWithExclusion(body, callback) {
-    const meth = 'adapter-addGroupWithExclusion';
+    this.addGroupWithExclusionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-group-with-exclusion
+   *
+   * @function addGroupWithExclusionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addGroupWithExclusionWithSid(sid, body, callback) {
+    const meth = 'adapter-addGroupWithExclusionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5165,6 +5926,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5177,7 +5941,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addGroupWithExclusion'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addGroupWithExclusionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5202,7 +5966,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showGroupWithExclusion(body, callback) {
-    const meth = 'adapter-showGroupWithExclusion';
+    this.showGroupWithExclusionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-group-with-exclusion
+   *
+   * @function showGroupWithExclusionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showGroupWithExclusionWithSid(sid, body, callback) {
+    const meth = 'adapter-showGroupWithExclusionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5256,6 +6033,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5268,7 +6048,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGroupWithExclusion'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGroupWithExclusionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5293,7 +6073,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setGroupWithExclusion(body, callback) {
-    const meth = 'adapter-setGroupWithExclusion';
+    this.setGroupWithExclusionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-group-with-exclusion
+   *
+   * @function setGroupWithExclusionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setGroupWithExclusionWithSid(sid, body, callback) {
+    const meth = 'adapter-setGroupWithExclusionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5347,6 +6140,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5359,7 +6155,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setGroupWithExclusion'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setGroupWithExclusionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5384,7 +6180,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteGroupWithExclusion(body, callback) {
-    const meth = 'adapter-deleteGroupWithExclusion';
+    this.deleteGroupWithExclusionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-group-with-exclusion
+   *
+   * @function deleteGroupWithExclusionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteGroupWithExclusionWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteGroupWithExclusionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5438,6 +6247,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5450,7 +6262,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteGroupWithExclusion'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteGroupWithExclusionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5475,7 +6287,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showGroupsWithExclusion(body, callback) {
-    const meth = 'adapter-showGroupsWithExclusion';
+    this.showGroupsWithExclusionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-groups-with-exclusion
+   *
+   * @function showGroupsWithExclusionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showGroupsWithExclusionWithSid(sid, body, callback) {
+    const meth = 'adapter-showGroupsWithExclusionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5529,6 +6354,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5541,7 +6369,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGroupsWithExclusion'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGroupsWithExclusionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5566,7 +6394,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addSimpleGateway(body, callback) {
-    const meth = 'adapter-addSimpleGateway';
+    this.addSimpleGatewayWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-simple-gateway
+   *
+   * @function addSimpleGatewayWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addSimpleGatewayWithSid(sid, body, callback) {
+    const meth = 'adapter-addSimpleGatewayWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5620,6 +6461,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5632,7 +6476,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addSimpleGateway'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addSimpleGatewayWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5657,7 +6501,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showSimpleGateway(body, callback) {
-    const meth = 'adapter-showSimpleGateway';
+    this.showSimpleGatewayWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-simple-gateway
+   *
+   * @function showSimpleGatewayWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showSimpleGatewayWithSid(sid, body, callback) {
+    const meth = 'adapter-showSimpleGatewayWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5711,6 +6568,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5723,7 +6583,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSimpleGateway'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSimpleGatewayWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5748,7 +6608,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setSimpleGateway(body, callback) {
-    const meth = 'adapter-setSimpleGateway';
+    this.setSimpleGatewayWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-simple-gateway
+   *
+   * @function setSimpleGatewayWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setSimpleGatewayWithSid(sid, body, callback) {
+    const meth = 'adapter-setSimpleGatewayWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5802,6 +6675,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5814,7 +6690,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setSimpleGateway'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setSimpleGatewayWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5839,7 +6715,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteSimpleGateway(body, callback) {
-    const meth = 'adapter-deleteSimpleGateway';
+    this.deleteSimpleGatewayWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-simple-gateway
+   *
+   * @function deleteSimpleGatewayWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteSimpleGatewayWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteSimpleGatewayWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5893,6 +6782,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5905,7 +6797,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteSimpleGateway'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteSimpleGatewayWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -5930,7 +6822,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showSimpleGateways(body, callback) {
-    const meth = 'adapter-showSimpleGateways';
+    this.showSimpleGatewaysWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-simple-gateways
+   *
+   * @function showSimpleGatewaysWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showSimpleGatewaysWithSid(sid, body, callback) {
+    const meth = 'adapter-showSimpleGatewaysWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -5984,6 +6889,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -5996,7 +6904,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSimpleGateways'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSimpleGatewaysWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6021,7 +6929,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addSecurityZone(body, callback) {
-    const meth = 'adapter-addSecurityZone';
+    this.addSecurityZoneWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-security-zone
+   *
+   * @function addSecurityZoneWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addSecurityZoneWithSid(sid, body, callback) {
+    const meth = 'adapter-addSecurityZoneWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6075,6 +6996,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6087,7 +7011,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addSecurityZone'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addSecurityZoneWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6112,7 +7036,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showSecurityZone(body, callback) {
-    const meth = 'adapter-showSecurityZone';
+    this.showSecurityZoneWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-security-zone
+   *
+   * @function showSecurityZoneWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showSecurityZoneWithSid(sid, body, callback) {
+    const meth = 'adapter-showSecurityZoneWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6166,6 +7103,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6178,7 +7118,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSecurityZone'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSecurityZoneWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6203,7 +7143,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setSecurityZone(body, callback) {
-    const meth = 'adapter-setSecurityZone';
+    this.setSecurityZoneWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-security-zone
+   *
+   * @function setSecurityZoneWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setSecurityZoneWithSid(sid, body, callback) {
+    const meth = 'adapter-setSecurityZoneWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6257,6 +7210,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6269,7 +7225,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setSecurityZone'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setSecurityZoneWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6294,7 +7250,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteSecurityZone(body, callback) {
-    const meth = 'adapter-deleteSecurityZone';
+    this.deleteSecurityZoneWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-security-zone
+   *
+   * @function deleteSecurityZoneWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteSecurityZoneWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteSecurityZoneWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6348,6 +7317,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6360,7 +7332,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteSecurityZone'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteSecurityZoneWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6385,7 +7357,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showSecurityZones(body, callback) {
-    const meth = 'adapter-showSecurityZones';
+    this.showSecurityZonesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-security-zones
+   *
+   * @function showSecurityZonesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showSecurityZonesWithSid(sid, body, callback) {
+    const meth = 'adapter-showSecurityZonesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6439,6 +7424,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6451,7 +7439,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSecurityZones'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSecurityZonesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6476,7 +7464,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addTime(body, callback) {
-    const meth = 'adapter-addTime';
+    this.addTimeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-time
+   *
+   * @function addTimeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addTimeWithSid(sid, body, callback) {
+    const meth = 'adapter-addTimeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6530,6 +7531,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6542,7 +7546,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addTime'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addTimeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6567,7 +7571,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTime(body, callback) {
-    const meth = 'adapter-showTime';
+    this.showTimeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-time
+   *
+   * @function showTimeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTimeWithSid(sid, body, callback) {
+    const meth = 'adapter-showTimeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6621,6 +7638,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6633,7 +7653,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTime'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTimeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6658,7 +7678,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setTime(body, callback) {
-    const meth = 'adapter-setTime';
+    this.setTimeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-time
+   *
+   * @function setTimeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setTimeWithSid(sid, body, callback) {
+    const meth = 'adapter-setTimeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6712,6 +7745,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6724,7 +7760,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setTime'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setTimeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6749,7 +7785,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteTime(body, callback) {
-    const meth = 'adapter-deleteTime';
+    this.deleteTimeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-time
+   *
+   * @function deleteTimeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteTimeWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteTimeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6803,6 +7852,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6815,7 +7867,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteTime'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteTimeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6840,7 +7892,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTimes(body, callback) {
-    const meth = 'adapter-showTimes';
+    this.showTimesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-times
+   *
+   * @function showTimesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTimesWithSid(sid, body, callback) {
+    const meth = 'adapter-showTimesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6894,6 +7959,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6906,7 +7974,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTimes'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTimesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -6931,7 +7999,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addTimeGroup(body, callback) {
-    const meth = 'adapter-addTimeGroup';
+    this.addTimeGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-time-group
+   *
+   * @function addTimeGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addTimeGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-addTimeGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -6985,6 +8066,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -6997,7 +8081,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addTimeGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addTimeGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7022,7 +8106,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTimeGroup(body, callback) {
-    const meth = 'adapter-showTimeGroup';
+    this.showTimeGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-time-group
+   *
+   * @function showTimeGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTimeGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-showTimeGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7076,6 +8173,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7088,7 +8188,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTimeGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTimeGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7113,7 +8213,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setTimeGroup(body, callback) {
-    const meth = 'adapter-setTimeGroup';
+    this.setTimeGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-time-group
+   *
+   * @function setTimeGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setTimeGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-setTimeGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7167,6 +8280,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7179,7 +8295,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setTimeGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setTimeGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7204,7 +8320,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteTimeGroup(body, callback) {
-    const meth = 'adapter-deleteTimeGroup';
+    this.deleteTimeGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-time-group
+   *
+   * @function deleteTimeGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteTimeGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteTimeGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7258,6 +8387,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7270,7 +8402,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteTimeGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteTimeGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7295,7 +8427,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTimeGroups(body, callback) {
-    const meth = 'adapter-showTimeGroups';
+    this.showTimeGroupsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-time-groups
+   *
+   * @function showTimeGroupsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTimeGroupsWithSid(sid, body, callback) {
+    const meth = 'adapter-showTimeGroupsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7349,6 +8494,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7361,7 +8509,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTimeGroups'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTimeGroupsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7386,7 +8534,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addAccessRole(body, callback) {
-    const meth = 'adapter-addAccessRole';
+    this.addAccessRoleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-access-role
+   *
+   * @function addAccessRoleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addAccessRoleWithSid(sid, body, callback) {
+    const meth = 'adapter-addAccessRoleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7440,6 +8601,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7452,7 +8616,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAccessRole'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAccessRoleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7477,7 +8641,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAccessRole(body, callback) {
-    const meth = 'adapter-showAccessRole';
+    this.showAccessRoleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-access-role
+   *
+   * @function showAccessRoleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAccessRoleWithSid(sid, body, callback) {
+    const meth = 'adapter-showAccessRoleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7531,6 +8708,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7543,7 +8723,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessRole'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessRoleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7568,7 +8748,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setAccessRole(body, callback) {
-    const meth = 'adapter-setAccessRole';
+    this.setAccessRoleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-access-role
+   *
+   * @function setAccessRoleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setAccessRoleWithSid(sid, body, callback) {
+    const meth = 'adapter-setAccessRoleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7622,6 +8815,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7634,7 +8830,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAccessRole'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAccessRoleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7659,7 +8855,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteAccessRole(body, callback) {
-    const meth = 'adapter-deleteAccessRole';
+    this.deleteAccessRoleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-access-role
+   *
+   * @function deleteAccessRoleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteAccessRoleWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteAccessRoleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7713,6 +8922,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7725,7 +8937,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAccessRole'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAccessRoleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7750,7 +8962,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAccessRoles(body, callback) {
-    const meth = 'adapter-showAccessRoles';
+    this.showAccessRolesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-access-roles
+   *
+   * @function showAccessRolesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAccessRolesWithSid(sid, body, callback) {
+    const meth = 'adapter-showAccessRolesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7804,6 +9029,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7816,7 +9044,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessRoles'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessRolesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7841,7 +9069,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addDynamicObject(body, callback) {
-    const meth = 'adapter-addDynamicObject';
+    this.addDynamicObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-dynamic-object
+   *
+   * @function addDynamicObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addDynamicObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-addDynamicObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7895,6 +9136,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7907,7 +9151,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addDynamicObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addDynamicObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -7932,7 +9176,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDynamicObject(body, callback) {
-    const meth = 'adapter-showDynamicObject';
+    this.showDynamicObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-dynamic-object
+   *
+   * @function showDynamicObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDynamicObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-showDynamicObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -7986,6 +9243,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -7998,7 +9258,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDynamicObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDynamicObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8023,7 +9283,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setDynamicObject(body, callback) {
-    const meth = 'adapter-setDynamicObject';
+    this.setDynamicObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-dynamic-object
+   *
+   * @function setDynamicObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setDynamicObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-setDynamicObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8077,6 +9350,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8089,7 +9365,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setDynamicObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setDynamicObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8114,7 +9390,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteDynamicObject(body, callback) {
-    const meth = 'adapter-deleteDynamicObject';
+    this.deleteDynamicObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-dynamic-object
+   *
+   * @function deleteDynamicObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteDynamicObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteDynamicObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8168,6 +9457,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8180,7 +9472,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteDynamicObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteDynamicObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8205,7 +9497,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDynamicObjects(body, callback) {
-    const meth = 'adapter-showDynamicObjects';
+    this.showDynamicObjectsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-dynamic-objects
+   *
+   * @function showDynamicObjectsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDynamicObjectsWithSid(sid, body, callback) {
+    const meth = 'adapter-showDynamicObjectsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8259,6 +9564,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8271,7 +9579,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDynamicObjects'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDynamicObjectsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8296,7 +9604,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addTrustedClient(body, callback) {
-    const meth = 'adapter-addTrustedClient';
+    this.addTrustedClientWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-trusted-client
+   *
+   * @function addTrustedClientWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addTrustedClientWithSid(sid, body, callback) {
+    const meth = 'adapter-addTrustedClientWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8350,6 +9671,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8362,7 +9686,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addTrustedClient'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addTrustedClientWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8387,7 +9711,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTrustedClient(body, callback) {
-    const meth = 'adapter-showTrustedClient';
+    this.showTrustedClientWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-trusted-client
+   *
+   * @function showTrustedClientWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTrustedClientWithSid(sid, body, callback) {
+    const meth = 'adapter-showTrustedClientWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8441,6 +9778,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8453,7 +9793,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTrustedClient'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTrustedClientWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8478,7 +9818,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setTrustedClient(body, callback) {
-    const meth = 'adapter-setTrustedClient';
+    this.setTrustedClientWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-trusted-client
+   *
+   * @function setTrustedClientWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setTrustedClientWithSid(sid, body, callback) {
+    const meth = 'adapter-setTrustedClientWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8532,6 +9885,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8544,7 +9900,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setTrustedClient'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setTrustedClientWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8569,7 +9925,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteTrustedClient(body, callback) {
-    const meth = 'adapter-deleteTrustedClient';
+    this.deleteTrustedClientWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-trusted-client
+   *
+   * @function deleteTrustedClientWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteTrustedClientWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteTrustedClientWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8623,6 +9992,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8635,7 +10007,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteTrustedClient'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteTrustedClientWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8660,7 +10032,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTrustedClients(body, callback) {
-    const meth = 'adapter-showTrustedClients';
+    this.showTrustedClientsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-trusted-clients
+   *
+   * @function showTrustedClientsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTrustedClientsWithSid(sid, body, callback) {
+    const meth = 'adapter-showTrustedClientsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8714,6 +10099,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8726,7 +10114,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTrustedClients'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTrustedClientsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8751,7 +10139,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addTag(body, callback) {
-    const meth = 'adapter-addTag';
+    this.addTagWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-tag
+   *
+   * @function addTagWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addTagWithSid(sid, body, callback) {
+    const meth = 'adapter-addTagWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8805,6 +10206,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8817,7 +10221,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addTag'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addTagWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8842,7 +10246,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTag(body, callback) {
-    const meth = 'adapter-showTag';
+    this.showTagWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-tag
+   *
+   * @function showTagWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTagWithSid(sid, body, callback) {
+    const meth = 'adapter-showTagWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8896,6 +10313,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8908,7 +10328,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTag'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTagWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -8933,7 +10353,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setTag(body, callback) {
-    const meth = 'adapter-setTag';
+    this.setTagWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-tag
+   *
+   * @function setTagWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setTagWithSid(sid, body, callback) {
+    const meth = 'adapter-setTagWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -8987,6 +10420,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -8999,7 +10435,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setTag'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setTagWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9024,7 +10460,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteTag(body, callback) {
-    const meth = 'adapter-deleteTag';
+    this.deleteTagWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-tag
+   *
+   * @function deleteTagWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteTagWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteTagWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9078,6 +10527,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9090,7 +10542,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteTag'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteTagWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9115,7 +10567,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTags(body, callback) {
-    const meth = 'adapter-showTags';
+    this.showTagsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-tags
+   *
+   * @function showTagsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTagsWithSid(sid, body, callback) {
+    const meth = 'adapter-showTagsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9169,6 +10634,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9181,7 +10649,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTags'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTagsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9206,7 +10674,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addDnsDomain(body, callback) {
-    const meth = 'adapter-addDnsDomain';
+    this.addDnsDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-dns-domain
+   *
+   * @function addDnsDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addDnsDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-addDnsDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9260,6 +10741,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9272,7 +10756,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addDnsDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addDnsDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9297,7 +10781,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDnsDomain(body, callback) {
-    const meth = 'adapter-showDnsDomain';
+    this.showDnsDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-dns-domain
+   *
+   * @function showDnsDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDnsDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-showDnsDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9351,6 +10848,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9363,7 +10863,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDnsDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDnsDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9388,7 +10888,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setDnsDomain(body, callback) {
-    const meth = 'adapter-setDnsDomain';
+    this.setDnsDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-dns-domain
+   *
+   * @function setDnsDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setDnsDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-setDnsDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9442,6 +10955,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9454,7 +10970,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setDnsDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setDnsDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9479,7 +10995,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteDnsDomain(body, callback) {
-    const meth = 'adapter-deleteDnsDomain';
+    this.deleteDnsDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-dns-domain
+   *
+   * @function deleteDnsDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteDnsDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteDnsDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9533,6 +11062,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9545,7 +11077,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteDnsDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteDnsDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9570,7 +11102,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDnsDomains(body, callback) {
-    const meth = 'adapter-showDnsDomains';
+    this.showDnsDomainsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-dns-domains
+   *
+   * @function showDnsDomainsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDnsDomainsWithSid(sid, body, callback) {
+    const meth = 'adapter-showDnsDomainsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9624,6 +11169,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9636,7 +11184,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDnsDomains'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDnsDomainsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9661,7 +11209,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addOpsecApplication(body, callback) {
-    const meth = 'adapter-addOpsecApplication';
+    this.addOpsecApplicationWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-opsec-application
+   *
+   * @function addOpsecApplicationWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addOpsecApplicationWithSid(sid, body, callback) {
+    const meth = 'adapter-addOpsecApplicationWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9715,6 +11276,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9727,7 +11291,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addOpsecApplication'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addOpsecApplicationWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9752,7 +11316,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showOpsecApplication(body, callback) {
-    const meth = 'adapter-showOpsecApplication';
+    this.showOpsecApplicationWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-opsec-application
+   *
+   * @function showOpsecApplicationWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showOpsecApplicationWithSid(sid, body, callback) {
+    const meth = 'adapter-showOpsecApplicationWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9806,6 +11383,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9818,7 +11398,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showOpsecApplication'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showOpsecApplicationWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9843,7 +11423,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setOpsecApplication(body, callback) {
-    const meth = 'adapter-setOpsecApplication';
+    this.setOpsecApplicationWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-opsec-application
+   *
+   * @function setOpsecApplicationWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setOpsecApplicationWithSid(sid, body, callback) {
+    const meth = 'adapter-setOpsecApplicationWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9897,6 +11490,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -9909,7 +11505,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setOpsecApplication'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setOpsecApplicationWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -9934,7 +11530,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteOpsecApplication(body, callback) {
-    const meth = 'adapter-deleteOpsecApplication';
+    this.deleteOpsecApplicationWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-opsec-application
+   *
+   * @function deleteOpsecApplicationWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteOpsecApplicationWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteOpsecApplicationWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -9988,6 +11597,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10000,7 +11612,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteOpsecApplication'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteOpsecApplicationWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10025,7 +11637,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showOpsecApplications(body, callback) {
-    const meth = 'adapter-showOpsecApplications';
+    this.showOpsecApplicationsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-opsec-applications
+   *
+   * @function showOpsecApplicationsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showOpsecApplicationsWithSid(sid, body, callback) {
+    const meth = 'adapter-showOpsecApplicationsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10079,6 +11704,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10091,7 +11719,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showOpsecApplications'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showOpsecApplicationsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10116,7 +11744,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDataCenterContent(body, callback) {
-    const meth = 'adapter-showDataCenterContent';
+    this.showDataCenterContentWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-data-center-content
+   *
+   * @function showDataCenterContentWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDataCenterContentWithSid(sid, body, callback) {
+    const meth = 'adapter-showDataCenterContentWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10170,6 +11811,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10182,7 +11826,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenterContent'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenterContentWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10207,7 +11851,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDataCenter(body, callback) {
-    const meth = 'adapter-showDataCenter';
+    this.showDataCenterWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-data-center
+   *
+   * @function showDataCenterWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDataCenterWithSid(sid, body, callback) {
+    const meth = 'adapter-showDataCenterWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10261,6 +11918,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10273,7 +11933,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenter'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenterWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10298,7 +11958,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDataCenters(body, callback) {
-    const meth = 'adapter-showDataCenters';
+    this.showDataCentersWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-data-centers
+   *
+   * @function showDataCentersWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDataCentersWithSid(sid, body, callback) {
+    const meth = 'adapter-showDataCentersWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10352,6 +12025,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10364,7 +12040,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenters'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCentersWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10389,7 +12065,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addDataCenterObjectWithGroup(body, callback) {
-    const meth = 'adapter-addDataCenterObjectWithGroup';
+    this.addDataCenterObjectWithGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-data-center-object with group
+   *
+   * @function addDataCenterObjectWithGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addDataCenterObjectWithGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-addDataCenterObjectWithGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10443,6 +12132,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10455,7 +12147,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addDataCenterObjectWithGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addDataCenterObjectWithGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10480,7 +12172,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDataCenterObject(body, callback) {
-    const meth = 'adapter-showDataCenterObject';
+    this.showDataCenterObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-data-center-object
+   *
+   * @function showDataCenterObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDataCenterObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-showDataCenterObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10534,6 +12239,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10546,7 +12254,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenterObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenterObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10571,7 +12279,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteDataCenterObject(body, callback) {
-    const meth = 'adapter-deleteDataCenterObject';
+    this.deleteDataCenterObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-data-center-object
+   *
+   * @function deleteDataCenterObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteDataCenterObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteDataCenterObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10625,6 +12346,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10637,7 +12361,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteDataCenterObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteDataCenterObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10662,7 +12386,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDataCenterObjects(body, callback) {
-    const meth = 'adapter-showDataCenterObjects';
+    this.showDataCenterObjectsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-data-center-objects
+   *
+   * @function showDataCenterObjectsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDataCenterObjectsWithSid(sid, body, callback) {
+    const meth = 'adapter-showDataCenterObjectsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10716,6 +12453,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10728,7 +12468,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenterObjects'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDataCenterObjectsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10753,7 +12493,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showUpdatableObjectsRepositoryContent(body, callback) {
-    const meth = 'adapter-showUpdatableObjectsRepositoryContent';
+    this.showUpdatableObjectsRepositoryContentWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-updatable-objects-repository-content
+   *
+   * @function showUpdatableObjectsRepositoryContentWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showUpdatableObjectsRepositoryContentWithSid(sid, body, callback) {
+    const meth = 'adapter-showUpdatableObjectsRepositoryContentWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10807,6 +12560,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10819,7 +12575,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showUpdatableObjectsRepositoryContent'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showUpdatableObjectsRepositoryContentWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10844,7 +12600,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   updateUpdatableObjectsRepositoryContent(body, callback) {
-    const meth = 'adapter-updateUpdatableObjectsRepositoryContent';
+    this.updateUpdatableObjectsRepositoryContentWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary update-updatable-objects-repository-content
+   *
+   * @function updateUpdatableObjectsRepositoryContentWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  updateUpdatableObjectsRepositoryContentWithSid(sid, body, callback) {
+    const meth = 'adapter-updateUpdatableObjectsRepositoryContentWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10898,6 +12667,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -10910,7 +12682,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['updateUpdatableObjectsRepositoryContent'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['updateUpdatableObjectsRepositoryContentWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -10935,7 +12707,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addUpdatableObject(body, callback) {
-    const meth = 'adapter-addUpdatableObject';
+    this.addUpdatableObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-updatable-object
+   *
+   * @function addUpdatableObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addUpdatableObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-addUpdatableObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -10989,6 +12774,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11001,7 +12789,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addUpdatableObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addUpdatableObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11026,7 +12814,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showUpdatableObject(body, callback) {
-    const meth = 'adapter-showUpdatableObject';
+    this.showUpdatableObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-updatable-object
+   *
+   * @function showUpdatableObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showUpdatableObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-showUpdatableObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11080,6 +12881,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11092,7 +12896,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showUpdatableObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showUpdatableObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11117,7 +12921,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteUpdatableObject(body, callback) {
-    const meth = 'adapter-deleteUpdatableObject';
+    this.deleteUpdatableObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-updatable-object
+   *
+   * @function deleteUpdatableObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteUpdatableObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteUpdatableObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11171,6 +12988,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11183,7 +13003,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteUpdatableObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteUpdatableObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11208,7 +13028,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showUpdatableObjects(body, callback) {
-    const meth = 'adapter-showUpdatableObjects';
+    this.showUpdatableObjectsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-updatable-objects
+   *
+   * @function showUpdatableObjectsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showUpdatableObjectsWithSid(sid, body, callback) {
+    const meth = 'adapter-showUpdatableObjectsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11262,6 +13095,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11274,7 +13110,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showUpdatableObjects'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showUpdatableObjectsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11299,7 +13135,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceTcp(body, callback) {
-    const meth = 'adapter-addServiceTcp';
+    this.addServiceTcpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-tcp
+   *
+   * @function addServiceTcpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceTcpWithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceTcpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11353,6 +13202,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11365,7 +13217,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceTcp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceTcpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11390,7 +13242,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceTcp(body, callback) {
-    const meth = 'adapter-showServiceTcp';
+    this.showServiceTcpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-tcp
+   *
+   * @function showServiceTcpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceTcpWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceTcpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11444,6 +13309,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11456,7 +13324,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceTcp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceTcpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11481,7 +13349,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceTcp(body, callback) {
-    const meth = 'adapter-setServiceTcp';
+    this.setServiceTcpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-tcp
+   *
+   * @function setServiceTcpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceTcpWithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceTcpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11535,6 +13416,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11547,7 +13431,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceTcp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceTcpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11572,7 +13456,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceTcp(body, callback) {
-    const meth = 'adapter-deleteServiceTcp';
+    this.deleteServiceTcpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-tcp
+   *
+   * @function deleteServiceTcpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceTcpWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceTcpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11626,6 +13523,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11638,7 +13538,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceTcp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceTcpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11663,7 +13563,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServicesTcp(body, callback) {
-    const meth = 'adapter-showServicesTcp';
+    this.showServicesTcpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-services-tcp
+   *
+   * @function showServicesTcpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServicesTcpWithSid(sid, body, callback) {
+    const meth = 'adapter-showServicesTcpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11717,6 +13630,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11729,7 +13645,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesTcp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesTcpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11754,7 +13670,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceUdp(body, callback) {
-    const meth = 'adapter-addServiceUdp';
+    this.addServiceUdpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-udp
+   *
+   * @function addServiceUdpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceUdpWithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceUdpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11808,6 +13737,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11820,7 +13752,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceUdp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceUdpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11845,7 +13777,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceUdp(body, callback) {
-    const meth = 'adapter-showServiceUdp';
+    this.showServiceUdpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-udp
+   *
+   * @function showServiceUdpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceUdpWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceUdpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11899,6 +13844,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -11911,7 +13859,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceUdp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceUdpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -11936,7 +13884,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceUdp(body, callback) {
-    const meth = 'adapter-setServiceUdp';
+    this.setServiceUdpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-udp
+   *
+   * @function setServiceUdpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceUdpWithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceUdpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -11990,6 +13951,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12002,7 +13966,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceUdp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceUdpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12027,7 +13991,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceUdp(body, callback) {
-    const meth = 'adapter-deleteServiceUdp';
+    this.deleteServiceUdpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-udp
+   *
+   * @function deleteServiceUdpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceUdpWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceUdpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12081,6 +14058,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12093,7 +14073,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceUdp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceUdpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12118,7 +14098,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServicesUdp(body, callback) {
-    const meth = 'adapter-showServicesUdp';
+    this.showServicesUdpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-services-udp
+   *
+   * @function showServicesUdpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServicesUdpWithSid(sid, body, callback) {
+    const meth = 'adapter-showServicesUdpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12172,6 +14165,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12184,7 +14180,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesUdp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesUdpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12209,7 +14205,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceIcmp(body, callback) {
-    const meth = 'adapter-addServiceIcmp';
+    this.addServiceIcmpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-icmp
+   *
+   * @function addServiceIcmpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceIcmpWithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceIcmpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12263,6 +14272,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12275,7 +14287,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceIcmp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceIcmpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12300,7 +14312,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceIcmp(body, callback) {
-    const meth = 'adapter-showServiceIcmp';
+    this.showServiceIcmpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-icmp
+   *
+   * @function showServiceIcmpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceIcmpWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceIcmpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12354,6 +14379,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12366,7 +14394,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceIcmp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceIcmpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12391,7 +14419,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceIcmp(body, callback) {
-    const meth = 'adapter-setServiceIcmp';
+    this.setServiceIcmpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-icmp
+   *
+   * @function setServiceIcmpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceIcmpWithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceIcmpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12445,6 +14486,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12457,7 +14501,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceIcmp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceIcmpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12482,7 +14526,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceIcmp(body, callback) {
-    const meth = 'adapter-deleteServiceIcmp';
+    this.deleteServiceIcmpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-icmp
+   *
+   * @function deleteServiceIcmpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceIcmpWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceIcmpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12536,6 +14593,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12548,7 +14608,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceIcmp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceIcmpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12573,7 +14633,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServicesIcmp(body, callback) {
-    const meth = 'adapter-showServicesIcmp';
+    this.showServicesIcmpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-services-icmp
+   *
+   * @function showServicesIcmpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServicesIcmpWithSid(sid, body, callback) {
+    const meth = 'adapter-showServicesIcmpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12627,6 +14700,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12639,7 +14715,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesIcmp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesIcmpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12664,7 +14740,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceIcmp6(body, callback) {
-    const meth = 'adapter-addServiceIcmp6';
+    this.addServiceIcmp6WithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-icmp6
+   *
+   * @function addServiceIcmp6WithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceIcmp6WithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceIcmp6WithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12718,6 +14807,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12730,7 +14822,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceIcmp6'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceIcmp6WithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12755,7 +14847,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceIcmp6(body, callback) {
-    const meth = 'adapter-showServiceIcmp6';
+    this.showServiceIcmp6WithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-icmp6
+   *
+   * @function showServiceIcmp6WithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceIcmp6WithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceIcmp6WithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12809,6 +14914,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12821,7 +14929,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceIcmp6'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceIcmp6WithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12846,7 +14954,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceIcmp6(body, callback) {
-    const meth = 'adapter-setServiceIcmp6';
+    this.setServiceIcmp6WithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-icmp6
+   *
+   * @function setServiceIcmp6WithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceIcmp6WithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceIcmp6WithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12900,6 +15021,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -12912,7 +15036,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceIcmp6'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceIcmp6WithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -12937,7 +15061,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceIcmp6(body, callback) {
-    const meth = 'adapter-deleteServiceIcmp6';
+    this.deleteServiceIcmp6WithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-icmp6
+   *
+   * @function deleteServiceIcmp6WithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceIcmp6WithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceIcmp6WithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -12991,6 +15128,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13003,7 +15143,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceIcmp6'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceIcmp6WithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13028,7 +15168,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServicesIcmp6(body, callback) {
-    const meth = 'adapter-showServicesIcmp6';
+    this.showServicesIcmp6WithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-services-icmp6
+   *
+   * @function showServicesIcmp6WithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServicesIcmp6WithSid(sid, body, callback) {
+    const meth = 'adapter-showServicesIcmp6WithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13082,6 +15235,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13094,7 +15250,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesIcmp6'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesIcmp6WithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13119,7 +15275,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceSctp(body, callback) {
-    const meth = 'adapter-addServiceSctp';
+    this.addServiceSctpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-sctp
+   *
+   * @function addServiceSctpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceSctpWithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceSctpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13173,6 +15342,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13185,7 +15357,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceSctp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceSctpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13210,7 +15382,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceSctp(body, callback) {
-    const meth = 'adapter-showServiceSctp';
+    this.showServiceSctpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-sctp
+   *
+   * @function showServiceSctpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceSctpWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceSctpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13264,6 +15449,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13276,7 +15464,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceSctp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceSctpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13301,7 +15489,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceSctp(body, callback) {
-    const meth = 'adapter-setServiceSctp';
+    this.setServiceSctpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-sctp
+   *
+   * @function setServiceSctpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceSctpWithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceSctpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13355,6 +15556,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13367,7 +15571,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceSctp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceSctpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13392,7 +15596,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceSctp(body, callback) {
-    const meth = 'adapter-deleteServiceSctp';
+    this.deleteServiceSctpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-sctp
+   *
+   * @function deleteServiceSctpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceSctpWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceSctpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13446,6 +15663,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13458,7 +15678,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceSctp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceSctpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13483,7 +15703,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServicesSctp(body, callback) {
-    const meth = 'adapter-showServicesSctp';
+    this.showServicesSctpWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-services-sctp
+   *
+   * @function showServicesSctpWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServicesSctpWithSid(sid, body, callback) {
+    const meth = 'adapter-showServicesSctpWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13537,6 +15770,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13549,7 +15785,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesSctp'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesSctpWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13574,7 +15810,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceOther(body, callback) {
-    const meth = 'adapter-addServiceOther';
+    this.addServiceOtherWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-other
+   *
+   * @function addServiceOtherWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceOtherWithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceOtherWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13628,6 +15877,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13640,7 +15892,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceOther'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceOtherWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13665,7 +15917,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceOther(body, callback) {
-    const meth = 'adapter-showServiceOther';
+    this.showServiceOtherWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-other
+   *
+   * @function showServiceOtherWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceOtherWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceOtherWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13719,6 +15984,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13731,7 +15999,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceOther'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceOtherWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13756,7 +16024,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceOther(body, callback) {
-    const meth = 'adapter-setServiceOther';
+    this.setServiceOtherWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-other
+   *
+   * @function setServiceOtherWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceOtherWithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceOtherWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13810,6 +16091,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13822,7 +16106,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceOther'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceOtherWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13847,7 +16131,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceOther(body, callback) {
-    const meth = 'adapter-deleteServiceOther';
+    this.deleteServiceOtherWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-other
+   *
+   * @function deleteServiceOtherWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceOtherWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceOtherWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13901,6 +16198,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -13913,7 +16213,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceOther'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceOtherWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -13938,7 +16238,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServicesOther(body, callback) {
-    const meth = 'adapter-showServicesOther';
+    this.showServicesOtherWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-services-other
+   *
+   * @function showServicesOtherWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServicesOtherWithSid(sid, body, callback) {
+    const meth = 'adapter-showServicesOtherWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -13992,6 +16305,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14004,7 +16320,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesOther'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesOtherWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14029,7 +16345,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceGroup(body, callback) {
-    const meth = 'adapter-addServiceGroup';
+    this.addServiceGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-group
+   *
+   * @function addServiceGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14083,6 +16412,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14095,7 +16427,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14120,7 +16452,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceGroup(body, callback) {
-    const meth = 'adapter-showServiceGroup';
+    this.showServiceGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-group
+   *
+   * @function showServiceGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14174,6 +16519,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14186,7 +16534,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14211,7 +16559,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceGroup(body, callback) {
-    const meth = 'adapter-setServiceGroup';
+    this.setServiceGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-group
+   *
+   * @function setServiceGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14265,6 +16626,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14277,7 +16641,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14302,7 +16666,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceGroup(body, callback) {
-    const meth = 'adapter-deleteServiceGroup';
+    this.deleteServiceGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-group
+   *
+   * @function deleteServiceGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14356,6 +16733,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14368,7 +16748,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14393,7 +16773,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceGroups(body, callback) {
-    const meth = 'adapter-showServiceGroups';
+    this.showServiceGroupsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-groups
+   *
+   * @function showServiceGroupsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceGroupsWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceGroupsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14447,6 +16840,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14459,7 +16855,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceGroups'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceGroupsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14484,7 +16880,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addApplicationSite(body, callback) {
-    const meth = 'adapter-addApplicationSite';
+    this.addApplicationSiteWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-application-site
+   *
+   * @function addApplicationSiteWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addApplicationSiteWithSid(sid, body, callback) {
+    const meth = 'adapter-addApplicationSiteWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14538,6 +16947,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14550,7 +16962,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addApplicationSite'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addApplicationSiteWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14575,7 +16987,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showApplicationSite(body, callback) {
-    const meth = 'adapter-showApplicationSite';
+    this.showApplicationSiteWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-application-site
+   *
+   * @function showApplicationSiteWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showApplicationSiteWithSid(sid, body, callback) {
+    const meth = 'adapter-showApplicationSiteWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14629,6 +17054,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14641,7 +17069,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSite'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14666,7 +17094,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setApplicationSite(body, callback) {
-    const meth = 'adapter-setApplicationSite';
+    this.setApplicationSiteWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-application-site
+   *
+   * @function setApplicationSiteWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setApplicationSiteWithSid(sid, body, callback) {
+    const meth = 'adapter-setApplicationSiteWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14720,6 +17161,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14732,7 +17176,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setApplicationSite'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setApplicationSiteWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14757,7 +17201,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteApplicationSite(body, callback) {
-    const meth = 'adapter-deleteApplicationSite';
+    this.deleteApplicationSiteWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-application-site
+   *
+   * @function deleteApplicationSiteWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteApplicationSiteWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteApplicationSiteWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14811,6 +17268,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14823,7 +17283,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteApplicationSite'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteApplicationSiteWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14848,7 +17308,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showApplicationSites(body, callback) {
-    const meth = 'adapter-showApplicationSites';
+    this.showApplicationSitesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-application-sites
+   *
+   * @function showApplicationSitesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showApplicationSitesWithSid(sid, body, callback) {
+    const meth = 'adapter-showApplicationSitesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14902,6 +17375,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -14914,7 +17390,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSites'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSitesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -14939,7 +17415,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addApplicationSiteCategory(body, callback) {
-    const meth = 'adapter-addApplicationSiteCategory';
+    this.addApplicationSiteCategoryWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-application-site-category
+   *
+   * @function addApplicationSiteCategoryWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addApplicationSiteCategoryWithSid(sid, body, callback) {
+    const meth = 'adapter-addApplicationSiteCategoryWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -14993,6 +17482,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15005,7 +17497,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addApplicationSiteCategory'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addApplicationSiteCategoryWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15030,7 +17522,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showApplicationSiteCategory(body, callback) {
-    const meth = 'adapter-showApplicationSiteCategory';
+    this.showApplicationSiteCategoryWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-application-site-category
+   *
+   * @function showApplicationSiteCategoryWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showApplicationSiteCategoryWithSid(sid, body, callback) {
+    const meth = 'adapter-showApplicationSiteCategoryWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15084,6 +17589,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15096,7 +17604,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteCategory'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteCategoryWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15121,7 +17629,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setApplicationSiteCategory(body, callback) {
-    const meth = 'adapter-setApplicationSiteCategory';
+    this.setApplicationSiteCategoryWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-application-site-category
+   *
+   * @function setApplicationSiteCategoryWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setApplicationSiteCategoryWithSid(sid, body, callback) {
+    const meth = 'adapter-setApplicationSiteCategoryWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15175,6 +17696,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15187,7 +17711,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setApplicationSiteCategory'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setApplicationSiteCategoryWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15212,7 +17736,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteApplicationSiteCategory(body, callback) {
-    const meth = 'adapter-deleteApplicationSiteCategory';
+    this.deleteApplicationSiteCategoryWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-application-site-category
+   *
+   * @function deleteApplicationSiteCategoryWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteApplicationSiteCategoryWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteApplicationSiteCategoryWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15266,6 +17803,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15278,7 +17818,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteApplicationSiteCategory'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteApplicationSiteCategoryWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15303,7 +17843,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showApplicationSiteCategories(body, callback) {
-    const meth = 'adapter-showApplicationSiteCategories';
+    this.showApplicationSiteCategoriesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-application-site-categories
+   *
+   * @function showApplicationSiteCategoriesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showApplicationSiteCategoriesWithSid(sid, body, callback) {
+    const meth = 'adapter-showApplicationSiteCategoriesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15357,6 +17910,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15369,7 +17925,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteCategories'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteCategoriesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15394,7 +17950,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addApplicationSiteGroup(body, callback) {
-    const meth = 'adapter-addApplicationSiteGroup';
+    this.addApplicationSiteGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-application-site-group
+   *
+   * @function addApplicationSiteGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addApplicationSiteGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-addApplicationSiteGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15448,6 +18017,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15460,7 +18032,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addApplicationSiteGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addApplicationSiteGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15485,7 +18057,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showApplicationSiteGroup(body, callback) {
-    const meth = 'adapter-showApplicationSiteGroup';
+    this.showApplicationSiteGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-application-site-group
+   *
+   * @function showApplicationSiteGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showApplicationSiteGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-showApplicationSiteGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15539,6 +18124,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15551,7 +18139,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15576,7 +18164,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setApplicationSiteGroup(body, callback) {
-    const meth = 'adapter-setApplicationSiteGroup';
+    this.setApplicationSiteGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-application-site-group
+   *
+   * @function setApplicationSiteGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setApplicationSiteGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-setApplicationSiteGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15630,6 +18231,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15642,7 +18246,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setApplicationSiteGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setApplicationSiteGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15667,7 +18271,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteApplicationSiteGroup(body, callback) {
-    const meth = 'adapter-deleteApplicationSiteGroup';
+    this.deleteApplicationSiteGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-application-site-group
+   *
+   * @function deleteApplicationSiteGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteApplicationSiteGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteApplicationSiteGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15721,6 +18338,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15733,7 +18353,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteApplicationSiteGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteApplicationSiteGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15758,7 +18378,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showApplicationSiteGroups(body, callback) {
-    const meth = 'adapter-showApplicationSiteGroups';
+    this.showApplicationSiteGroupsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-application-site-groups
+   *
+   * @function showApplicationSiteGroupsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showApplicationSiteGroupsWithSid(sid, body, callback) {
+    const meth = 'adapter-showApplicationSiteGroupsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15812,6 +18445,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15824,7 +18460,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteGroups'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApplicationSiteGroupsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15849,7 +18485,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceDceRpc(body, callback) {
-    const meth = 'adapter-addServiceDceRpc';
+    this.addServiceDceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-dce-rpc
+   *
+   * @function addServiceDceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceDceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceDceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15903,6 +18552,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -15915,7 +18567,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceDceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceDceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -15940,7 +18592,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceDceRpc(body, callback) {
-    const meth = 'adapter-showServiceDceRpc';
+    this.showServiceDceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-dce-rpc
+   *
+   * @function showServiceDceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceDceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceDceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -15994,6 +18659,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16006,7 +18674,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceDceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceDceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16031,7 +18699,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceDceRpc(body, callback) {
-    const meth = 'adapter-setServiceDceRpc';
+    this.setServiceDceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-dce-rpc
+   *
+   * @function setServiceDceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceDceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceDceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16085,6 +18766,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16097,7 +18781,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceDceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceDceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16122,7 +18806,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceDceRpc(body, callback) {
-    const meth = 'adapter-deleteServiceDceRpc';
+    this.deleteServiceDceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-dce-rpc
+   *
+   * @function deleteServiceDceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceDceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceDceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16176,6 +18873,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16188,7 +18888,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceDceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceDceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16213,7 +18913,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServicesDceRpc(body, callback) {
-    const meth = 'adapter-showServicesDceRpc';
+    this.showServicesDceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-services-dce-rpc
+   *
+   * @function showServicesDceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServicesDceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-showServicesDceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16267,6 +18980,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16279,7 +18995,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesDceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesDceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16304,7 +19020,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addServiceRpc(body, callback) {
-    const meth = 'adapter-addServiceRpc';
+    this.addServiceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-service-rpc
+   *
+   * @function addServiceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addServiceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-addServiceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16358,6 +19087,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16370,7 +19102,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addServiceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16395,7 +19127,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServiceRpc(body, callback) {
-    const meth = 'adapter-showServiceRpc';
+    this.showServiceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-service-rpc
+   *
+   * @function showServiceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServiceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-showServiceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16449,6 +19194,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16461,7 +19209,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServiceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16486,7 +19234,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setServiceRpc(body, callback) {
-    const meth = 'adapter-setServiceRpc';
+    this.setServiceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-service-rpc
+   *
+   * @function setServiceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setServiceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-setServiceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16540,6 +19301,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16552,7 +19316,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setServiceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16577,7 +19341,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteServiceRpc(body, callback) {
-    const meth = 'adapter-deleteServiceRpc';
+    this.deleteServiceRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-service-rpc
+   *
+   * @function deleteServiceRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteServiceRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteServiceRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16631,6 +19408,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16643,7 +19423,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteServiceRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16668,7 +19448,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showServicesRpc(body, callback) {
-    const meth = 'adapter-showServicesRpc';
+    this.showServicesRpcWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-services-rpc
+   *
+   * @function showServicesRpcWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showServicesRpcWithSid(sid, body, callback) {
+    const meth = 'adapter-showServicesRpcWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16722,6 +19515,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16734,7 +19530,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesRpc'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showServicesRpcWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16759,7 +19555,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addAccessRule(body, callback) {
-    const meth = 'adapter-addAccessRule';
+    this.addAccessRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-access-rule
+   *
+   * @function addAccessRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addAccessRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-addAccessRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16813,6 +19622,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16825,7 +19637,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAccessRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAccessRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16850,7 +19662,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAccessRulebase(body, callback) {
-    const meth = 'adapter-showAccessRulebase';
+    this.showAccessRulebaseWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-access-rulebase
+   *
+   * @function showAccessRulebaseWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAccessRulebaseWithSid(sid, body, callback) {
+    const meth = 'adapter-showAccessRulebaseWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16904,6 +19729,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -16916,7 +19744,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessRulebase'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessRulebaseWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -16941,7 +19769,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAccessRule(body, callback) {
-    const meth = 'adapter-showAccessRule';
+    this.showAccessRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-access-rule
+   *
+   * @function showAccessRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAccessRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-showAccessRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -16995,6 +19836,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17007,7 +19851,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17032,7 +19876,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setAccessRule(body, callback) {
-    const meth = 'adapter-setAccessRule';
+    this.setAccessRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-access-rule
+   *
+   * @function setAccessRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setAccessRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-setAccessRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17086,6 +19943,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17098,7 +19958,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAccessRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAccessRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17123,7 +19983,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteAccessRule(body, callback) {
-    const meth = 'adapter-deleteAccessRule';
+    this.deleteAccessRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-access-rule
+   *
+   * @function deleteAccessRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteAccessRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteAccessRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17177,6 +20050,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17189,7 +20065,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAccessRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAccessRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17214,7 +20090,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addAccessSection(body, callback) {
-    const meth = 'adapter-addAccessSection';
+    this.addAccessSectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-access-section
+   *
+   * @function addAccessSectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addAccessSectionWithSid(sid, body, callback) {
+    const meth = 'adapter-addAccessSectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17268,6 +20157,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17280,7 +20172,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAccessSection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAccessSectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17305,7 +20197,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAccessSection(body, callback) {
-    const meth = 'adapter-showAccessSection';
+    this.showAccessSectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-access-section
+   *
+   * @function showAccessSectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAccessSectionWithSid(sid, body, callback) {
+    const meth = 'adapter-showAccessSectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17359,6 +20264,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17371,7 +20279,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessSection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessSectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17396,7 +20304,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setAccessSection(body, callback) {
-    const meth = 'adapter-setAccessSection';
+    this.setAccessSectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-access-section
+   *
+   * @function setAccessSectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setAccessSectionWithSid(sid, body, callback) {
+    const meth = 'adapter-setAccessSectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17450,6 +20371,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17462,7 +20386,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAccessSection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAccessSectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17487,7 +20411,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteAccessSection(body, callback) {
-    const meth = 'adapter-deleteAccessSection';
+    this.deleteAccessSectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-access-section
+   *
+   * @function deleteAccessSectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteAccessSectionWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteAccessSectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17541,6 +20478,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17553,7 +20493,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAccessSection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAccessSectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17578,7 +20518,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addAccessLayer(body, callback) {
-    const meth = 'adapter-addAccessLayer';
+    this.addAccessLayerWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-access-layer
+   *
+   * @function addAccessLayerWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addAccessLayerWithSid(sid, body, callback) {
+    const meth = 'adapter-addAccessLayerWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17632,6 +20585,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17644,7 +20600,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAccessLayer'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAccessLayerWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17669,7 +20625,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAccessLayer(body, callback) {
-    const meth = 'adapter-showAccessLayer';
+    this.showAccessLayerWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-access-layer
+   *
+   * @function showAccessLayerWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAccessLayerWithSid(sid, body, callback) {
+    const meth = 'adapter-showAccessLayerWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17723,6 +20692,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17735,7 +20707,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessLayer'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessLayerWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17760,7 +20732,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setAccessLayer(body, callback) {
-    const meth = 'adapter-setAccessLayer';
+    this.setAccessLayerWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-access-layer
+   *
+   * @function setAccessLayerWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setAccessLayerWithSid(sid, body, callback) {
+    const meth = 'adapter-setAccessLayerWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17814,6 +20799,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17826,7 +20814,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAccessLayer'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAccessLayerWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17851,7 +20839,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteAccessLayer(body, callback) {
-    const meth = 'adapter-deleteAccessLayer';
+    this.deleteAccessLayerWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-access-layer
+   *
+   * @function deleteAccessLayerWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteAccessLayerWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteAccessLayerWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17905,6 +20906,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -17917,7 +20921,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAccessLayer'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAccessLayerWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -17942,7 +20946,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAccessLayers(body, callback) {
-    const meth = 'adapter-showAccessLayers';
+    this.showAccessLayersWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-access-layers
+   *
+   * @function showAccessLayersWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAccessLayersWithSid(sid, body, callback) {
+    const meth = 'adapter-showAccessLayersWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -17996,6 +21013,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18008,7 +21028,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessLayers'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAccessLayersWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18033,7 +21053,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addNatRule(body, callback) {
-    const meth = 'adapter-addNatRule';
+    this.addNatRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-nat-rule
+   *
+   * @function addNatRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addNatRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-addNatRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18087,6 +21120,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18099,7 +21135,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addNatRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addNatRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18124,7 +21160,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showNatRulebase(body, callback) {
-    const meth = 'adapter-showNatRulebase';
+    this.showNatRulebaseWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-nat-rulebase
+   *
+   * @function showNatRulebaseWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showNatRulebaseWithSid(sid, body, callback) {
+    const meth = 'adapter-showNatRulebaseWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18178,6 +21227,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18190,7 +21242,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNatRulebase'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNatRulebaseWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18215,7 +21267,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showNatRule(body, callback) {
-    const meth = 'adapter-showNatRule';
+    this.showNatRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-nat-rule
+   *
+   * @function showNatRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showNatRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-showNatRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18269,6 +21334,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18281,7 +21349,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNatRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNatRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18306,7 +21374,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setNatRule(body, callback) {
-    const meth = 'adapter-setNatRule';
+    this.setNatRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-nat-rule
+   *
+   * @function setNatRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setNatRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-setNatRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18360,6 +21441,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18372,7 +21456,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setNatRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setNatRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18397,7 +21481,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteNatRule(body, callback) {
-    const meth = 'adapter-deleteNatRule';
+    this.deleteNatRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-nat-rule
+   *
+   * @function deleteNatRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteNatRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteNatRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18451,6 +21548,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18463,7 +21563,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteNatRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteNatRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18488,7 +21588,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addNatSection(body, callback) {
-    const meth = 'adapter-addNatSection';
+    this.addNatSectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-nat-section
+   *
+   * @function addNatSectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addNatSectionWithSid(sid, body, callback) {
+    const meth = 'adapter-addNatSectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18542,6 +21655,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18554,7 +21670,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addNatSection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addNatSectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18579,7 +21695,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showNatSection(body, callback) {
-    const meth = 'adapter-showNatSection';
+    this.showNatSectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-nat-section
+   *
+   * @function showNatSectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showNatSectionWithSid(sid, body, callback) {
+    const meth = 'adapter-showNatSectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18633,6 +21762,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18645,7 +21777,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNatSection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showNatSectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18670,7 +21802,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setNatSection(body, callback) {
-    const meth = 'adapter-setNatSection';
+    this.setNatSectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-nat-section
+   *
+   * @function setNatSectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setNatSectionWithSid(sid, body, callback) {
+    const meth = 'adapter-setNatSectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18724,6 +21869,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18736,7 +21884,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setNatSection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setNatSectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18761,7 +21909,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteNatSection(body, callback) {
-    const meth = 'adapter-deleteNatSection';
+    this.deleteNatSectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-nat-section
+   *
+   * @function deleteNatSectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteNatSectionWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteNatSectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18815,6 +21976,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18827,7 +21991,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteNatSection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteNatSectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18852,7 +22016,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addVpnCommunityMeshed(body, callback) {
-    const meth = 'adapter-addVpnCommunityMeshed';
+    this.addVpnCommunityMeshedWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-vpn-community-meshed
+   *
+   * @function addVpnCommunityMeshedWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addVpnCommunityMeshedWithSid(sid, body, callback) {
+    const meth = 'adapter-addVpnCommunityMeshedWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18906,6 +22083,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -18918,7 +22098,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addVpnCommunityMeshed'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addVpnCommunityMeshedWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -18943,7 +22123,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showVpnCommunityMeshed(body, callback) {
-    const meth = 'adapter-showVpnCommunityMeshed';
+    this.showVpnCommunityMeshedWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-vpn-community-meshed
+   *
+   * @function showVpnCommunityMeshedWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showVpnCommunityMeshedWithSid(sid, body, callback) {
+    const meth = 'adapter-showVpnCommunityMeshedWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -18997,6 +22190,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19009,7 +22205,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showVpnCommunityMeshed'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showVpnCommunityMeshedWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19034,7 +22230,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setVpnCommunityMeshed(body, callback) {
-    const meth = 'adapter-setVpnCommunityMeshed';
+    this.setVpnCommunityMeshedWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-vpn-community-meshed
+   *
+   * @function setVpnCommunityMeshedWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setVpnCommunityMeshedWithSid(sid, body, callback) {
+    const meth = 'adapter-setVpnCommunityMeshedWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19088,6 +22297,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19100,7 +22312,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setVpnCommunityMeshed'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setVpnCommunityMeshedWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19125,7 +22337,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteVpnCommunityMeshed(body, callback) {
-    const meth = 'adapter-deleteVpnCommunityMeshed';
+    this.deleteVpnCommunityMeshedWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-vpn-community-meshed
+   *
+   * @function deleteVpnCommunityMeshedWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteVpnCommunityMeshedWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteVpnCommunityMeshedWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19179,6 +22404,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19191,7 +22419,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteVpnCommunityMeshed'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteVpnCommunityMeshedWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19216,7 +22444,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showVpnCommunitiesMeshed(body, callback) {
-    const meth = 'adapter-showVpnCommunitiesMeshed';
+    this.showVpnCommunitiesMeshedWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-vpn-communities-meshed
+   *
+   * @function showVpnCommunitiesMeshedWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showVpnCommunitiesMeshedWithSid(sid, body, callback) {
+    const meth = 'adapter-showVpnCommunitiesMeshedWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19270,6 +22511,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19282,7 +22526,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showVpnCommunitiesMeshed'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showVpnCommunitiesMeshedWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19307,7 +22551,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addVpnCommunityStar(body, callback) {
-    const meth = 'adapter-addVpnCommunityStar';
+    this.addVpnCommunityStarWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-vpn-community-star
+   *
+   * @function addVpnCommunityStarWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addVpnCommunityStarWithSid(sid, body, callback) {
+    const meth = 'adapter-addVpnCommunityStarWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19361,6 +22618,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19373,7 +22633,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addVpnCommunityStar'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addVpnCommunityStarWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19398,7 +22658,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showVpnCommunityStar(body, callback) {
-    const meth = 'adapter-showVpnCommunityStar';
+    this.showVpnCommunityStarWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-vpn-community-star
+   *
+   * @function showVpnCommunityStarWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showVpnCommunityStarWithSid(sid, body, callback) {
+    const meth = 'adapter-showVpnCommunityStarWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19452,6 +22725,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19464,7 +22740,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showVpnCommunityStar'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showVpnCommunityStarWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19489,7 +22765,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setVpnCommunityStar(body, callback) {
-    const meth = 'adapter-setVpnCommunityStar';
+    this.setVpnCommunityStarWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-vpn-community-star
+   *
+   * @function setVpnCommunityStarWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setVpnCommunityStarWithSid(sid, body, callback) {
+    const meth = 'adapter-setVpnCommunityStarWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19543,6 +22832,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19555,7 +22847,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setVpnCommunityStar'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setVpnCommunityStarWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19580,7 +22872,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteVpnCommunityStar(body, callback) {
-    const meth = 'adapter-deleteVpnCommunityStar';
+    this.deleteVpnCommunityStarWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-vpn-community-star
+   *
+   * @function deleteVpnCommunityStarWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteVpnCommunityStarWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteVpnCommunityStarWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19634,6 +22939,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19646,7 +22954,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteVpnCommunityStar'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteVpnCommunityStarWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19671,7 +22979,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showVpnCommunitiesStar(body, callback) {
-    const meth = 'adapter-showVpnCommunitiesStar';
+    this.showVpnCommunitiesStarWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-vpn-communities-star
+   *
+   * @function showVpnCommunitiesStarWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showVpnCommunitiesStarWithSid(sid, body, callback) {
+    const meth = 'adapter-showVpnCommunitiesStarWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19725,6 +23046,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19737,7 +23061,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showVpnCommunitiesStar'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showVpnCommunitiesStarWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19762,7 +23086,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addThreatRule(body, callback) {
-    const meth = 'adapter-addThreatRule';
+    this.addThreatRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-threat-rule
+   *
+   * @function addThreatRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addThreatRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-addThreatRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19816,6 +23153,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19828,7 +23168,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19853,7 +23193,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatRulebase(body, callback) {
-    const meth = 'adapter-showThreatRulebase';
+    this.showThreatRulebaseWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-rulebase
+   *
+   * @function showThreatRulebaseWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatRulebaseWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatRulebaseWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19907,6 +23260,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -19919,7 +23275,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatRulebase'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatRulebaseWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -19944,7 +23300,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatRule(body, callback) {
-    const meth = 'adapter-showThreatRule';
+    this.showThreatRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-rule
+   *
+   * @function showThreatRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -19998,6 +23367,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20010,7 +23382,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20035,7 +23407,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setThreatRule(body, callback) {
-    const meth = 'adapter-setThreatRule';
+    this.setThreatRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-threat-rule
+   *
+   * @function setThreatRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setThreatRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-setThreatRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20089,6 +23474,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20101,7 +23489,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20126,7 +23514,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteThreatRule(body, callback) {
-    const meth = 'adapter-deleteThreatRule';
+    this.deleteThreatRuleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-threat-rule
+   *
+   * @function deleteThreatRuleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteThreatRuleWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteThreatRuleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20180,6 +23581,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20192,7 +23596,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatRule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatRuleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20217,7 +23621,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addThreatException(body, callback) {
-    const meth = 'adapter-addThreatException';
+    this.addThreatExceptionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-threat-exception
+   *
+   * @function addThreatExceptionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addThreatExceptionWithSid(sid, body, callback) {
+    const meth = 'adapter-addThreatExceptionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20271,6 +23688,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20283,7 +23703,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatException'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatExceptionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20308,7 +23728,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatRuleExceptionRulebase(body, callback) {
-    const meth = 'adapter-showThreatRuleExceptionRulebase';
+    this.showThreatRuleExceptionRulebaseWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-rule-exception-rulebase
+   *
+   * @function showThreatRuleExceptionRulebaseWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatRuleExceptionRulebaseWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatRuleExceptionRulebaseWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20362,6 +23795,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20374,7 +23810,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatRuleExceptionRulebase'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatRuleExceptionRulebaseWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20399,7 +23835,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatException(body, callback) {
-    const meth = 'adapter-showThreatException';
+    this.showThreatExceptionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-exception
+   *
+   * @function showThreatExceptionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatExceptionWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatExceptionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20453,6 +23902,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20465,7 +23917,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatException'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatExceptionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20490,7 +23942,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setThreatException(body, callback) {
-    const meth = 'adapter-setThreatException';
+    this.setThreatExceptionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-threat-exception
+   *
+   * @function setThreatExceptionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setThreatExceptionWithSid(sid, body, callback) {
+    const meth = 'adapter-setThreatExceptionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20544,6 +24009,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20556,7 +24024,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatException'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatExceptionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20581,7 +24049,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteThreatException(body, callback) {
-    const meth = 'adapter-deleteThreatException';
+    this.deleteThreatExceptionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-threat-exception
+   *
+   * @function deleteThreatExceptionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteThreatExceptionWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteThreatExceptionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20635,6 +24116,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20647,7 +24131,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatException'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatExceptionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20672,7 +24156,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addExceptionGroup(body, callback) {
-    const meth = 'adapter-addExceptionGroup';
+    this.addExceptionGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-exception-group
+   *
+   * @function addExceptionGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addExceptionGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-addExceptionGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20726,6 +24223,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20738,7 +24238,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addExceptionGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addExceptionGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20763,7 +24263,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showExceptionGroup(body, callback) {
-    const meth = 'adapter-showExceptionGroup';
+    this.showExceptionGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-exception-group
+   *
+   * @function showExceptionGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showExceptionGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-showExceptionGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20817,6 +24330,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20829,7 +24345,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showExceptionGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showExceptionGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20854,7 +24370,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setExceptionGroup(body, callback) {
-    const meth = 'adapter-setExceptionGroup';
+    this.setExceptionGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-exception-group
+   *
+   * @function setExceptionGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setExceptionGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-setExceptionGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20908,6 +24437,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -20920,7 +24452,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setExceptionGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setExceptionGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -20945,7 +24477,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteExceptionGroup(body, callback) {
-    const meth = 'adapter-deleteExceptionGroup';
+    this.deleteExceptionGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-exception-group
+   *
+   * @function deleteExceptionGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteExceptionGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteExceptionGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -20999,6 +24544,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21011,7 +24559,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteExceptionGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteExceptionGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21036,7 +24584,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showExceptionGroups(body, callback) {
-    const meth = 'adapter-showExceptionGroups';
+    this.showExceptionGroupsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-exception-groups
+   *
+   * @function showExceptionGroupsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showExceptionGroupsWithSid(sid, body, callback) {
+    const meth = 'adapter-showExceptionGroupsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21090,6 +24651,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21102,7 +24666,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showExceptionGroups'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showExceptionGroupsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21127,7 +24691,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatProtection(body, callback) {
-    const meth = 'adapter-showThreatProtection';
+    this.showThreatProtectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-protection
+   *
+   * @function showThreatProtectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatProtectionWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatProtectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21181,6 +24758,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21193,7 +24773,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatProtection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatProtectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21218,7 +24798,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setThreatProtection(body, callback) {
-    const meth = 'adapter-setThreatProtection';
+    this.setThreatProtectionWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-threat-protection
+   *
+   * @function setThreatProtectionWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setThreatProtectionWithSid(sid, body, callback) {
+    const meth = 'adapter-setThreatProtectionWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21272,6 +24865,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21284,7 +24880,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatProtection'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatProtectionWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21309,7 +24905,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatProtections(body, callback) {
-    const meth = 'adapter-showThreatProtections';
+    this.showThreatProtectionsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-protections
+   *
+   * @function showThreatProtectionsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatProtectionsWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatProtectionsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21363,6 +24972,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21375,7 +24987,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatProtections'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatProtectionsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21400,7 +25012,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addThreatProtections(body, callback) {
-    const meth = 'adapter-addThreatProtections';
+    this.addThreatProtectionsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-threat-protections
+   *
+   * @function addThreatProtectionsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addThreatProtectionsWithSid(sid, body, callback) {
+    const meth = 'adapter-addThreatProtectionsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21454,6 +25079,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21466,7 +25094,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatProtections'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatProtectionsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21491,7 +25119,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteThreatProtections(body, callback) {
-    const meth = 'adapter-deleteThreatProtections';
+    this.deleteThreatProtectionsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-threat-protections
+   *
+   * @function deleteThreatProtectionsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteThreatProtectionsWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteThreatProtectionsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21545,6 +25186,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21557,7 +25201,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatProtections'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatProtectionsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21582,7 +25226,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addThreatProfile(body, callback) {
-    const meth = 'adapter-addThreatProfile';
+    this.addThreatProfileWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-threat-profile
+   *
+   * @function addThreatProfileWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addThreatProfileWithSid(sid, body, callback) {
+    const meth = 'adapter-addThreatProfileWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21636,6 +25293,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21648,7 +25308,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatProfile'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatProfileWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21673,7 +25333,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatProfile(body, callback) {
-    const meth = 'adapter-showThreatProfile';
+    this.showThreatProfileWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-profile
+   *
+   * @function showThreatProfileWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatProfileWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatProfileWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21727,6 +25400,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21739,7 +25415,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatProfile'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatProfileWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21764,7 +25440,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setThreatProfile(body, callback) {
-    const meth = 'adapter-setThreatProfile';
+    this.setThreatProfileWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-threat-profile
+   *
+   * @function setThreatProfileWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setThreatProfileWithSid(sid, body, callback) {
+    const meth = 'adapter-setThreatProfileWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21818,6 +25507,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21830,7 +25522,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatProfile'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatProfileWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21855,7 +25547,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteThreatProfile(body, callback) {
-    const meth = 'adapter-deleteThreatProfile';
+    this.deleteThreatProfileWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-threat-profile
+   *
+   * @function deleteThreatProfileWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteThreatProfileWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteThreatProfileWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -21909,6 +25614,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -21921,7 +25629,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatProfile'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatProfileWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -21946,7 +25654,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatProfiles(body, callback) {
-    const meth = 'adapter-showThreatProfiles';
+    this.showThreatProfilesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-profiles
+   *
+   * @function showThreatProfilesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatProfilesWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatProfilesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22000,6 +25721,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22012,7 +25736,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatProfiles'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatProfilesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22037,7 +25761,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addThreatIndicator(body, callback) {
-    const meth = 'adapter-addThreatIndicator';
+    this.addThreatIndicatorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-threat-indicator
+   *
+   * @function addThreatIndicatorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addThreatIndicatorWithSid(sid, body, callback) {
+    const meth = 'adapter-addThreatIndicatorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22091,6 +25828,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22103,7 +25843,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatIndicator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatIndicatorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22128,7 +25868,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatIndicator(body, callback) {
-    const meth = 'adapter-showThreatIndicator';
+    this.showThreatIndicatorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-indicator
+   *
+   * @function showThreatIndicatorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatIndicatorWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatIndicatorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22182,6 +25935,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22194,7 +25950,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatIndicator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatIndicatorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22219,7 +25975,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setThreatIndicator(body, callback) {
-    const meth = 'adapter-setThreatIndicator';
+    this.setThreatIndicatorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-threat-indicator
+   *
+   * @function setThreatIndicatorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setThreatIndicatorWithSid(sid, body, callback) {
+    const meth = 'adapter-setThreatIndicatorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22273,6 +26042,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22285,7 +26057,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatIndicator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatIndicatorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22310,7 +26082,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteThreatIndicator(body, callback) {
-    const meth = 'adapter-deleteThreatIndicator';
+    this.deleteThreatIndicatorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-threat-indicator
+   *
+   * @function deleteThreatIndicatorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteThreatIndicatorWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteThreatIndicatorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22364,6 +26149,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22376,7 +26164,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatIndicator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatIndicatorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22401,7 +26189,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatIndicators(body, callback) {
-    const meth = 'adapter-showThreatIndicators';
+    this.showThreatIndicatorsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-indicators
+   *
+   * @function showThreatIndicatorsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatIndicatorsWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatIndicatorsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22455,6 +26256,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22467,7 +26271,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatIndicators'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatIndicatorsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22492,7 +26296,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addThreatLayer(body, callback) {
-    const meth = 'adapter-addThreatLayer';
+    this.addThreatLayerWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-threat-layer
+   *
+   * @function addThreatLayerWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addThreatLayerWithSid(sid, body, callback) {
+    const meth = 'adapter-addThreatLayerWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22546,6 +26363,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22558,7 +26378,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatLayer'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addThreatLayerWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22583,7 +26403,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatLayer(body, callback) {
-    const meth = 'adapter-showThreatLayer';
+    this.showThreatLayerWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-layer
+   *
+   * @function showThreatLayerWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatLayerWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatLayerWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22637,6 +26470,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22649,7 +26485,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatLayer'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatLayerWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22674,7 +26510,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setThreatLayer(body, callback) {
-    const meth = 'adapter-setThreatLayer';
+    this.setThreatLayerWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-threat-layer
+   *
+   * @function setThreatLayerWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setThreatLayerWithSid(sid, body, callback) {
+    const meth = 'adapter-setThreatLayerWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22728,6 +26577,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22740,7 +26592,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatLayer'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setThreatLayerWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22765,7 +26617,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteThreatLayer(body, callback) {
-    const meth = 'adapter-deleteThreatLayer';
+    this.deleteThreatLayerWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-threat-layer
+   *
+   * @function deleteThreatLayerWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteThreatLayerWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteThreatLayerWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22819,6 +26684,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22831,7 +26699,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatLayer'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteThreatLayerWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22856,7 +26724,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showThreatLayers(body, callback) {
-    const meth = 'adapter-showThreatLayers';
+    this.showThreatLayersWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-threat-layers
+   *
+   * @function showThreatLayersWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showThreatLayersWithSid(sid, body, callback) {
+    const meth = 'adapter-showThreatLayersWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -22910,6 +26791,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -22922,7 +26806,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatLayers'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showThreatLayersWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -22947,7 +26831,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showIpsUpdateSchedule(body, callback) {
-    const meth = 'adapter-showIpsUpdateSchedule';
+    this.showIpsUpdateScheduleWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-ips-update-schedule
+   *
+   * @function showIpsUpdateScheduleWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showIpsUpdateScheduleWithSid(sid, body, callback) {
+    const meth = 'adapter-showIpsUpdateScheduleWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23001,6 +26898,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23013,7 +26913,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showIpsUpdateSchedule'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showIpsUpdateScheduleWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23038,7 +26938,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setIpsUpdateScheduleInterval(body, callback) {
-    const meth = 'adapter-setIpsUpdateScheduleInterval';
+    this.setIpsUpdateScheduleIntervalWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-ips-update-schedule-interval
+   *
+   * @function setIpsUpdateScheduleIntervalWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setIpsUpdateScheduleIntervalWithSid(sid, body, callback) {
+    const meth = 'adapter-setIpsUpdateScheduleIntervalWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23092,6 +27005,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23104,7 +27020,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setIpsUpdateScheduleInterval'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setIpsUpdateScheduleIntervalWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23129,7 +27045,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   runIpsUpdate(body, callback) {
-    const meth = 'adapter-runIpsUpdate';
+    this.runIpsUpdateWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary run-ips-update
+   *
+   * @function runIpsUpdateWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  runIpsUpdateWithSid(sid, body, callback) {
+    const meth = 'adapter-runIpsUpdateWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23183,6 +27112,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23195,7 +27127,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['runIpsUpdate'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['runIpsUpdateWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23220,7 +27152,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showIpsStatus(body, callback) {
-    const meth = 'adapter-showIpsStatus';
+    this.showIpsStatusWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-ips-status
+   *
+   * @function showIpsStatusWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showIpsStatusWithSid(sid, body, callback) {
+    const meth = 'adapter-showIpsStatusWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23274,6 +27219,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23286,7 +27234,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showIpsStatus'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showIpsStatusWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23311,7 +27259,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showIpsProtectionExtendedAttribute(body, callback) {
-    const meth = 'adapter-showIpsProtectionExtendedAttribute';
+    this.showIpsProtectionExtendedAttributeWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-ips-protection-extended-attribute
+   *
+   * @function showIpsProtectionExtendedAttributeWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showIpsProtectionExtendedAttributeWithSid(sid, body, callback) {
+    const meth = 'adapter-showIpsProtectionExtendedAttributeWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23365,6 +27326,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23377,7 +27341,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showIpsProtectionExtendedAttribute'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showIpsProtectionExtendedAttributeWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23402,7 +27366,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showIpsProtectionExtendedAttributes(body, callback) {
-    const meth = 'adapter-showIpsProtectionExtendedAttributes';
+    this.showIpsProtectionExtendedAttributesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-ips-protection-extended-attributes
+   *
+   * @function showIpsProtectionExtendedAttributesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showIpsProtectionExtendedAttributesWithSid(sid, body, callback) {
+    const meth = 'adapter-showIpsProtectionExtendedAttributesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23456,6 +27433,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23468,7 +27448,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showIpsProtectionExtendedAttributes'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showIpsProtectionExtendedAttributesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23493,7 +27473,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   runThreatEmulationFileTypesOfflineUpdate(body, callback) {
-    const meth = 'adapter-runThreatEmulationFileTypesOfflineUpdate';
+    this.runThreatEmulationFileTypesOfflineUpdateWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary run-threat-emulation-file-types-offline-update
+   *
+   * @function runThreatEmulationFileTypesOfflineUpdateWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  runThreatEmulationFileTypesOfflineUpdateWithSid(sid, body, callback) {
+    const meth = 'adapter-runThreatEmulationFileTypesOfflineUpdateWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23547,6 +27540,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23559,7 +27555,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['runThreatEmulationFileTypesOfflineUpdate'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['runThreatEmulationFileTypesOfflineUpdateWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23584,7 +27580,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   verifyPolicy(body, callback) {
-    const meth = 'adapter-verifyPolicy';
+    this.verifyPolicyWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary verify-policy
+   *
+   * @function verifyPolicyWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  verifyPolicyWithSid(sid, body, callback) {
+    const meth = 'adapter-verifyPolicyWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23638,6 +27647,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23650,7 +27662,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['verifyPolicy'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['verifyPolicyWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23675,7 +27687,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   installPolicy(body, callback) {
-    const meth = 'adapter-installPolicy';
+    this.installPolicyWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary install-policy
+   *
+   * @function installPolicyWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  installPolicyWithSid(sid, body, callback) {
+    const meth = 'adapter-installPolicyWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23729,6 +27754,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23741,7 +27769,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['installPolicy'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['installPolicyWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23766,7 +27794,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addPackage(body, callback) {
-    const meth = 'adapter-addPackage';
+    this.addPackageWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-package
+   *
+   * @function addPackageWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addPackageWithSid(sid, body, callback) {
+    const meth = 'adapter-addPackageWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23820,6 +27861,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23832,7 +27876,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addPackage'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addPackageWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23857,7 +27901,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showPackage(body, callback) {
-    const meth = 'adapter-showPackage';
+    this.showPackageWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-package
+   *
+   * @function showPackageWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showPackageWithSid(sid, body, callback) {
+    const meth = 'adapter-showPackageWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -23911,6 +27968,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -23923,7 +27983,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showPackage'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showPackageWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -23948,7 +28008,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setPackage(body, callback) {
-    const meth = 'adapter-setPackage';
+    this.setPackageWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-package
+   *
+   * @function setPackageWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setPackageWithSid(sid, body, callback) {
+    const meth = 'adapter-setPackageWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24002,6 +28075,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24014,7 +28090,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setPackage'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setPackageWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24039,7 +28115,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deletePackage(body, callback) {
-    const meth = 'adapter-deletePackage';
+    this.deletePackageWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-package
+   *
+   * @function deletePackageWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deletePackageWithSid(sid, body, callback) {
+    const meth = 'adapter-deletePackageWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24093,6 +28182,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24105,7 +28197,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deletePackage'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deletePackageWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24130,7 +28222,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showPackages(body, callback) {
-    const meth = 'adapter-showPackages';
+    this.showPackagesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-packages
+   *
+   * @function showPackagesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showPackagesWithSid(sid, body, callback) {
+    const meth = 'adapter-showPackagesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24184,6 +28289,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24196,7 +28304,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showPackages'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showPackagesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24221,7 +28329,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addDomain(body, callback) {
-    const meth = 'adapter-addDomain';
+    this.addDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-domain
+   *
+   * @function addDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-addDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24275,6 +28396,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24287,7 +28411,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24312,7 +28436,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDomain(body, callback) {
-    const meth = 'adapter-showDomain';
+    this.showDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-domain
+   *
+   * @function showDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-showDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24366,6 +28503,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24378,7 +28518,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24403,7 +28543,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setDomain(body, callback) {
-    const meth = 'adapter-setDomain';
+    this.setDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-domain
+   *
+   * @function setDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-setDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24457,6 +28610,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24469,7 +28625,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24494,7 +28650,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteDomain(body, callback) {
-    const meth = 'adapter-deleteDomain';
+    this.deleteDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-domain
+   *
+   * @function deleteDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24548,6 +28717,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24560,7 +28732,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24585,7 +28757,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showDomains(body, callback) {
-    const meth = 'adapter-showDomains';
+    this.showDomainsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-domains
+   *
+   * @function showDomainsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showDomainsWithSid(sid, body, callback) {
+    const meth = 'adapter-showDomainsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24639,6 +28824,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24651,7 +28839,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDomains'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showDomainsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24676,7 +28864,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showGlobalDomain(body, callback) {
-    const meth = 'adapter-showGlobalDomain';
+    this.showGlobalDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-global-domain
+   *
+   * @function showGlobalDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showGlobalDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-showGlobalDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24730,6 +28931,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24742,7 +28946,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGlobalDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGlobalDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24767,7 +28971,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setGlobalDomain(body, callback) {
-    const meth = 'adapter-setGlobalDomain';
+    this.setGlobalDomainWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-global-domain
+   *
+   * @function setGlobalDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setGlobalDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-setGlobalDomainWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24821,6 +29038,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24833,7 +29053,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setGlobalDomain'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setGlobalDomainWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24858,7 +29078,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showMds(body, callback) {
-    const meth = 'adapter-showMds';
+    this.showMdsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-mds
+   *
+   * @function showMdsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showMdsWithSid(sid, body, callback) {
+    const meth = 'adapter-showMdsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -24912,6 +29145,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -24924,7 +29160,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showMds'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showMdsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -24949,7 +29185,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showMdss(body, callback) {
-    const meth = 'adapter-showMdss';
+    this.showMdssWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-mdss
+   *
+   * @function showMdssWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showMdssWithSid(sid, body, callback) {
+    const meth = 'adapter-showMdssWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25003,6 +29252,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25015,7 +29267,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showMdss'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showMdssWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25040,7 +29292,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showPlaceHolder(body, callback) {
-    const meth = 'adapter-showPlaceHolder';
+    this.showPlaceHolderWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-place-holder
+   *
+   * @function showPlaceHolderWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showPlaceHolderWithSid(sid, body, callback) {
+    const meth = 'adapter-showPlaceHolderWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25094,6 +29359,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25106,7 +29374,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showPlaceHolder'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showPlaceHolderWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25131,7 +29399,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addGlobalAssignment(body, callback) {
-    const meth = 'adapter-addGlobalAssignment';
+    this.addGlobalAssignmentWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-global-assignment
+   *
+   * @function addGlobalAssignmentWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addGlobalAssignmentWithSid(sid, body, callback) {
+    const meth = 'adapter-addGlobalAssignmentWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25185,6 +29466,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25197,7 +29481,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addGlobalAssignment'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addGlobalAssignmentWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25222,7 +29506,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showGlobalAssignment(body, callback) {
-    const meth = 'adapter-showGlobalAssignment';
+    this.showGlobalAssignmentWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-global-assignment
+   *
+   * @function showGlobalAssignmentWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showGlobalAssignmentWithSid(sid, body, callback) {
+    const meth = 'adapter-showGlobalAssignmentWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25276,6 +29573,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25288,7 +29588,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGlobalAssignment'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGlobalAssignmentWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25313,7 +29613,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setGlobalAssignment(body, callback) {
-    const meth = 'adapter-setGlobalAssignment';
+    this.setGlobalAssignmentWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-global-assignment
+   *
+   * @function setGlobalAssignmentWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setGlobalAssignmentWithSid(sid, body, callback) {
+    const meth = 'adapter-setGlobalAssignmentWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25367,6 +29680,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25379,7 +29695,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setGlobalAssignment'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setGlobalAssignmentWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25404,7 +29720,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteGlobalAssignment(body, callback) {
-    const meth = 'adapter-deleteGlobalAssignment';
+    this.deleteGlobalAssignmentWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-global-assignment
+   *
+   * @function deleteGlobalAssignmentWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteGlobalAssignmentWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteGlobalAssignmentWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25458,6 +29787,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25470,7 +29802,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteGlobalAssignment'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteGlobalAssignmentWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25495,7 +29827,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showGlobalAssignments(body, callback) {
-    const meth = 'adapter-showGlobalAssignments';
+    this.showGlobalAssignmentsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-global-assignments
+   *
+   * @function showGlobalAssignmentsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showGlobalAssignmentsWithSid(sid, body, callback) {
+    const meth = 'adapter-showGlobalAssignmentsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25549,6 +29894,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25561,7 +29909,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGlobalAssignments'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGlobalAssignmentsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25586,7 +29934,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   assignGlobalAssignment(body, callback) {
-    const meth = 'adapter-assignGlobalAssignment';
+    this.assignGlobalAssignmentWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary assign-global-assignment
+   *
+   * @function assignGlobalAssignmentWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  assignGlobalAssignmentWithSid(sid, body, callback) {
+    const meth = 'adapter-assignGlobalAssignmentWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25640,6 +30001,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25652,7 +30016,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['assignGlobalAssignment'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['assignGlobalAssignmentWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25677,7 +30041,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   whereUsed(body, callback) {
-    const meth = 'adapter-whereUsed';
+    this.whereUsedWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary where-used
+   *
+   * @function whereUsedWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  whereUsedWithSid(sid, body, callback) {
+    const meth = 'adapter-whereUsedWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25731,6 +30108,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25743,7 +30123,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['whereUsed'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['whereUsedWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25768,7 +30148,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTask(body, callback) {
-    const meth = 'adapter-showTask';
+    this.showTaskWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-task
+   *
+   * @function showTaskWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTaskWithSid(sid, body, callback) {
+    const meth = 'adapter-showTaskWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25822,6 +30215,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25834,7 +30230,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTask'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTaskWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25859,7 +30255,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   runScript(body, callback) {
-    const meth = 'adapter-runScript';
+    this.runScriptWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary run-script
+   *
+   * @function runScriptWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  runScriptWithSid(sid, body, callback) {
+    const meth = 'adapter-runScriptWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -25913,6 +30322,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -25925,7 +30337,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['runScript'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['runScriptWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -25950,7 +30362,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showUnusedObjects(body, callback) {
-    const meth = 'adapter-showUnusedObjects';
+    this.showUnusedObjectsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show  unused objects
+   *
+   * @function showUnusedObjectsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showUnusedObjectsWithSid(sid, body, callback) {
+    const meth = 'adapter-showUnusedObjectsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26004,6 +30429,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26016,7 +30444,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showUnusedObjects'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showUnusedObjectsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26041,7 +30469,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   export(body, callback) {
-    const meth = 'adapter-export';
+    this.exportWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary exportWithSid
+   *
+   * @function exportWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  exportWithSid(sid, body, callback) {
+    const meth = 'adapter-exportWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26095,6 +30536,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26107,7 +30551,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['export'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['exportWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26132,7 +30576,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showChangesBetweenTheDates(body, callback) {
-    const meth = 'adapter-showChangesBetweenTheDates';
+    this.showChangesBetweenTheDatesWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-changes between the dates
+   *
+   * @function showChangesBetweenTheDatesWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showChangesBetweenTheDatesWithSid(sid, body, callback) {
+    const meth = 'adapter-showChangesBetweenTheDatesWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26186,6 +30643,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26198,7 +30658,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showChangesBetweenTheDates'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showChangesBetweenTheDatesWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26223,7 +30683,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showGatewaysAndServers(body, callback) {
-    const meth = 'adapter-showGatewaysAndServers';
+    this.showGatewaysAndServersWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-gateways-and-servers
+   *
+   * @function showGatewaysAndServersWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showGatewaysAndServersWithSid(sid, body, callback) {
+    const meth = 'adapter-showGatewaysAndServersWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26277,6 +30750,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26289,7 +30765,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGatewaysAndServers'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showGatewaysAndServersWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26314,7 +30790,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showObjectsOfTypeGroup(body, callback) {
-    const meth = 'adapter-showObjectsOfTypeGroup';
+    this.showObjectsOfTypeGroupWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-objects of type group
+   *
+   * @function showObjectsOfTypeGroupWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showObjectsOfTypeGroupWithSid(sid, body, callback) {
+    const meth = 'adapter-showObjectsOfTypeGroupWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26368,6 +30857,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26380,7 +30872,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showObjectsOfTypeGroup'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showObjectsOfTypeGroupWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26405,7 +30897,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showValidations(body, callback) {
-    const meth = 'adapter-showValidations';
+    this.showValidationsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-validations
+   *
+   * @function showValidationsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showValidationsWithSid(sid, body, callback) {
+    const meth = 'adapter-showValidationsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26459,6 +30964,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26471,7 +30979,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showValidations'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showValidationsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26496,7 +31004,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showTasks(body, callback) {
-    const meth = 'adapter-showTasks';
+    this.showTasksWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-tasks
+   *
+   * @function showTasksWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showTasksWithSid(sid, body, callback) {
+    const meth = 'adapter-showTasksWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26550,6 +31071,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26562,7 +31086,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTasks'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showTasksWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26587,7 +31111,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showApiVersions(body, callback) {
-    const meth = 'adapter-showApiVersions';
+    this.showApiVersionsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-api-versions
+   *
+   * @function showApiVersionsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showApiVersionsWithSid(sid, body, callback) {
+    const meth = 'adapter-showApiVersionsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26641,6 +31178,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26653,7 +31193,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApiVersions'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApiVersionsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26678,7 +31218,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showObject(body, callback) {
-    const meth = 'adapter-showObject';
+    this.showObjectWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-object
+   *
+   * @function showObjectWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showObjectWithSid(sid, body, callback) {
+    const meth = 'adapter-showObjectWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26732,6 +31285,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26744,7 +31300,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showObject'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showObjectWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26769,7 +31325,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showCommands(body, callback) {
-    const meth = 'adapter-showCommands';
+    this.showCommandsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-commands
+   *
+   * @function showCommandsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showCommandsWithSid(sid, body, callback) {
+    const meth = 'adapter-showCommandsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26823,6 +31392,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26835,7 +31407,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showCommands'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showCommandsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26860,7 +31432,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   putFile(body, callback) {
-    const meth = 'adapter-putFile';
+    this.putFileWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary put-file
+   *
+   * @function putFileWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  putFileWithSid(sid, body, callback) {
+    const meth = 'adapter-putFileWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -26914,6 +31499,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -26926,7 +31514,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['putFile'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['putFileWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -26951,7 +31539,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   addAdministrator(body, callback) {
-    const meth = 'adapter-addAdministrator';
+    this.addAdministratorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary add-administrator
+   *
+   * @function addAdministratorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addAdministratorWithSid(sid, body, callback) {
+    const meth = 'adapter-addAdministratorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -27005,6 +31606,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -27017,7 +31621,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAdministrator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addAdministratorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -27042,7 +31646,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAdministrator(body, callback) {
-    const meth = 'adapter-showAdministrator';
+    this.showAdministratorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-administrator
+   *
+   * @function showAdministratorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAdministratorWithSid(sid, body, callback) {
+    const meth = 'adapter-showAdministratorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -27096,6 +31713,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -27108,7 +31728,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAdministrator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAdministratorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -27133,7 +31753,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setAdministrator(body, callback) {
-    const meth = 'adapter-setAdministrator';
+    this.setAdministratorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-administrator
+   *
+   * @function setAdministratorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setAdministratorWithSid(sid, body, callback) {
+    const meth = 'adapter-setAdministratorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -27187,6 +31820,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -27199,7 +31835,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAdministrator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setAdministratorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -27224,7 +31860,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   deleteAdministrator(body, callback) {
-    const meth = 'adapter-deleteAdministrator';
+    this.deleteAdministratorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary delete-administrator
+   *
+   * @function deleteAdministratorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteAdministratorWithSid(sid, body, callback) {
+    const meth = 'adapter-deleteAdministratorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -27278,6 +31927,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -27290,7 +31942,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAdministrator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteAdministratorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -27315,7 +31967,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showAdministrators(body, callback) {
-    const meth = 'adapter-showAdministrators';
+    this.showAdministratorsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-administrators
+   *
+   * @function showAdministratorsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showAdministratorsWithSid(sid, body, callback) {
+    const meth = 'adapter-showAdministratorsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -27369,6 +32034,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -27381,7 +32049,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAdministrators'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showAdministratorsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -27406,7 +32074,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   unlockAdministrator(body, callback) {
-    const meth = 'adapter-unlockAdministrator';
+    this.unlockAdministratorWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary unlock-administrator
+   *
+   * @function unlockAdministratorWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  unlockAdministratorWithSid(sid, body, callback) {
+    const meth = 'adapter-unlockAdministratorWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -27460,6 +32141,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -27472,7 +32156,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['unlockAdministrator'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['unlockAdministratorWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -27497,7 +32181,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   showApiSettings(body, callback) {
-    const meth = 'adapter-showApiSettings';
+    this.showApiSettingsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary show-api-settings
+   *
+   * @function showApiSettingsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showApiSettingsWithSid(sid, body, callback) {
+    const meth = 'adapter-showApiSettingsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -27551,6 +32248,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -27563,7 +32263,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApiSettings'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showApiSettingsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
@@ -27588,7 +32288,20 @@ class CheckpointManagement extends AdapterBaseCl {
    */
   /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
   setApiSettings(body, callback) {
-    const meth = 'adapter-setApiSettings';
+    this.setApiSettingsWithSid(null, body, callback);
+  }
+
+  /**
+   * @summary set-api-settings
+   *
+   * @function setApiSettingsWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  setApiSettingsWithSid(sid, body, callback) {
+    const meth = 'adapter-setApiSettingsWithSid';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
@@ -27642,6 +32355,9 @@ class CheckpointManagement extends AdapterBaseCl {
       uriQuery: queryParams,
       addlHeaders: thisHeaderData
     };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
 
     try {
       // Make the call -
@@ -27654,7 +32370,7 @@ class CheckpointManagement extends AdapterBaseCl {
           return callback(null, irReturnError);
         }
         if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setApiSettings'], null, null, null);
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['setApiSettingsWithSid'], null, null, null);
           log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
           return callback(null, errorObj);
         }
