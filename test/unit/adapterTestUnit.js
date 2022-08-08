@@ -1323,7 +1323,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.publish(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-publish', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-publishWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1352,7 +1352,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.discard(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-discard', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-discardWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1381,7 +1381,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.logout(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-logout', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-logoutWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1410,7 +1410,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.disconnect(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-disconnect', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-disconnectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1439,7 +1439,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.keepalive(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-keepalive', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-keepaliveWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1468,7 +1468,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showSession(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSession', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSessionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1497,7 +1497,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setSession(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setSession', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setSessionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1526,7 +1526,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.continueSessionInSmartconsole(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-continueSessionInSmartconsole', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-continueSessionInSmartconsoleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1555,7 +1555,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showLastPublishedSession(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showLastPublishedSession', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showLastPublishedSessionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1584,7 +1584,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.purgePublishedSessionsByCount(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-purgePublishedSessionsByCount', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-purgePublishedSessionsByCountWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1613,7 +1613,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.switchSession(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-switchSession', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-switchSessionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1642,7 +1642,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.assignSession(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-assignSession', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-assignSessionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1671,7 +1671,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.takeOverSession(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-takeOverSession', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-takeOverSessionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1700,7 +1700,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showSessions(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSessions', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSessionsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1729,7 +1729,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showLoginMessage(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showLoginMessage', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showLoginMessageWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1758,7 +1758,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setLoginMessage(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setLoginMessage', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setLoginMessageWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1787,7 +1787,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addHost(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addHost', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addHostWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1816,7 +1816,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showHost(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showHost', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showHostWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1845,7 +1845,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setHost(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setHost', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setHostWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1874,7 +1874,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteHost(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteHost', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteHostWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1903,7 +1903,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showHosts(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showHosts', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showHostsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1932,7 +1932,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addNetwork(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addNetwork', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addNetworkWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1961,7 +1961,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showNetwork(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNetwork', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNetworkWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -1990,7 +1990,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setNetwork(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setNetwork', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setNetworkWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2019,7 +2019,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteNetwork(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteNetwork', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteNetworkWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2048,7 +2048,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showNetworks(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNetworks', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNetworksWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2077,7 +2077,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addWildcard(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addWildcard', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addWildcardWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2106,7 +2106,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showWildcard(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showWildcard', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showWildcardWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2135,7 +2135,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setWildcard(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setWildcard', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setWildcardWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2164,7 +2164,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteWildcard(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteWildcard', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteWildcardWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2193,7 +2193,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showWildcards(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showWildcards', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showWildcardsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2222,7 +2222,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addGroupWithGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addGroupWithGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addGroupWithGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2251,7 +2251,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2280,7 +2280,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2309,7 +2309,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2338,7 +2338,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showGroups(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGroups', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGroupsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2367,7 +2367,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addAddressRange(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAddressRange', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAddressRangeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2396,7 +2396,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAddressRange(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAddressRange', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAddressRangeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2425,7 +2425,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setAddressRange(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAddressRange', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAddressRangeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2454,7 +2454,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteAddressRange(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAddressRange', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAddressRangeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2483,7 +2483,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAddressRanges(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAddressRanges', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAddressRangesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2512,7 +2512,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addMulticastAddressRangeIpRange(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addMulticastAddressRangeIpRange', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addMulticastAddressRangeIpRangeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2541,7 +2541,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showMulticastAddressRange(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showMulticastAddressRange', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showMulticastAddressRangeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2570,7 +2570,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setMulticastAddressRange(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setMulticastAddressRange', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setMulticastAddressRangeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2599,7 +2599,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteMulticastAddressRange(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteMulticastAddressRange', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteMulticastAddressRangeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2628,7 +2628,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showMulticastAddressRanges(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showMulticastAddressRanges', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showMulticastAddressRangesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2657,7 +2657,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addGroupWithExclusion(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addGroupWithExclusion', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addGroupWithExclusionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2686,7 +2686,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showGroupWithExclusion(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGroupWithExclusion', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGroupWithExclusionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2715,7 +2715,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setGroupWithExclusion(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setGroupWithExclusion', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setGroupWithExclusionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2744,7 +2744,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteGroupWithExclusion(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteGroupWithExclusion', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteGroupWithExclusionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2773,7 +2773,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showGroupsWithExclusion(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGroupsWithExclusion', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGroupsWithExclusionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2802,7 +2802,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addSimpleGateway(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addSimpleGateway', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addSimpleGatewayWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2831,7 +2831,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showSimpleGateway(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSimpleGateway', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSimpleGatewayWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2860,7 +2860,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setSimpleGateway(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setSimpleGateway', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setSimpleGatewayWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2889,7 +2889,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteSimpleGateway(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteSimpleGateway', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteSimpleGatewayWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2918,7 +2918,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showSimpleGateways(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSimpleGateways', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSimpleGatewaysWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2947,7 +2947,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addSecurityZone(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addSecurityZone', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addSecurityZoneWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -2976,7 +2976,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showSecurityZone(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSecurityZone', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSecurityZoneWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3005,7 +3005,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setSecurityZone(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setSecurityZone', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setSecurityZoneWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3034,7 +3034,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteSecurityZone(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteSecurityZone', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteSecurityZoneWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3063,7 +3063,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showSecurityZones(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSecurityZones', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSecurityZonesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3092,7 +3092,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addTime(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addTime', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addTimeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3121,7 +3121,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTime(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTime', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTimeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3150,7 +3150,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setTime(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setTime', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setTimeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3179,7 +3179,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteTime(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteTime', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteTimeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3208,7 +3208,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTimes(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTimes', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTimesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3237,7 +3237,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addTimeGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addTimeGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addTimeGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3266,7 +3266,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTimeGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTimeGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTimeGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3295,7 +3295,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setTimeGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setTimeGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setTimeGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3324,7 +3324,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteTimeGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteTimeGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteTimeGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3353,7 +3353,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTimeGroups(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTimeGroups', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTimeGroupsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3382,7 +3382,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addAccessRole(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAccessRole', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAccessRoleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3411,7 +3411,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAccessRole(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessRole', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessRoleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3440,7 +3440,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setAccessRole(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAccessRole', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAccessRoleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3469,7 +3469,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteAccessRole(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAccessRole', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAccessRoleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3498,7 +3498,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAccessRoles(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessRoles', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessRolesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3527,7 +3527,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addDynamicObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addDynamicObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addDynamicObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3556,7 +3556,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDynamicObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDynamicObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDynamicObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3585,7 +3585,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setDynamicObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setDynamicObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setDynamicObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3614,7 +3614,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteDynamicObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteDynamicObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteDynamicObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3643,7 +3643,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDynamicObjects(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDynamicObjects', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDynamicObjectsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3672,7 +3672,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addTrustedClient(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addTrustedClient', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addTrustedClientWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3701,7 +3701,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTrustedClient(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTrustedClient', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTrustedClientWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3730,7 +3730,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setTrustedClient(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setTrustedClient', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setTrustedClientWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3759,7 +3759,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteTrustedClient(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteTrustedClient', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteTrustedClientWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3788,7 +3788,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTrustedClients(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTrustedClients', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTrustedClientsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3817,7 +3817,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addTag(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addTag', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addTagWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3846,7 +3846,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTag(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTag', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTagWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3875,7 +3875,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setTag(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setTag', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setTagWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3904,7 +3904,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteTag(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteTag', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteTagWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3933,7 +3933,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTags(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTags', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTagsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3962,7 +3962,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addDnsDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addDnsDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addDnsDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -3991,7 +3991,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDnsDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDnsDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDnsDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4020,7 +4020,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setDnsDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setDnsDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setDnsDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4049,7 +4049,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteDnsDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteDnsDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteDnsDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4078,7 +4078,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDnsDomains(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDnsDomains', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDnsDomainsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4107,7 +4107,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addOpsecApplication(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addOpsecApplication', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addOpsecApplicationWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4136,7 +4136,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showOpsecApplication(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showOpsecApplication', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showOpsecApplicationWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4165,7 +4165,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setOpsecApplication(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setOpsecApplication', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setOpsecApplicationWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4194,7 +4194,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteOpsecApplication(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteOpsecApplication', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteOpsecApplicationWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4223,7 +4223,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showOpsecApplications(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showOpsecApplications', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showOpsecApplicationsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4252,7 +4252,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDataCenterContent(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenterContent', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenterContentWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4281,7 +4281,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDataCenter(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenter', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenterWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4310,7 +4310,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDataCenters(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenters', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCentersWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4339,7 +4339,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addDataCenterObjectWithGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addDataCenterObjectWithGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addDataCenterObjectWithGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4368,7 +4368,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDataCenterObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenterObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenterObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4397,7 +4397,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteDataCenterObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteDataCenterObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteDataCenterObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4426,7 +4426,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDataCenterObjects(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenterObjects', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDataCenterObjectsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4455,7 +4455,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showUpdatableObjectsRepositoryContent(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showUpdatableObjectsRepositoryContent', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showUpdatableObjectsRepositoryContentWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4484,7 +4484,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.updateUpdatableObjectsRepositoryContent(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-updateUpdatableObjectsRepositoryContent', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-updateUpdatableObjectsRepositoryContentWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4513,7 +4513,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addUpdatableObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addUpdatableObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addUpdatableObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4542,7 +4542,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showUpdatableObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showUpdatableObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showUpdatableObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4571,7 +4571,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteUpdatableObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteUpdatableObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteUpdatableObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4600,7 +4600,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showUpdatableObjects(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showUpdatableObjects', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showUpdatableObjectsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4629,7 +4629,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceTcp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceTcp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceTcpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4658,7 +4658,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceTcp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceTcp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceTcpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4687,7 +4687,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceTcp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceTcp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceTcpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4716,7 +4716,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceTcp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceTcp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceTcpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4745,7 +4745,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServicesTcp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesTcp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesTcpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4774,7 +4774,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceUdp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceUdp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceUdpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4803,7 +4803,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceUdp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceUdp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceUdpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4832,7 +4832,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceUdp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceUdp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceUdpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4861,7 +4861,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceUdp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceUdp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceUdpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4890,7 +4890,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServicesUdp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesUdp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesUdpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4919,7 +4919,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceIcmp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceIcmp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceIcmpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4948,7 +4948,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceIcmp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceIcmp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceIcmpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -4977,7 +4977,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceIcmp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceIcmp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceIcmpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5006,7 +5006,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceIcmp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceIcmp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceIcmpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5035,7 +5035,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServicesIcmp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesIcmp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesIcmpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5064,7 +5064,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceIcmp6(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceIcmp6', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceIcmp6WithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5093,7 +5093,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceIcmp6(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceIcmp6', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceIcmp6WithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5122,7 +5122,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceIcmp6(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceIcmp6', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceIcmp6WithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5151,7 +5151,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceIcmp6(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceIcmp6', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceIcmp6WithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5180,7 +5180,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServicesIcmp6(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesIcmp6', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesIcmp6WithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5209,7 +5209,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceSctp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceSctp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceSctpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5238,7 +5238,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceSctp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceSctp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceSctpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5267,7 +5267,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceSctp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceSctp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceSctpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5296,7 +5296,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceSctp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceSctp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceSctpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5325,7 +5325,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServicesSctp(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesSctp', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesSctpWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5354,7 +5354,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceOther(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceOther', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceOtherWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5383,7 +5383,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceOther(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceOther', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceOtherWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5412,7 +5412,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceOther(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceOther', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceOtherWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5441,7 +5441,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceOther(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceOther', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceOtherWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5470,7 +5470,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServicesOther(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesOther', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesOtherWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5499,7 +5499,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5528,7 +5528,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5557,7 +5557,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5586,7 +5586,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5615,7 +5615,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceGroups(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceGroups', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceGroupsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5644,7 +5644,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addApplicationSite(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addApplicationSite', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addApplicationSiteWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5673,7 +5673,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showApplicationSite(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSite', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5702,7 +5702,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setApplicationSite(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setApplicationSite', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setApplicationSiteWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5731,7 +5731,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteApplicationSite(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteApplicationSite', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteApplicationSiteWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5760,7 +5760,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showApplicationSites(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSites', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSitesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5789,7 +5789,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addApplicationSiteCategory(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addApplicationSiteCategory', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addApplicationSiteCategoryWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5818,7 +5818,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showApplicationSiteCategory(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteCategory', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteCategoryWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5847,7 +5847,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setApplicationSiteCategory(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setApplicationSiteCategory', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setApplicationSiteCategoryWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5876,7 +5876,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteApplicationSiteCategory(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteApplicationSiteCategory', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteApplicationSiteCategoryWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5905,7 +5905,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showApplicationSiteCategories(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteCategories', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteCategoriesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5934,7 +5934,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addApplicationSiteGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addApplicationSiteGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addApplicationSiteGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5963,7 +5963,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showApplicationSiteGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -5992,7 +5992,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setApplicationSiteGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setApplicationSiteGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setApplicationSiteGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6021,7 +6021,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteApplicationSiteGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteApplicationSiteGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteApplicationSiteGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6050,7 +6050,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showApplicationSiteGroups(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteGroups', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApplicationSiteGroupsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6079,7 +6079,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceDceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceDceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceDceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6108,7 +6108,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceDceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceDceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceDceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6137,7 +6137,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceDceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceDceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceDceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6166,7 +6166,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceDceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceDceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceDceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6195,7 +6195,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServicesDceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesDceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesDceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6224,7 +6224,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addServiceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addServiceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6253,7 +6253,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServiceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServiceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6282,7 +6282,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setServiceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setServiceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6311,7 +6311,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteServiceRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteServiceRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6340,7 +6340,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showServicesRpc(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesRpc', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showServicesRpcWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6369,7 +6369,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addAccessRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAccessRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAccessRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6398,7 +6398,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAccessRulebase(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessRulebase', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessRulebaseWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6427,7 +6427,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAccessRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6456,7 +6456,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setAccessRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAccessRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAccessRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6485,7 +6485,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteAccessRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAccessRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAccessRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6514,7 +6514,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addAccessSection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAccessSection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAccessSectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6543,7 +6543,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAccessSection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessSection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessSectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6572,7 +6572,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setAccessSection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAccessSection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAccessSectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6601,7 +6601,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteAccessSection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAccessSection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAccessSectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6630,7 +6630,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addAccessLayer(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAccessLayer', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAccessLayerWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6659,7 +6659,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAccessLayer(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessLayer', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessLayerWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6688,7 +6688,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setAccessLayer(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAccessLayer', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAccessLayerWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6717,7 +6717,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteAccessLayer(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAccessLayer', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAccessLayerWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6746,7 +6746,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAccessLayers(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessLayers', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAccessLayersWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6775,7 +6775,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addNatRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addNatRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addNatRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6804,7 +6804,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showNatRulebase(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNatRulebase', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNatRulebaseWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6833,7 +6833,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showNatRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNatRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNatRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6862,7 +6862,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setNatRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setNatRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setNatRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6891,7 +6891,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteNatRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteNatRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteNatRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6920,7 +6920,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addNatSection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addNatSection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addNatSectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6949,7 +6949,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showNatSection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNatSection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showNatSectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -6978,7 +6978,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setNatSection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setNatSection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setNatSectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7007,7 +7007,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteNatSection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteNatSection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteNatSectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7036,7 +7036,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addVpnCommunityMeshed(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addVpnCommunityMeshed', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addVpnCommunityMeshedWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7065,7 +7065,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showVpnCommunityMeshed(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showVpnCommunityMeshed', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showVpnCommunityMeshedWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7094,7 +7094,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setVpnCommunityMeshed(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setVpnCommunityMeshed', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setVpnCommunityMeshedWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7123,7 +7123,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteVpnCommunityMeshed(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteVpnCommunityMeshed', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteVpnCommunityMeshedWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7152,7 +7152,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showVpnCommunitiesMeshed(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showVpnCommunitiesMeshed', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showVpnCommunitiesMeshedWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7181,7 +7181,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addVpnCommunityStar(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addVpnCommunityStar', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addVpnCommunityStarWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7210,7 +7210,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showVpnCommunityStar(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showVpnCommunityStar', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showVpnCommunityStarWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7239,7 +7239,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setVpnCommunityStar(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setVpnCommunityStar', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setVpnCommunityStarWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7268,7 +7268,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteVpnCommunityStar(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteVpnCommunityStar', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteVpnCommunityStarWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7297,7 +7297,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showVpnCommunitiesStar(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showVpnCommunitiesStar', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showVpnCommunitiesStarWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7326,7 +7326,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addThreatRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7355,7 +7355,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatRulebase(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatRulebase', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatRulebaseWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7384,7 +7384,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7413,7 +7413,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setThreatRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7442,7 +7442,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteThreatRule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatRule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatRuleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7471,7 +7471,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addThreatException(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatException', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatExceptionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7500,7 +7500,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatRuleExceptionRulebase(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatRuleExceptionRulebase', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatRuleExceptionRulebaseWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7529,7 +7529,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatException(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatException', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatExceptionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7558,7 +7558,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setThreatException(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatException', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatExceptionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7587,7 +7587,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteThreatException(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatException', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatExceptionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7616,7 +7616,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addExceptionGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addExceptionGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addExceptionGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7645,7 +7645,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showExceptionGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showExceptionGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showExceptionGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7674,7 +7674,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setExceptionGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setExceptionGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setExceptionGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7703,7 +7703,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteExceptionGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteExceptionGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteExceptionGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7732,7 +7732,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showExceptionGroups(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showExceptionGroups', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showExceptionGroupsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7761,7 +7761,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatProtection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatProtection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatProtectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7790,7 +7790,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setThreatProtection(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatProtection', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatProtectionWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7819,7 +7819,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatProtections(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatProtections', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatProtectionsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7848,7 +7848,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addThreatProtections(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatProtections', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatProtectionsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7877,7 +7877,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteThreatProtections(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatProtections', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatProtectionsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7906,7 +7906,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addThreatProfile(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatProfile', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatProfileWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7935,7 +7935,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatProfile(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatProfile', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatProfileWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7964,7 +7964,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setThreatProfile(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatProfile', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatProfileWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -7993,7 +7993,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteThreatProfile(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatProfile', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatProfileWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8022,7 +8022,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatProfiles(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatProfiles', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatProfilesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8051,7 +8051,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addThreatIndicator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatIndicator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatIndicatorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8080,7 +8080,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatIndicator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatIndicator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatIndicatorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8109,7 +8109,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setThreatIndicator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatIndicator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatIndicatorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8138,7 +8138,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteThreatIndicator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatIndicator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatIndicatorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8167,7 +8167,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatIndicators(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatIndicators', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatIndicatorsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8196,7 +8196,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addThreatLayer(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatLayer', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addThreatLayerWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8225,7 +8225,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatLayer(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatLayer', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatLayerWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8254,7 +8254,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setThreatLayer(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatLayer', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setThreatLayerWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8283,7 +8283,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteThreatLayer(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatLayer', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteThreatLayerWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8312,7 +8312,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showThreatLayers(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatLayers', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showThreatLayersWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8341,7 +8341,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showIpsUpdateSchedule(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showIpsUpdateSchedule', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showIpsUpdateScheduleWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8370,7 +8370,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setIpsUpdateScheduleInterval(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setIpsUpdateScheduleInterval', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setIpsUpdateScheduleIntervalWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8399,7 +8399,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.runIpsUpdate(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-runIpsUpdate', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-runIpsUpdateWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8428,7 +8428,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showIpsStatus(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showIpsStatus', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showIpsStatusWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8457,7 +8457,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showIpsProtectionExtendedAttribute(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showIpsProtectionExtendedAttribute', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showIpsProtectionExtendedAttributeWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8486,7 +8486,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showIpsProtectionExtendedAttributes(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showIpsProtectionExtendedAttributes', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showIpsProtectionExtendedAttributesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8515,7 +8515,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.runThreatEmulationFileTypesOfflineUpdate(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-runThreatEmulationFileTypesOfflineUpdate', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-runThreatEmulationFileTypesOfflineUpdateWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8544,7 +8544,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.verifyPolicy(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-verifyPolicy', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-verifyPolicyWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8573,7 +8573,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.installPolicy(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-installPolicy', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-installPolicyWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8602,7 +8602,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addPackage(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addPackage', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addPackageWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8631,7 +8631,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showPackage(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showPackage', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showPackageWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8660,7 +8660,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setPackage(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setPackage', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setPackageWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8689,7 +8689,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deletePackage(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deletePackage', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deletePackageWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8718,7 +8718,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showPackages(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showPackages', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showPackagesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8747,7 +8747,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8776,7 +8776,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8805,7 +8805,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8834,7 +8834,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8863,7 +8863,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showDomains(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDomains', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showDomainsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8892,7 +8892,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showGlobalDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGlobalDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGlobalDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8921,7 +8921,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setGlobalDomain(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setGlobalDomain', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setGlobalDomainWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8950,7 +8950,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showMds(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showMds', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showMdsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -8979,7 +8979,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showMdss(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showMdss', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showMdssWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9008,7 +9008,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showPlaceHolder(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showPlaceHolder', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showPlaceHolderWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9037,7 +9037,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addGlobalAssignment(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addGlobalAssignment', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addGlobalAssignmentWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9066,7 +9066,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showGlobalAssignment(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGlobalAssignment', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGlobalAssignmentWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9095,7 +9095,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setGlobalAssignment(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setGlobalAssignment', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setGlobalAssignmentWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9124,7 +9124,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteGlobalAssignment(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteGlobalAssignment', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteGlobalAssignmentWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9153,7 +9153,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showGlobalAssignments(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGlobalAssignments', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGlobalAssignmentsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9182,7 +9182,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.assignGlobalAssignment(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-assignGlobalAssignment', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-assignGlobalAssignmentWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9211,7 +9211,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.whereUsed(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-whereUsed', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-whereUsedWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9240,7 +9240,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTask(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTask', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTaskWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9269,7 +9269,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.runScript(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-runScript', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-runScriptWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9298,7 +9298,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showUnusedObjects(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showUnusedObjects', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showUnusedObjectsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9327,7 +9327,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.export(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-export', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-exportWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9356,7 +9356,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showChangesBetweenTheDates(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showChangesBetweenTheDates', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showChangesBetweenTheDatesWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9385,7 +9385,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showGatewaysAndServers(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGatewaysAndServers', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showGatewaysAndServersWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9414,7 +9414,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showObjectsOfTypeGroup(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showObjectsOfTypeGroup', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showObjectsOfTypeGroupWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9443,7 +9443,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showValidations(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showValidations', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showValidationsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9472,7 +9472,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showTasks(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTasks', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showTasksWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9501,7 +9501,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showApiVersions(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApiVersions', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApiVersionsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9530,7 +9530,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showObject(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showObject', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showObjectWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9559,7 +9559,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showCommands(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showCommands', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showCommandsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9588,7 +9588,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.putFile(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-putFile', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-putFileWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9617,7 +9617,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.addAdministrator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAdministrator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addAdministratorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9646,7 +9646,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAdministrator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAdministrator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAdministratorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9675,7 +9675,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setAdministrator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAdministrator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setAdministratorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9704,7 +9704,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.deleteAdministrator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAdministrator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteAdministratorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9733,7 +9733,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showAdministrators(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAdministrators', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showAdministratorsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9762,7 +9762,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.unlockAdministrator(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-unlockAdministrator', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-unlockAdministratorWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9791,7 +9791,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.showApiSettings(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApiSettings', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showApiSettingsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
@@ -9820,7 +9820,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           a.setApiSettings(null, (data, error) => {
             try {
               const displayE = 'body is required';
-              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setApiSettings', displayE);
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-setApiSettingsWithSid', displayE);
               done();
             } catch (err) {
               log.error(`Test Failure: ${err}`);
