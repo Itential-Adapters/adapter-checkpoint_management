@@ -1,4 +1,12 @@
 
+## 0.5.0 [05-30-2023]
+
+* Minor/adapt 2429
+
+See merge request itentialopensource/adapters/security/adapter-checkpoint_management!11
+
+---
+
 ## 0.4.0 [08-08-2022]
 
 * Add Session Management Capability
