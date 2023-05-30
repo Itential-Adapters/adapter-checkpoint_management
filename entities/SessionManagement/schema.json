@@ -11,6 +11,7 @@
       "default": "login",
       "enum": [
         "login",
+        "loginToDomainWithSid",
         "publish",
         "discard",
         "logout",

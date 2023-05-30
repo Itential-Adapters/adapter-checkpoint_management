@@ -700,6 +700,50 @@
       "task": true
     },
     {
+      "name": "loginToDomainWithSid",
+      "summary": "loginToDomainWithSid",
+      "description": "Login to a domain with sid.",
+      "input": [
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": true,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        },
+        {
+          "name": "body",
+          "type": "object",
+          "info": ": object",
+          "required": true,
+          "schema": {
+            "title": "body",
+            "type": "object"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/loginToDomainWithSid"
+      },
+      "task": true
+    },
+    {
       "name": "publish",
       "summary": "publish",
       "description": "Publish the last changes. Use the show-task command to check the progress of the task.",
