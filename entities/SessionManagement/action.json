@@ -22,6 +22,27 @@
       ]
     },
     {
+      "name": "loginToDomainWithSid",
+      "protocol": "REST",
+      "method": "POST",
+      "entitypath": "{base_path}/{version}/login-to-domain?{query}",
+      "requestSchema": "schema.json",
+      "responseSchema": "schema.json",
+      "timeout": 0,
+      "sendEmpty": true,
+      "sendGetBody": false,
+      "requestDatatype": "JSON",
+      "responseDatatype": "JSON",
+      "headers": {},
+      "responseObjects": [
+        {
+          "type": "default",
+          "key": "",
+          "mockFile": ""
+        }
+      ]
+    },
+    {
       "name": "publish",
       "protocol": "REST",
       "method": "POST",

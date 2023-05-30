@@ -929,6 +929,101 @@ class CheckpointManagement extends AdapterBaseCl {
   }
 
   /**
+   * @summary loginToDomainWithSid
+   *
+   * @function loginToDomainWithSid
+   * @param {string} sid - session id
+   * @param {object} body - body param
+   * @param {getCallback} callback - a callback function to return the result
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  loginToDomainWithSid(sid, body, callback) {
+    const meth = 'adapter-loginToDomainWithSid';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+          && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // if you want to expose addlHeaders to workflow, add it to the method signature here and in pronghorn.json
+    let thisHeaderData = null;
+    // if the additional headers was passed in as a string parse the json into an object
+    if (thisHeaderData !== null && thisHeaderData.constructor === String) {
+      try {
+        // parse the additional headers object that was passed in
+        thisHeaderData = JSON.parse(thisHeaderData);
+      } catch (err) {
+        const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'addlHeaders string must be a stringified JSON', [], null, null, null);
+        log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+        return callback(null, errorObj);
+      }
+    } else if (thisHeaderData === null) {
+      thisHeaderData = { xChkpSid: '' };
+    }
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams,
+      addlHeaders: thisHeaderData
+    };
+    if (sid) {
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('SessionManagement', 'loginToDomainWithSid', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['loginToDomainWithSid'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
    * @summary publish
    *
    * @function publish
