@@ -1,7 +1,7 @@
+const { execSync } = require('child_process');
 const fs = require('fs-extra');
 const Ajv = require('ajv');
 const rls = require('readline-sync');
-const { execSync } = require('child_process');
 const { existsSync } = require('fs-extra');
 const { getAdapterConfig } = require('./tbUtils');
 const { name } = require('../package.json');
@@ -21,9 +21,7 @@ async function updateServiceItem() {
   const validate = ajv.compile(propertiesSchema);
   validate(currentProps);
   console.log('Updating Properties...');
-  await database.collection('service_configs').updateOne(
-    { model: name }, { $set: serviceItem }
-  );
+  await database.collection('service_configs').updateOne({ model: name }, { $set: serviceItem });
   console.log('Properties Updated');
 }
 
@@ -35,7 +33,7 @@ async function updateServiceItem() {
 function backup() {
   // zip all files except node_modules and package-lock
   const backupCmd = 'zip -r previousVersion.zip .';
-  execSync(backupCmd, { encoding: 'utf-8' });
+  execSync(backupCmd, { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 2 });
 }
 
 /**
@@ -53,9 +51,9 @@ function archiveMod(modType) {
   const archiveName = `${modType}-${now.toISOString()}`;
   execSync(`mkdir adapter_modifications/archive/${archiveName}`);
   const archiveCmd = 'mv adapter_modifications/archive .'
-  + ` && mv adapter_modifications/* archive/${archiveName}`
-  + ' && mv archive adapter_modifications'
-  + ` && rm ${zipFile}`;
+    + ` && mv adapter_modifications/* archive/${archiveName}`
+    + ' && mv archive adapter_modifications'
+    + ` && rm ${zipFile}`;
   execSync(archiveCmd, { encoding: 'utf-8' });
 }
 
@@ -73,7 +71,7 @@ function revertMod() {
     }
   });
   // // unzip previousVersion, reinstall dependencies and delete zipfile
-  execSync('unzip -o previousVersion.zip && rm -rf node_modules && rm package-lock.json && npm install');
+  execSync('unzip -o previousVersion.zip && rm -rf node_modules && rm package-lock.json && npm install', { maxBuffer: 1024 * 1024 * 2 });
   execSync('rm previousVersion.zip');
   console.log('Changes have been reverted');
 }
@@ -90,12 +88,12 @@ if (flags === '-m') {
   backup();
   console.log('Migrating adapter and running tests...');
   const migrateCmd = 'unzip -o migrationPackage.zip'
-  + ' && cd adapter_modifications'
-  + ' && node migrate';
+    + ' && cd adapter_modifications'
+    + ' && node migrate';
   const migrateOutput = execSync(migrateCmd, { encoding: 'utf-8' });
   console.log(migrateOutput);
   if (migrateOutput.indexOf('Lint exited with code 1') >= 0
-  || migrateOutput.indexOf('Tests exited with code 1') >= 0) {
+    || migrateOutput.indexOf('Tests exited with code 1') >= 0) {
     if (rls.keyInYN('Adapter failed tests or lint after migrating. Would you like to revert the changes?')) {
       console.log('Reverting changes...');
       revertMod();
@@ -125,12 +123,12 @@ if (flags === '-u') {
   // Backup current adapter
   backup();
   const updateCmd = 'unzip -o updatePackage.zip'
-  + ' && cd adapter_modifications'
-  + ' && node update.js updateFiles';
+    + ' && cd adapter_modifications'
+    + ' && node update.js updateFiles';
   execSync(updateCmd, { encoding: 'utf-8' });
   const updateOutput = execSync(updateCmd, { encoding: 'utf-8' });
   if (updateOutput.indexOf('Lint exited with code 1') >= 0
-  || updateOutput.indexOf('Tests exited with code 1') >= 0) {
+    || updateOutput.indexOf('Tests exited with code 1') >= 0) {
     if (rls.keyInYN('Adapter failed tests or lint after updating. Would you like to revert the changes?')) {
       console.log('Reverting changes...');
       revertMod();

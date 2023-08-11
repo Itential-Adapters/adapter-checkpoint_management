@@ -165,5 +165,17 @@ Specific adapter calls are built based on the API of the Check Point Management.
     <th bgcolor="lightgrey" style="padding:15px"><span style="font-size:12.0pt">Path</span></th>
     <th bgcolor="lightgrey" style="padding:15px"><span style="font-size:12.0pt">Workflow?</span></th>
   </tr>
+  <tr>
+    <td style="padding:15px">login(body, callback)</td>
+    <td style="padding:15px">Login request to receive session token.</td>
+    <td style="padding:15px">{base_path}/{version}/login?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">loginToDomainWithSid(sid, body, callback)</td>
+    <td style="padding:15px">Login to a domain with sid.</td>
+    <td style="padding:15px">{base_path}/{version}/login-to-domain?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
 </table>
 <br>

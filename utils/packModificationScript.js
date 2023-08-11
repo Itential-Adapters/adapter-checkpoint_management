@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /* @copyright Itential, LLC 2019 */
 
-const fs = require('fs-extra');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const fs = require('fs-extra');
 const { createBundle } = require('./artifactize');
 
 const nodeEntryPath = path.resolve('.');

@@ -9,13 +9,13 @@
 // include required items for testing & logging
 const assert = require('assert');
 const fs = require('fs');
-const mocha = require('mocha');
 const path = require('path');
+const util = require('util');
+const mocha = require('mocha');
 const winston = require('winston');
 const { expect } = require('chai');
 const { use } = require('chai');
 const td = require('testdouble');
-const util = require('util');
 
 const anything = td.matchers.anything();
 
@@ -335,6 +335,134 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
       }).timeout(attemptTimeout);
     });
 
+    // broker tests
+    describe('#getDevicesFiltered - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          const opts = {
+            filter: {
+              name: 'deviceName'
+            }
+          };
+          a.getDevicesFiltered(opts, (data, error) => {
+            try {
+              if (stub) {
+                if (samProps.devicebroker.getDevicesFiltered[0].handleFailure === 'ignore') {
+                  assert.equal(null, error);
+                  assert.notEqual(undefined, data);
+                  assert.notEqual(null, data);
+                  assert.equal(0, data.total);
+                  assert.equal(0, data.list.length);
+                } else {
+                  const displayE = 'Error 400 received on request';
+                  runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+                }
+              } else {
+                runCommonAsserts(data, error);
+              }
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#iapGetDeviceCount - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          const opts = {
+            filter: {
+              name: 'deviceName'
+            }
+          };
+          a.iapGetDeviceCount((data, error) => {
+            try {
+              if (stub) {
+                if (samProps.devicebroker.getDevicesFiltered[0].handleFailure === 'ignore') {
+                  assert.equal(null, error);
+                  assert.notEqual(undefined, data);
+                  assert.notEqual(null, data);
+                  assert.equal(0, data.count);
+                } else {
+                  const displayE = 'Error 400 received on request';
+                  runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+                }
+              } else {
+                runCommonAsserts(data, error);
+              }
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    // exposed cache tests
+    describe('#iapPopulateEntityCache - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.iapPopulateEntityCache('Device', (data, error) => {
+            try {
+              if (stub) {
+                assert.equal(null, data);
+                assert.notEqual(undefined, error);
+                assert.notEqual(null, error);
+                done();
+              } else {
+                assert.equal(undefined, error);
+                assert.equal('success', data[0]);
+                done();
+              }
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#iapRetrieveEntitiesCache - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.iapRetrieveEntitiesCache('Device', {}, (data, error) => {
+            try {
+              if (stub) {
+                assert.equal(null, data);
+                assert.notEqual(null, error);
+                assert.notEqual(undefined, error);
+              } else {
+                assert.equal(undefined, error);
+                assert.notEqual(null, data);
+                assert.notEqual(undefined, data);
+              }
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
     /*
     -----------------------------------------------------------------------
     -----------------------------------------------------------------------

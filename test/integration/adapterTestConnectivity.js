@@ -3,9 +3,12 @@
 /* global describe it context before after */
 /* eslint no-unused-vars: warn */
 
-const mocha = require('mocha');
 const assert = require('assert');
-const diagnostics = require('network-diagnostics');
+const http = require('http');
+const https = require('https');
+const mocha = require('mocha');
+const ping = require('ping');
+const dnsLookup = require('dns-lookup-promise');
 
 let host;
 process.argv.forEach((val) => {
@@ -16,78 +19,124 @@ process.argv.forEach((val) => {
 
 describe('[integration] Adapter Test', () => {
   context(`Testing network connection on ${host}`, () => {
-    before(() => {
-      diagnostics.setTestURL(host);
-    });
-
     after((done) => {
       done();
     });
 
     it('DNS resolve', (done) => {
-      diagnostics.haveDNS((result) => {
-        try {
-          assert.equal(result, true);
-          done();
-        } catch (error) {
-          done(error);
-        }
-      });
+      dnsLookup(host)
+        .then((addresses) => {
+          try {
+            assert.ok(addresses.length > 0);
+            done();
+          } catch (error) {
+            done(error);
+          }
+        })
+        .catch((err) => {
+          done(err);
+        });
     });
 
     it('Responds to ping', (done) => {
-      diagnostics.havePing((result) => {
-        try {
-          assert.equal(result, true);
-          done();
-        } catch (error) {
-          done(error);
-        }
-      });
+      ping.promise.probe(host)
+        .then((result) => {
+          try {
+            assert.ok(result.alive);
+            done();
+          } catch (error) {
+            done(error);
+          }
+        })
+        .catch((err) => {
+          done(err);
+        });
     });
 
     it('Support HTTP on port 80', (done) => {
-      diagnostics.haveHTTP((result) => {
+      const requestOptions = {
+        host,
+        port: 80,
+        method: 'HEAD'
+      };
+
+      const req = http.request(requestOptions, (res) => {
         try {
-          assert.equal(result, true);
+          assert.ok(res.statusCode >= 200 && res.statusCode < 400);
           done();
         } catch (error) {
           done(error);
         }
       });
+
+      req.on('error', (err) => {
+        done(err);
+      });
+
+      req.end();
     });
 
     it('Support HTTPS on port 443', (done) => {
-      diagnostics.haveHTTPS((result) => {
+      const requestOptions = {
+        host,
+        port: 443,
+        method: 'HEAD'
+      };
+
+      const req = https.request(requestOptions, (res) => {
         try {
-          assert.equal(result, true);
+          assert.ok(res.statusCode >= 200 && res.statusCode < 400);
           done();
         } catch (error) {
           done(error);
         }
       });
+
+      req.on('error', (err) => {
+        done(err);
+      });
+
+      req.end();
     });
 
     it('Support IPv4', (done) => {
-      diagnostics.haveIPv4Async((result) => {
-        try {
-          assert.equal(result, true);
-          done();
-        } catch (error) {
-          done(error);
-        }
-      });
+      const options = {
+        family: 4,
+        hints: dnsLookup.ADDRCONFIG
+      };
+
+      dnsLookup.lookup(host, options)
+        .then((address, family) => {
+          try {
+            assert.ok(address !== null && family === 4);
+            done();
+          } catch (error) {
+            done(error);
+          }
+        })
+        .catch((err) => {
+          done(err);
+        });
     });
 
     it('Support IPv6', (done) => {
-      diagnostics.haveIPv6Async((result) => {
-        try {
-          assert.equal(result, true);
-          done();
-        } catch (error) {
-          done(error);
-        }
-      });
+      const options = {
+        family: 6,
+        hints: dnsLookup.ADDRCONFIG
+      };
+
+      dnsLookup.lookup(host, options)
+        .then((address, family) => {
+          try {
+            assert.ok(address !== null && family === 6);
+            done();
+          } catch (error) {
+            done(error);
+          }
+        })
+        .catch((err) => {
+          done(err);
+        });
     });
   });
 });

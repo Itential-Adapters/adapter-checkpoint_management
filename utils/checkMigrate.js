@@ -1,7 +1,7 @@
 const { execSync } = require('child_process');
+const fs = require('fs');
 const semver = require('semver');
 const axios = require('axios');
-const fs = require('fs');
 const packageJson = require('../package.json');
 
 const localEngineVer = packageJson.engineVersion;

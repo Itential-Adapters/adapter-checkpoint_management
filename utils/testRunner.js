@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /* @copyright Itential, LLC 2019 */
 
+const execute = require('child_process').exec;
 const fs = require('fs-extra');
 const rl = require('readline-sync');
-const execute = require('child_process').exec;
 
 /**
  * This script will determine the type of integration test to run

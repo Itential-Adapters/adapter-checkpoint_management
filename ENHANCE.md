@@ -18,7 +18,7 @@ npm run adapter:update
 
 If you do not have a Swagger or OpenAPI document, you can use a Postman Collection and convert that to an OpenAPI document using APIMatic and then follow the first process.
 
-If you want to manually update the adapter that can also be done the key thing is to make sure you update all of the right files. Within the entities directory you will find 1 or more entities. You can create a new entity or add to an existing entity. Each entity has an action.json file, any new call will need to be put in the action.json file. It will also need to be added to the enum for the ph_request_type in the appropriate schema files. Once this configuration is complete you will need to add the call to the adapter.js file and, in order to make it available as a workflow task in IAP, it should also be added to the pronghorn.json file. You can optionally add it to the unit and integration test files. There is more information on how to work on each of these files in the <a href="https://www.itential.com/automation-platform/integrations/adapters-resources/" target="_blank">Adapter Technical Resources</a> on Dev Site.
+If you want to manually update the adapter that can also be done the key thing is to make sure you update all of the right files. Within the entities directory you will find 1 or more entities. You can create a new entity or add to an existing entity. Each entity has an action.json file, any new call will need to be put in the action.json file. It will also need to be added to the enum for the ph_request_type in the appropriate schema files. Once this configuration is complete you will need to add the call to the adapter.js file and, in order to make it available as a workflow task in IAP, it should also be added to the pronghorn.json file. You can optionally add it to the unit and integration test files. There is more information on how to work on each of these files in the <a href="https://docs.itential.com/opensource/docs/adapters" target="_blank">Adapter Technical Resources</a> on our Documentation Site.
 
 ```text
 Files to update
@@ -66,4 +66,4 @@ Files to update
 * test/integration/adapterTestIntegration.js: add better data for the create and update calls so that they will not fail.
 ```
 
-As mentioned previously, for most of these changes as well as other possible changes, there is more information on how to work on an adapter in the <a href="https://www.itential.com/automation-platform/integrations/adapters-resources/" target="_blank">Adapter Technical Resources</a> on Dev Site.
+As mentioned previously, for most of these changes as well as other possible changes, there is more information on how to work on an adapter in the <a href="https://docs.itential.com/opensource/docs/adapters" target="_blank">Adapter Technical Resources</a> on our Documentation Site.

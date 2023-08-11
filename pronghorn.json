@@ -62,6 +62,16 @@
             "title": "action",
             "type": "string"
           }
+        },
+        {
+          "name" : "replace",
+          "type": "boolean",
+          "info": "True to replace entire mock data, false to merge/append",
+          "required": false,
+          "schema": {
+            "title": "replace",
+            "type" : "boolean"
+          }
         }
       ],
       "output": {
@@ -79,41 +89,6 @@
       "route": {
         "verb": "POST",
         "path": "/iapUpdateAdapterConfiguration"
-      },
-      "task": true
-    },
-    {
-      "name": "iapFindAdapterPath",
-      "summary": "Provides the ability to see if a particular API path is supported by the adapter",
-      "description": "Provides the ability to see if a particular API path is supported by the adapter",
-      "input": [
-        {
-          "name": "apiPath",
-          "type": "string",
-          "info": "The API Path you want to check - make sure to not include base path and version",
-          "description": "The API Path you want to check - make sure to not include base path and version",
-          "schema": {
-            "title": "apiPath",
-            "type": "string"
-          },
-          "required": true
-        }
-      ],
-      "output": {
-        "name": "result",
-        "type": "object",
-        "description": "A JSON Object containing the result",
-        "schema": {
-          "title": "result",
-          "type": "object"
-        }
-      },
-      "roles": [
-        "admin"
-      ],
-      "route": {
-        "verb": "POST",
-        "path": "/iapFindAdapterPath"
       },
       "task": true
     },
@@ -199,6 +174,41 @@
       "route": {
         "verb": "POST",
         "path": "/iapGetAdapterQueue"
+      },
+      "task": true
+    },
+    {
+      "name": "iapFindAdapterPath",
+      "summary": "Provides the ability to see if a particular API path is supported by the adapter",
+      "description": "Provides the ability to see if a particular API path is supported by the adapter",
+      "input": [
+        {
+          "name": "apiPath",
+          "type": "string",
+          "info": "The API Path you want to check - make sure to not include base path and version",
+          "description": "The API Path you want to check - make sure to not include base path and version",
+          "schema": {
+            "title": "apiPath",
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/iapFindAdapterPath"
       },
       "task": true
     },
@@ -339,70 +349,24 @@
       "task": true
     },
     {
-      "name": "genericAdapterRequest",
-      "summary": "Makes the requested generic call",
-      "description": "Makes the requested generic call",
+      "name": "iapDeactivateTasks",
+      "summary": "Deactivate the inputted tasks",
+      "description": "Deactivate the inputted tasks",
       "input": [
         {
-          "name": "uriPath",
-          "type": "string",
-          "info": "the path of the api call - do not include the host, port, base path or version",
-          "description": "the path of the api call",
+          "name": "tasks",
+          "type": "array",
+          "description": "Tasks to deactivate",
           "schema": {
-            "title": "uriPath",
-            "type": "string"
-          },
-          "required": true
-        },
-        {
-          "name": "restMethod",
-          "type": "string",
-          "info": "the rest method (GET, POST, PUT, PATCH, DELETE)",
-          "description": "the rest method (GET, POST, PUT, PATCH, DELETE)",
-          "schema": {
-            "title": "restMethod",
-            "type": "string"
-          },
-          "required": true
-        },
-        {
-          "name": "queryData",
-          "type": "object",
-          "info": "the query parameters to be put on the url (optional)",
-          "description": "the query parameters to be put on the url (optional)",
-          "schema": {
-            "title": "queryData",
-            "type": "object"
-          },
-          "required": false
-        },
-        {
-          "name": "requestBody",
-          "type": "object",
-          "info": "the payload to be sent with the request (optional)",
-          "description": "the payload to be sent with the request (optional)",
-          "schema": {
-            "title": "requestBody",
-            "type": "object"
-          },
-          "required": false
-        },
-        {
-          "name": "addlHeaders",
-          "type": "object",
-          "info": "additional headers to be put on the call (optional)",
-          "description": "additional headers to be put on the call (optional)",
-          "schema": {
-            "title": "addlHeaders",
-            "type": "object"
-          },
-          "required": false
+            "title": "tasks",
+            "type": "array"
+          }
         }
       ],
       "output": {
         "name": "result",
         "type": "object",
-        "description": "A JSON Object containing status, code and the result",
+        "description": "A JSON Object containing success status",
         "schema": {
           "title": "result",
           "type": "object"
@@ -413,69 +377,57 @@
       ],
       "route": {
         "verb": "POST",
-        "path": "/genericAdapterRequest"
+        "path": "/iapDeactivateTasks"
       },
       "task": true
     },
     {
-      "name": "genericAdapterRequestNoBasePath",
-      "summary": "Makes the requested generic call with no base path or version",
-      "description": "Makes the requested generic call with no base path or version",
+      "name": "iapActivateTasks",
+      "summary": "Activate the inputted tasks",
+      "description": "activate the inputted tasks",
       "input": [
         {
-          "name": "uriPath",
-          "type": "string",
-          "info": "the path of the api call - do not include the host, port, base path or version",
-          "description": "the path of the api call",
+          "name": "tasks",
+          "type": "array",
+          "description": "Tasks to activate",
           "schema": {
-            "title": "uriPath",
-            "type": "string"
-          },
-          "required": true
-        },
+            "title": "tasks",
+            "type": "array"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing success status",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/iapActivateTasks"
+      },
+      "task": true
+    },
+    {
+      "name": "iapPopulateEntityCache",
+      "summary": "Populate the cache for the given entities",
+      "description": "Populate the cache for the given entities",
+      "input": [
         {
-          "name": "restMethod",
-          "type": "string",
-          "info": "the rest method (GET, POST, PUT, PATCH, DELETE)",
-          "description": "the rest method (GET, POST, PUT, PATCH, DELETE)",
+          "name": "entityTypes",
+          "type": "array",
+          "info": "the entity type(s) to populate",
+          "required": true,
           "schema": {
-            "title": "restMethod",
-            "type": "string"
-          },
-          "required": true
-        },
-        {
-          "name": "queryData",
-          "type": "object",
-          "info": "the query parameters to be put on the url (optional)",
-          "description": "the query parameters to be put on the url (optional)",
-          "schema": {
-            "title": "queryData",
-            "type": "object"
-          },
-          "required": false
-        },
-        {
-          "name": "requestBody",
-          "type": "object",
-          "info": "the payload to be sent with the request (optional)",
-          "description": "the payload to be sent with the request (optional)",
-          "schema": {
-            "title": "requestBody",
-            "type": "object"
-          },
-          "required": false
-        },
-        {
-          "name": "addlHeaders",
-          "type": "object",
-          "info": "additional headers to be put on the call (optional)",
-          "description": "additional headers to be put on the call (optional)",
-          "schema": {
-            "title": "addlHeaders",
-            "type": "object"
-          },
-          "required": false
+            "title": "entityTypes",
+            "type": "array"
+          }
         }
       ],
       "output": {
@@ -492,7 +444,51 @@
       ],
       "route": {
         "verb": "POST",
-        "path": "/genericAdapterRequestNoBasePath"
+        "path": "/iapPopulateEntityCache"
+      },
+      "task": true
+    },
+    {
+      "name": "iapRetrieveEntitiesCache",
+      "summary": "Retrieves data from cache for specified entity type",
+      "description": "Retrieves data from cache for specified entity type",
+      "input": [
+        {
+          "name": "entityType",
+          "type": "string",
+          "info": "entity of which to retrieve",
+          "required": true,
+          "schema": {
+            "title": "entityType",
+            "type": "string"
+          }
+        },
+        {
+          "name": "options",
+          "type": "object",
+          "info": "settings of which data to return and how to return it",
+          "required": false,
+          "schema": {
+            "title": "options",
+            "type": "object"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/iapRetrieveEntitiesCache"
       },
       "task": true
     },
@@ -664,6 +660,334 @@
         "path": "/iapGetDeviceCount"
       },
       "task": false
+    },
+    {
+      "name": "iapExpandedGenericAdapterRequest",
+      "summary": "Makes the requested generic call with additional options",
+      "description": "Makes the requested generic call with additional options via metadata",
+      "input": [
+        {
+          "name": "metadata",
+          "type": "object",
+          "info": "metadata for the call (optional)",
+          "description": "metadata for the call - allows for many enhancements (optional)",
+          "schema": {
+            "title": "metadata",
+            "type": "object"
+          },
+          "required": false
+        },
+        {
+          "name": "uriPath",
+          "type": "string",
+          "info": "the path of the api call - do not include the host, port, base path or version",
+          "description": "the path of the api call",
+          "schema": {
+            "title": "uriPath",
+            "type": "string"
+          },
+          "required": false
+        },
+        {
+          "name": "restMethod",
+          "type": "string",
+          "info": "the rest method (GET, POST, PUT, PATCH, DELETE)",
+          "description": "the rest method (GET, POST, PUT, PATCH, DELETE)",
+          "schema": {
+            "title": "restMethod",
+            "type": "string"
+          },
+          "required": false
+        },
+        {
+          "name": "pathVars",
+          "type": "object",
+          "info": "the parameters to be put within the url path (optional)",
+          "description": "the parameters to be put within the url path (optional)",
+          "schema": {
+            "title": "pathVars",
+            "type": "object"
+          },
+          "required": false
+        },
+        {
+          "name": "queryData",
+          "type": "object",
+          "info": "the query parameters to be put on the url (optional)",
+          "description": "the query parameters to be put on the url (optional)",
+          "schema": {
+            "title": "queryData",
+            "type": "object"
+          },
+          "required": false
+        },
+        {
+          "name": "requestBody",
+          "type": "object",
+          "info": "the payload to be sent with the request (optional)",
+          "description": "the payload to be sent with the request (optional)",
+          "schema": {
+            "title": "requestBody",
+            "type": "object"
+          },
+          "required": false
+        },
+        {
+          "name": "addlHeaders",
+          "type": "object",
+          "info": "additional headers to be put on the call (optional)",
+          "description": "additional headers to be put on the call (optional)",
+          "schema": {
+            "title": "addlHeaders",
+            "type": "object"
+          },
+          "required": false
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/iapExpandedGenericAdapterRequest"
+      },
+      "task": true
+    },
+    {
+      "name": "genericAdapterRequest",
+      "summary": "Makes the requested generic call",
+      "description": "Makes the requested generic call",
+      "input": [
+        {
+          "name": "uriPath",
+          "type": "string",
+          "info": "the path of the api call - do not include the host, port, base path or version",
+          "description": "the path of the api call",
+          "schema": {
+            "title": "uriPath",
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "restMethod",
+          "type": "string",
+          "info": "the rest method (GET, POST, PUT, PATCH, DELETE)",
+          "description": "the rest method (GET, POST, PUT, PATCH, DELETE)",
+          "schema": {
+            "title": "restMethod",
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "queryData",
+          "type": "object",
+          "info": "the query parameters to be put on the url (optional)",
+          "description": "the query parameters to be put on the url (optional)",
+          "schema": {
+            "title": "queryData",
+            "type": "object"
+          },
+          "required": false
+        },
+        {
+          "name": "requestBody",
+          "type": "object",
+          "info": "the payload to be sent with the request (optional)",
+          "description": "the payload to be sent with the request (optional)",
+          "schema": {
+            "title": "requestBody",
+            "type": "object"
+          },
+          "required": false
+        },
+        {
+          "name": "addlHeaders",
+          "type": "object",
+          "info": "additional headers to be put on the call (optional)",
+          "description": "additional headers to be put on the call (optional)",
+          "schema": {
+            "title": "addlHeaders",
+            "type": "object"
+          },
+          "required": false
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/genericAdapterRequest"
+      },
+      "task": true
+    },
+    {
+      "name": "genericAdapterRequestNoBasePath",
+      "summary": "Makes the requested generic call",
+      "description": "Makes the requested generic call",
+      "input": [
+        {
+          "name": "uriPath",
+          "type": "string",
+          "info": "the path of the api call - do not include the host, port, base path or version",
+          "description": "the path of the api call",
+          "schema": {
+            "title": "uriPath",
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "restMethod",
+          "type": "string",
+          "info": "the rest method (GET, POST, PUT, PATCH, DELETE)",
+          "description": "the rest method (GET, POST, PUT, PATCH, DELETE)",
+          "schema": {
+            "title": "restMethod",
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "queryData",
+          "type": "object",
+          "info": "the query parameters to be put on the url (optional)",
+          "description": "the query parameters to be put on the url (optional)",
+          "schema": {
+            "title": "queryData",
+            "type": "object"
+          },
+          "required": false
+        },
+        {
+          "name": "requestBody",
+          "type": "object",
+          "info": "the payload to be sent with the request (optional)",
+          "description": "the payload to be sent with the request (optional)",
+          "schema": {
+            "title": "requestBody",
+            "type": "object"
+          },
+          "required": false
+        },
+        {
+          "name": "addlHeaders",
+          "type": "object",
+          "info": "additional headers to be put on the call (optional)",
+          "description": "additional headers to be put on the call (optional)",
+          "schema": {
+            "title": "addlHeaders",
+            "type": "object"
+          },
+          "required": false
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/genericAdapterRequestNoBasePath"
+      },
+      "task": true
+    },
+    {
+			"name": "iapRunAdapterLint",
+			"summary": "Run the adapter lint script to return the results",
+			"description": "Run the adapter lint script to return the results",
+			"input": [],
+			"output": {
+				"name": "result",
+				"type": "string",
+				"description": "A string containing the run results",
+				"schema": {
+					"title": "result",
+					"type": "string"
+				}
+			},
+			"roles": [
+				"admin"
+			],
+			"route": {
+				"verb": "GET",
+				"path": "/iapRunAdapterLint"
+			},
+			"task": true
+		},
+    {
+			"name": "iapRunAdapterTests",
+			"summary": "Run the adapter test scripts (baseunit and unit) to return the results",
+			"description": "Run the adapter test scripts (baseunit and unit) to return the results",
+			"input": [],
+			"output": {
+				"name": "result",
+				"type": "object",
+				"description": "A JSON Object containing status, code and the result",
+				"schema": {
+					"title": "result",
+					"type": "object"
+				}
+			},
+			"roles": [
+				"admin"
+			],
+			"route": {
+				"verb": "GET",
+				"path": "/iapRunAdapterTests"
+			},
+			"task": true
+		},
+    {
+			"name": "iapGetAdapterInventory",
+			"summary": "Provide inventory information abbout the adapter",
+			"description": "Provide inventory information abbout the adapter",
+			"input": [],
+			"output": {
+				"name": "result",
+				"type": "object",
+				"description": "A JSON Object containing status, code and the result",
+				"schema": {
+					"title": "result",
+					"type": "object"
+				}
+			},
+			"roles": [
+				"admin"
+			],
+			"route": {
+				"verb": "GET",
+				"path": "/iapGetAdapterInventory"
+			},
+			"task": true
     },
     {
       "name": "login",

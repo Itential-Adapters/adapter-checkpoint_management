@@ -31,7 +31,7 @@ Itential Product and opensource adapters utilize SemVer for versioning. The curr
 
 Any release prior to 1.0.0 is a pre-release. Initial builds of adapters are generally set up as pre-releases as there is often work that needs to be done to configure the adapter and make sure the authentication process to Checkpoint_Management works appropriately.
 
-Release notes can be viewed in CHANGELOG.md or in the <a href="https://itential.atlassian.net/servicedesk/customer/portals" target="_blank">Customer Knowledge Base</a> for Itential adapters.
+Release notes can be viewed in CHANGELOG.md.
 
 ## Supported IAP Versions
 
@@ -47,7 +47,7 @@ These instructions will help you get a copy of the project on your local machine
 
 ### Helpful Background Information
 
-There is adapter documentation available on the Itential Developer Site <a href="https://www.itential.com/automation-platform/integrations/adapters-resources/" target="_blank">HERE</a>. This documentation includes information and examples that are helpful for:
+There is adapter documentation available on the Itential Developer Site <a href="https://docs.itential.com/opensource/docs/adapters" target="_blank">HERE</a>. This documentation includes information and examples that are helpful for:
 
 ```text
 Authentication
@@ -97,6 +97,10 @@ The following list of packages are required for Itential opensource adapters or 
     <td style="padding:15px">Utilized by the node scripts that are included with the adapter; helps to build and extend the functionality.</td>
   </tr>
   <tr>
+    <td style="padding:15px">dns-lookup-promise</td>
+    <td style="padding:15px">Utilized by the node scripts that are included with the adapter; helps to build and extend the functionality.</td>
+  </tr>
+  <tr>
     <td style="padding:15px">fs-extra</td>
     <td style="padding:15px">Utilized by the node scripts that are included with the adapter; helps to build and extend the functionality.</td>
   </tr>
@@ -113,12 +117,12 @@ The following list of packages are required for Itential opensource adapters or 
     <td style="padding:15px">Utilized by the node scripts that are included with the adapter; helps to build and extend the functionality.</td>
   </tr>
   <tr>
-    <td style="padding:15px">network-diagnostics</td>
-    <td style="padding:15px">Utilized by the node scripts that are included with the adapter; helps to build and extend the functionality.</td>
-  </tr>
-  <tr>
     <td style="padding:15px">nyc</td>
     <td style="padding:15px">Testing coverage library that is utilized by some of the node scripts that are included with the adapter.</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">ping</td>
+    <td style="padding:15px">Utilized by the node scripts that are included with the adapter; helps to build and extend the functionality.</td>
   </tr>
   <tr>
     <td style="padding:15px">readline-sync</td>
@@ -143,7 +147,6 @@ eslint
 eslint-config-airbnb-base
 eslint-plugin-import
 eslint-plugin-json
-package-json-validator
 testdouble
 ```
 
@@ -172,23 +175,6 @@ tar -xvf adapter-checkpoint_management.tar
 
 ```bash
 cd adapter-checkpoint_management
-npm run adapter:install
-```
-
-4. Restart IAP
-
-```bash
-systemctl restart pronghorn
-```
-
-5. Change the adapter service instance configuration (host, port, credentials, etc) in IAP Admin Essentials GUI
-
-npm run adapter:install can be dependent on where the adapter is installed and on the version of IAP so it is subject to fail. If this happens you can replace step 3-5 above with these:
-
-3. Install adapter dependencies and check the adapter.
-
-```bash
-cd adapter-checkpoint_management
 npm run install
 npm run lint:errors
 npm run test
@@ -205,6 +191,25 @@ systemctl restart pronghorn
 6. Copy the properties from the sampleProperties.json and paste them into the service instance configuration in the inner/second properties field.
 
 7. Change the adapter service instance configuration (host, port, credentials, etc) in IAP Admin Essentials GUI
+
+
+For an easier install of the adapter use npm run adapter:install, it will install the adapter in IAP. Please note that it can be dependent on where the adapter is installed and on the version of IAP so it is subject to fail. If using this, you can replace step 3-5 above with these:
+
+3. Install adapter dependencies and check the adapter.
+
+```bash
+cd adapter-checkpoint_management
+npm run adapter:install
+```
+
+4. Restart IAP
+
+```bash
+systemctl restart pronghorn
+```
+
+5. Change the adapter service instance configuration (host, port, credentials, etc) in IAP Admin Essentials GUI
+
 
 ### Testing
 
@@ -268,7 +273,7 @@ Test should also be written to clean up after themselves. However, it is importa
 
 ### Helpful Links
 
-<a href="https://www.itential.com/automation-platform/integrations/adapters-resources/" target="_blank">Adapter Technical Resources</a>
+<a href="https://docs.itential.com/opensource/docs/adapters" target="_blank">Adapter Technical Resources</a>
 
 ### Node Scripts
 

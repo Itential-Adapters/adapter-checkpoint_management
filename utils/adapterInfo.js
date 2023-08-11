@@ -4,8 +4,8 @@
 /* eslint import/no-dynamic-require:warn */
 /* eslint prefer-destructuring:warn */
 
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 
 /**
  * This script will determine the information about the adapter and store
