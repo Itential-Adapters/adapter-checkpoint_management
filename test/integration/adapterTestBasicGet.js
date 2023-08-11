@@ -7,9 +7,9 @@
 /* eslint import/no-dynamic-require: warn */
 /* eslint import/no-unresolved: warn */
 
-const mocha = require('mocha');
 const path = require('path');
 const assert = require('assert');
+const mocha = require('mocha');
 const itParam = require('mocha-param');
 
 const utils = require('../../utils/tbUtils');
@@ -18,12 +18,10 @@ const { name } = require('../../package.json');
 const { methods } = require('../../pronghorn.json');
 
 const getPronghornProps = (iapDir) => {
-  const { Discovery } = require('@itential/itential-utils');
   console.log('Retrieving properties.json file...');
   const rawProps = require(path.join(iapDir, 'properties.json'));
   console.log('Decrypting properties...');
-  const discovery = new Discovery();
-  const pronghornProps = utils.decryptProperties(rawProps, path.join(__dirname, '..'), discovery);
+  const pronghornProps = utils.decryptProperties(rawProps, iapDir);
   console.log('Found properties.\n');
   return pronghornProps;
 };

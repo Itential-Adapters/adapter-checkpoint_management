@@ -4,13 +4,14 @@
   "properties": {
     "host": "INSERT CHECKPOINT HOST HERE",
     "port": 443,
+    "choosepath": "",
     "base_path": "/web_api",
     "version": "",
     "cache_location": "none",
     "encode_pathvars": true,
     "encode_queryvars": true,
     "save_metric": false,
-    "stub": false,
+    "stub": true,
     "protocol": "https",
     "authentication": {
       "auth_method": "request_token",
@@ -21,20 +22,35 @@
       "token_password_field": "password",
       "token_result_field": "sid",
       "token_URI_path": "/login",
-      "invalid_token_error": 400,
       "token_timeout": 3600000,
       "token_cache": "local",
+      "invalid_token_error": 400,
       "auth_field": "header.headers.x-chkp-sid",
       "auth_field_format": "{token}",
       "auth_logging": false,
       "client_id": "",
       "client_secret": "",
-      "grant_type": ""
+      "grant_type": "",
+      "sensitive": [],
+      "sso": {
+        "protocol": "",
+        "host": "",
+        "port": 0
+      },
+      "multiStepAuthCalls": [
+        {
+          "name": "",
+          "requestFields": {},
+          "responseFields": {},
+          "successfullResponseCode": 200
+        }
+      ]
     },
     "healthcheck": {
       "type": "startup",
       "frequency": 60000,
-      "query_object": {}
+      "query_object": {},
+      "addlHeaders": {}
     },
     "throttle": {
       "throttle_enabled": false,
@@ -107,72 +123,136 @@
     "devicebroker": {
       "getDevice": [
         {
-          "path": "/get/devices/{id}",
-          "method": "GET",
+          "path": "/show-simple-gateway",
+          "method": "POST",
           "query": {},
-          "body": {},
+          "body": {
+            "uid": "uid"
+          },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "id": "name"
+            "uid": "uid"
           },
           "responseDatakey": "",
           "responseFields": {
-            "name": "host",
-            "ostype": "os",
-            "ostypePrefix": "system-",
-            "ipaddress": "attributes.ipaddr",
-            "port": "443"
+            "name": "name",
+            "ostype": "type",
+            "ostypePrefix": "chkpt-",
+            "ipaddress": "ipv4-address",
+            "port": "n/a"
+          }
+        },
+        {
+          "path": "/show-lsm-gateway",
+          "method": "POST",
+          "query": {},
+          "body": {
+            "uid": "uid"
+          },
+          "headers": {},
+          "handleFailure": "ignore",
+          "requestFields": {
+            "uid": "uid"
+          },
+          "responseDatakey": "",
+          "responseFields": {
+            "name": "name",
+            "ostype": "type",
+            "ostypePrefix": "chkpt-",
+            "ipaddress": "ipv4-address",
+            "port": "n/a"
           }
         }
       ],
       "getDevicesFiltered": [
         {
-          "path": "/get/devices",
-          "method": "GET",
+          "path": "/show-gateways-and-servers",
+          "method": "POST",
           "query": {},
-          "body": {},
+          "body": {
+            "offset": "0",
+            "limit": "500"
+          },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {},
           "responseDatakey": "",
           "responseFields": {
-            "name": "host",
-            "ostype": "os",
-            "ostypePrefix": "system-",
-            "ipaddress": "attributes.ipaddr",
-            "port": "443"
+            "name": "name",
+            "ostype": "type",
+            "ostypePrefix": "chkpt-",
+            "ipaddress": "n/a",
+            "port": "n/a",
+            "uid": "uid"
           }
         }
       ],
       "isAlive": [
         {
-          "path": "/get/devices/{id}/status",
-          "method": "GET",
+          "path": "/show-simple-gateway",
+          "method": "POST",
           "query": {},
-          "body": {},
+          "body": {
+            "uid": "uid"
+          },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "id": "name"
+            "uid": "uid"
           },
           "responseDatakey": "",
           "responseFields": {
-            "status": "status",
-            "statusValue": "online"
+            "status": "meta-info.validation-state",
+            "statusValue": "ok"
+          }
+        },
+        {
+          "path": "/show-lsm-gateway",
+          "method": "POST",
+          "query": {},
+          "body": {
+            "uid": "uid"
+          },
+          "headers": {},
+          "handleFailure": "ignore",
+          "requestFields": {
+            "uid": "uid"
+          },
+          "responseDatakey": "",
+          "responseFields": {
+            "status": "meta-info.validation-state",
+            "statusValue": "ok"
           }
         }
       ],
       "getConfig": [
         {
-          "path": "/get/devices/{id}/configPart1",
-          "method": "GET",
+          "path": "/show-simple-gateway",
+          "method": "POST",
           "query": {},
-          "body": {},
+          "body": {
+            "uid": "uid"
+          },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "id": "name"
+            "uid": "uid"
+          },
+          "responseDatakey": "",
+          "responseFields": {}
+        },
+        {
+          "path": "/show-lsm-gateway",
+          "method": "POST",
+          "query": {},
+          "body": {
+            "uid": "uid"
+          },
+          "headers": {},
+          "handleFailure": "ignore",
+          "requestFields": {
+            "uid": "uid"
           },
           "responseDatakey": "",
           "responseFields": {}
@@ -180,15 +260,54 @@
       ],
       "getCount": [
         {
-          "path": "/get/devices",
-          "method": "GET",
+          "path": "/show-gateways-and-servers",
+          "method": "POST",
           "query": {},
-          "body": {},
+          "body": {
+            "offset": "0",
+            "limit": "500"
+          },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {},
           "responseDatakey": "",
           "responseFields": {}
+        }
+      ]
+    },
+    "cache": {
+      "enabled": false,
+      "entities": [
+        {
+          "entityType": "device",
+          "frequency": 3600,
+          "flushOnFail": false,
+          "limit": 1000,
+          "retryAttempts": 5,
+          "sort": true,
+          "populate": [
+            {
+              "path": "/show-gateways-and-servers",
+              "method": "POST",
+              "query": {},
+              "body": {
+                "offset": "0",
+                "limit": "500"
+              },
+              "headers": {},
+              "handleFailure": "ignore",
+              "requestFields": {},
+              "responseDatakey": "",
+              "responseFields": {}
+            }
+          ],
+          "cachedTasks": [
+            {
+              "name": "",
+              "filterField": "",
+              "filterLoc": ""
+            }
+          ]
         }
       ]
     }

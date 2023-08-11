@@ -19,6 +19,8 @@ node utils/testRunner.js -r
 
 # update the adapter information file
 node utils/adapterInfo.js
+node utils/methodDocumentor.js
+git add CALLS.md report/adapterInfo.json
 
 # security audit on the code
 npm audit --registry=https://registry.npmjs.org --audit-level=moderate

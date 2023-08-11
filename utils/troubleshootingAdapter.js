@@ -134,9 +134,13 @@ const offline = async () => {
 };
 
 const troubleshoot = async (props, scriptFlag, persistFlag, adapter) => {
-  // get database connection and existing adapter config
-  const { database, serviceItem } = await utils.getAdapterConfig();
-  // where troubleshoot should start
+  let serviceItem;
+  if (adapter && adapter.allProps) {
+    serviceItem = { properties: { properties: adapter.allProps } };
+  }
+  if (adapter && adapter.properties && adapter.properties.properties) {
+    serviceItem = adapter.properties;
+  }
   if (serviceItem) {
     if (!scriptFlag || rls.keyInYN(`Start verifying the connection and authentication properties for ${name}?`)) {
       const { result, updatedAdapter } = VerifyHealthCheckEndpoint(serviceItem, props, scriptFlag);
@@ -154,10 +158,9 @@ const troubleshoot = async (props, scriptFlag, persistFlag, adapter) => {
       }
 
       if (persistFlag && healthRes) {
+        const { database } = await utils.getIAPDatabaseConnection();
         const update = { $set: { properties: updatedAdapter.properties } };
-        await database.collection(utils.SERVICE_CONFIGS_COLLECTION).updateOne(
-          { model: name }, update
-        );
+        await database.collection(utils.SERVICE_CONFIGS_COLLECTION).updateOne({ model: name }, update);
         if (scriptFlag) {
           console.log(`${name} updated.`);
         }

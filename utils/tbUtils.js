@@ -6,8 +6,8 @@
 /* eslint-disable no-console */
 
 const path = require('path');
-const fs = require('fs-extra');
 const cp = require('child_process');
+const fs = require('fs-extra');
 
 module.exports = {
   SERVICE_CONFIGS_COLLECTION: 'service_configs',
@@ -101,10 +101,8 @@ module.exports = {
    *
    * @function decryptProperties
    */
-  decryptProperties: (props, iapDir, discovery) => {
-    const propertyEncryptionClassPath = path.join(iapDir, 'node_modules/@itential/pronghorn-core/core/PropertyEncryption.js');
-    const isEncrypted = props.pathProps.encrypted;
-    const PropertyEncryption = discovery.require(propertyEncryptionClassPath, isEncrypted);
+  decryptProperties: (props, iapDir) => {
+    const { PropertyEncryption } = require(path.join(iapDir, 'node_modules/@itential/itential-utils'));
     const propertyEncryption = new PropertyEncryption({
       algorithm: 'aes-256-ctr',
       key: 'TG9uZ0Rpc3RhbmNlUnVubmVyUHJvbmdob3JuCg==',
@@ -160,8 +158,7 @@ module.exports = {
    * @param {Object} healthcheck - {Object} healthcheck - ./entities/.system/action.json object
    */
   getHealthCheckEndpoint: (healthcheck) => {
-    const endpoint = healthcheck.actions[1].entitypath.slice(21,
-      healthcheck.actions[1].entitypath.length - 8);
+    const endpoint = healthcheck.actions[1].entitypath.slice(21, healthcheck.actions[1].entitypath.length - 8);
     return { healthCheckEndpoint: endpoint };
   },
 
@@ -203,6 +200,7 @@ module.exports = {
       try {
         stdout = cp.execSync(cmd).toString();
       } catch (error) {
+        console.log('execute command error', error.stdout.toString(), error.stderr.toString());
         stdout = error.stdout.toString();
       }
       const output = this.getTestCount(stdout);
@@ -290,10 +288,12 @@ module.exports = {
    */
   runConnectivity: function runConnectivity(host, scriptFlag) {
     let testPath = 'test/integration/adapterTestConnectivity.js';
+    let executable = 'mocha';
     if (!scriptFlag) {
       testPath = path.resolve(__dirname, '..', testPath);
+      executable = path.join(__dirname, '..', 'node_modules/mocha/bin/mocha');
     }
-    return this.systemSync(`mocha ${testPath} --HOST=${host} --timeout 10000 --exit`, !scriptFlag);
+    return this.systemSync(`${executable} ${testPath} --HOST=${host} --timeout 10000 --exit`, !scriptFlag);
   },
 
   /**
@@ -340,28 +340,42 @@ module.exports = {
     return adapter;
   },
 
-  getPronghornProps: function getPronghornProps(iapDir) {
+  getPronghornProps: function getPronghornProps() {
+    const iapDir = this.getIAPHome();
     console.log('Retrieving properties.json file...');
     const rawProps = require(path.join(iapDir, 'properties.json'));
     console.log('Decrypting properties...');
-    const { Discovery } = require(path.join(iapDir, 'node_modules/@itential/itential-utils'));
-    const discovery = new Discovery();
-    const pronghornProps = this.decryptProperties(rawProps, iapDir, discovery);
+    const pronghornProps = this.decryptProperties(rawProps, iapDir);
     console.log('Found properties.\n');
     return pronghornProps;
   },
 
-  // get database connection and existing adapter config
-  getAdapterConfig: async function getAdapterConfig() {
-    const iapDir = this.getIAPHome();
-    const pronghornProps = this.getPronghornProps(iapDir);
-    console.log('Connecting to Database...');
-    const database = await this.connect(iapDir, pronghornProps);
-    console.log('Connection established.');
+  getAllAdapterInstances: async function getAllAdapterInstances() {
+    const database = await this.getIAPDatabaseConnection();
     const { name } = require(path.join(__dirname, '..', 'package.json'));
+    const query = { model: name };
+    const options = { projection: { name: 1 } };
+    const adapterInstancesNames = await database.collection(this.SERVICE_CONFIGS_COLLECTION).find(
+      query,
+      options
+    ).toArray();
+    return adapterInstancesNames;
+  },
+
+  // get database connection and existing adapter config
+  getAdapterConfig: async function getAdapterConfig(adapterId) {
+    const database = await this.getIAPDatabaseConnection();
+    const { name } = require(path.join(__dirname, '..', 'package.json'));
+    let query = {};
+    if (!adapterId) {
+      query = { model: name };
+    } else {
+      query = { _id: adapterId };
+    }
     const serviceItem = await database.collection(this.SERVICE_CONFIGS_COLLECTION).findOne(
-      { model: name }
+      query
     );
+    const pronghornProps = await this.getPronghornProps();
     return { database, serviceItem, pronghornProps };
   },
 
@@ -438,13 +452,19 @@ module.exports = {
     return path.join(this.getCurrentExecutionPath(), '../../..') === this.getIAPHome();
   },
 
+  getIAPDatabaseConnection: async function getIAPDatabaseConnection() {
+    const pronghornProps = await this.getPronghornProps();
+    const database = await this.connect(pronghornProps);
+    return database;
+  },
+
   /**
    * @summary connect to mongodb
    *
    * @function connect
    * @param {Object} properties - pronghornProps
    */
-  connect: async function connect(iapDir, properties) {
+  connect: async function connect(properties) {
     let dbConnectionProperties = {};
     if (properties.mongoProps) {
       dbConnectionProperties = properties.mongoProps;
@@ -459,7 +479,7 @@ module.exports = {
     if (!dbConnectionProperties.url || !dbConnectionProperties.db) {
       throw new Error('Mongo properties are not specified in IAP configuration!');
     }
-
+    const iapDir = this.getIAPHome();
     const { MongoDBConnection } = require(path.join(iapDir, 'node_modules/@itential/database'));
     const connection = new MongoDBConnection(dbConnectionProperties);
     const database = await connection.connect(true);

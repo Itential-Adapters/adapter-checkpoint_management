@@ -7,6 +7,7 @@
 /* eslint global-require: warn */
 /* eslint no-unused-vars: warn */
 /* eslint import/no-unresolved: warn */
+/* eslint no-promise-executor-return: warn */
 
 /**
  *  This script is used to read through an adapter's entities files
@@ -164,8 +165,7 @@ const moveEntitiesToDB = async (targetPath, options) => {
     });
 
     // Upload documents to db collection
-    const iapDir = utils.getIAPHome();
-    const db = await utils.connect(iapDir, currentProps).catch((err) => { console.error(err); throw err; });
+    const db = await utils.connect(currentProps).catch((err) => { console.error(err); throw err; });
     if (!db) {
       console.error('Error occured when connectiong to database', currentProps);
       throw new Error('Database not found');

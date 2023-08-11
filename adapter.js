@@ -86,9 +86,6 @@ class CheckpointManagement extends AdapterBaseCl {
     let myIgnore = [
       'healthCheck',
       'iapGetAdapterWorkflowFunctions',
-      'iapHasAdapterEntity',
-      'iapVerifyAdapterCapability',
-      'iapUpdateAdapterEntityCache',
       'hasEntities',
       'getAuthorization'
     ];
@@ -116,29 +113,15 @@ class CheckpointManagement extends AdapterBaseCl {
    * @param {string} entity - the entity to be changed, if an action, schema or mock data file (optional)
    * @param {string} type - the type of entity file to change, (action, schema, mock) (optional)
    * @param {string} action - the action to be changed, if an action, schema or mock data file (optional)
+   * @param {boolean} replace - true to replace entire mock data, false to merge/append
    * @param {Callback} callback - The results of the call
    */
-  iapUpdateAdapterConfiguration(configFile, changes, entity, type, action, callback) {
+  iapUpdateAdapterConfiguration(configFile, changes, entity, type, action, replace, callback) {
     const meth = 'adapter-iapUpdateAdapterConfiguration';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
-    super.iapUpdateAdapterConfiguration(configFile, changes, entity, type, action, callback);
-  }
-
-  /**
-   * See if the API path provided is found in this adapter
-   *
-   * @function iapFindAdapterPath
-   * @param {string} apiPath - the api path to check on
-   * @param {Callback} callback - The results of the call
-   */
-  iapFindAdapterPath(apiPath, callback) {
-    const meth = 'adapter-iapFindAdapterPath';
-    const origin = `${this.id}-${meth}`;
-    log.trace(origin);
-
-    super.iapFindAdapterPath(apiPath, callback);
+    super.iapUpdateAdapterConfiguration(configFile, changes, entity, type, action, replace, callback);
   }
 
   /**
@@ -180,7 +163,7 @@ class CheckpointManagement extends AdapterBaseCl {
   }
 
   /**
-    * @summary Get the Adaoter Queue
+    * @summary Get the Adapter Queue
     *
     * @function iapGetAdapterQueue
     * @param {Callback} callback - callback function
@@ -191,6 +174,22 @@ class CheckpointManagement extends AdapterBaseCl {
     log.trace(origin);
 
     return super.iapGetAdapterQueue(callback);
+  }
+
+  /* SCRIPT CALLS */
+  /**
+   * See if the API path provided is found in this adapter
+   *
+   * @function iapFindAdapterPath
+   * @param {string} apiPath - the api path to check on
+   * @param {Callback} callback - The results of the call
+   */
+  iapFindAdapterPath(apiPath, callback) {
+    const meth = 'adapter-iapFindAdapterPath';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    super.iapFindAdapterPath(apiPath, callback);
   }
 
   /**
@@ -293,176 +292,93 @@ class CheckpointManagement extends AdapterBaseCl {
     }
   }
 
-  /* BROKER CALLS */
   /**
-   * @summary Determines if this adapter supports the specific entity
+   * @summary Deactivate adapter tasks
    *
-   * @function iapHasAdapterEntity
-   * @param {String} entityType - the entity type to check for
-   * @param {String/Array} entityId - the specific entity we are looking for
+   * @function iapDeactivateTasks
    *
-   * @param {Callback} callback - An array of whether the adapter can has the
-   *                              desired capability or an error
+   * @param {Array} tasks - List of tasks to deactivate
+   * @param {Callback} callback
    */
-  iapHasAdapterEntity(entityType, entityId, callback) {
-    const origin = `${this.id}-adapter-iapHasAdapterEntity`;
-    log.trace(origin);
-
-    // Make the call -
-    // iapVerifyAdapterCapability(entityType, actionType, entityId, callback)
-    return this.iapVerifyAdapterCapability(entityType, null, entityId, callback);
-  }
-
-  /**
-   * @summary Provides a way for the adapter to tell north bound integrations
-   * whether the adapter supports type, action and specific entity
-   *
-   * @function iapVerifyAdapterCapability
-   * @param {String} entityType - the entity type to check for
-   * @param {String} actionType - the action type to check for
-   * @param {String/Array} entityId - the specific entity we are looking for
-   *
-   * @param {Callback} callback - An array of whether the adapter can has the
-   *                              desired capability or an error
-   */
-  iapVerifyAdapterCapability(entityType, actionType, entityId, callback) {
-    const meth = 'adapterBase-iapVerifyAdapterCapability';
+  iapDeactivateTasks(tasks, callback) {
+    const meth = 'adapter-iapDeactivateTasks';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
-    // if caching
-    if (this.caching) {
-      // Make the call - iapVerifyAdapterCapability(entityType, actionType, entityId, callback)
-      return this.requestHandlerInst.iapVerifyAdapterCapability(entityType, actionType, entityId, (results, error) => {
-        if (error) {
-          return callback(null, error);
-        }
-
-        // if the cache needs to be updated, update and try again
-        if (results && results[0] === 'needupdate') {
-          switch (entityType) {
-            case 'template_entity': {
-              // if the cache is invalid, update the cache
-              return this.getEntities(null, null, null, null, (data, err) => {
-                if (err) {
-                  const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Could not update entity: $VARIABLE$, cache', [entityType], null, null, null);
-                  log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-                  return callback(null, errorObj);
-                }
-
-                // need to check the cache again since it has been updated
-                return this.requestHandlerInst.iapVerifyAdapterCapability(entityType, actionType, entityId, (vcapable, verror) => {
-                  if (verror) {
-                    return callback(null, verror);
-                  }
-
-                  return this.capabilityResults(vcapable, callback);
-                });
-              });
-            }
-            default: {
-              // unsupported entity type
-              const result = [false];
-
-              // put false in array for all entities
-              if (Array.isArray(entityId)) {
-                for (let e = 1; e < entityId.length; e += 1) {
-                  result.push(false);
-                }
-              }
-
-              return callback(result);
-            }
-          }
-        }
-
-        // return the results
-        return this.capabilityResults(results, callback);
-      });
-    }
-
-    // if no entity id
-    if (!entityId) {
-      // need to check the cache again since it has been updated
-      return this.requestHandlerInst.iapVerifyAdapterCapability(entityType, actionType, null, (vcapable, verror) => {
-        if (verror) {
-          return callback(null, verror);
-        }
-
-        return this.capabilityResults(vcapable, callback);
-      });
-    }
-
-    // if not caching
-    switch (entityType) {
-      case 'template_entity': {
-        // need to get the entities to check
-        return this.getEntities(null, null, null, null, (data, err) => {
-          if (err) {
-            const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Could not update entity: $VARIABLE$, cache', [entityType], null, null, null);
-            log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-            return callback(null, errorObj);
-          }
-
-          // need to check the cache again since it has been updated
-          return this.requestHandlerInst.iapVerifyAdapterCapability(entityType, actionType, null, (vcapable, verror) => {
-            if (verror) {
-              return callback(null, verror);
-            }
-
-            // is the entity in the list?
-            const isEntity = this.entityInList(entityId, data.response, callback);
-            const res = [];
-
-            // not found
-            for (let i = 0; i < isEntity.length; i += 1) {
-              if (vcapable) {
-                res.push(isEntity[i]);
-              } else {
-                res.push(false);
-              }
-            }
-
-            return callback(res);
-          });
-        });
-      }
-      default: {
-        // unsupported entity type
-        const result = [false];
-
-        // put false in array for all entities
-        if (Array.isArray(entityId)) {
-          for (let e = 1; e < entityId.length; e += 1) {
-            result.push(false);
-          }
-        }
-
-        return callback(result);
-      }
+    try {
+      return super.iapDeactivateTasks(tasks, callback);
+    } catch (err) {
+      log.error(`${origin}: ${err}`);
+      return callback(null, err);
     }
   }
 
   /**
-   * @summary Updates the cache for all entities by call the get All entity method
+   * @summary Activate adapter tasks that have previously been deactivated
    *
-   * @function iapUpdateAdapterEntityCache
+   * @function iapActivateTasks
    *
+   * @param {Array} tasks - List of tasks to activate
+   * @param {Callback} callback
    */
-  iapUpdateAdapterEntityCache() {
-    const origin = `${this.id}-adapter-iapUpdateAdapterEntityCache`;
+  iapActivateTasks(tasks, callback) {
+    const meth = 'adapter-iapActivateTasks';
+    const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
-    if (this.caching) {
-      // if the cache is invalid, update the cache
-      this.getEntities(null, null, null, null, (data, err) => {
-        if (err) {
-          log.trace(`${origin}: Could not load template_entity into cache - ${err}`);
-        }
-      });
+    try {
+      return super.iapActivateTasks(tasks, callback);
+    } catch (err) {
+      log.error(`${origin}: ${err}`);
+      return callback(null, err);
     }
   }
 
+  /* CACHE CALLS */
+  /**
+   * @summary Populate the cache for the given entities
+   *
+   * @function iapPopulateEntityCache
+   * @param {String/Array of Strings} entityType - the entity type(s) to populate
+   * @param {Callback} callback - whether the cache was updated or not for each entity type
+   *
+   * @returns status of the populate
+   */
+  iapPopulateEntityCache(entityTypes, callback) {
+    const meth = 'adapter-iapPopulateEntityCache';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    try {
+      return super.iapPopulateEntityCache(entityTypes, callback);
+    } catch (err) {
+      log.error(`${origin}: ${err}`);
+      return callback(null, err);
+    }
+  }
+
+  /**
+   * @summary Retrieves data from cache for specified entity type
+   *
+   * @function iapRetrieveEntitiesCache
+   * @param {String} entityType - entity of which to retrieve
+   * @param {Object} options - settings of which data to return and how to return it
+   * @param {Callback} callback - the data if it was retrieved
+   */
+  iapRetrieveEntitiesCache(entityType, options, callback) {
+    const meth = 'adapter-iapCheckEiapRetrieveEntitiesCachentityCached';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    try {
+      return super.iapRetrieveEntitiesCache(entityType, options, callback);
+    } catch (err) {
+      log.error(`${origin}: ${err}`);
+      return callback(null, err);
+    }
+  }
+
+  /* BROKER CALLS */
   /**
    * @summary Determines if this adapter supports any in a list of entities
    *
@@ -600,6 +516,38 @@ class CheckpointManagement extends AdapterBaseCl {
   /**
    * Makes the requested generic call
    *
+   * @function iapExpandedGenericAdapterRequest
+   * @param {Object} metadata - metadata for the call (optional).
+   *                 Can be a stringified Object.
+   * @param {String} uriPath - the path of the api call - do not include the host, port, base path or version (optional)
+   * @param {String} restMethod - the rest method (GET, POST, PUT, PATCH, DELETE) (optional)
+   * @param {Object} pathVars - the parameters to be put within the url path (optional).
+   *                 Can be a stringified Object.
+   * @param {Object} queryData - the parameters to be put on the url (optional).
+   *                 Can be a stringified Object.
+   * @param {Object} requestBody - the body to add to the request (optional).
+   *                 Can be a stringified Object.
+   * @param {Object} addlHeaders - additional headers to be put on the call (optional).
+   *                 Can be a stringified Object.
+   * @param {getCallback} callback - a callback function to return the result (Generics)
+   *                 or the error
+   */
+  iapExpandedGenericAdapterRequest(metadata, uriPath, restMethod, pathVars, queryData, requestBody, addlHeaders, callback) {
+    const meth = 'adapter-iapExpandedGenericAdapterRequest';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    try {
+      return super.iapExpandedGenericAdapterRequest(metadata, uriPath, restMethod, pathVars, queryData, requestBody, addlHeaders, callback);
+    } catch (err) {
+      log.error(`${origin}: ${err}`);
+      return callback(null, err);
+    }
+  }
+
+  /**
+   * Makes the requested generic call
+   *
    * @function genericAdapterRequest
    * @param {String} uriPath - the path of the api call - do not include the host, port, base path or version (required)
    * @param {String} restMethod - the rest method (GET, POST, PUT, PATCH, DELETE) (required)
@@ -617,93 +565,11 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
-    if (this.suspended && this.suspendMode === 'error') {
-      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
-      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-      return callback(null, errorObj);
-    }
-
-    /* HERE IS WHERE YOU VALIDATE DATA */
-    if (uriPath === undefined || uriPath === null || uriPath === '') {
-      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['uriPath'], null, null, null);
-      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-      return callback(null, errorObj);
-    }
-    if (restMethod === undefined || restMethod === null || restMethod === '') {
-      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['restMethod'], null, null, null);
-      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-      return callback(null, errorObj);
-    }
-
-    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
-    // remove any leading / and split the uripath into path variables
-    let myPath = uriPath;
-    while (myPath.indexOf('/') === 0) {
-      myPath = myPath.substring(1);
-    }
-    const pathVars = myPath.split('/');
-    const queryParamsAvailable = queryData;
-    const queryParams = {};
-    const bodyVars = requestBody;
-
-    // loop in template. long callback arg name to avoid identifier conflicts
-    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
-      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
-          && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
-        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
-      }
-    });
-
-    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders
-    const reqObj = {
-      payload: bodyVars,
-      uriPathVars: pathVars,
-      uriQuery: queryParams,
-      uriOptions: {}
-    };
-    // add headers if provided
-    if (addlHeaders) {
-      reqObj.addlHeaders = addlHeaders;
-    }
-
-    // determine the call and return flag
-    let action = 'getGenerics';
-    let returnF = true;
-    if (restMethod.toUpperCase() === 'POST') {
-      action = 'createGeneric';
-    } else if (restMethod.toUpperCase() === 'PUT') {
-      action = 'updateGeneric';
-    } else if (restMethod.toUpperCase() === 'PATCH') {
-      action = 'patchGeneric';
-    } else if (restMethod.toUpperCase() === 'DELETE') {
-      action = 'deleteGeneric';
-      returnF = false;
-    }
-
     try {
-      // Make the call -
-      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
-      return this.requestHandlerInst.identifyRequest('.generic', action, reqObj, returnF, (irReturnData, irReturnError) => {
-        // if we received an error or their is no response on the results
-        // return an error
-        if (irReturnError) {
-          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
-          return callback(null, irReturnError);
-        }
-        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['genericAdapterRequest'], null, null, null);
-          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-          return callback(null, errorObj);
-        }
-
-        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
-        // return the response
-        return callback(irReturnData, null);
-      });
-    } catch (ex) {
-      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
-      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-      return callback(null, errorObj);
+      return super.genericAdapterRequest(uriPath, restMethod, queryData, requestBody, addlHeaders, callback);
+    } catch (err) {
+      log.error(`${origin}: ${err}`);
+      return callback(null, err);
     }
   }
 
@@ -727,94 +593,56 @@ class CheckpointManagement extends AdapterBaseCl {
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
-    if (this.suspended && this.suspendMode === 'error') {
-      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
-      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-      return callback(null, errorObj);
-    }
-
-    /* HERE IS WHERE YOU VALIDATE DATA */
-    if (uriPath === undefined || uriPath === null || uriPath === '') {
-      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['uriPath'], null, null, null);
-      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-      return callback(null, errorObj);
-    }
-    if (restMethod === undefined || restMethod === null || restMethod === '') {
-      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['restMethod'], null, null, null);
-      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-      return callback(null, errorObj);
-    }
-
-    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
-    // remove any leading / and split the uripath into path variables
-    let myPath = uriPath;
-    while (myPath.indexOf('/') === 0) {
-      myPath = myPath.substring(1);
-    }
-    const pathVars = myPath.split('/');
-    const queryParamsAvailable = queryData;
-    const queryParams = {};
-    const bodyVars = requestBody;
-
-    // loop in template. long callback arg name to avoid identifier conflicts
-    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
-      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
-          && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
-        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
-      }
-    });
-
-    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders
-    const reqObj = {
-      payload: bodyVars,
-      uriPathVars: pathVars,
-      uriQuery: queryParams,
-      uriOptions: {}
-    };
-    // add headers if provided
-    if (addlHeaders) {
-      reqObj.addlHeaders = addlHeaders;
-    }
-
-    // determine the call and return flag
-    let action = 'getGenericsNoBase';
-    let returnF = true;
-    if (restMethod.toUpperCase() === 'POST') {
-      action = 'createGenericNoBase';
-    } else if (restMethod.toUpperCase() === 'PUT') {
-      action = 'updateGenericNoBase';
-    } else if (restMethod.toUpperCase() === 'PATCH') {
-      action = 'patchGenericNoBase';
-    } else if (restMethod.toUpperCase() === 'DELETE') {
-      action = 'deleteGenericNoBase';
-      returnF = false;
-    }
-
     try {
-      // Make the call -
-      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
-      return this.requestHandlerInst.identifyRequest('.generic', action, reqObj, returnF, (irReturnData, irReturnError) => {
-        // if we received an error or their is no response on the results
-        // return an error
-        if (irReturnError) {
-          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
-          return callback(null, irReturnError);
-        }
-        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
-          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['genericAdapterRequestNoBasePath'], null, null, null);
-          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-          return callback(null, errorObj);
-        }
-
-        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
-        // return the response
-        return callback(irReturnData, null);
-      });
-    } catch (ex) {
-      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
-      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
-      return callback(null, errorObj);
+      return super.genericAdapterRequestNoBasePath(uriPath, restMethod, queryData, requestBody, addlHeaders, callback);
+    } catch (err) {
+      log.error(`${origin}: ${err}`);
+      return callback(null, err);
     }
+  }
+
+  /* INVENTORY CALLS */
+  /**
+   * @summary run the adapter lint script to return the results.
+   *
+   * @function iapRunAdapterLint
+   * @param {Callback} callback - callback function
+   */
+  iapRunAdapterLint(callback) {
+    const meth = 'adapter-iapRunAdapterLint';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    return super.iapRunAdapterLint(callback);
+  }
+
+  /**
+   * @summary run the adapter test scripts (baseunit and unit) to return the results.
+   *    can not run integration as there can be implications with that.
+   *
+   * @function iapRunAdapterTests
+   * @param {Callback} callback - callback function
+   */
+  iapRunAdapterTests(callback) {
+    const meth = 'adapter-iapRunAdapterTests';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    return super.iapRunAdapterTests(callback);
+  }
+
+  /**
+   * @summary provide inventory information abbout the adapter
+   *
+   * @function iapGetAdapterInventory
+   * @param {Callback} callback - callback function
+   */
+  iapGetAdapterInventory(callback) {
+    const meth = 'adapter-iapGetAdapterInventory';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    return super.iapGetAdapterInventory(callback);
   }
 
   /**

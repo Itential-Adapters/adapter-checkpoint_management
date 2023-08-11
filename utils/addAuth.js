@@ -2,9 +2,9 @@
 /* eslint global-require: warn */
 /* eslint import/no-dynamic-require: warn */
 
-const rls = require('readline-sync');
 const path = require('path');
 const fs = require('fs');
+const rls = require('readline-sync');
 
 function getQuestions(props, obj) {
   const questions = props.map((p) => `${p}: ${(obj[p] !== undefined) ? `(${obj[p]})` : ''} `);

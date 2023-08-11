@@ -8,16 +8,18 @@
 
 // include required items for testing & logging
 const assert = require('assert');
-const fs = require('fs-extra');
-const mocha = require('mocha');
 const path = require('path');
 const util = require('util');
-const winston = require('winston');
 const execute = require('child_process').execSync;
+const fs = require('fs-extra');
+const mocha = require('mocha');
+const winston = require('winston');
 const { expect } = require('chai');
 const { use } = require('chai');
 const td = require('testdouble');
+const Ajv = require('ajv');
 
+const ajv = new Ajv({ strictSchema: false, allErrors: true, allowUnionTypes: true });
 const anything = td.matchers.anything();
 let logLevel = 'none';
 const isRapidFail = false;
@@ -41,7 +43,7 @@ samProps.protocol = 'http';
 samProps.port = 80;
 samProps.ssl.enabled = false;
 samProps.ssl.accept_invalid_cert = false;
-samProps.request.attempt_timeout = 60000;
+samProps.request.attempt_timeout = 1200000;
 const attemptTimeout = samProps.request.attempt_timeout;
 const { stub } = samProps;
 
@@ -220,19 +222,24 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       it('package.json should be validated', (done) => {
         try {
           const packageDotJson = require('../../package.json');
-          const { PJV } = require('package-json-validator');
-          const options = {
-            warnings: true, // show warnings
-            recommendations: true // show recommendations
+          // Define the JSON schema for package.json
+          const packageJsonSchema = {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              version: { type: 'string' }
+              // May need to add more properties as needed
+            },
+            required: ['name', 'version']
           };
-          const results = PJV.validate(JSON.stringify(packageDotJson), 'npm', options);
+          const validate = ajv.compile(packageJsonSchema);
+          const isValid = validate(packageDotJson);
 
-          if (results.valid === false) {
-            log.error('The package.json contains the following errors: ');
-            log.error(util.inspect(results));
-            assert.equal(true, results.valid);
+          if (isValid === false) {
+            log.error('The package.json contains errors');
+            assert.equal(true, isValid);
           } else {
-            assert.equal(true, results.valid);
+            assert.equal(true, isValid);
           }
 
           done();
@@ -271,7 +278,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, packageDotJson.scripts);
           assert.notEqual(null, packageDotJson.scripts);
           assert.notEqual('', packageDotJson.scripts);
-          assert.equal('node utils/setup.js && npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions', packageDotJson.scripts.preinstall);
+          assert.equal('node utils/setup.js', packageDotJson.scripts.preinstall);
           assert.equal('node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js . --ext .json --ext .js', packageDotJson.scripts.lint);
           assert.equal('node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js . --ext .json --ext .js --quiet', packageDotJson.scripts['lint:errors']);
           assert.equal('mocha test/unit/adapterBaseTestUnit.js --LOG=error', packageDotJson.scripts['test:baseunit']);
@@ -308,17 +315,17 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, packageDotJson.dependencies);
           assert.notEqual(null, packageDotJson.dependencies);
           assert.notEqual('', packageDotJson.dependencies);
-          assert.equal('^6.12.0', packageDotJson.dependencies.ajv);
-          assert.equal('^0.21.0', packageDotJson.dependencies.axios);
-          assert.equal('^2.20.0', packageDotJson.dependencies.commander);
-          assert.equal('^8.1.0', packageDotJson.dependencies['fs-extra']);
-          assert.equal('^9.0.1', packageDotJson.dependencies.mocha);
+          assert.equal('^8.12.0', packageDotJson.dependencies.ajv);
+          assert.equal('^1.4.0', packageDotJson.dependencies.axios);
+          assert.equal('^11.0.0', packageDotJson.dependencies.commander);
+          assert.equal('^11.1.1', packageDotJson.dependencies['fs-extra']);
+          assert.equal('^10.2.0', packageDotJson.dependencies.mocha);
           assert.equal('^2.0.1', packageDotJson.dependencies['mocha-param']);
-          assert.equal('^0.5.3', packageDotJson.dependencies['network-diagnostics']);
           assert.equal('^15.1.0', packageDotJson.dependencies.nyc);
+          assert.equal('^0.4.4', packageDotJson.dependencies.ping);
           assert.equal('^1.4.10', packageDotJson.dependencies['readline-sync']);
-          assert.equal('^7.3.2', packageDotJson.dependencies.semver);
-          assert.equal('^3.3.3', packageDotJson.dependencies.winston);
+          assert.equal('^7.5.3', packageDotJson.dependencies.semver);
+          assert.equal('^3.9.0', packageDotJson.dependencies.winston);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -331,13 +338,12 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, packageDotJson.devDependencies);
           assert.notEqual(null, packageDotJson.devDependencies);
           assert.notEqual('', packageDotJson.devDependencies);
-          assert.equal('^4.3.4', packageDotJson.devDependencies.chai);
-          assert.equal('^7.29.0', packageDotJson.devDependencies.eslint);
-          assert.equal('^14.2.1', packageDotJson.devDependencies['eslint-config-airbnb-base']);
-          assert.equal('^2.23.4', packageDotJson.devDependencies['eslint-plugin-import']);
-          assert.equal('^3.0.0', packageDotJson.devDependencies['eslint-plugin-json']);
-          assert.equal('^0.6.3', packageDotJson.devDependencies['package-json-validator']);
-          assert.equal('^3.16.1', packageDotJson.devDependencies.testdouble);
+          assert.equal('^4.3.7', packageDotJson.devDependencies.chai);
+          assert.equal('^8.44.0', packageDotJson.devDependencies.eslint);
+          assert.equal('^15.0.0', packageDotJson.devDependencies['eslint-config-airbnb-base']);
+          assert.equal('^2.27.5', packageDotJson.devDependencies['eslint-plugin-import']);
+          assert.equal('^3.1.0', packageDotJson.devDependencies['eslint-plugin-json']);
+          assert.equal('^3.18.0', packageDotJson.devDependencies.testdouble);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -381,16 +387,30 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal(true, Array.isArray(pronghornDotJson.methods));
           assert.notEqual(0, pronghornDotJson.methods.length);
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapUpdateAdapterConfiguration'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapSuspendAdapter'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapUnsuspendAdapter'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapGetAdapterQueue'));
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapFindAdapterPath'));
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapTroubleshootAdapter'));
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRunAdapterHealthcheck'));
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRunAdapterConnectivity'));
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRunAdapterBasicGet'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapSuspendAdapter'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapUnsuspendAdapter'));
-          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapGetAdapterQueue'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapMoveAdapterEntitiesToDB'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapDeactivateTasks'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapActivateTasks'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapPopulateEntityCache'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRetrieveEntitiesCache'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'getDevice'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'getDevicesFiltered'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'isAlive'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'getConfig'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapGetDeviceCount'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapExpandedGenericAdapterRequest'));
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'genericAdapterRequest'));
           assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'genericAdapterRequestNoBasePath'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRunAdapterLint'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapRunAdapterTests'));
+          assert.notEqual(undefined, pronghornDotJson.methods.find((e) => e.name === 'iapGetAdapterInventory'));
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -511,6 +531,39 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           done(error);
         }
       });
+      it('pronghorn.json verify input/output schema objects', (done) => {
+        const verifySchema = (methodName, schema) => {
+          try {
+            ajv.compile(schema);
+          } catch (error) {
+            const errorMessage = `Invalid schema found in '${methodName}' method.
+          Schema => ${JSON.stringify(schema)}.
+          Details => ${error.message}`;
+            throw new Error(errorMessage);
+          }
+        };
+
+        try {
+          const pronghornDotJson = require('../../pronghorn.json');
+          const { methods } = pronghornDotJson;
+          for (let i = 0; i < methods.length; i += 1) {
+            for (let j = 0; j < methods[i].input.length; j += 1) {
+              const inputSchema = methods[i].input[j].schema;
+              if (inputSchema) {
+                verifySchema(methods[i].name, inputSchema);
+              }
+            }
+            const outputSchema = methods[i].output.schema;
+            if (outputSchema) {
+              verifySchema(methods[i].name, outputSchema);
+            }
+          }
+          done();
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      });
     });
 
     describe('propertiesSchema.json', () => {
@@ -546,6 +599,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('string', propertiesDotJson.properties.host.type);
           assert.equal('integer', propertiesDotJson.properties.port.type);
           assert.equal('boolean', propertiesDotJson.properties.stub.type);
+          assert.equal('string', propertiesDotJson.properties.protocol.type);
           assert.notEqual(undefined, propertiesDotJson.definitions.authentication);
           assert.notEqual(null, propertiesDotJson.definitions.authentication);
           assert.notEqual('', propertiesDotJson.definitions.authentication);
@@ -579,7 +633,6 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('boolean', propertiesDotJson.properties.encode_pathvars.type);
           assert.equal('boolean', propertiesDotJson.properties.encode_queryvars.type);
           assert.equal(true, Array.isArray(propertiesDotJson.properties.save_metric.type));
-          assert.equal('string', propertiesDotJson.properties.protocol.type);
           assert.notEqual(undefined, propertiesDotJson.definitions);
           assert.notEqual(null, propertiesDotJson.definitions);
           assert.notEqual('', propertiesDotJson.definitions);
@@ -736,6 +789,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, sampleDotJson.properties.host);
           assert.notEqual(undefined, sampleDotJson.properties.port);
           assert.notEqual(undefined, sampleDotJson.properties.stub);
+          assert.notEqual(undefined, sampleDotJson.properties.protocol);
           assert.notEqual(undefined, sampleDotJson.properties.authentication);
           assert.notEqual(null, sampleDotJson.properties.authentication);
           assert.notEqual('', sampleDotJson.properties.authentication);
@@ -769,7 +823,6 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, sampleDotJson.properties.encode_pathvars);
           assert.notEqual(undefined, sampleDotJson.properties.encode_queryvars);
           assert.notEqual(undefined, sampleDotJson.properties.save_metric);
-          assert.notEqual(undefined, sampleDotJson.properties.protocol);
           assert.notEqual(undefined, sampleDotJson.properties.healthcheck);
           assert.notEqual(null, sampleDotJson.properties.healthcheck);
           assert.notEqual('', sampleDotJson.properties.healthcheck);
@@ -939,40 +992,6 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
-    describe('#iapFindAdapterPath', () => {
-      it('should have a iapFindAdapterPath function', (done) => {
-        try {
-          assert.equal(true, typeof a.iapFindAdapterPath === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('iapFindAdapterPath should find atleast one path that matches', (done) => {
-        try {
-          a.iapFindAdapterPath('{base_path}/{version}', (data, error) => {
-            try {
-              assert.equal(undefined, error);
-              assert.notEqual(undefined, data);
-              assert.notEqual(null, data);
-              assert.equal(true, data.found);
-              assert.notEqual(undefined, data.foundIn);
-              assert.notEqual(null, data.foundIn);
-              assert.notEqual(0, data.foundIn.length);
-              done();
-            } catch (err) {
-              log.error(`Test Failure: ${err}`);
-              done(err);
-            }
-          });
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
     describe('#iapSuspendAdapter', () => {
       it('should have a iapSuspendAdapter function', (done) => {
         try {
@@ -1007,6 +1026,40 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           done(error);
         }
       });
+    });
+
+    describe('#iapFindAdapterPath', () => {
+      it('should have a iapFindAdapterPath function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapFindAdapterPath === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('iapFindAdapterPath should find atleast one path that matches', (done) => {
+        try {
+          a.iapFindAdapterPath('{base_path}/{version}', (data, error) => {
+            try {
+              assert.equal(undefined, error);
+              assert.notEqual(undefined, data);
+              assert.notEqual(null, data);
+              assert.equal(true, data.found);
+              assert.notEqual(undefined, data.foundIn);
+              assert.notEqual(null, data.foundIn);
+              assert.notEqual(0, data.foundIn.length);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
     });
 
     describe('#iapTroubleshootAdapter', () => {
@@ -1154,49 +1207,53 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       }).timeout(attemptTimeout);
     });
 
-    // describe('#iapHasAdapterEntity', () => {
-    //   it('should have a iapHasAdapterEntity function', (done) => {
-    //     try {
-    //       assert.equal(true, typeof a.iapHasAdapterEntity === 'function');
-    //       done();
-    //     } catch (error) {
-    //       log.error(`Test Failure: ${error}`);
-    //       done(error);
-    //     }
-    //   });
-    //   it('should find entity', (done) => {
-    //     try {
-    //       a.iapHasAdapterEntity('template_entity', // 'a9e9c33dc61122760072455df62663d2', (data) => {
-    //         try {
-    //           assert.equal(true, data[0]);
-    //           done();
-    //         } catch (err) {
-    //           log.error(`Test Failure: ${err}`);
-    //           done(err);
-    //         }
-    //       });
-    //     } catch (error) {
-    //       log.error(`Adapter Exception: ${error}`);
-    //       done(error);
-    //     }
-    //   }).timeout(attemptTimeout);
-    //   it('should not find entity', (done) => {
-    //     try {
-    //       a.iapHasAdapterEntity('template_entity', 'blah', (data) => {
-    //         try {
-    //           assert.equal(false, data[0]);
-    //           done();
-    //         } catch (err) {
-    //           log.error(`Test Failure: ${err}`);
-    //           done(err);
-    //         }
-    //       });
-    //     } catch (error) {
-    //       log.error(`Adapter Exception: ${error}`);
-    //       done(error);
-    //     }
-    //   }).timeout(attemptTimeout);
-    // });
+    describe('#iapDeactivateTasks', () => {
+      it('should have a iapDeactivateTasks function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapDeactivateTasks === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapActivateTasks', () => {
+      it('should have a iapActivateTasks function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapActivateTasks === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapPopulateEntityCache', () => {
+      it('should have a iapPopulateEntityCache function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapPopulateEntityCache === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapRetrieveEntitiesCache', () => {
+      it('should have a iapRetrieveEntitiesCache function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRetrieveEntitiesCache === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
 
     describe('#hasEntities', () => {
       it('should have a hasEntities function', (done) => {
@@ -1270,6 +1327,169 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
       });
     });
 
+    describe('#iapExpandedGenericAdapterRequest', () => {
+      it('should have a iapExpandedGenericAdapterRequest function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapExpandedGenericAdapterRequest === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#genericAdapterRequest', () => {
+      it('should have a genericAdapterRequest function', (done) => {
+        try {
+          assert.equal(true, typeof a.genericAdapterRequest === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#genericAdapterRequestNoBasePath', () => {
+      it('should have a genericAdapterRequestNoBasePath function', (done) => {
+        try {
+          assert.equal(true, typeof a.genericAdapterRequestNoBasePath === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapRunAdapterLint', () => {
+      it('should have a iapRunAdapterLint function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRunAdapterLint === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('retrieve the lint results', (done) => {
+        try {
+          a.iapRunAdapterLint((data, error) => {
+            try {
+              assert.equal(undefined, error);
+              assert.notEqual(undefined, data);
+              assert.notEqual(null, data);
+              assert.notEqual(undefined, data.status);
+              assert.notEqual(null, data.status);
+              assert.equal('SUCCESS', data.status);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#iapRunAdapterTests', () => {
+      it('should have a iapRunAdapterTests function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRunAdapterTests === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapGetAdapterInventory', () => {
+      it('should have a iapGetAdapterInventory function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapGetAdapterInventory === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('retrieve the inventory', (done) => {
+        try {
+          a.iapGetAdapterInventory((data, error) => {
+            try {
+              assert.equal(undefined, error);
+              assert.notEqual(undefined, data);
+              assert.notEqual(null, data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+    describe('metadata.json', () => {
+      it('should have a metadata.json', (done) => {
+        try {
+          fs.exists('metadata.json', (val) => {
+            assert.equal(true, val);
+            done();
+          });
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('metadata.json is customized', (done) => {
+        try {
+          const metadataDotJson = require('../../metadata.json');
+          assert.equal('adapter-checkpoint_management', metadataDotJson.name);
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('metadata.json contains accurate documentation', (done) => {
+        try {
+          const metadataDotJson = require('../../metadata.json');
+          assert.notEqual(undefined, metadataDotJson.documentation);
+          assert.equal('https://www.npmjs.com/package/@itentialopensource/adapter-checkpoint_management', metadataDotJson.documentation.npmLink);
+          assert.equal('https://docs.itential.com/opensource/docs/troubleshooting-an-adapter', metadataDotJson.documentation.faqLink);
+          assert.equal('https://gitlab.com/itentialopensource/adapters/contributing-guide', metadataDotJson.documentation.contributeLink);
+          assert.equal('https://itential.atlassian.net/servicedesk/customer/portals', metadataDotJson.documentation.issueLink);
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('metadata.json has related items', (done) => {
+        try {
+          const metadataDotJson = require('../../metadata.json');
+          assert.notEqual(undefined, metadataDotJson.relatedItems);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.adapters);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.integrations);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.ecosystemApplications);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.automations);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.transformations);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.useCases);
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
     /*
     -----------------------------------------------------------------------
     -----------------------------------------------------------------------

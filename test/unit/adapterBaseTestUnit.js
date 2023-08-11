@@ -5,9 +5,9 @@
 
 // include required items for testing & logging
 const assert = require('assert');
+const path = require('path');
 const fs = require('fs-extra');
 const mocha = require('mocha');
-const path = require('path');
 const winston = require('winston');
 const { expect } = require('chai');
 const { use } = require('chai');
@@ -305,156 +305,6 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
     });
 
-    describe('#getAllFunctions', () => {
-      it('should have a getAllFunctions function', (done) => {
-        try {
-          assert.equal(true, typeof a.getAllFunctions === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('should return a list of functions', (done) => {
-        const returnedFunctions = ['addEntityCache', 'capabilityResults', 'checkActionFiles', 'checkProperties', 'connect', 'encryptProperty',
-          'entityInList', 'getAllCapabilities', 'getAllFunctions', 'getConfig', 'getDevice', 'getDevicesFiltered', 'hasDevices', 'hasEntities',
-          'healthCheck', 'iapFindAdapterPath', 'iapGetAdapterQueue', 'iapGetAdapterWorkflowFunctions', 'iapGetDeviceCount', 'iapMakeBrokerCall',
-          'iapMoveAdapterEntitiesToDB', 'iapRunAdapterBasicGet', 'iapRunAdapterConnectivity', 'iapRunAdapterHealthcheck', 'iapSuspendAdapter',
-          'iapTroubleshootAdapter', 'iapUnsuspendAdapter', 'iapUpdateAdapterConfiguration', 'isAlive', 'refreshProperties', 'addListener',
-          'emit', 'eventNames', 'getMaxListeners', 'listenerCount', 'listeners', 'off', 'on', 'once', 'prependListener',
-          'prependOnceListener', 'rawListeners', 'removeAllListeners', 'removeListener', 'setMaxListeners'];
-        try {
-          const expectedFunctions = a.getAllFunctions();
-          try {
-            assert.equal(JSON.stringify(expectedFunctions), JSON.stringify(returnedFunctions));
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
-    describe('#iapGetAdapterWorkflowFunctions', () => {
-      it('should have a iapGetAdapterWorkflowFunctions function', (done) => {
-        try {
-          assert.equal(true, typeof a.iapGetAdapterWorkflowFunctions === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('should retrieve workflow functions', (done) => {
-        try {
-          const expectedFunctions = a.iapGetAdapterWorkflowFunctions([]);
-          try {
-            assert.equal(0, expectedFunctions.length);
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
-    describe('#checkProperties', () => {
-      it('should have a checkProperties function', (done) => {
-        try {
-          assert.equal(true, typeof a.checkProperties === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('the sample properties should be good - if failure change the log level', (done) => {
-        try {
-          const samplePropsJson = require('../../sampleProperties.json');
-          const clean = a.checkProperties(samplePropsJson.properties);
-          try {
-            assert.notEqual(0, Object.keys(clean));
-            assert.equal(undefined, clean.exception);
-            assert.notEqual(undefined, clean.host);
-            assert.notEqual(null, clean.host);
-            assert.notEqual('', clean.host);
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
-    describe('#checkActionFiles', () => {
-      it('should have a checkActionFiles function', (done) => {
-        try {
-          assert.equal(true, typeof a.checkActionFiles === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('the action files should be good - if failure change the log level as most issues are warnings', (done) => {
-        try {
-          const clean = a.checkActionFiles();
-          try {
-            for (let c = 0; c < clean.length; c += 1) {
-              log.error(clean[c]);
-            }
-            assert.equal(0, clean.length);
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
-    describe('#iapGetAdapterQueue', () => {
-      it('should have a iapGetAdapterQueue function', (done) => {
-        try {
-          assert.equal(true, typeof a.iapGetAdapterQueue === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('should get information for all of the requests currently in the queue', (done) => {
-        try {
-          const expectedFunctions = a.iapGetAdapterQueue();
-          try {
-            assert.equal(0, expectedFunctions.length);
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
     describe('#connect', () => {
       it('should have a connect function', (done) => {
         try {
@@ -529,6 +379,129 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
     });
 
+    describe('#getAllFunctions', () => {
+      it('should have a getAllFunctions function', (done) => {
+        try {
+          assert.equal(true, typeof a.getAllFunctions === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('should return a list of functions', (done) => {
+        const returnedFunctions = ['checkActionFiles', 'checkProperties', 'connect', 'encryptProperty', 'genericAdapterRequest', 'genericAdapterRequestNoBasePath',
+          'getAllFunctions', 'getConfig', 'getDevice', 'getDevicesFiltered', 'hasEntities', 'healthCheck', 'iapActivateTasks', 'iapDeactivateTasks',
+          'iapExpandedGenericAdapterRequest', 'iapFindAdapterPath', 'iapGetAdapterInventory', 'iapGetAdapterQueue', 'iapGetAdapterWorkflowFunctions', 'iapGetDeviceCount',
+          'iapMoveAdapterEntitiesToDB', 'iapPopulateEntityCache', 'iapRetrieveEntitiesCache', 'iapRunAdapterBasicGet', 'iapRunAdapterConnectivity', 'iapRunAdapterHealthcheck',
+          'iapRunAdapterLint', 'iapRunAdapterTests', 'iapSuspendAdapter', 'iapTroubleshootAdapter', 'iapUnsuspendAdapter', 'iapUpdateAdapterConfiguration',
+          'isAlive', 'refreshProperties', 'addListener', 'emit', 'eventNames', 'getMaxListeners', 'listenerCount', 'listeners', 'off', 'on', 'once',
+          'prependListener', 'prependOnceListener', 'rawListeners', 'removeAllListeners', 'removeListener', 'setMaxListeners'];
+        try {
+          const expectedFunctions = a.getAllFunctions();
+          try {
+            assert.equal(JSON.stringify(expectedFunctions), JSON.stringify(returnedFunctions));
+            done();
+          } catch (err) {
+            log.error(`Test Failure: ${err}`);
+            done(err);
+          }
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#iapGetAdapterWorkflowFunctions', () => {
+      it('should have a iapGetAdapterWorkflowFunctions function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapGetAdapterWorkflowFunctions === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('should retrieve workflow functions', (done) => {
+        try {
+          const expectedFunctions = a.iapGetAdapterWorkflowFunctions([]);
+          try {
+            assert.equal(0, expectedFunctions.length);
+            done();
+          } catch (err) {
+            log.error(`Test Failure: ${err}`);
+            done(err);
+          }
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#checkActionFiles', () => {
+      it('should have a checkActionFiles function', (done) => {
+        try {
+          assert.equal(true, typeof a.checkActionFiles === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('the action files should be good - if failure change the log level as most issues are warnings', (done) => {
+        try {
+          const clean = a.checkActionFiles();
+          try {
+            for (let c = 0; c < clean.length; c += 1) {
+              log.error(clean[c]);
+            }
+            assert.equal(0, clean.length);
+            done();
+          } catch (err) {
+            log.error(`Test Failure: ${err}`);
+            done(err);
+          }
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#checkProperties', () => {
+      it('should have a checkProperties function', (done) => {
+        try {
+          assert.equal(true, typeof a.checkProperties === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('the sample properties should be good - if failure change the log level', (done) => {
+        try {
+          const samplePropsJson = require('../../sampleProperties.json');
+          const clean = a.checkProperties(samplePropsJson.properties);
+          try {
+            assert.notEqual(0, Object.keys(clean));
+            assert.equal(undefined, clean.exception);
+            assert.notEqual(undefined, clean.host);
+            assert.notEqual(null, clean.host);
+            assert.notEqual('', clean.host);
+            done();
+          } catch (err) {
+            log.error(`Test Failure: ${err}`);
+            done(err);
+          }
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
     describe('#encryptProperty', () => {
       it('should have a encryptProperty function', (done) => {
         try {
@@ -583,273 +556,6 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
     });
 
-    const entityType = 'mockType';
-    const entities = {
-      response: [
-        {
-          name: 'Godric Gryffindor'
-        }, {
-          name: 'Salazar Slytherin'
-        }
-      ]
-    };
-    const key = 'name';
-    describe('#addEntityCache', () => {
-      it('should have a addEntityCache function', (done) => {
-        try {
-          assert.equal(true, typeof a.addEntityCache === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('should take the entities and add them to the cache', (done) => {
-        // Run the promise and verify the results match what we were expecting.
-        try {
-          a.addEntityCache(entityType, entities, key, (data, error) => {
-            try {
-              assert.equal(true, data);
-              done();
-            } catch (err) {
-              log.error(`Test Failure: ${err}`);
-              done(err);
-            }
-          });
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
-    const cache = [
-      'Godric Gryffindor',
-      'Salazar Slytherin'
-    ];
-    describe('#entityInList', () => {
-      it('should have a entityInList function', (done) => {
-        try {
-          assert.equal(true, typeof a.entityInList === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('should return true if the entity is in the list of entities for this adapter', (done) => {
-        try {
-          const entityExist = a.entityInList('Godric Gryffindor', cache);
-          try {
-            assert.equal(true, entityExist[0]);
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-      it('should return false if the entity is not in the list of entities for this adapter', (done) => {
-        try {
-          const entityExist = a.entityInList('XXXX', cache);
-          try {
-            assert.equal(false, entityExist[0]);
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-      it('should return status of each item if an array is passed', (done) => {
-        try {
-          const entityExist = a.entityInList(['Godric Gryffindor', 'XXXX'], cache);
-          try {
-            assert.equal(true, entityExist[0]);
-            assert.equal(false, entityExist[1]);
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
-    describe('#capabilityResults', () => {
-      it('should have a capabilityResults function', (done) => {
-        try {
-          assert.equal(true, typeof a.capabilityResults === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('should throw an error if needupdate is passed into the function', (done) => {
-        try {
-          const results = ['needupdate'];
-          a.capabilityResults(results, (data, error) => {
-            try {
-              const displayE = 'Could not load entity: unknown, into cache';
-              runErrorAsserts(data, error, 'AD.320', 'Test-Base-adapterBase-capabilityResults', displayE);
-              done();
-            } catch (err) {
-              log.error(`Test Failure: ${err}`);
-              done(err);
-            }
-          });
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-      it('should throw an error if error is passed into the function', (done) => {
-        try {
-          const results = ['error'];
-          a.capabilityResults(results, (data, error) => {
-            try {
-              const displayE = 'Could not verify entity in cache';
-              runErrorAsserts(data, error, 'AD.321', 'Test-Base-adapterBase-capabilityResults', displayE);
-              done();
-            } catch (err) {
-              log.error(`Test Failure: ${err}`);
-              done(err);
-            }
-          });
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-      it('should return null if nothing passed in', (done) => {
-        try {
-          const results = null;
-          a.capabilityResults(results, (data, error) => {
-            try {
-              assert.equal(null, data);
-              done();
-            } catch (err) {
-              log.error(`Test Failure: ${err}`);
-              done(err);
-            }
-          });
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-      it('should return true if results is not an array and is "found"', (done) => {
-        try {
-          const results = 'found';
-          a.capabilityResults(results, (data, error) => {
-            try {
-              assert.equal(true, data[0]);
-              done();
-            } catch (err) {
-              log.error(`Test Failure: ${err}`);
-              done(err);
-            }
-          });
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-      it('should return false if results is not an array and is not "found"', (done) => {
-        try {
-          const results = 'notfound';
-          a.capabilityResults(results, (data, error) => {
-            try {
-              assert.equal(false, data[0]);
-              done();
-            } catch (err) {
-              log.error(`Test Failure: ${err}`);
-              done(err);
-            }
-          });
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-      it('should process an incoming array and return an array of values', (done) => {
-        try {
-          const results = ['found', 'notFound', 'found'];
-          a.capabilityResults(results, (data, error) => {
-            try {
-              assert.equal(true, data[0]);
-              assert.equal(false, data[1]);
-              assert.equal(true, data[2]);
-              done();
-            } catch (err) {
-              log.error(`Test Failure: ${err}`);
-              done(err);
-            }
-          });
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
-    describe('#getAllCapabilities', () => {
-      it('should have a getAllCapabilities function', (done) => {
-        try {
-          assert.equal(true, typeof a.getAllCapabilities === 'function');
-          done();
-        } catch (error) {
-          log.error(`Test Failure: ${error}`);
-          done(error);
-        }
-      });
-      it('should have capabilities returned', (done) => {
-        try {
-          const expectedCapabilities = a.getAllCapabilities();
-          try {
-            assert.notEqual(0, expectedCapabilities.length);
-            assert.equal('.generic', expectedCapabilities[0].entity);
-            assert.equal(10, expectedCapabilities[0].actions.length);
-            assert.equal('getGenerics', expectedCapabilities[0].actions[0]);
-            assert.equal('createGeneric', expectedCapabilities[0].actions[1]);
-            assert.equal('updateGeneric', expectedCapabilities[0].actions[2]);
-            assert.equal('patchGeneric', expectedCapabilities[0].actions[3]);
-            assert.equal('deleteGeneric', expectedCapabilities[0].actions[4]);
-            assert.equal('getGenericsNoBase', expectedCapabilities[0].actions[5]);
-            assert.equal('createGenericNoBase', expectedCapabilities[0].actions[6]);
-            assert.equal('updateGenericNoBase', expectedCapabilities[0].actions[7]);
-            assert.equal('patchGenericNoBase', expectedCapabilities[0].actions[8]);
-            assert.equal('deleteGenericNoBase', expectedCapabilities[0].actions[9]);
-            assert.equal('.system', expectedCapabilities[1].entity);
-            assert.equal(2, expectedCapabilities[1].actions.length);
-            assert.equal('getToken', expectedCapabilities[1].actions[0]);
-            assert.equal('healthcheck', expectedCapabilities[1].actions[1]);
-            for (let e = 1; e < expectedCapabilities.length; e += 1) {
-              assert.notEqual('', expectedCapabilities[e].entity);
-              assert.notEqual(null, expectedCapabilities[e].actions);
-            }
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
-        } catch (error) {
-          log.error(`Adapter Exception: ${error}`);
-          done(error);
-        }
-      }).timeout(attemptTimeout);
-    });
-
     describe('#iapUpdateAdapterConfiguration', () => {
       it('should have a iapUpdateAdapterConfiguration function', (done) => {
         try {
@@ -862,7 +568,7 @@ describe('[unit] Adapter Base Test', () => {
       });
       it('should return no updated if no changes are provided', (done) => {
         try {
-          a.iapUpdateAdapterConfiguration(null, null, null, null, null, (data, error) => {
+          a.iapUpdateAdapterConfiguration(null, null, null, null, null, null, (data, error) => {
             try {
               assert.equal('No configuration updates to make', data.response);
               done();
@@ -878,7 +584,7 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
       it('should throw an error if missing configuration file', (done) => {
         try {
-          a.iapUpdateAdapterConfiguration(null, { name: 'fakeChange' }, null, null, null, (data, error) => {
+          a.iapUpdateAdapterConfiguration(null, { name: 'fakeChange' }, null, null, null, null, (data, error) => {
             try {
               const displayE = 'configFile is required';
               runErrorAsserts(data, error, 'AD.300', 'Test-Base-adapterBase-iapUpdateAdapterConfiguration', displayE);
@@ -895,7 +601,7 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
       it('if not package.json, entity is required', (done) => {
         try {
-          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, null, null, null, (data, error) => {
+          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, null, null, null, null, (data, error) => {
             try {
               const displayE = 'Unsupported Configuration Change or Missing Entity';
               runErrorAsserts(data, error, 'AD.999', 'Test-Base-adapterBase-iapUpdateAdapterConfiguration', displayE);
@@ -912,7 +618,7 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
       it('if not package.json, type is required', (done) => {
         try {
-          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, 'entity', null, null, (data, error) => {
+          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, 'entity', null, null, null, (data, error) => {
             try {
               const displayE = 'type is required';
               runErrorAsserts(data, error, 'AD.300', 'Test-Base-adapterBase-iapUpdateAdapterConfiguration', displayE);
@@ -929,7 +635,7 @@ describe('[unit] Adapter Base Test', () => {
       }).timeout(attemptTimeout);
       it('if not package.json, entity must be valid', (done) => {
         try {
-          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, 'fakeEntity', 'fakeType', null, (data, error) => {
+          a.iapUpdateAdapterConfiguration('notPackage', { name: 'fakeChange' }, 'fakeEntity', 'fakeType', null, null, (data, error) => {
             try {
               const displayE = 'Incomplete Configuration Change: Invalid Entity - fakeEntity';
               runErrorAsserts(data, error, 'AD.999', 'Test-Base-adapterBase-iapUpdateAdapterConfiguration', displayE);
@@ -944,6 +650,375 @@ describe('[unit] Adapter Base Test', () => {
           done(error);
         }
       }).timeout(attemptTimeout);
+    });
+
+    describe('#iapSuspendAdapter', () => {
+      it('should have a iapSuspendAdapter function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapSuspendAdapter === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('should successfully suspend the adapter', (done) => {
+        try {
+          a.iapSuspendAdapter('nopause', (data, error) => {
+            try {
+              assert.notEqual(null, data);
+              assert.notEqual(null, data.suspended);
+              assert.equal(true, data.suspended);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#iapUnsuspendAdapter', () => {
+      it('should have a iapUnsuspendAdapter function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapUnsuspendAdapter === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('should successfully unsuspend the adapter', (done) => {
+        try {
+          a.iapUnsuspendAdapter((data, error) => {
+            try {
+              assert.notEqual(null, data);
+              assert.notEqual(null, data.suspend);
+              assert.equal(false, data.suspend);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#iapGetAdapterQueue', () => {
+      it('should have a iapGetAdapterQueue function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapGetAdapterQueue === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('should get information for all of the requests currently in the queue', (done) => {
+        try {
+          const expectedFunctions = a.iapGetAdapterQueue();
+          try {
+            assert.equal(0, expectedFunctions.length);
+            done();
+          } catch (err) {
+            log.error(`Test Failure: ${err}`);
+            done(err);
+          }
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#iapFindAdapterPath', () => {
+      it('should have a iapFindAdapterPath function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapFindAdapterPath === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+      it('should fail - missing path', (done) => {
+        try {
+          a.iapFindAdapterPath(null, (data, error) => {
+            try {
+              assert.notEqual(null, error);
+              assert.notEqual(null, error.message);
+              assert.equal('NO PATH PROVIDED!', error.message);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#iapTroubleshootAdapter', () => {
+      it('should have a iapTroubleshootAdapter function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapTroubleshootAdapter === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapRunAdapterHealthcheck', () => {
+      it('should have a iapRunAdapterHealthcheck function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRunAdapterHealthcheck === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapRunAdapterConnectivity', () => {
+      it('should have a iapRunAdapterConnectivity function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRunAdapterConnectivity === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapRunAdapterBasicGet', () => {
+      it('should have a iapRunAdapterBasicGet function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRunAdapterBasicGet === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapMoveAdapterEntitiesToDB', () => {
+      it('should have a iapMoveAdapterEntitiesToDB function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapMoveAdapterEntitiesToDB === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapDeactivateTasks', () => {
+      it('should have a iapDeactivateTasks function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapDeactivateTasks === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapActivateTasks', () => {
+      it('should have a iapActivateTasks function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapActivateTasks === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapPopulateEntityCache', () => {
+      it('should have a iapPopulateEntityCache function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapPopulateEntityCache === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapRetrieveEntitiesCache', () => {
+      it('should have a iapRetrieveEntitiesCache function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRetrieveEntitiesCache === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#hasEntities', () => {
+      it('should have a hasEntities function', (done) => {
+        try {
+          assert.equal(true, typeof a.hasEntities === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#getDevice', () => {
+      it('should have a getDevice function', (done) => {
+        try {
+          assert.equal(true, typeof a.getDevice === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#getDevicesFiltered', () => {
+      it('should have a getDevicesFiltered function', (done) => {
+        try {
+          assert.equal(true, typeof a.getDevicesFiltered === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#isAlive', () => {
+      it('should have a isAlive function', (done) => {
+        try {
+          assert.equal(true, typeof a.isAlive === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#getConfig', () => {
+      it('should have a getConfig function', (done) => {
+        try {
+          assert.equal(true, typeof a.getConfig === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapGetDeviceCount', () => {
+      it('should have a iapGetDeviceCount function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapGetDeviceCount === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapExpandedGenericAdapterRequest', () => {
+      it('should have a iapExpandedGenericAdapterRequest function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapExpandedGenericAdapterRequest === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#genericAdapterRequest', () => {
+      it('should have a genericAdapterRequest function', (done) => {
+        try {
+          assert.equal(true, typeof a.genericAdapterRequest === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#genericAdapterRequestNoBasePath', () => {
+      it('should have a genericAdapterRequestNoBasePath function', (done) => {
+        try {
+          assert.equal(true, typeof a.genericAdapterRequestNoBasePath === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapRunAdapterLint', () => {
+      it('should have a iapRunAdapterLint function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRunAdapterLint === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapRunAdapterTests', () => {
+      it('should have a iapRunAdapterTests function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapRunAdapterTests === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
+    });
+
+    describe('#iapGetAdapterInventory', () => {
+      it('should have a iapGetAdapterInventory function', (done) => {
+        try {
+          assert.equal(true, typeof a.iapGetAdapterInventory === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      });
     });
   });
 });

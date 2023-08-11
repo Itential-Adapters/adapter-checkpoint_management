@@ -9,6 +9,7 @@
 
 const program = require('commander');
 const rls = require('readline-sync');
+const prompts = require('prompts');
 const utils = require('./tbUtils');
 const basicGet = require('./basicGet');
 const { name } = require('../package.json');
@@ -50,10 +51,81 @@ const executeInStandaloneMode = async (command) => {
   process.exit(0);
 };
 
+const getAdapterInstanceConfig = async (command) => {
+  const instances = await utils.getAllAdapterInstances();
+  if (!instances || instances.length === 0) {
+    return console.log('None adapter instances found!');
+  }
+
+  let instance;
+  if (instances.length === 1) {
+    [instance] = instances;
+  } else {
+    const choices = instances.map((item) => ({ title: item.name }));
+    const menu = {
+      type: 'select',
+      name: 'index',
+      message: `Pick an adapter for ${command} check`,
+      choices
+    };
+
+    console.log('\n');
+    const selected = await prompts(menu);
+    console.log('\n');
+    instance = instances[selected.index];
+  }
+
+  if (!instance) {
+    console.error('No adapter instance selected');
+    return null;
+  }
+
+  const { serviceItem: adapterConfig } = await utils.getAdapterConfig(instance._id); /* eslint-disable-line no-underscore-dangle */
+
+  console.log('\nAdapter instance configuration =>');
+  console.log('======================================');
+  console.log(adapterConfig);
+  console.log('======================================');
+
+  return adapterConfig;
+};
+
+const executeCommandOnInstance = async (command) => {
+  const adapterConfig = await getAdapterInstanceConfig(command);
+  if (!adapterConfig) {
+    process.exit(0);
+  }
+
+  switch (command) {
+    case 'connectivity': {
+      const { host } = adapterConfig.properties.properties;
+      console.log(`perform networking diagnositics to ${host}`);
+      utils.runConnectivity(host, true);
+      break;
+    }
+    case 'healthcheck': {
+      const adapterInstance = basicGet.getAdapterInstance(adapterConfig);
+      await utils.healthCheck(adapterInstance);
+      break;
+    }
+    case 'basicget': {
+      utils.runBasicGet(true);
+      break;
+    }
+    case 'troubleshoot': {
+      const adapter = { properties: adapterConfig };
+      await troubleshoot({}, true, true, adapter);
+      break;
+    }
+    default: {
+      console.error(`Unknown command: ${command}`);
+    }
+  }
+  return process.exit(0);
+};
+
 const executeUnderIAPInstallationDirectory = async (command) => {
-  if (command === undefined) {
-    await troubleshoot({}, true, true);
-  } else if (command === 'install') {
+  if (command === 'install') {
     const { database, serviceItem, pronghornProps } = await utils.getAdapterConfig();
     const filter = { id: pronghornProps.id };
     const profileItem = await database.collection(utils.IAP_PROFILES_COLLECTION).findOne(filter);
@@ -71,9 +143,7 @@ const executeUnderIAPInstallationDirectory = async (command) => {
           const serviceIndex = profileItem.services.indexOf(serviceItem.name);
           profileItem.services.splice(serviceIndex, 1);
           const update = { $set: { services: profileItem.services } };
-          await database.collection(utils.IAP_PROFILES_COLLECTION).updateOne(
-            { id: pronghornProps.id }, update
-          );
+          await database.collection(utils.IAP_PROFILES_COLLECTION).updateOne({ id: pronghornProps.id }, update);
           console.log(`${serviceItem.name} removed from profileItem.services.`);
           console.log(`Rerun the script to reinstall ${serviceItem.name}.`);
           process.exit(0);
@@ -90,43 +160,20 @@ const executeUnderIAPInstallationDirectory = async (command) => {
       utils.runTest();
       if (rls.keyInYN(`Do you want to install ${name} to IAP?`)) {
         console.log('Creating database entries...');
-        const adapter = utils.createAdapter(
-          pronghornProps, profileItem, sampleProperties, adapterPronghorn
-        );
-
+        const adapter = utils.createAdapter(pronghornProps, profileItem, sampleProperties, adapterPronghorn);
         adapter.properties.properties = await addAuthInfo(adapter.properties.properties);
 
         await database.collection(utils.SERVICE_CONFIGS_COLLECTION).insertOne(adapter);
         profileItem.services.push(adapter.name);
         const update = { $set: { services: profileItem.services } };
-        await database.collection(utils.IAP_PROFILES_COLLECTION).updateOne(
-          { id: pronghornProps.id }, update
-        );
+        await database.collection(utils.IAP_PROFILES_COLLECTION).updateOne({ id: pronghornProps.id }, update);
         console.log('Database entry creation complete.');
       }
       console.log('Exiting...');
       process.exit(0);
     }
-  } else if (['healthcheck', 'basicget', 'connectivity'].includes(command)) {
-    const { serviceItem } = await utils.getAdapterConfig();
-    if (serviceItem) {
-      const adapter = serviceItem;
-      const a = basicGet.getAdapterInstance(adapter);
-      if (command === 'healthcheck') {
-        await utils.healthCheck(a);
-        process.exit(0);
-      } else if (command === 'basicget') {
-        await utils.runBasicGet(true);
-      } else if (command === 'connectivity') {
-        const { host } = adapter.properties.properties;
-        console.log(`perform networking diagnositics to ${host}`);
-        await utils.runConnectivity(host, true);
-        process.exit(0);
-      }
-    } else {
-      console.log(`${name} not installed. Run npm \`run install:adapter\` to install.`);
-      process.exit(0);
-    }
+  } else if (['healthcheck', 'basicget', 'connectivity', 'troubleshoot'].includes(command)) {
+    await executeCommandOnInstance(command);
   }
 };
 
@@ -170,13 +217,21 @@ program
     main('basicget');
   });
 
+program
+  .command('troubleshoot')
+  .alias('tb')
+  .description('perfom troubleshooting')
+  .action(() => {
+    main('troubleshoot');
+  });
+
 // Allow commander to parse `process.argv`
 program.parse(process.argv);
 
 if (process.argv.length < 3) {
   main();
 }
-const allowedParams = ['install', 'healthcheck', 'basicget', 'connectivity'];
+const allowedParams = ['install', 'healthcheck', 'basicget', 'connectivity', 'troubleshoot'];
 if (process.argv.length === 3 && !allowedParams.includes(process.argv[2])) {
   console.log(`unknown parameter ${process.argv[2]}`);
   console.log('try `node troubleshootingAdapter.js -h` to see allowed parameters. Exiting...');

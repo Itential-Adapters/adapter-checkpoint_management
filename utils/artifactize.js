@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /* @copyright Itential, LLC 2019 */
 
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 
 async function createBundle(adapterOldDir) {
   // set directories
