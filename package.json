@@ -5,7 +5,7 @@
   "main": "adapter.js",
   "systemName": "Checkpoint Management",
   "wizardVersion": "2.44.7",
-  "engineVersion": "1.67.0",
+  "engineVersion": "1.67.5",
   "adapterType": "http",
   "scripts": {
     "artifactize": "npm i && node utils/packModificationScript.js",

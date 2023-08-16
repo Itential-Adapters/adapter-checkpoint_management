@@ -175,7 +175,7 @@ tar -xvf adapter-checkpoint_management.tar
 
 ```bash
 cd adapter-checkpoint_management
-npm run install
+npm install
 npm run lint:errors
 npm run test
 ```
