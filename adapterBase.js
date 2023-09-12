@@ -1028,6 +1028,24 @@ class AdapterBase extends EventEmitterCl {
   }
 
   /**
+   * @summary Determines if this adapter supports any in a list of entities
+   *
+   * @function hasEntitiesAuth
+   * @param {String} entityType - the entity type to check for
+   * @param {Array} entityList - the list of entities we are looking for
+   * @param {Object} callOptions - Additional options used to make request, including auth headers, AWS service, or datatypes
+   *
+   * @param {Callback} callback - A map where the entity is the key and the
+   *                              value is true or false
+   */
+  hasEntitiesAuth(entityType, entityList, callOptions, callback) {
+    const origin = `${this.id}-adapterBase-hasEntitiesAuth`;
+    log.trace(origin);
+
+    return this.requestHandlerInst.hasEntitiesAuth(entityType, entityList, callOptions, callback);
+  }
+
+  /**
    * @summary Get Appliance that match the deviceName
    *
    * @function getDevice
@@ -1041,6 +1059,23 @@ class AdapterBase extends EventEmitterCl {
     log.trace(origin);
 
     return this.requestHandlerInst.getDevice(deviceName, callback);
+  }
+
+  /**
+   * @summary Get Appliance that match the deviceName
+   *
+   * @function getDeviceAuth
+   * @param {String} deviceName - the deviceName to find (required)
+   * @param {Object} callOptions - Additional options used to make request, including auth headers, AWS service, or datatypes
+   *
+   * @param {getCallback} callback - a callback function to return the result
+   *                                 (appliance) or the error
+   */
+  getDeviceAuth(deviceName, callOptions, callback) {
+    const origin = `${this.id}-adapterBase-getDeviceAuth`;
+    log.trace(origin);
+
+    return this.requestHandlerInst.getDeviceAuth(deviceName, callOptions, callback);
   }
 
   /**
@@ -1060,6 +1095,23 @@ class AdapterBase extends EventEmitterCl {
   }
 
   /**
+   * @summary Get Appliances that match the filter
+   *
+   * @function getDevicesFilteredAuth
+   * @param {Object} options - the data to use to filter the appliances (optional)
+   * @param {Object} callOptions - Additional options used to make request, including auth headers, AWS service, or datatypes
+   *
+   * @param {getCallback} callback - a callback function to return the result
+   *                                 (appliances) or the error
+   */
+  getDevicesFilteredAuth(options, callOptions, callback) {
+    const origin = `${this.id}-adapterBase-getDevicesFilteredAuth`;
+    log.trace(origin);
+
+    return this.requestHandlerInst.getDevicesFilteredAuth(options, callOptions, callback);
+  }
+
+  /**
    * @summary Gets the status for the provided appliance
    *
    * @function isAlive
@@ -1073,6 +1125,23 @@ class AdapterBase extends EventEmitterCl {
     log.trace(origin);
 
     return this.requestHandlerInst.isAlive(deviceName, callback);
+  }
+
+  /**
+   * @summary Gets the status for the provided appliance
+   *
+   * @function isAliveAuth
+   * @param {String} deviceName - the deviceName of the appliance. (required)
+   * @param {Object} callOptions - Additional options used to make request, including auth headers, AWS service, or datatypes
+   *
+   * @param {configCallback} callback - callback function to return the result
+   *                                    (appliance isAliveAuth) or the error
+   */
+  isAliveAuth(deviceName, callOptions, callback) {
+    const origin = `${this.id}-adapterBase-isAliveAuth`;
+    log.trace(origin);
+
+    return this.requestHandlerInst.isAliveAuth(deviceName, callOptions, callback);
   }
 
   /**
@@ -1093,6 +1162,24 @@ class AdapterBase extends EventEmitterCl {
   }
 
   /**
+   * @summary Gets a config for the provided Appliance
+   *
+   * @function getConfigAuth
+   * @param {String} deviceName - the deviceName of the appliance. (required)
+   * @param {String} format - the desired format of the config. (optional)
+   * @param {Object} callOptions - Additional options used to make request, including auth headers, AWS service, or datatypes
+   *
+   * @param {configCallback} callback - callback function to return the result
+   *                                    (appliance config) or the error
+   */
+  getConfigAuth(deviceName, format, callOptions, callback) {
+    const origin = `${this.id}-adapterBase-getConfigAuth`;
+    log.trace(origin);
+
+    return this.requestHandlerInst.getConfigAuth(deviceName, format, callOptions, callback);
+  }
+
+  /**
    * @summary Gets the device count from the system
    *
    * @function iapGetDeviceCount
@@ -1105,6 +1192,22 @@ class AdapterBase extends EventEmitterCl {
     log.trace(origin);
 
     return this.requestHandlerInst.iapGetDeviceCount(callback);
+  }
+
+  /**
+   * @summary Gets the device count from the system
+   *
+   * @function iapGetDeviceCountAuth
+   * @param {Object} callOptions - Additional options used to make request, including auth headers, AWS service, or datatypes
+   *
+   * @param {getCallback} callback - callback function to return the result
+   *                                    (count) or the error
+   */
+  iapGetDeviceCountAuth(callOptions, callback) {
+    const origin = `${this.id}-adapterBase-iapGetDeviceCountAuth`;
+    log.trace(origin);
+
+    return this.requestHandlerInst.iapGetDeviceCountAuth(callOptions, callback);
   }
 
   /* ********************************************** */

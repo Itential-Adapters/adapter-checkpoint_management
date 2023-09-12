@@ -14,6 +14,7 @@ Some of the page links in this document and links to other GitLab files do not w
   - [Testing](#testing)
 - [Configuration](./PROPERTIES.md)
 - [Using this Adapter](./CALLS.md)
+  - [Authentication](./AUTH.md)
 - [Additional Information](#additional-information)
   - [Enhancements](./ENHANCE.md)
   - [Contributing](./CONTRIBUTING.md)
@@ -47,17 +48,20 @@ These instructions will help you get a copy of the project on your local machine
 
 ### Helpful Background Information
 
-There is adapter documentation available on the Itential Developer Site <a href="https://docs.itential.com/opensource/docs/adapters" target="_blank">HERE</a>. This documentation includes information and examples that are helpful for:
+There is <a href="https://docs.itential.com/opensource/docs/adapters" target="_blank">Adapter documentation available on the Itential Documentation Site</a>. This documentation includes information and examples that are helpful for:
 
 ```text
 Authentication
-Properties
+IAP Service Instance Configuration
 Code Files
-Action Files
-Schema Files
-Mock Data Files
+Endpoint Configuration (Action & Schema)
+Mock Data
+Adapter Generic Methods
+Headers
+Security
 Linting and Testing
-Troubleshooting
+Build an Adapter
+Troubleshooting an Adapter
 ```
 
 Others will be added over time.

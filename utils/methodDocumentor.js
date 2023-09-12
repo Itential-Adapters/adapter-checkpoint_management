@@ -3,7 +3,7 @@
 /* eslint no-param-reassign:warn */
 
 const fs = require('fs-extra');
-const esprima = require('esprima');
+const acorn = require('acorn');
 
 // Getting the base directory:
 let adaptdir = __dirname;
@@ -44,18 +44,38 @@ function getPathFromEntity(entity, funcName) {
     const actionJSON = require(entityPath);
     actionJSON.actions.forEach((action) => {
       if (action.name === funcName) {
-        epath = action.entitypath;
+        if (typeof action.entitypath === 'object') {
+          epath = '';
+          const keys = Object.keys(action.entitypath);
+          for (let k = 0; k < keys.length; k += 1) {
+            epath += `${keys[k]}:${action.entitypath[keys[k]]} <br /> `;
+          }
+          epath = epath.substring(0, epath.length - 8);
+        } else {
+          epath = action.entitypath;
+        }
       }
     });
   }
   return epath;
 }
 
+function recurseCallExpressions(statement, callList) {
+  // Recursively finds all CallExpressions in the syntax tree
+  if (statement.type === 'CallExpression') callList.push(statement);
+  const keys = Object.keys(statement);
+  for (let k = 0; k < keys.length; k += 1) {
+    if (typeof statement[keys[k]] === 'object' && statement[keys[k]] !== null) {
+      recurseCallExpressions(statement[keys[k]], callList);
+    }
+  }
+}
+
 function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
   // read the file
   const aFile = fs.readFileSync(filename, 'utf8');
   // parsing the file to get the function and class declarations.
-  const aFileFuncArgs = esprima.parseScript(aFile);
+  const aFileFuncArgs = acorn.parse(aFile, { ecmaVersion: 2020 });
 
   // Looping through all the declarations parsed:
   aFileFuncArgs.body.forEach((e) => {
@@ -76,25 +96,40 @@ function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
         });
 
         // Getting the entity for the method:
-        let entity;
-        method.value.body.body.forEach((statementType) => {
-          if (statementType.type === 'TryStatement') {
-            entity = statementType.block.body[0].argument.arguments[0].value;
-          }
+        const callList = [];
+        method.value.body.body.forEach((statement) => {
+          recurseCallExpressions(statement, callList);
         });
-        const entityPath = getPathFromEntity(entity, funcName);
+        const requests = [];
+        for (let i = 0; i < callList.length; i += 1) {
+          if (callList[i].callee.property && callList[i].callee.property.name === 'identifyRequest') {
+            requests.push(callList[i]);
+          }
+        }
+        if (requests.length > 0) {
+          const expr = requests[0];
+          if (expr.arguments.length < 2) {
+            throw new Error(`Bad inputs in method ${funcName}`);
+          }
+          const entity = expr.arguments[0].value;
+          const actionName = expr.arguments[1].value;
+          if (expr !== undefined && (expr.arguments[0].type !== 'Literal' || expr.arguments[1].type !== 'Literal')) {
+            throw new Error(`Bad inputs in method ${funcName}`);
+          }
+          const entityPath = getPathFromEntity(entity, actionName);
 
-        // Creating and storing the object for the method.
-        if (entityPath !== undefined) {
-          functionList.push(
-            createObjectForFunction(
-              funcName,
-              funcArgs,
-              entityPath,
-              descriptionObj[funcName],
-              workflowObj[funcName]
-            )
-          );
+          // Creating and storing the object for the method.
+          if (entityPath !== undefined) {
+            functionList.push(
+              createObjectForFunction(
+                funcName,
+                funcArgs,
+                entityPath,
+                descriptionObj[funcName],
+                workflowObj[funcName]
+              )
+            );
+          }
         }
       });
     }
@@ -109,7 +144,7 @@ function readJSONFile(filename, descriptionObj, workflowObj) {
   methodArray.forEach((methodName) => {
     // Getting the method description and workflow:
     const funcName = methodName.name;
-    descriptionObj[funcName] = methodName.description;
+    descriptionObj[funcName] = methodName.summary ? methodName.summary : methodName.description;
     workflowObj[funcName] = methodName.task ? 'Yes' : 'No';
   });
 }
