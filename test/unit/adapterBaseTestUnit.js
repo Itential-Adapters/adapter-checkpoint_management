@@ -391,12 +391,12 @@ describe('[unit] Adapter Base Test', () => {
       });
       it('should return a list of functions', (done) => {
         const returnedFunctions = ['checkActionFiles', 'checkProperties', 'connect', 'encryptProperty', 'genericAdapterRequest', 'genericAdapterRequestNoBasePath',
-          'getAllFunctions', 'getConfig', 'getDevice', 'getDevicesFiltered', 'hasEntities', 'healthCheck', 'iapActivateTasks', 'iapDeactivateTasks',
-          'iapExpandedGenericAdapterRequest', 'iapFindAdapterPath', 'iapGetAdapterInventory', 'iapGetAdapterQueue', 'iapGetAdapterWorkflowFunctions', 'iapGetDeviceCount',
-          'iapMoveAdapterEntitiesToDB', 'iapPopulateEntityCache', 'iapRetrieveEntitiesCache', 'iapRunAdapterBasicGet', 'iapRunAdapterConnectivity', 'iapRunAdapterHealthcheck',
-          'iapRunAdapterLint', 'iapRunAdapterTests', 'iapSuspendAdapter', 'iapTroubleshootAdapter', 'iapUnsuspendAdapter', 'iapUpdateAdapterConfiguration',
-          'isAlive', 'refreshProperties', 'addListener', 'emit', 'eventNames', 'getMaxListeners', 'listenerCount', 'listeners', 'off', 'on', 'once',
-          'prependListener', 'prependOnceListener', 'rawListeners', 'removeAllListeners', 'removeListener', 'setMaxListeners'];
+          'getAllFunctions', 'getConfig', 'getConfigAuth', 'getDevice', 'getDeviceAuth', 'getDevicesFiltered', 'getDevicesFilteredAuth', 'hasEntities', 'hasEntitiesAuth',
+          'healthCheck', 'iapActivateTasks', 'iapDeactivateTasks', 'iapExpandedGenericAdapterRequest', 'iapFindAdapterPath', 'iapGetAdapterInventory', 'iapGetAdapterQueue',
+          'iapGetAdapterWorkflowFunctions', 'iapGetDeviceCount', 'iapGetDeviceCountAuth', 'iapMoveAdapterEntitiesToDB', 'iapPopulateEntityCache', 'iapRetrieveEntitiesCache',
+          'iapRunAdapterBasicGet', 'iapRunAdapterConnectivity', 'iapRunAdapterHealthcheck', 'iapRunAdapterLint', 'iapRunAdapterTests', 'iapSuspendAdapter', 'iapTroubleshootAdapter',
+          'iapUnsuspendAdapter', 'iapUpdateAdapterConfiguration', 'isAlive', 'isAliveAuth', 'refreshProperties', 'addListener', 'emit', 'eventNames', 'getMaxListeners',
+          'listenerCount', 'listeners', 'off', 'on', 'once', 'prependListener', 'prependOnceListener', 'rawListeners', 'removeAllListeners', 'removeListener', 'setMaxListeners'];
         try {
           const expectedFunctions = a.getAllFunctions();
           try {

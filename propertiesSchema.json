@@ -1063,6 +1063,38 @@
                 "description": "The method of the call to getDevicesFiltered",
                 "default": "GET"
               },
+              "pagination": {
+                "type": "object",
+                "description": "todo",
+                "properties": {
+                  "offsetVar": {
+                    "type": "string",
+                    "description": "Name of variable that defines how to go to next set of results"
+                  },
+                  "limitVar": {
+                    "type": "string",
+                    "description": "Name of variable that defines the max results returned in a request"
+                  },
+                  "incrementBy": {
+                    "type": "string",
+                    "enum": [
+                      "limit",
+                      "page"
+                    ],
+                    "description": "How to incremenet offset. Default limit",
+                    "default": "limit"
+                  },
+                  "requestLocation": {
+                    "type": "string",
+                    "enum": [
+                      "query",
+                      "body"
+                    ],
+                    "description": "Where in request the pagination data goes",
+                    "default": "query"
+                  }
+                }
+              },
               "query": {
                 "type": "object",
                 "description": "The json object with query parameters of the call to getDevicesFiltered",
@@ -1486,6 +1518,38 @@
                       "type": "string",
                       "description": "The method of the call to getDevice",
                       "default": "GET"
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "todo",
+                      "properties": {
+                        "offsetVar": {
+                          "type": "string",
+                          "description": "Name of variable that defines how to go to next set of results"
+                        },
+                        "limitVar": {
+                          "type": "string",
+                          "description": "Name of variable that defines the max results returned in a request"
+                        },
+                        "incrementBy": {
+                          "type": "string",
+                          "enum": [
+                            "limit",
+                            "page"
+                          ],
+                          "description": "How to incremenet offset. Default limit",
+                          "default": "limit"
+                        },
+                        "requestLocation": {
+                          "type": "string",
+                          "enum": [
+                            "query",
+                            "body"
+                          ],
+                          "description": "Where in request the pagination data goes",
+                          "default": "query"
+                        }
+                      }
                     },
                     "query": {
                       "type": "object",

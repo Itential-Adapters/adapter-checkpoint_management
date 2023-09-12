@@ -887,6 +887,8 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, sampleDotJson.properties.devicebroker.isAlive);
           assert.notEqual(undefined, sampleDotJson.properties.devicebroker.getConfig);
           assert.notEqual(undefined, sampleDotJson.properties.devicebroker.getCount);
+          assert.notEqual(undefined, sampleDotJson.properties.cache);
+          assert.notEqual(undefined, sampleDotJson.properties.cache.entities);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1453,6 +1455,10 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
         try {
           const metadataDotJson = require('../../metadata.json');
           assert.equal('adapter-checkpoint_management', metadataDotJson.name);
+          assert.notEqual(undefined, metadataDotJson.webName);
+          assert.notEqual(null, metadataDotJson.webName);
+          assert.notEqual('', metadataDotJson.webName);
+          assert.equal('Adapter', metadataDotJson.type);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -1480,9 +1486,9 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, metadataDotJson.relatedItems.adapters);
           assert.notEqual(undefined, metadataDotJson.relatedItems.integrations);
           assert.notEqual(undefined, metadataDotJson.relatedItems.ecosystemApplications);
-          assert.notEqual(undefined, metadataDotJson.relatedItems.automations);
-          assert.notEqual(undefined, metadataDotJson.relatedItems.transformations);
-          assert.notEqual(undefined, metadataDotJson.relatedItems.useCases);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.workflowProjects);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.transformationProjects);
+          assert.notEqual(undefined, metadataDotJson.relatedItems.exampleProjects);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);

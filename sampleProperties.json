@@ -169,6 +169,12 @@
         {
           "path": "/show-gateways-and-servers",
           "method": "POST",
+          "pagination": {
+            "offsetVar": "offset",
+            "limitVar": "limit",
+            "incrementBy": "limit",
+            "requestLocation": "body"
+          },
           "query": {},
           "body": {
             "offset": "0",
@@ -289,6 +295,12 @@
             {
               "path": "/show-gateways-and-servers",
               "method": "POST",
+              "pagination": {
+                "offsetVar": "offset",
+                "limitVar": "limit",
+                "incrementBy": "limit",
+                "requestLocation": "body"
+              },
               "query": {},
               "body": {
                 "offset": "0",

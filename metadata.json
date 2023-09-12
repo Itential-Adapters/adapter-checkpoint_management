@@ -1,5 +1,6 @@
 {
   "name": "adapter-checkpoint_management",
+  "webName": "Adapter for Integration to Checkpoint Management",
   "vendor": "Checkpoint",
   "product": "Management",
   "osVersion": [
@@ -14,14 +15,21 @@
     "2022.1.x",
     "2023.1.x"
   ],
-  "method": "REST API",
+  "method": "REST",
   "type": "Adapter",
-  "example": "",
   "domains": [
     "Inventory",
-    "Security/SASE"
+    "SD-WAN (SASE)"
   ],
-  "tags": [],
+  "tags": [
+    "Firewall",
+    "Security Rule Management"
+  ],
+  "useCases": [
+    "Create Security Rule",
+    "Update Security Rule",
+    "Delete Security Rule"
+  ],
   "deprecated": {
     "isDeprecated": false
   },
@@ -31,6 +39,7 @@
     "npmLink": "https://www.npmjs.com/package/@itentialopensource/adapter-checkpoint_management",
     "repoLink": "https://gitlab.com/itentialopensource/adapters/security/adapter-checkpoint_management",
     "docLink": "https://docs.itential.com/opensource/docs/check-point-management",
+    "demoLinks": [],
     "faqLink": "https://docs.itential.com/opensource/docs/troubleshooting-an-adapter",
     "contributeLink": "https://gitlab.com/itentialopensource/adapters/contributing-guide",
     "issueLink": "https://itential.atlassian.net/servicedesk/customer/portals",
@@ -41,12 +50,13 @@
       "https://sc1.checkpoint.com/documents/latest/APIs/index.html#~v1.9%20"
     ]
   },
+  "assets": [],
   "relatedItems": {
     "adapters": [],
     "integrations": [],
     "ecosystemApplications": [],
-    "automations": [],
-    "transformations": [],
-    "useCases": []
+    "workflowProjects": [],
+    "transformationProjects": [],
+    "exampleProjects": []
   }
 }
