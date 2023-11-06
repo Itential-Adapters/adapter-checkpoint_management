@@ -109,6 +109,14 @@
     },
     "cache": {
       "$ref": "#/definitions/cache"
+    },
+    "service": {
+      "type": "string",
+      "description": "Service we are integrating with -- used with AWS Authentication",
+      "examples": [
+        "ec2",
+        "route53"
+      ]
     }
   },
   "required": [
@@ -131,7 +139,8 @@
             "jwt_token",
             "request_token",
             "no_authentication",
-            "multi_step_authentication"
+            "multi_step_authentication",
+            "aws_authentication"
           ]
         },
         "username": {

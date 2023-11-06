@@ -26,9 +26,8 @@
     "Security Rule Management"
   ],
   "useCases": [
-    "Create Security Rule",
-    "Update Security Rule",
-    "Delete Security Rule"
+    "Add, update, manage and remove Security Policies and Rules",
+    "Automate Security Rule Validation"
   ],
   "deprecated": {
     "isDeprecated": false
