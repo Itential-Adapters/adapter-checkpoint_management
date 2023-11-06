@@ -77,6 +77,7 @@ function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
   // parsing the file to get the function and class declarations.
   const aFileFuncArgs = acorn.parse(aFile, { ecmaVersion: 2020 });
 
+  let callName = 'identifyRequest';
   // Looping through all the declarations parsed:
   aFileFuncArgs.body.forEach((e) => {
     // Getting only the class declaration as it has our required functions.
@@ -89,8 +90,10 @@ function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
         method.value.params.forEach((param) => {
           if (param.type === 'Identifier') {
             funcArgs.push(param.name);
+          } else if (param.type === 'RestElement') {
+            funcArgs.push(`...${param.argument.name}`);
           } else {
-            const args = `${param.left.name} = ${param.right.value}`;
+            const args = `${param.left.name} = ${param.right.raw}`;
             funcArgs.push(args);
           }
         });
@@ -102,7 +105,7 @@ function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
         });
         const requests = [];
         for (let i = 0; i < callList.length; i += 1) {
-          if (callList[i].callee.property && callList[i].callee.property.name === 'identifyRequest') {
+          if (callList[i].callee.property && callList[i].callee.property.name === callName) {
             requests.push(callList[i]);
           }
         }
@@ -114,7 +117,16 @@ function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
           const entity = expr.arguments[0].value;
           const actionName = expr.arguments[1].value;
           if (expr !== undefined && (expr.arguments[0].type !== 'Literal' || expr.arguments[1].type !== 'Literal')) {
-            throw new Error(`Bad inputs in method ${funcName}`);
+            const param1 = method.value.params[0];
+            const param2 = method.value.params[1];
+            if (param1.type !== 'Identifier' || param2.type !== 'Identifier'
+                || expr.arguments[0].type !== 'Identifier' || expr.arguments[1].type !== 'Identifier'
+                || param1.name !== expr.arguments[0].name || param2.name !== expr.arguments[1].name) {
+              throw new Error(`identifyRequest proxy method ${funcName} unknown format`);
+            } else if (callName !== 'identifyRequest') {
+              throw new Error(`MethodDocumentor not yet programmed to handle multiple helper methods: 1) ${callName}, 2) ${funcName}`);
+            }
+            callName = funcName;
           }
           const entityPath = getPathFromEntity(entity, actionName);
 
@@ -197,6 +209,7 @@ function readMDFile(filename, functionList) {
   // Creating the tags for each method to be appended to the file.
   const tdBeginTag = '    <td style="padding:15px">';
   const tdEndTag = '</td>';
+
   functionList.forEach((func) => {
     const signCommand = `${tdBeginTag}${func.method_signature}${tdEndTag}`;
     const descCommand = `${tdBeginTag}${func.description}${tdEndTag}`;
