@@ -1,4 +1,12 @@
 
+## 0.8.0 [11-06-2023]
+
+* More migration changes
+
+See merge request itentialopensource/adapters/security/adapter-checkpoint_management!15
+
+---
+
 ## 0.7.1 [09-12-2023]
 
 * more migration & metadata changes

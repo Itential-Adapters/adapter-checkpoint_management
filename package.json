@@ -1,6 +1,6 @@
 {
   "name": "@itentialopensource/adapter-checkpoint_management",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "This adapter integrates with system described as: checkpointManagementApi.",
   "main": "adapter.js",
   "systemName": "Checkpoint Management",
