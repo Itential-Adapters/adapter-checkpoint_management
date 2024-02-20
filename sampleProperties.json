@@ -121,25 +121,26 @@
       }
     },
     "devicebroker": {
+      "enabled": true,
       "getDevice": [
         {
           "path": "/show-simple-gateway",
           "method": "POST",
           "query": {},
           "body": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "responseDatakey": "",
           "responseFields": {
-            "name": "name",
-            "ostype": "type",
+            "name": "{name}",
+            "ostype": "{type}",
             "ostypePrefix": "chkpt-",
-            "ipaddress": "ipv4-address",
+            "ipaddress": "{ipv4-address}",
             "port": "n/a"
           }
         },
@@ -148,19 +149,19 @@
           "method": "POST",
           "query": {},
           "body": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "responseDatakey": "",
           "responseFields": {
-            "name": "name",
-            "ostype": "type",
+            "name": "{name}",
+            "ostype": "{type}",
             "ostypePrefix": "chkpt-",
-            "ipaddress": "ipv4-address",
+            "ipaddress": "{ipv4-address}",
             "port": "n/a"
           }
         }
@@ -185,12 +186,12 @@
           "requestFields": {},
           "responseDatakey": "",
           "responseFields": {
-            "name": "name",
-            "ostype": "type",
+            "name": "{name}",
+            "ostype": "{type}",
             "ostypePrefix": "chkpt-",
             "ipaddress": "n/a",
             "port": "n/a",
-            "uid": "uid"
+            "uid": "{uid}"
           }
         }
       ],
@@ -200,16 +201,16 @@
           "method": "POST",
           "query": {},
           "body": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
-          "responseDatakey": "",
+          "responseDatakey": "meta-info",
           "responseFields": {
-            "status": "meta-info.validation-state",
+            "status": "{validation-state}",
             "statusValue": "ok"
           }
         },
@@ -218,16 +219,16 @@
           "method": "POST",
           "query": {},
           "body": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
-          "responseDatakey": "",
+          "responseDatakey": "meta-info",
           "responseFields": {
-            "status": "meta-info.validation-state",
+            "status": "{validation-state}",
             "statusValue": "ok"
           }
         }
@@ -238,12 +239,12 @@
           "method": "POST",
           "query": {},
           "body": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "responseDatakey": "",
           "responseFields": {}
@@ -253,12 +254,12 @@
           "method": "POST",
           "query": {},
           "body": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "headers": {},
           "handleFailure": "ignore",
           "requestFields": {
-            "uid": "uid"
+            "uid": "{uid}"
           },
           "responseDatakey": "",
           "responseFields": {}
@@ -310,7 +311,14 @@
               "handleFailure": "ignore",
               "requestFields": {},
               "responseDatakey": "",
-              "responseFields": {}
+              "responseFields": {
+                "name": "{name}",
+                "ostype": "{type}",
+                "ostypePrefix": "chkpt-",
+                "ipaddress": "n/a",
+                "port": "n/a",
+                "uid": "{uid}"
+              }
             }
           ],
           "cachedTasks": [
