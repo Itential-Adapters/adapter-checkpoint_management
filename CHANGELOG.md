@@ -1,4 +1,12 @@
 
+## 0.9.2 [02-27-2024]
+
+* Changes made at 2024.02.27_11:58AM
+
+See merge request itentialopensource/adapters/security/adapter-checkpoint_management!17
+
+---
+
 ## 0.9.1 [02-20-2024]
 
 * update broker calls
