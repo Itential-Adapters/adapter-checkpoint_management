@@ -63,7 +63,7 @@
     "dns-lookup-promise": "^1.0.4",
     "fs-extra": "^11.1.1",
     "json-query": "^2.2.2",
-    "mocha": "^10.2.0",
+    "mocha": "^10.3.0",
     "mocha-param": "^2.0.1",
     "mongodb": "^4.16.0",
     "nyc": "^15.1.0",
