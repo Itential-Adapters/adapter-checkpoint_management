@@ -18,16 +18,23 @@
   "method": "REST",
   "type": "Adapter",
   "domains": [
-    "Inventory",
-    "SD-WAN (SASE)"
+    "Security (SASE)"
   ],
   "tags": [
-    "Firewall",
-    "Security Rule Management"
+    "Security Policy Management",
+    "Configuration & Compliance",
+    "Network Infrastructure Changes",
+    "Software Upgrades & Device Maintenance"
   ],
   "useCases": [
-    "Add, update, manage and remove Security Policies and Rules",
-    "Automate Security Rule Validation"
+    "Security Group updates",
+    "Security Rule Removal",
+    "Security Rule Creation",
+    "Run network compliance checks and remediation",
+    "Determine configuration drift",
+    "Device Onboarding",
+    "Software Upgrade",
+    "Firewall Configuration backup or restore"
   ],
   "deprecated": {
     "isDeprecated": false
