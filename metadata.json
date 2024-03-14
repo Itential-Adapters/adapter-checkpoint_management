@@ -1,8 +1,8 @@
 {
   "name": "adapter-checkpoint_management",
-  "webName": "Adapter for Integration to Checkpoint Management",
-  "vendor": "Checkpoint",
-  "product": "Management",
+  "webName": "Adapter for Integration to Check Point Firewall Management",
+  "vendor": "Check Point",
+  "product": "Firewall",
   "osVersion": [
     "v1.5"
   ],
