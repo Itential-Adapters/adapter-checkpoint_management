@@ -55,10 +55,10 @@
   "author": "Itential",
   "homepage": "https://gitlab.com/itentialopensource/adapters/security/adapter-checkpoint_management#readme",
   "dependencies": {
-    "@itentialopensource/adapter-utils": "^5.3.8",
+    "@itentialopensource/adapter-utils": "^5.3.10",
     "acorn": "^8.10.0",
     "ajv": "^8.12.0",
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "commander": "^11.0.0",
     "dns-lookup-promise": "^1.0.4",
     "fs-extra": "^11.1.1",
