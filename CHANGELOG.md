@@ -1,4 +1,12 @@
 
+## 0.9.5 [03-27-2024]
+
+* Changes made at 2024.03.27_13:55PM
+
+See merge request itentialopensource/adapters/security/adapter-checkpoint_management!20
+
+---
+
 ## 0.9.4 [03-14-2024]
 
 * Update metadata.json
