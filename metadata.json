@@ -49,10 +49,15 @@
   "documentation": {
     "storeLink": "",
     "npmLink": "https://www.npmjs.com/package/@itentialopensource/adapter-checkpoint_management",
-    "repoLink": "https://gitlab.com/itentialopensource/adapters/security/adapter-checkpoint_management",
+    "repoLink": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management",
     "docLink": "https://docs.itential.com/opensource/docs/check-point-management",
     "demoLinks": [],
-    "trainingLinks": [],
+    "trainingLinks": [
+      {
+        "title": "Itential Academy",
+        "link": "https://www.itential.com/itential-academy/"
+      }
+    ],
     "faqLink": "https://docs.itential.com/opensource/docs/troubleshooting-an-adapter",
     "contributeLink": "https://gitlab.com/itentialopensource/adapters/contributing-guide",
     "issueLink": "https://itential.atlassian.net/servicedesk/customer/portals",
@@ -62,7 +67,8 @@
     "apiLinks": [
       {
         "title": "Introduction to the Check Point Management API",
-        "link": "https://sc1.checkpoint.com/documents/latest/APIs/index.html#~v1.9%20"
+        "link": "https://sc1.checkpoint.com/documents/latest/APIs/index.html#~v1.9%20",
+        "public": true
       }
     ]
   },

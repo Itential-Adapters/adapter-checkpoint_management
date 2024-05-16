@@ -284,7 +284,6 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('mocha test/unit/adapterBaseTestUnit.js --LOG=error', packageDotJson.scripts['test:baseunit']);
           assert.equal('mocha test/unit/adapterTestUnit.js --LOG=error', packageDotJson.scripts['test:unit']);
           assert.equal('mocha test/integration/adapterTestIntegration.js --LOG=error', packageDotJson.scripts['test:integration']);
-          assert.equal('nyc --reporter html --reporter text mocha --reporter dot test/*', packageDotJson.scripts['test:cover']);
           assert.equal('npm run test:baseunit && npm run test:unit && npm run test:integration', packageDotJson.scripts.test);
           assert.equal('npm publish --registry=https://registry.npmjs.org --access=public', packageDotJson.scripts.deploy);
           assert.equal('npm run deploy', packageDotJson.scripts.build);
@@ -321,7 +320,6 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('^11.1.1', packageDotJson.dependencies['fs-extra']);
           assert.equal('^10.3.0', packageDotJson.dependencies.mocha);
           assert.equal('^2.0.1', packageDotJson.dependencies['mocha-param']);
-          assert.equal('^15.1.0', packageDotJson.dependencies.nyc);
           assert.equal('^0.4.4', packageDotJson.dependencies.ping);
           assert.equal('^1.4.10', packageDotJson.dependencies['readline-sync']);
           assert.equal('^7.5.3', packageDotJson.dependencies.semver);

@@ -46,6 +46,7 @@ samProps.ssl.accept_invalid_cert = false;
 if (samProps.request.attempt_timeout < 30000) {
   samProps.request.attempt_timeout = 30000;
 }
+samProps.devicebroker.enabled = true;
 const attemptTimeout = samProps.request.attempt_timeout;
 const { stub } = samProps;
 

@@ -97,6 +97,7 @@ This section defines **all** the properties that are available for the adapter, 
         }
       },
       "devicebroker": {
+        "enabled": false,
         "getDevice": [
           {
             "path": "/call/to/get/device/details",
@@ -579,6 +580,10 @@ The device broker section defines the properties used integrate Checkpoint_Manag
   <tr>
     <th bgcolor="lightgrey" style="padding:15px"><span style="font-size:12.0pt">Property</span></th>
     <th bgcolor="lightgrey" style="padding:15px"><span style="font-size:12.0pt">Description</span></th>
+  </tr>
+  <tr>
+    <td style="padding:15px">enabled</td>
+    <td style="padding:15px">Whether or not the device broker calls have been mapped.</td>
   </tr>
   <tr>
     <td style="padding:15px">getDevice</td>
