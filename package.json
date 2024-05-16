@@ -5,7 +5,7 @@
   "main": "adapter.js",
   "systemName": "Checkpoint Management",
   "wizardVersion": "2.44.7",
-  "engineVersion": "1.67.10",
+  "engineVersion": "1.67.19",
   "adapterType": "http",
   "scripts": {
     "artifactize": "npm i && node utils/packModificationScript.js",
@@ -16,7 +16,6 @@
     "test:baseunit": "mocha test/unit/adapterBaseTestUnit.js --LOG=error",
     "test:unit": "mocha test/unit/adapterTestUnit.js --LOG=error",
     "test:integration": "mocha test/integration/adapterTestIntegration.js --LOG=error",
-    "test:cover": "nyc --reporter html --reporter text mocha --reporter dot test/*",
     "test": "npm run test:baseunit && npm run test:unit && npm run test:integration",
     "adapter:install": "npm i && node utils/tbScript.js install",
     "adapter:checkMigrate": "node utils/checkMigrate.js",
@@ -50,10 +49,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:itentialopensource/adapters/security/adapter-checkpoint_management.git"
+    "url": "git@gitlab.com:itentialopensource/adapters/adapter-checkpoint_management.git"
   },
   "author": "Itential",
-  "homepage": "https://gitlab.com/itentialopensource/adapters/security/adapter-checkpoint_management#readme",
+  "homepage": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management#readme",
   "dependencies": {
     "@itentialopensource/adapter-utils": "^5.3.10",
     "acorn": "^8.10.0",
@@ -66,7 +65,6 @@
     "mocha": "^10.3.0",
     "mocha-param": "^2.0.1",
     "mongodb": "^4.16.0",
-    "nyc": "^15.1.0",
     "ping": "^0.4.4",
     "prompts": "^2.4.2",
     "readline-sync": "^1.4.10",

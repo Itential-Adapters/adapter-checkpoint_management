@@ -22,18 +22,25 @@ Below is an example of how you may set up the properties for this call.
   {
     "path": "/{org}/get/devices",
     "method": "GET",
+    "pagination": {
+      "offsetVar": "",
+      "limitVar": "",
+      "incrementBy": "limit",
+      "requestLocation": "query"
+    },
     "query": {},
     "body": {},
     "headers": {},
     "handleFailure": "ignore",
+    "responseDataKey": "",
     "requestFields": {
       "org": "555"
     },
     "responseFields": {
-      "name": "host",
-      "ostype": "os",
+      "name": "{hostField}",
+      "ostype": "{osField}",
       "ostypePrefix": "system-",
-      "ipaddress": "attributes.ipaddr",
+      "ipaddress": "{attributes.ipaddr}",
       "port": "443"
     }
   },
@@ -44,16 +51,17 @@ Below is an example of how you may set up the properties for this call.
     "body": {},
     "headers": {},
     "handleFailure": "ignore",
+    "responseDataKey": "",
     "requestFields": {
       "org": "777"
     },
     "responseFields": {
-      "name": "host",
-      "ostype": "os",
+      "name": "{hostField}",
+      "ostype": "{osField}",
       "ostypePrefix": "system-",
-      "ipaddress": "attributes.ipaddr",
+      "ipaddress": "{attributes.ipaddr}",
       "port": "443",
-      "myorg": "org"
+      "myorg": "{orgField}"
     }
   }
 ]
@@ -88,12 +96,13 @@ Below is an example of how you may set up the properties for this call.
     "headers": {},
     "handleFailure": "ignore",
     "statusValue": "online",
+    "responseDataKey": "",
     "requestFields": {
-      "org": "myorg",
-      "id": "name"
+      "org": "{myorg}",
+      "id": "{name}"
     },
     "responseFields": {
-      "status": "status"
+      "status": "{status}"
     }
   }
 ]
@@ -129,9 +138,10 @@ Below is an example of how you may set up the properties for this call.
     "body": {},
     "headers": {},
     "handleFailure": "ignore",
+    "responseDataKey": "",
     "requestFields": {
-      "org": "myorg",
-      "id": "name"
+      "org": "{myorg}",
+      "id": "{name}"
     }
     "responseFields": {}
   },
@@ -142,8 +152,9 @@ Below is an example of how you may set up the properties for this call.
     "body": {},
     "headers": {},
     "handleFailure": "ignore",
+    "responseDataKey": "",
     "requestFields": {
-      "org": "myorg"
+      "org": "{myorg}"
     }
     "responseFields": {}
   }
@@ -178,17 +189,18 @@ Below is an example of how you may set up the properties for this call.
     "body": {},
     "headers": {},
     "handleFailure": "ignore",
+    "responseDataKey": "",
     "requestFields": {
-      "org": "myorg",
-      "id": "name"
+      "org": "{myorg}",
+      "id": "{name}"
     },
     "responseFields": {
-      "name": "host",
-      "ostype": "os",
+      "name": "{hostField}",
+      "ostype": "{osField}",
       "ostypePrefix": "system-",
-      "ipaddress": "attributes.ipaddr",
+      "ipaddress": "{attributes.ipaddr}",
       "port": "443",
-      "myorg": "org"
+      "myorg": "{orgField}"
     }
   }
 ]
