@@ -2,6 +2,9 @@ name: CI Pipeline
 
 on: [push, pull_request]
 
+permissions:
+  contents: write
+
 jobs:
   call-reusable-workflow:
     uses: Itential-Adapters/ci-templates/.github/workflows/ci-template.yml@main
