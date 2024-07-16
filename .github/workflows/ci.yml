@@ -5,3 +5,4 @@ on: [push, pull_request]
 jobs:
   call-reusable-workflow:
     uses: Itential-Adapters/ci-templates/.github/workflows/ci-template.yml@main
+    secrets: inherit
