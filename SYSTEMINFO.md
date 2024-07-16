@@ -7,7 +7,7 @@ Product: Firewall
 Product https://www.checkpoint.com/
 
 ## Introduction
-We classify Check Point Managemen into the Security/SASE domain as Check Point Management provide a Software Security solution. We also classify it into the Inventory domain because it contains an inventory of Check Point Managed Gateways.
+We classify Check Point Management into the Security/SASE domain as Check Point Management provide a Software Security solution. We also classify it into the Inventory domain because it contains an inventory of Check Point Managed Gateways.
 
 "Check Point Management automates security posture at scale." 
 "Check Point Management gives you visibility and control over your work environment." 
