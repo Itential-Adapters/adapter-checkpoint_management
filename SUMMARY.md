@@ -1,6 +1,6 @@
 ## Overview
 
-This adapter is used to integrate the Itential Automation Platform (IAP) with the Checkpoint_Manageme System. The API that was used to build the adapter for Checkpoint_Management is usually available in the report directory of this adapter. The adapter utilizes the Checkpoint_Management API to provide the integrations that are deemed pertinent to IAP. The ReadMe file is intended to provide information on this adapter it is generated from various other Markdown files.
+This adapter is used to integrate the Itential Automation Platform (IAP) with the Checkpoint_Manageme Syste. The API that was used to build the adapter for Checkpoint_Management is usually available in the report directory of this adapter. The adapter utilizes the Checkpoint_Management API to provide the integrations that are deemed pertinent to IAP. The ReadMe file is intended to provide information on this adapter it is generated from various other Markdown files.
 
 >**Note**: It is possible that some integrations will be supported through the Checkpoint_Management adapter while other integrations will not. If you need additional API calls, you can use the Update capabilities provided by the Adapter Builder or request Itential to add them if the Adapter is an Itential opensourced adapter.
 
