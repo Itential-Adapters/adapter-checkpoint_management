@@ -1,4 +1,12 @@
 
+## 0.10.1 [08-07-2024]
+
+* Changes made at 2024.08.06_21:51PM
+
+See merge request itentialopensource/adapters/adapter-checkpoint_management!22
+
+---
+
 ## 0.10.0 [05-16-2024]
 
 * Minor/2024 auto migration
