@@ -314,16 +314,16 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, packageDotJson.dependencies);
           assert.notEqual(null, packageDotJson.dependencies);
           assert.notEqual('', packageDotJson.dependencies);
-          assert.equal('^8.12.0', packageDotJson.dependencies.ajv);
-          assert.equal('^1.6.8', packageDotJson.dependencies.axios);
+          assert.equal('^8.17.1', packageDotJson.dependencies.ajv);
+          assert.equal('^1.7.2', packageDotJson.dependencies.axios);
           assert.equal('^11.0.0', packageDotJson.dependencies.commander);
-          assert.equal('^11.1.1', packageDotJson.dependencies['fs-extra']);
-          assert.equal('^10.3.0', packageDotJson.dependencies.mocha);
+          assert.equal('^11.2.0', packageDotJson.dependencies['fs-extra']);
+          assert.equal('^10.7.0', packageDotJson.dependencies.mocha);
           assert.equal('^2.0.1', packageDotJson.dependencies['mocha-param']);
           assert.equal('^0.4.4', packageDotJson.dependencies.ping);
           assert.equal('^1.4.10', packageDotJson.dependencies['readline-sync']);
-          assert.equal('^7.5.3', packageDotJson.dependencies.semver);
-          assert.equal('^3.9.0', packageDotJson.dependencies.winston);
+          assert.equal('^7.6.3', packageDotJson.dependencies.semver);
+          assert.equal('^3.13.1', packageDotJson.dependencies.winston);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
