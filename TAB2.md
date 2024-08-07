@@ -389,7 +389,7 @@ Sample Properties can be used to help you configure the adapter in the Itential 
     }
   }
 ```
-### [Swagger](https://gitlab.com/itentialopensource/adapters/security/adapter-checkpoint_management/-/blob/master/report/adapter-openapi.json) 
+### [Swagger](https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management/-/blob/master/report/adapter-openapi.json) 
 
-## [Generic Adapter Information](https://gitlab.com/itentialopensource/adapters/security/adapter-checkpoint_management/-/blob/master/README.md) 
+## [Generic Adapter Information](https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management/-/blob/master/README.md) 
 
