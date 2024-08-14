@@ -70,7 +70,9 @@
         "link": "https://sc1.checkpoint.com/documents/latest/APIs/index.html#~v1.9%20",
         "public": true
       }
-    ]
+    ],
+    "workshopLinks": [],
+    "workshopHomePage": "https://www.itential.com/get-started/"
   },
   "assets": [],
   "relatedItems": {
@@ -81,5 +83,6 @@
     "transformationProjects": [],
     "exampleProjects": []
   },
-  "supportLevel": "community"
+  "supportLevel": "community",
+  "techAlliance": false
 }
