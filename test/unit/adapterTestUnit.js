@@ -323,7 +323,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('^0.4.4', packageDotJson.dependencies.ping);
           assert.equal('^1.4.10', packageDotJson.dependencies['readline-sync']);
           assert.equal('^7.6.3', packageDotJson.dependencies.semver);
-          assert.equal('^3.13.1', packageDotJson.dependencies.winston);
+          assert.equal('^3.14.2', packageDotJson.dependencies.winston);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -561,7 +561,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           log.error(`Adapter Exception: ${error}`);
           done(error);
         }
-      });
+      }).timeout(attemptTimeout);
     });
 
     describe('propertiesSchema.json', () => {

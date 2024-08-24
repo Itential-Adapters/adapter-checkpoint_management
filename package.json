@@ -5,7 +5,7 @@
   "main": "adapter.js",
   "systemName": "Checkpoint Management",
   "wizardVersion": "2.44.7",
-  "engineVersion": "1.67.19",
+  "engineVersion": "1.68.2",
   "adapterType": "http",
   "scripts": {
     "artifactize": "npm i && node utils/packModificationScript.js",
@@ -54,7 +54,7 @@
   "author": "Itential",
   "homepage": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management#readme",
   "dependencies": {
-    "@itentialopensource/adapter-utils": "^5.6.0",
+    "@itentialopensource/adapter-utils": "^5.7.0",
     "acorn": "^8.12.1",
     "ajv": "^8.17.1",
     "axios": "^1.7.4",
@@ -69,7 +69,7 @@
     "prompts": "^2.4.2",
     "readline-sync": "^1.4.10",
     "semver": "^7.6.3",
-    "winston": "^3.13.1"
+    "winston": "^3.14.2"
   },
   "devDependencies": {
     "chai": "^4.3.7",
