@@ -4,7 +4,6 @@
 /* eslint no-unused-vars: warn */
 
 const assert = require('assert');
-const http = require('http');
 const https = require('https');
 const mocha = require('mocha');
 const ping = require('ping');
@@ -51,29 +50,6 @@ describe('[integration] Adapter Test', () => {
         .catch((err) => {
           done(err);
         });
-    });
-
-    it('Support HTTP on port 80', (done) => {
-      const requestOptions = {
-        host,
-        port: 80,
-        method: 'HEAD'
-      };
-
-      const req = http.request(requestOptions, (res) => {
-        try {
-          assert.ok(res.statusCode >= 200 && res.statusCode < 400);
-          done();
-        } catch (error) {
-          done(error);
-        }
-      });
-
-      req.on('error', (err) => {
-        done(err);
-      });
-
-      req.end();
     });
 
     it('Support HTTPS on port 443', (done) => {

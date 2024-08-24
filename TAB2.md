@@ -58,7 +58,7 @@ Sample Properties can be used to help you configure the adapter in the Itential 
 
 ```json
   "properties": {
-    "host": "INSERT CHECKPOINT HOST HERE",
+    "host": "localhost",
     "port": 443,
     "choosepath": "",
     "base_path": "/web_api",
@@ -73,7 +73,7 @@ Sample Properties can be used to help you configure the adapter in the Itential 
       "auth_method": "request_token",
       "username": "username",
       "password": "password",
-      "token": "",
+      "token": "token",
       "token_user_field": "user",
       "token_password_field": "password",
       "token_result_field": "sid",
