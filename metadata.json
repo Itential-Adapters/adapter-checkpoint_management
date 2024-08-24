@@ -1,8 +1,10 @@
 {
   "name": "adapter-checkpoint_management",
   "webName": "Adapter for Integration to Check Point Firewall Management",
+  "supportLevel": "community",
   "vendor": "Check Point",
   "product": "Firewall",
+  "techAlliance": false,
   "osVersion": [
     "v1.5"
   ],
@@ -50,7 +52,7 @@
     "storeLink": "",
     "npmLink": "https://www.npmjs.com/package/@itentialopensource/adapter-checkpoint_management",
     "repoLink": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management",
-    "docLink": "https://docs.itential.com/opensource/docs/check-point-management",
+    "docLink": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management/-/blob/master/README.md?ref_type=heads",
     "demoLinks": [],
     "trainingLinks": [
       {
@@ -82,7 +84,5 @@
     "workflowProjects": [],
     "transformationProjects": [],
     "exampleProjects": []
-  },
-  "supportLevel": "community",
-  "techAlliance": false
+  }
 }

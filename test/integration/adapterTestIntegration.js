@@ -555,8 +555,8 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
     });
 
     const sessionManagementLoginBodyParam = {
-      user: 'string',
-      password: 'string'
+      user: samProps.authentication.username,
+      password: samProps.authentication.password
     };
     describe('#login - errors', () => {
       it('should work if integrated or standalone with mockdata', (done) => {
@@ -10089,7 +10089,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
 
     const administratorAddAdministratorBodyParam = {
       name: 'string',
-      password: 'string',
+      password: samProps.authentication.password,
       'must-change-password': true,
       email: 'string',
       'phone-number': 'string',
@@ -10151,7 +10151,7 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
 
     const administratorSetAdministratorBodyParam = {
       name: 'string',
-      password: 'string',
+      password: samProps.authentication.password,
       'permissions-profile': 'string'
     };
     describe('#setAdministrator - errors', () => {
