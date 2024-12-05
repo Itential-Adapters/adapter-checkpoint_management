@@ -57,7 +57,7 @@
     "@itentialopensource/adapter-utils": "^5.10.1",
     "acorn": "^8.14.0",
     "ajv": "^8.17.1",
-    "axios": "^1.7.8",
+    "axios": "^1.7.9",
     "commander": "^11.0.0",
     "dns-lookup-promise": "^1.0.4",
     "fs-extra": "^11.2.0",
