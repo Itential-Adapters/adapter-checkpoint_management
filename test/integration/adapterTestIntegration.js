@@ -10318,5 +10318,239 @@ describe('[integration] Checkpoint_Management Adapter Test', () => {
         }
       }).timeout(attemptTimeout);
     });
+
+    const packageDeploymentVerifySoftwarePackageBodyParam = {};
+    describe('#verifySoftwarePackage - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.verifySoftwarePackage(packageDeploymentVerifySoftwarePackageBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'verifySoftwarePackage', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    const packageDeploymentInstallSoftwarePackageBodyParam = {};
+    describe('#installSoftwarePackage - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.installSoftwarePackage(packageDeploymentInstallSoftwarePackageBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'installSoftwarePackage', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    const packageDeploymentUninstallSoftwarePackageBodyParam = {};
+    describe('#uninstallSoftwarePackage - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.uninstallSoftwarePackage(packageDeploymentUninstallSoftwarePackageBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'uninstallSoftwarePackage', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    const packageDeploymentAddRepositoryPackageBodyParam = {};
+    describe('#addRepositoryPackage - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.addRepositoryPackage(packageDeploymentAddRepositoryPackageBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'addRepositoryPackage', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    const packageDeploymentShowRepositoryPackageBodyParam = {};
+    describe('#showRepositoryPackage - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.showRepositoryPackage(packageDeploymentShowRepositoryPackageBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'showRepositoryPackage', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    const packageDeploymentShowSoftwarePackageDetailsBodyParam = {};
+    describe('#showSoftwarePackageDetails - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.showSoftwarePackageDetails(packageDeploymentShowSoftwarePackageDetailsBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'showSoftwarePackageDetails', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    const packageDeploymentShowSoftwarePackagesPerTargetsBodyParam = {};
+    describe('#showSoftwarePackagesPerTargets - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.showSoftwarePackagesPerTargets(packageDeploymentShowSoftwarePackagesPerTargetsBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'showSoftwarePackagesPerTargets', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    const packageDeploymentDeleteRepositoryPackageBodyParam = {};
+    describe('#deleteRepositoryPackage - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.deleteRepositoryPackage(packageDeploymentDeleteRepositoryPackageBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'deleteRepositoryPackage', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    const packageDeploymentShowRepositoryPackagesBodyParam = {};
+    describe('#showRepositoryPackages - errors', () => {
+      it('should work if integrated but since no mockdata should error when run standalone', (done) => {
+        try {
+          a.showRepositoryPackages(packageDeploymentShowRepositoryPackagesBodyParam, null, null, (data, error) => {
+            try {
+              if (stub) {
+                const displayE = 'Error 400 received on request';
+                runErrorAsserts(data, error, 'AD.500', 'Test-checkpoint_management-connectorRest-handleEndResponse', displayE);
+              } else {
+                runCommonAsserts(data, error);
+              }
+              saveMockData('PackageDeployment', 'showRepositoryPackages', 'default', data);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
   });
 });
