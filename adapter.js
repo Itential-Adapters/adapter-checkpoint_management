@@ -32308,6 +32308,1003 @@ class CheckpointManagement extends AdapterBaseCl {
       return callback(null, errorObj);
     }
   }
+
+  /**
+   * @function verifySoftwarePackage
+   * @pronghornType method
+   * @name verifySoftwarePackage
+   * @summary Verifies the software package on target machines.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /verifySoftwarePackage
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  verifySoftwarePackage(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-verifySoftwarePackage';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'verifySoftwarePackage', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['verifySoftwarePackage'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @function installSoftwarePackage
+   * @pronghornType method
+   * @name installSoftwarePackage
+   * @summary Installs the software package on target machines.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /installSoftwarePackage
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  installSoftwarePackage(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-installSoftwarePackage';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'installSoftwarePackage', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['installSoftwarePackage'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @function uninstallSoftwarePackage
+   * @pronghornType method
+   * @name uninstallSoftwarePackage
+   * @summary Uninstalls the software package from target machines.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /uninstallSoftwarePackage
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  uninstallSoftwarePackage(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-uninstallSoftwarePackage';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'uninstallSoftwarePackage', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['uninstallSoftwarePackage'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @function addRepositoryPackage
+   * @pronghornType method
+   * @name addRepositoryPackage
+   * @summary Add the software package to the central repository.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /addRepositoryPackage
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  addRepositoryPackage(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-addRepositoryPackage';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'addRepositoryPackage', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['addRepositoryPackage'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @function showRepositoryPackage
+   * @pronghornType method
+   * @name showRepositoryPackage
+   * @summary Gets repository software packages information.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /showRepositoryPackage
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showRepositoryPackage(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-showRepositoryPackage';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'showRepositoryPackage', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showRepositoryPackage'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @function showSoftwarePackageDetails
+   * @pronghornType method
+   * @name showSoftwarePackageDetails
+   * @summary Gets the software package information from the cloud.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /showSoftwarePackageDetails
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showSoftwarePackageDetails(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-showSoftwarePackageDetails';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'showSoftwarePackageDetails', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSoftwarePackageDetails'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @function showSoftwarePackagesPerTargets
+   * @pronghornType method
+   * @name showSoftwarePackagesPerTargets
+   * @summary Shows software packages on targets.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /showSoftwarePackagesPerTargets
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showSoftwarePackagesPerTargets(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-showSoftwarePackagesPerTargets';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'showSoftwarePackagesPerTargets', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showSoftwarePackagesPerTargets'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @function deleteRepositoryPackage
+   * @pronghornType method
+   * @name deleteRepositoryPackage
+   * @summary Delete the repository software package from the central repository.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /deleteRepositoryPackage
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  deleteRepositoryPackage(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-deleteRepositoryPackage';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'deleteRepositoryPackage', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['deleteRepositoryPackage'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
+
+  /**
+   * @function showRepositoryPackages
+   * @pronghornType method
+   * @name showRepositoryPackages
+   * @summary Gets all repository software packages information.
+   *
+   * @param {object} body - Request body
+   * @param {object} iapMetadata - IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.
+   * @param {string} sid - session id
+   * @param {getCallback} callback - a callback function to return the result
+   * @return {object} results - An object containing the response of the action
+   *
+   * @route {POST} /showRepositoryPackages
+   * @roles admin
+   * @task true
+   */
+  /* YOU CAN CHANGE THE PARAMETERS YOU TAKE IN HERE AND IN THE pronghorn.json FILE */
+  showRepositoryPackages(body, iapMetadata, sid, callback) {
+    const meth = 'adapter-showRepositoryPackages';
+    const origin = `${this.id}-${meth}`;
+    log.trace(origin);
+
+    if (this.suspended && this.suspendMode === 'error') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'AD.600', [], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU VALIDATE DATA */
+    if (body === undefined || body === null || body === '') {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Missing Data', ['body'], null, null, null);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+
+    /* HERE IS WHERE YOU SET THE DATA TO PASS INTO REQUEST */
+    const queryParamsAvailable = {};
+    const queryParams = {};
+    const pathVars = [];
+    const bodyVars = body;
+
+    // loop in template. long callback arg name to avoid identifier conflicts
+    Object.keys(queryParamsAvailable).forEach((thisKeyInQueryParamsAvailable) => {
+      if (queryParamsAvailable[thisKeyInQueryParamsAvailable] !== undefined && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== null
+        && queryParamsAvailable[thisKeyInQueryParamsAvailable] !== '') {
+        queryParams[thisKeyInQueryParamsAvailable] = queryParamsAvailable[thisKeyInQueryParamsAvailable];
+      }
+    });
+
+    // set up the request object - payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, filter, priority, event
+    // see adapter code documentation for more information on the request object's fields
+    const reqObj = {
+      payload: bodyVars,
+      uriPathVars: pathVars,
+      uriQuery: queryParams
+    };
+
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    // Merge and add new iapMetadata fields in reqObj
+    if (iapMetadata && typeof iapMetadata === 'object') {
+      Object.keys(iapMetadata).forEach((iapField) => {
+        if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+          if (typeof reqObj[iapField] === 'object' && typeof iapMetadata[iapField] === 'object') {
+            reqObj[iapField] = { ...reqObj[iapField], ...iapMetadata[iapField] }; // Merge objects
+          } else if (Array.isArray(reqObj[iapField]) && Array.isArray(iapMetadata[iapField])) {
+            reqObj[iapField] = reqObj[iapField].concat(iapMetadata[iapField]); // Merge arrays
+          } else {
+            // Otherwise, add new iapMetadata fields to reqObj
+            reqObj[iapField] = iapMetadata[iapField];
+          }
+        }
+      });
+      // Add iapMetadata to reqObj for further work
+      reqObj.iapMetadata = iapMetadata;
+    }
+
+    if (sid) {
+      if (!reqObj.addlHeaders) {
+        reqObj.addlHeaders = {};
+      }
+      reqObj.addlHeaders['X-chkp-sid'] = sid;
+    }
+
+    try {
+      // Make the call -
+      // identifyRequest(entity, action, requestObj, returnDataFlag, callback)
+      return this.requestHandlerInst.identifyRequest('PackageDeployment', 'showRepositoryPackages', reqObj, true, (irReturnData, irReturnError) => {
+        // if we received an error or their is no response on the results
+        // return an error
+        if (irReturnError) {
+          /* HERE IS WHERE YOU CAN ALTER THE ERROR MESSAGE */
+          return callback(null, irReturnError);
+        }
+        if (!Object.hasOwnProperty.call(irReturnData, 'response')) {
+          const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Invalid Response', ['showRepositoryPackages'], null, null, null);
+          log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+          return callback(null, errorObj);
+        }
+
+        /* HERE IS WHERE YOU CAN ALTER THE RETURN DATA */
+        // return the response
+        return callback(irReturnData, null);
+      });
+    } catch (ex) {
+      const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, ex);
+      log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
+      return callback(null, errorObj);
+    }
+  }
 }
 
 module.exports = CheckpointManagement;

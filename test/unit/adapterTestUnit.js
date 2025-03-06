@@ -10057,5 +10057,266 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
         }
       }).timeout(attemptTimeout);
     });
+
+    describe('#verifySoftwarePackage - errors', () => {
+      it('should have a verifySoftwarePackage function', (done) => {
+        try {
+          assert.equal(true, typeof a.verifySoftwarePackage === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.verifySoftwarePackage(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-verifySoftwarePackage', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#installSoftwarePackage - errors', () => {
+      it('should have a installSoftwarePackage function', (done) => {
+        try {
+          assert.equal(true, typeof a.installSoftwarePackage === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.installSoftwarePackage(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-installSoftwarePackage', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#uninstallSoftwarePackage - errors', () => {
+      it('should have a uninstallSoftwarePackage function', (done) => {
+        try {
+          assert.equal(true, typeof a.uninstallSoftwarePackage === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.uninstallSoftwarePackage(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-uninstallSoftwarePackage', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#addRepositoryPackage - errors', () => {
+      it('should have a addRepositoryPackage function', (done) => {
+        try {
+          assert.equal(true, typeof a.addRepositoryPackage === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.addRepositoryPackage(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-addRepositoryPackage', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#showRepositoryPackage - errors', () => {
+      it('should have a showRepositoryPackage function', (done) => {
+        try {
+          assert.equal(true, typeof a.showRepositoryPackage === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.showRepositoryPackage(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showRepositoryPackage', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#showSoftwarePackageDetails - errors', () => {
+      it('should have a showSoftwarePackageDetails function', (done) => {
+        try {
+          assert.equal(true, typeof a.showSoftwarePackageDetails === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.showSoftwarePackageDetails(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSoftwarePackageDetails', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#showSoftwarePackagesPerTargets - errors', () => {
+      it('should have a showSoftwarePackagesPerTargets function', (done) => {
+        try {
+          assert.equal(true, typeof a.showSoftwarePackagesPerTargets === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.showSoftwarePackagesPerTargets(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showSoftwarePackagesPerTargets', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#deleteRepositoryPackage - errors', () => {
+      it('should have a deleteRepositoryPackage function', (done) => {
+        try {
+          assert.equal(true, typeof a.deleteRepositoryPackage === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.deleteRepositoryPackage(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-deleteRepositoryPackage', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
+
+    describe('#showRepositoryPackages - errors', () => {
+      it('should have a showRepositoryPackages function', (done) => {
+        try {
+          assert.equal(true, typeof a.showRepositoryPackages === 'function');
+          done();
+        } catch (error) {
+          log.error(`Test Failure: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+      it('should error if - missing body', (done) => {
+        try {
+          a.showRepositoryPackages(null, null, null, (data, error) => {
+            try {
+              const displayE = 'body is required';
+              runErrorAsserts(data, error, 'AD.300', 'Test-checkpoint_management-adapter-showRepositoryPackages', displayE);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
+        } catch (error) {
+          log.error(`Adapter Exception: ${error}`);
+          done(error);
+        }
+      }).timeout(attemptTimeout);
+    });
   });
 });

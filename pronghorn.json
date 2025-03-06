@@ -64,13 +64,13 @@
           }
         },
         {
-          "name" : "replace",
+          "name": "replace",
           "type": "boolean",
           "info": "True to replace entire mock data, false to merge/append",
           "required": false,
           "schema": {
             "title": "replace",
-            "type" : "boolean"
+            "type": "boolean"
           }
         }
       ],
@@ -921,73 +921,73 @@
       "task": true
     },
     {
-			"name": "iapRunAdapterLint",
-			"summary": "Run the adapter lint script to return the results",
-			"description": "Run the adapter lint script to return the results",
-			"input": [],
-			"output": {
-				"name": "result",
-				"type": "string",
-				"description": "A string containing the run results",
-				"schema": {
-					"title": "result",
-					"type": "string"
-				}
-			},
-			"roles": [
-				"admin"
-			],
-			"route": {
-				"verb": "GET",
-				"path": "/iapRunAdapterLint"
-			},
-			"task": true
-		},
+      "name": "iapRunAdapterLint",
+      "summary": "Run the adapter lint script to return the results",
+      "description": "Run the adapter lint script to return the results",
+      "input": [],
+      "output": {
+        "name": "result",
+        "type": "string",
+        "description": "A string containing the run results",
+        "schema": {
+          "title": "result",
+          "type": "string"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "GET",
+        "path": "/iapRunAdapterLint"
+      },
+      "task": true
+    },
     {
-			"name": "iapRunAdapterTests",
-			"summary": "Run the adapter test scripts (baseunit and unit) to return the results",
-			"description": "Run the adapter test scripts (baseunit and unit) to return the results",
-			"input": [],
-			"output": {
-				"name": "result",
-				"type": "object",
-				"description": "A JSON Object containing status, code and the result",
-				"schema": {
-					"title": "result",
-					"type": "object"
-				}
-			},
-			"roles": [
-				"admin"
-			],
-			"route": {
-				"verb": "GET",
-				"path": "/iapRunAdapterTests"
-			},
-			"task": true
-		},
+      "name": "iapRunAdapterTests",
+      "summary": "Run the adapter test scripts (baseunit and unit) to return the results",
+      "description": "Run the adapter test scripts (baseunit and unit) to return the results",
+      "input": [],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "GET",
+        "path": "/iapRunAdapterTests"
+      },
+      "task": true
+    },
     {
-			"name": "iapGetAdapterInventory",
-			"summary": "Provide inventory information abbout the adapter",
-			"description": "Provide inventory information abbout the adapter",
-			"input": [],
-			"output": {
-				"name": "result",
-				"type": "object",
-				"description": "A JSON Object containing status, code and the result",
-				"schema": {
-					"title": "result",
-					"type": "object"
-				}
-			},
-			"roles": [
-				"admin"
-			],
-			"route": {
-				"verb": "GET",
-				"path": "/iapGetAdapterInventory"
-			},
-			"task": true
+      "name": "iapGetAdapterInventory",
+      "summary": "Provide inventory information abbout the adapter",
+      "description": "Provide inventory information abbout the adapter",
+      "input": [],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "GET",
+        "path": "/iapGetAdapterInventory"
+      },
+      "task": true
     },
     {
       "name": "login",
@@ -23996,6 +23996,483 @@
       "route": {
         "verb": "POST",
         "path": "/setApiSettingsWithSid"
+      },
+      "task": true
+    },
+    {
+      "name": "verifySoftwarePackage",
+      "summary": "Verifies the software package on target machines.",
+      "description": "Verifies the software package on target machines.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/verifySoftwarePackage"
+      },
+      "task": true
+    },
+    {
+      "name": "installSoftwarePackage",
+      "summary": "Installs the software package on target machines.",
+      "description": "Installs the software package on target machines.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/installSoftwarePackage"
+      },
+      "task": true
+    },
+    {
+      "name": "uninstallSoftwarePackage",
+      "summary": "Uninstalls the software package from target machines.",
+      "description": "Uninstalls the software package from target machines.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/uninstallSoftwarePackage"
+      },
+      "task": true
+    },
+    {
+      "name": "addRepositoryPackage",
+      "summary": "Add the software package to the central repository.",
+      "description": "Add the software package to the central repository. On Multi-Domain Server this command is available only after logging in to the Global domain.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/addRepositoryPackage"
+      },
+      "task": true
+    },
+    {
+      "name": "showRepositoryPackage",
+      "summary": "Gets repository software packages information.",
+      "description": "Gets repository software packages information.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/showRepositoryPackage"
+      },
+      "task": true
+    },
+    {
+      "name": "showSoftwarePackageDetails",
+      "summary": "Gets the software package information from the cloud.",
+      "description": "Gets the software package information from the cloud.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/showSoftwarePackageDetails"
+      },
+      "task": true
+    },
+    {
+      "name": "showSoftwarePackagesPerTargets",
+      "summary": "Shows software packages on targets.",
+      "description": "Shows software packages on targets.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/showSoftwarePackagesPerTargets"
+      },
+      "task": true
+    },
+    {
+      "name": "deleteRepositoryPackage",
+      "summary": "Delete the repository software package from the central repository.",
+      "description": "Delete the repository software package from the central repository. On Multi-Domain Server this command is available only after logging in to the Global domain.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/deleteRepositoryPackage"
+      },
+      "task": true
+    },
+    {
+      "name": "showRepositoryPackages",
+      "summary": "Gets all repository software packages information.",
+      "description": "Gets all repository software packages information.",
+      "input": [
+        {
+          "name": "body",
+          "type": "object",
+          "info": "Request body: object",
+          "required": true,
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "name": "iapMetadata",
+          "type": "object",
+          "info": "IAP Metadata object contains additional info needed for the request: payload, uriPathVars, uriQuery, uriOptions, addlHeaders, authData, callProperties, etc.",
+          "required": false,
+          "schema": {
+            "title": "iapMetadata",
+            "type": "object"
+          }
+        },
+        {
+          "name": "sid",
+          "type": "string",
+          "info": "Session unique identifier returned by the login request.",
+          "required": false,
+          "schema": {
+            "title": "sid",
+            "type": "string"
+          }
+        }
+      ],
+      "output": {
+        "name": "result",
+        "type": "object",
+        "description": "A JSON Object containing status, code and the result",
+        "schema": {
+          "title": "result",
+          "type": "object"
+        }
+      },
+      "roles": [
+        "admin"
+      ],
+      "route": {
+        "verb": "POST",
+        "path": "/showRepositoryPackages"
       },
       "task": true
     }

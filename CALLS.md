@@ -1978,5 +1978,59 @@ Specific adapter calls are built based on the API of the Check Point Management.
     <td style="padding:15px">{base_path}/{version}/set-api-settings?{query}</td>
     <td style="padding:15px">Yes</td>
   </tr>
+  <tr>
+    <td style="padding:15px">verifySoftwarePackage(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Verifies the software package on target machines.</td>
+    <td style="padding:15px">{base_path}/{version}/verify-software-package?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">installSoftwarePackage(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Installs the software package on target machines.</td>
+    <td style="padding:15px">{base_path}/{version}/install-software-package?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">uninstallSoftwarePackage(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Uninstalls the software package from target machines.</td>
+    <td style="padding:15px">{base_path}/{version}/uninstall-software-package?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">addRepositoryPackage(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Add the software package to the central repository.</td>
+    <td style="padding:15px">{base_path}/{version}/add-repository-package?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">showRepositoryPackage(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Gets repository software packages information.</td>
+    <td style="padding:15px">{base_path}/{version}/show-repository-package?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">showSoftwarePackageDetails(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Gets the software package information from the cloud.</td>
+    <td style="padding:15px">{base_path}/{version}/show-software-package-details?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">showSoftwarePackagesPerTargets(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Shows software packages on targets.</td>
+    <td style="padding:15px">{base_path}/{version}/show-software-packages-per-targets?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">deleteRepositoryPackage(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Delete the repository software package from the central repository.</td>
+    <td style="padding:15px">{base_path}/{version}/delete-repository-package?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">showRepositoryPackages(body, iapMetadata, sid, callback)</td>
+    <td style="padding:15px">Gets all repository software packages information.</td>
+    <td style="padding:15px">{base_path}/{version}/show-repository-packages?{query}</td>
+    <td style="padding:15px">Yes</td>
+  </tr>
 </table>
 <br>
