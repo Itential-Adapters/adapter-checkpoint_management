@@ -1,6 +1,6 @@
 ## Troubleshoot
 
-Run `npm run troubleshoot` to start the interactive troubleshooting process. The command allows you to verify and update connection, authentication as well as healthcheck configuration. After that it will test these properties by sending HTTP request to the endpoint. If the tests pass, it will persist these changes into IAP.
+Run `npm run troubleshoot` to start the interactive troubleshooting process. The command allows you to verify and update connection, authentication as well as healthcheck configuration. After that it will test these properties by sending HTTP request to the endpoint. If the tests pass, it will persist these changes into Itential Platform.
 
 You also have the option to run individual commands to perform specific test:
 
@@ -45,3 +45,12 @@ Go into the Itential Platform GUI and verify/update the properties
 ### Functional Issues
 
 Adapter logs are located in `/var/log/pronghorn`. In older releases of the Itential Platform, there is a `pronghorn.log` file which contains logs for all of the Itential Platform. In newer versions, adapters can be configured to log into their own files.
+
+### Adapter Results
+
+The majority of the http response codes from the adapter come directly from the downstream system. There are some exceptions to this:
+
+1. Timeout (-2): There is an attempt timeout property that defines how long the adapter should wait to receive a response before giving up. If that time expires before a resonse is received the adapter will respond with a code of -2. The message will say "The Adapter has run out of time for the request" and it will recommend that you "Increase your adapter request.attempt_timeout property".
+2. Econnreset (-1): When the downstream system or something within the network drops the connection, the adapter will receive and forward an ECONNRESET error with a -1 code. The message will say "The connection was terminated by the network or external system" and the recommendation will be for you to "Check connectivity to the external system and that the system is up".
+
+The adapter will also have various errors if it is unable to build the request. All of these errors come with messages and recommendations to help you understand what you need to do to resolve the issue.

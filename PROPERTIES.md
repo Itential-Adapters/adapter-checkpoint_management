@@ -1,6 +1,6 @@
 ## Configuration
 
-This section defines **all** the properties that are available for the adapter, including detailed information on what each property is for. If you are not using certain capabilities with this adapter, you do not need to define all of the properties. An example of how the properties for this adapter can be used with tests or IAP are provided in the sampleProperties.
+This section defines **all** the properties that are available for the adapter, including detailed information on what each property is for. If you are not using certain capabilities with this adapter, you do not need to define all of the properties. An example of how the properties for this adapter can be used with tests or Itential Platform are provided in the sampleProperties.
 
 ```json
   {
@@ -82,12 +82,15 @@ This section defines **all** the properties that are available for the adapter, 
         "password": "",
       },
       "mongo": {
+        "url": "",
         "host": "",
         "port": 0,
         "database": "",
+        "dbAuth": false,
         "username": "",
         "password": "",
         "replSet": "",
+        "addSrv": false,
         "db_ssl": {
           "enabled": false,
           "accept_invalid_cert": false,
@@ -215,7 +218,7 @@ These base properties are used to connect to Checkpoint_Management upon the adap
 </table>
 <br>
 
-A connectivity check tells IAP the adapter has loaded successfully.
+A connectivity check tells Itential Platform the adapter has loaded successfully.
 
 ### Authentication Properties
 
@@ -343,7 +346,7 @@ The request section defines properties to help handle requests.
   </tr>
   <tr>
     <td style="padding:15px">failover_codes</td>
-    <td style="padding:15px">An array of error codes for which the adapter will send back a failover flag to IAP so that the Platform can attempt the action in another adapter.</td>
+    <td style="padding:15px">An array of error codes for which the adapter will send back a failover flag to Itential Platform so that the Platform can attempt the action in another adapter.</td>
   </tr>
   <tr>
     <td style="padding:15px">attempt_timeout</td>
@@ -375,7 +378,7 @@ The request section defines properties to help handle requests.
   </tr>
   <tr>
     <td style="padding:15px">return_raw</td>
-    <td style="padding:15px">Optional. Tells the adapter whether the raw response should be returned as well as the IAP response. This is helpful when running integration tests to save mock data. It does add overhead to the response object so it is not ideal from production.</td>
+    <td style="padding:15px">Optional. Tells the adapter whether the raw response should be returned as well as the Itential Platform response. This is helpful when running integration tests to save mock data. It does add overhead to the response object so it is not ideal from production.</td>
   </tr>
   <tr>
     <td style="padding:15px">archiving</td>
@@ -522,28 +525,40 @@ The mongo section defines the properties used to connect to a Mongo database. Mo
     <th bgcolor="lightgrey" style="padding:15px"><span style="font-size:12.0pt">Description</span></th>
   </tr>
   <tr>
+    <td style="padding:15px">url</td>
+    <td style="padding:15px">Optional. Mongo's complete connection URL. This property overrides host, port, database, username, password and replSet settings.</td>
+  </tr>
+  <tr>
     <td style="padding:15px">host</td>
-    <td style="padding:15px">Optional. Host information for the mongo server.</td>
+    <td style="padding:15px">Optional. Host information for the Mongo server.</td>
   </tr>
   <tr>
     <td style="padding:15px">port</td>
-    <td style="padding:15px">Optional. Port information for the mongo server.</td>
+    <td style="padding:15px">Optional. Port information for the Mongo server.</td>
   </tr>
   <tr>
     <td style="padding:15px">database</td>
     <td style="padding:15px">Optional. The database for the adapter to use for its data.</td>
   </tr>
   <tr>
+    <td style="padding:15px">dbAuth</td>
+    <td style="padding:15px">Optional. Whether to use authentication for MongoDB connection. Default is false.</td>
+  </tr>
+  <tr>
     <td style="padding:15px">username</td>
-    <td style="padding:15px">Optional. If credentials are required to access mongo, this is the user to login as.</td>
+    <td style="padding:15px">Optional. If credentials are required to access Mongo, this is the user to login as.</td>
   </tr>
   <tr>
     <td style="padding:15px">password</td>
-    <td style="padding:15px">Optional. If credentials are required to access mongo, this is the password to login with.</td>
+    <td style="padding:15px">Optional. If credentials are required to access Mongo, this is the password to login with.</td>
   </tr>
   <tr>
     <td style="padding:15px">replSet</td>
-    <td style="padding:15px">Optional. If the database is set up to use replica sets, define it here so it can be added to the database connection.</td>
+    <td style="padding:15px">Optional. If the database is set up to use replica sets, define it here so it can be added to the database connection. Not used when using mongodb+srv:// protocol</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">addSrv</td>
+    <td style="padding:15px">Optional. Whether the connection requires the mongodb+srv:// protocol. If true, uses mongodb+srv:// protocol. Note: mongodb+srv:// can also be used for non-Atlas deployments that support DNS SRV records</td>
   </tr>
   <tr>
     <td style="padding:15px">db_ssl</td>

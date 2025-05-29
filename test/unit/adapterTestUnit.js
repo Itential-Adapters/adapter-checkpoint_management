@@ -18,10 +18,10 @@ const { expect } = require('chai');
 const { use } = require('chai');
 const td = require('testdouble');
 const Ajv = require('ajv');
+const log = require('../../utils/logger');
 
 const ajv = new Ajv({ strictSchema: false, allErrors: true, allowUnionTypes: true });
 const anything = td.matchers.anything();
-let logLevel = 'none';
 const isRapidFail = false;
 
 // read in the properties from the sampleProperties files
@@ -36,13 +36,17 @@ const samProps = require(`${adaptdir}/sampleProperties.json`).properties;
 // these variables can be changed to run in integrated mode so easier to set them here
 // always check these in with bogus data!!!
 samProps.stub = true;
-samProps.host = 'replace.hostorip.here';
-samProps.authentication.username = 'username';
-samProps.authentication.password = 'password';
-samProps.protocol = 'http';
-samProps.port = 80;
-samProps.ssl.enabled = false;
-samProps.ssl.accept_invalid_cert = false;
+
+// uncomment if connecting
+// samProps.host = 'replace.hostorip.here';
+// samProps.authentication.username = 'username';
+// samProps.authentication.password = 'password';
+// samProps.authentication.token = 'password';
+// samProps.protocol = 'http';
+// samProps.port = 80;
+// samProps.ssl.enabled = false;
+// samProps.ssl.accept_invalid_cert = false;
+
 samProps.request.attempt_timeout = 1200000;
 const attemptTimeout = samProps.request.attempt_timeout;
 const { stub } = samProps;
@@ -63,43 +67,6 @@ global.pronghornProps = {
 };
 
 global.$HOME = `${__dirname}/../..`;
-
-// set the log levels that Pronghorn uses, spam and trace are not defaulted in so without
-// this you may error on log.trace calls.
-const myCustomLevels = {
-  levels: {
-    spam: 6,
-    trace: 5,
-    debug: 4,
-    info: 3,
-    warn: 2,
-    error: 1,
-    none: 0
-  }
-};
-
-// need to see if there is a log level passed in
-process.argv.forEach((val) => {
-  // is there a log level defined to be passed in?
-  if (val.indexOf('--LOG') === 0) {
-    // get the desired log level
-    const inputVal = val.split('=')[1];
-
-    // validate the log level is supported, if so set it
-    if (Object.hasOwnProperty.call(myCustomLevels.levels, inputVal)) {
-      logLevel = inputVal;
-    }
-  }
-});
-
-// need to set global logging
-global.log = winston.createLogger({
-  level: logLevel,
-  levels: myCustomLevels.levels,
-  transports: [
-    new winston.transports.Console()
-  ]
-});
 
 /**
  * Runs the error asserts for the test
@@ -314,16 +281,16 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, packageDotJson.dependencies);
           assert.notEqual(null, packageDotJson.dependencies);
           assert.notEqual('', packageDotJson.dependencies);
-          assert.equal('^8.17.1', packageDotJson.dependencies.ajv);
-          assert.equal('^1.8.2', packageDotJson.dependencies.axios);
-          assert.equal('^11.0.0', packageDotJson.dependencies.commander);
-          assert.equal('^11.2.0', packageDotJson.dependencies['fs-extra']);
-          assert.equal('^10.8.2', packageDotJson.dependencies.mocha);
-          assert.equal('^2.0.1', packageDotJson.dependencies['mocha-param']);
-          assert.equal('^0.4.4', packageDotJson.dependencies.ping);
-          assert.equal('^1.4.10', packageDotJson.dependencies['readline-sync']);
-          assert.equal('^7.6.3', packageDotJson.dependencies.semver);
-          assert.equal('^3.17.0', packageDotJson.dependencies.winston);
+          assert.equal('8.17.1', packageDotJson.dependencies.ajv);
+          assert.equal('1.9.0', packageDotJson.dependencies.axios);
+          assert.equal('11.1.0', packageDotJson.dependencies.commander);
+          assert.equal('11.3.0', packageDotJson.dependencies['fs-extra']);
+          assert.equal('10.8.2', packageDotJson.dependencies.mocha);
+          assert.equal('2.0.1', packageDotJson.dependencies['mocha-param']);
+          assert.equal('0.4.4', packageDotJson.dependencies.ping);
+          assert.equal('1.4.10', packageDotJson.dependencies['readline-sync']);
+          assert.equal('7.7.2', packageDotJson.dependencies.semver);
+          assert.equal('3.17.0', packageDotJson.dependencies.winston);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
@@ -336,12 +303,12 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, packageDotJson.devDependencies);
           assert.notEqual(null, packageDotJson.devDependencies);
           assert.notEqual('', packageDotJson.devDependencies);
-          assert.equal('^4.3.7', packageDotJson.devDependencies.chai);
-          assert.equal('^8.44.0', packageDotJson.devDependencies.eslint);
-          assert.equal('^15.0.0', packageDotJson.devDependencies['eslint-config-airbnb-base']);
-          assert.equal('^2.27.5', packageDotJson.devDependencies['eslint-plugin-import']);
-          assert.equal('^3.1.0', packageDotJson.devDependencies['eslint-plugin-json']);
-          assert.equal('^3.18.0', packageDotJson.devDependencies.testdouble);
+          assert.equal('4.5.0', packageDotJson.devDependencies.chai);
+          assert.equal('8.57.0', packageDotJson.devDependencies.eslint);
+          assert.equal('15.0.0', packageDotJson.devDependencies['eslint-config-airbnb-base']);
+          assert.equal('2.31.0', packageDotJson.devDependencies['eslint-plugin-import']);
+          assert.equal('3.1.0', packageDotJson.devDependencies['eslint-plugin-json']);
+          assert.equal('3.18.0', packageDotJson.devDependencies.testdouble);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);

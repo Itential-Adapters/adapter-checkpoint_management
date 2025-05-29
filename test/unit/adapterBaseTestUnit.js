@@ -1,5 +1,5 @@
 // Set globals
-/* global describe it log pronghornProps */
+/* global describe it log pronghornProps beforeEach afterEach */
 /* eslint global-require: warn */
 /* eslint no-unused-vars: warn */
 
@@ -12,11 +12,13 @@ const winston = require('winston');
 const { expect } = require('chai');
 const { use } = require('chai');
 const td = require('testdouble');
+const entitiesToDB = require('../../utils/entitiesToDB');
+const troubleshootingAdapter = require('../../utils/troubleshootingAdapter');
+const log = require('../../utils/logger');
 
 const anything = td.matchers.anything();
 
 // stub and attemptTimeout are used throughout the code so set them here
-let logLevel = 'none';
 const stub = true;
 const isRapidFail = false;
 const attemptTimeout = 120000;
@@ -143,43 +145,6 @@ global.pronghornProps = {
 
 global.$HOME = `${__dirname}/../..`;
 
-// set the log levels that Pronghorn uses, spam and trace are not defaulted in so without
-// this you may error on log.trace calls.
-const myCustomLevels = {
-  levels: {
-    spam: 6,
-    trace: 5,
-    debug: 4,
-    info: 3,
-    warn: 2,
-    error: 1,
-    none: 0
-  }
-};
-
-// need to see if there is a log level passed in
-process.argv.forEach((val) => {
-  // is there a log level defined to be passed in?
-  if (val.indexOf('--LOG') === 0) {
-    // get the desired log level
-    const inputVal = val.split('=')[1];
-
-    // validate the log level is supported, if so set it
-    if (Object.hasOwnProperty.call(myCustomLevels.levels, inputVal)) {
-      logLevel = inputVal;
-    }
-  }
-});
-
-// need to set global logging
-global.log = winston.createLogger({
-  level: logLevel,
-  levels: myCustomLevels.levels,
-  transports: [
-    new winston.transports.Console()
-  ]
-});
-
 /**
  * Runs the error asserts for the test
  */
@@ -209,6 +174,33 @@ if (fs.existsSync(dirPath)) {
     console.log('Error when deleting .DS_Store:', e);
   }
 }
+
+// Define test data at the top of the test section
+const testData = {
+  pronghorn: {
+    id: 'test-adapter',
+    name: 'Test Adapter',
+    version: '1.0.0'
+  },
+  action: {
+    actions: [{
+      name: 'testAction',
+      description: 'Test action description',
+      method: 'GET',
+      entitypath: '/test/path'
+    }]
+  },
+  schema: {
+    type: 'object',
+    properties: {
+      name: { type: 'string' },
+      description: { type: 'string' }
+    }
+  },
+  mock: {
+    testData: 'value'
+  }
+};
 
 describe('[unit] Adapter Base Test', () => {
   describe('Adapter Base Class Tests', () => {
@@ -650,6 +642,246 @@ describe('[unit] Adapter Base Test', () => {
           done(error);
         }
       }).timeout(attemptTimeout);
+
+      // Single working test for action update
+      // it('should update an action configuration', (done) => {
+      //   const adapterId = testData.pronghorn.id;
+
+      //   // Create mock fs module with promises
+      //   const mockFs = {
+      //     existsSync: td.func('existsSync'),
+      //     lstatSync: td.func('lstatSync'),
+      //     promises: {
+      //       writeFile: td.func('writeFile')
+      //     }
+      //   };
+
+      //   // Replace fs module
+      //   td.replace('fs', mockFs);
+      //   td.replace('fs-extra', mockFs);
+
+      //   // Mock MongoDB connection
+      //   const mockMongoDBConnection = td.constructor(['connect', 'closeConnection']);
+      //   td.replace('../../utils/mongoDbConnection', mockMongoDBConnection);
+
+      //   // Set up MongoDB properties
+      //   a.allProps = {
+      //     mongo: {
+      //       host: 'localhost',
+      //       port: 27017,
+      //       database: 'test'
+      //     }
+      //   };
+
+      //   // Mock MongoDB operations
+      //   const mockDb = {
+      //     collection: td.func('collection')
+      //   };
+      //   const mockCollection = {
+      //     findOne: td.func('findOne'),
+      //     updateOne: td.func('updateOne')
+      //   };
+
+      //   td.when(mockMongoDBConnection.prototype.connect()).thenResolve({ db: mockDb });
+      //   td.when(mockDb.collection('adapter_configs')).thenReturn(mockCollection);
+      //   td.when(mockCollection.findOne(td.matchers.anything())).thenResolve({
+      //     id: 'test',
+      //     type: adapterId,
+      //     entity: 'testEntity',
+      //     actions: []
+      //   });
+      //   td.when(mockCollection.updateOne(td.matchers.anything(), td.matchers.anything())).thenResolve({ modifiedCount: 1 });
+
+      //   // Test the update
+      //   a.iapUpdateAdapterConfiguration(
+      //     'action.json',
+      //     { name: 'testAction', method: 'GET', entitypath: '/test/path' },
+      //     'testEntity',
+      //     'action',
+      //     'testAction',
+      //     null,
+      //     (data, error) => {
+      //       assert.equal(null, data);
+      //       assert.notEqual(null, error);
+      //       assert.equal('AD.999', error.icode);
+      //       done();
+      //     }
+      //   );
+      // });
+
+      // it('should update a schema configuration', (done) => {
+      //   const adapterId = testData.pronghorn.id;
+
+      //   // Create mock fs module with promises
+      //   const mockFs = {
+      //     existsSync: td.func('existsSync'),
+      //     lstatSync: td.func('lstatSync'),
+      //     promises: {
+      //       writeFile: td.func('writeFile')
+      //     }
+      //   };
+
+      //   // Replace fs module
+      //   td.replace('fs', mockFs);
+      //   td.replace('fs-extra', mockFs);
+
+      //   // Mock MongoDB connection
+      //   const mockMongoDBConnection = td.constructor(['connect', 'closeConnection']);
+      //   td.replace('../../utils/mongoDbConnection', mockMongoDBConnection);
+
+      //   // Set up MongoDB properties
+      //   a.allProps = {
+      //     mongo: {
+      //       host: 'localhost',
+      //       port: 27017,
+      //       database: 'test'
+      //     }
+      //   };
+
+      //   // Mock MongoDB operations
+      //   const mockDb = {
+      //     collection: td.func('collection')
+      //   };
+      //   const mockCollection = {
+      //     findOne: td.func('findOne'),
+      //     updateOne: td.func('updateOne')
+      //   };
+
+      //   td.when(mockMongoDBConnection.prototype.connect()).thenResolve({ db: mockDb });
+      //   td.when(mockDb.collection('adapter_configs')).thenReturn(mockCollection);
+      //   td.when(mockCollection.findOne(td.matchers.anything())).thenResolve({
+      //     id: 'test',
+      //     type: adapterId,
+      //     entity: 'testEntity',
+      //     schema: []
+      //   });
+      //   td.when(mockCollection.updateOne(td.matchers.anything(), td.matchers.anything())).thenResolve({ modifiedCount: 1 });
+
+      //   // Test the update
+      //   a.iapUpdateAdapterConfiguration(
+      //     'schema.json',
+      //     { type: 'object', properties: { newField: { type: 'string' } } },
+      //     'testEntity',
+      //     'schema',
+      //     null,
+      //     false,
+      //     (data, error) => {
+      //       assert.equal(null, data);
+      //       assert.notEqual(null, error);
+      //       assert.equal('AD.999', error.icode);
+      //       done();
+      //     }
+      //   );
+      // });
+
+      // it('should update a mock data configuration', (done) => {
+      //   const adapterId = testData.pronghorn.id;
+
+      //   // Create mock fs module with promises
+      //   const mockFs = {
+      //     existsSync: td.func('existsSync'),
+      //     lstatSync: td.func('lstatSync'),
+      //     promises: {
+      //       writeFile: td.func('writeFile'),
+      //       mkdir: td.func('mkdir')
+      //     }
+      //   };
+
+      //   // Replace fs module
+      //   td.replace('fs', mockFs);
+      //   td.replace('fs-extra', mockFs);
+
+      //   // Mock MongoDB connection
+      //   const mockMongoDBConnection = td.constructor(['connect', 'closeConnection']);
+      //   td.replace('../../utils/mongoDbConnection', mockMongoDBConnection);
+
+      //   // Set up MongoDB properties
+      //   a.allProps = {
+      //     mongo: {
+      //       host: 'localhost',
+      //       port: 27017,
+      //       database: 'test'
+      //     }
+      //   };
+
+      //   // Mock MongoDB operations
+      //   const mockDb = {
+      //     collection: td.func('collection')
+      //   };
+      //   const mockCollection = {
+      //     findOne: td.func('findOne'),
+      //     updateOne: td.func('updateOne')
+      //   };
+
+      //   td.when(mockMongoDBConnection.prototype.connect()).thenResolve({ db: mockDb });
+      //   td.when(mockDb.collection('adapter_configs')).thenReturn(mockCollection);
+      //   td.when(mockCollection.findOne(td.matchers.anything())).thenResolve({
+      //     id: 'test',
+      //     type: adapterId,
+      //     entity: 'testEntity',
+      //     mockdatafiles: {}
+      //   });
+      //   td.when(mockCollection.updateOne(td.matchers.anything(), td.matchers.anything())).thenResolve({ modifiedCount: 1 });
+
+      //   // Test the update
+      //   a.iapUpdateAdapterConfiguration(
+      //     'mock.json',
+      //     { testData: 'new value' },
+      //     'testEntity',
+      //     'mock',
+      //     null,
+      //     true,
+      //     (data, error) => {
+      //       assert.equal(null, data);
+      //       assert.notEqual(null, error);
+      //       assert.equal('AD.999', error.icode);
+      //       done();
+      //     }
+      //   );
+      // });
+
+      // it('should handle MongoDB errors', (done) => {
+      //   const adapterId = testData.pronghorn.id;
+      //   const changes = {
+      //     name: 'testAction',
+      //     method: 'GET',
+      //     entitypath: '/test/path'
+      //   };
+
+      //   // Mock MongoDBConnection to simulate error
+      //   const originalMongoDBConnection = require('../../utils/mongoDbConnection').MongoDBConnection;
+      //   const mockMongoDBConnection = {
+      //     connect: td.func('connect'),
+      //     db: {
+      //       collection: td.func('collection')
+      //     },
+      //     closeConnection: td.func('closeConnection')
+      //   };
+      //   require('../../utils/mongoDbConnection').MongoDBConnection = function () {
+      //     return mockMongoDBConnection;
+      //   };
+
+      //   // Set up MongoDB properties
+      //   a.allProps = {
+      //     mongo: {
+      //       host: 'localhost',
+      //       port: 27017,
+      //       database: 'test'
+      //     }
+      //   };
+
+      //   // Mock MongoDB operations to fail
+      //   td.when(mockMongoDBConnection.connect()).thenReject(new Error('MongoDB error'));
+
+      //   a.iapUpdateAdapterConfiguration('action.json', changes, 'testEntity', 'action', 'testAction', null, (data, error) => {
+      //     assert.equal(null, data);
+      //     assert.notEqual(null, error);
+      //     assert.equal('AD.999', error.icode);
+      //     // Restore original MongoDBConnection
+      //     require('../../utils/mongoDbConnection').MongoDBConnection = originalMongoDBConnection;
+      //     done();
+      //   });
+      // }).timeout(attemptTimeout);
     });
 
     describe('#iapSuspendAdapter', () => {
@@ -770,6 +1002,14 @@ describe('[unit] Adapter Base Test', () => {
     });
 
     describe('#iapTroubleshootAdapter', () => {
+      beforeEach(() => {
+        td.replace(troubleshootingAdapter, 'troubleshoot', td.func());
+      });
+
+      afterEach(() => {
+        td.reset();
+      });
+
       it('should have a iapTroubleshootAdapter function', (done) => {
         try {
           assert.equal(true, typeof a.iapTroubleshootAdapter === 'function');
@@ -779,6 +1019,116 @@ describe('[unit] Adapter Base Test', () => {
           done(error);
         }
       });
+
+      // it('should successfully troubleshoot adapter with valid properties', (done) => {
+      //   try {
+      //     const mockResult = {
+      //       connectivity: { failCount: 0 },
+      //       healthCheck: true,
+      //       basicGet: { passCount: 1 }
+      //     };
+
+      //     td.when(troubleshootingAdapter.troubleshoot(td.matchers.anything(), false, td.matchers.anything()))
+      //       .thenResolve(mockResult);
+
+      //     a.iapTroubleshootAdapter({}, false, a, (result, error) => {
+      //       try {
+      //         assert.equal(undefined, error);
+      //         assert.notEqual(undefined, result);
+      //         assert.notEqual(null, result);
+      //         assert.equal(true, result.healthCheck);
+      //         assert.equal(0, result.connectivity.failCount);
+      //         assert.equal(1, result.basicGet.passCount);
+      //         done();
+      //       } catch (err) {
+      //         log.error(`Test Failure: ${err}`);
+      //         done(err);
+      //       }
+      //     });
+      //   } catch (error) {
+      //     log.error(`Adapter Exception: ${error}`);
+      //     done(error);
+      //   }
+      // }).timeout(attemptTimeout);
+
+      // it('should handle failed troubleshooting', (done) => {
+      //   try {
+      //     const mockResult = {
+      //       connectivity: { failCount: 1 },
+      //       healthCheck: false,
+      //       basicGet: { passCount: 0 }
+      //     };
+
+      //     td.when(troubleshootingAdapter.troubleshoot(td.matchers.anything(), false, td.matchers.anything()))
+      //       .thenResolve(mockResult);
+
+      //     a.iapTroubleshootAdapter({}, false, a, (result, error) => {
+      //       try {
+      //         assert.equal(null, result);
+      //         assert.notEqual(undefined, error);
+      //         assert.notEqual(null, error);
+      //         assert.equal(false, error.healthCheck);
+      //         assert.equal(1, error.connectivity.failCount);
+      //         assert.equal(0, error.basicGet.passCount);
+      //         done();
+      //       } catch (err) {
+      //         log.error(`Test Failure: ${err}`);
+      //         done(err);
+      //       }
+      //     });
+      //   } catch (error) {
+      //     log.error(`Adapter Exception: ${error}`);
+      //     done(error);
+      //   }
+      // }).timeout(attemptTimeout);
+
+      // it('should handle troubleshooting errors', (done) => {
+      //   try {
+      //     td.when(troubleshootingAdapter.troubleshoot(td.matchers.anything(), false, td.matchers.anything()))
+      //       .thenReject(new Error('Troubleshooting failed'));
+
+      //     a.iapTroubleshootAdapter({}, false, a, (result, error) => {
+      //       try {
+      //         assert.equal(null, result);
+      //         assert.notEqual(undefined, error);
+      //         assert.notEqual(null, error);
+      //         assert.equal('Troubleshooting failed', error.message);
+      //         done();
+      //       } catch (err) {
+      //         log.error(`Test Failure: ${err}`);
+      //         done(err);
+      //       }
+      //     });
+      //   } catch (error) {
+      //     log.error(`Adapter Exception: ${error}`);
+      //     done(error);
+      //   }
+      // }).timeout(attemptTimeout);
+
+      // it('should handle missing adapter instance', (done) => {
+      //   try {
+      //     a.iapTroubleshootAdapter({}, false, null, (result, error) => {
+      //       try {
+      //         assert.equal(null, result);
+      //         assert.notEqual(undefined, error);
+      //         assert.notEqual(null, error);
+      //         // Check for either error message format
+      //         assert.ok(
+      //           error.message === "Cannot read property 'healthCheck' of undefined"
+      //           || error.message === "Cannot read properties of undefined (reading 'healthCheck')",
+      //           `Unexpected error message: ${error.message}`
+      //         );
+      //         done();
+      //       } catch (err) {
+      //         log.error(`Test Failure: ${err}`);
+      //         done(err);
+      //       }
+      //     });
+      //   } catch (error) {
+      //     log.error(`Adapter Exception: ${error}`);
+      //     done(error);
+      //   }
+      // }).timeout(attemptTimeout);
     });
 
     describe('#iapRunAdapterHealthcheck', () => {
@@ -827,6 +1177,258 @@ describe('[unit] Adapter Base Test', () => {
           done(error);
         }
       });
+
+      // describe('Connection String Tests', () => {
+      //   beforeEach(() => {
+      //     // Initialize allProps if it doesn't exist
+      //     if (!a.allProps) {
+      //       a.allProps = {};
+      //     }
+      //     // Initialize mongo properties with defaults
+      //     a.allProps.mongo = {
+      //       host: '',
+      //       port: 0,
+      //       database: '',
+      //       dbAuth: false,
+      //       username: '',
+      //       password: '',
+      //       replSet: '',
+      //       addSrv: false,
+      //       db_ssl: {
+      //         enabled: false,
+      //         accept_invalid_cert: false,
+      //         ca_file: '',
+      //         key_file: '',
+      //         cert_file: ''
+      //       }
+      //     };
+      //   });
+
+      //   it('should prioritize URL over individual properties when both are provided', (done) => {
+      //     // Mock the moveEntitiesToDB function
+      //     entitiesToDB.moveEntitiesToDB = td.func();
+
+      //     // Set both URL and individual properties
+      //     a.allProps.mongo.url = 'mongodb://localhost:27017/urldb';
+      //     a.allProps.mongo.host = 'differenthost';
+      //     a.allProps.mongo.port = 12345;
+      //     a.allProps.mongo.database = 'propdb';
+
+      //     // Mock successful database operation
+      //     td.when(entitiesToDB.moveEntitiesToDB(
+      //       td.matchers.anything(),
+      //       td.matchers.contains({
+      //         pronghornProps: {
+      //           mongo: a.allProps.mongo
+      //         },
+      //         id: a.id
+      //       })
+      //     )).thenResolve({ insertedCount: 1 });
+
+      //     // Call the function
+      //     a.iapMoveAdapterEntitiesToDB((result, error) => {
+      //       try {
+      //         assert.notEqual(null, result);
+      //         assert.equal(null, error);
+      //         assert.equal(1, result.insertedCount);
+      //         done();
+      //       } catch (err) {
+      //         done(err);
+      //       }
+      //     });
+      //   }).timeout(attemptTimeout);
+
+      //   it('should correctly form connection string from URL with database override', (done) => {
+      //     // Mock the moveEntitiesToDB function
+      //     entitiesToDB.moveEntitiesToDB = td.func();
+
+      //     // Set URL-based connection with different database in URL vs properties
+      //     a.allProps.mongo.url = 'mongodb://localhost:27017/urldb';
+      //     a.allProps.mongo.database = 'propdb';
+
+      //     // Mock successful database operation
+      //     td.when(entitiesToDB.moveEntitiesToDB(
+      //       td.matchers.anything(),
+      //       td.matchers.contains({
+      //         pronghornProps: {
+      //           mongo: a.allProps.mongo
+      //         },
+      //         id: a.id
+      //       })
+      //     )).thenResolve({ insertedCount: 1 });
+
+      //     // Call the function
+      //     a.iapMoveAdapterEntitiesToDB((result, error) => {
+      //       try {
+      //         assert.notEqual(null, result);
+      //         assert.equal(null, error);
+      //         assert.equal(1, result.insertedCount);
+      //         done();
+      //       } catch (err) {
+      //         done(err);
+      //       }
+      //     });
+      //   }).timeout(attemptTimeout);
+
+      //   it('should correctly form connection string from individual properties with SSL', (done) => {
+      //     // Mock the moveEntitiesToDB function
+      //     entitiesToDB.moveEntitiesToDB = td.func();
+
+      //     // Update adapter properties with SSL configuration without sensitive data
+      //     a.allProps.mongo = {
+      //       host: 'localhost',
+      //       port: 27017,
+      //       database: 'testdb',
+      //       replSet: 'rs0',
+      //       addSrv: false,
+      //       db_ssl: {
+      //         enabled: true,
+      //         accept_invalid_cert: true
+      //       }
+      //     };
+
+      //     // Mock successful database operation
+      //     td.when(entitiesToDB.moveEntitiesToDB(
+      //       td.matchers.anything(),
+      //       td.matchers.contains({
+      //         pronghornProps: {
+      //           mongo: a.allProps.mongo
+      //         },
+      //         id: a.id
+      //       })
+      //     )).thenResolve({ insertedCount: 1 });
+
+      //     // Call the function
+      //     a.iapMoveAdapterEntitiesToDB((result, error) => {
+      //       try {
+      //         assert.notEqual(null, result);
+      //         assert.equal(null, error);
+      //         assert.equal(1, result.insertedCount);
+      //         done();
+      //       } catch (err) {
+      //         done(err);
+      //       }
+      //     });
+      //   }).timeout(attemptTimeout);
+
+      //   it('should handle missing required properties', (done) => {
+      //     // Mock the moveEntitiesToDB function to throw an error
+      //     entitiesToDB.moveEntitiesToDB = td.func();
+      //     td.when(entitiesToDB.moveEntitiesToDB(td.matchers.anything(), td.matchers.anything()))
+      //       .thenReject(new Error('Missing required property: database'));
+
+      //     // Call the function with incomplete properties
+      //     a.allProps.mongo = {
+      //       host: 'localhost',
+      //       port: 27017
+      //       // Missing database property
+      //     };
+
+      //     a.iapMoveAdapterEntitiesToDB((result, error) => {
+      //       try {
+      //         assert.equal(null, result);
+      //         assert.notEqual(null, error);
+      //         assert.equal('Missing required property: database', error);
+      //         done();
+      //       } catch (err) {
+      //         done(err);
+      //       }
+      //     });
+      //   }).timeout(attemptTimeout);
+
+      //   it('should handle invalid URL format', (done) => {
+      //     // Mock the moveEntitiesToDB function to throw an error
+      //     entitiesToDB.moveEntitiesToDB = td.func();
+      //     td.when(entitiesToDB.moveEntitiesToDB(td.matchers.anything(), td.matchers.anything()))
+      //       .thenReject(new Error('Invalid URL format'));
+
+      //     // Call the function with invalid URL
+      //     a.allProps.mongo.url = 'invalid-url';
+
+      //     a.iapMoveAdapterEntitiesToDB((result, error) => {
+      //       try {
+      //         assert.equal(null, result);
+      //         assert.notEqual(null, error);
+      //         assert.equal('Invalid URL format', error);
+      //         done();
+      //       } catch (err) {
+      //         done(err);
+      //       }
+      //     });
+      //   }).timeout(attemptTimeout);
+
+      //   it('should handle connection errors gracefully', (done) => {
+      //     // Mock the moveEntitiesToDB function to throw a connection error
+      //     entitiesToDB.moveEntitiesToDB = td.func();
+      //     td.when(entitiesToDB.moveEntitiesToDB(td.matchers.anything(), td.matchers.anything()))
+      //       .thenReject(new Error('Failed to connect to MongoDB'));
+
+      //     // Set valid connection properties
+      //     a.allProps.mongo = {
+      //       host: 'localhost',
+      //       port: 27017,
+      //       database: 'testdb'
+      //     };
+
+      //     a.iapMoveAdapterEntitiesToDB((result, error) => {
+      //       try {
+      //         assert.equal(null, result);
+      //         assert.notEqual(null, error);
+      //         assert.equal('Failed to connect to MongoDB', error);
+      //         done();
+      //       } catch (err) {
+      //         done(err);
+      //       }
+      //     });
+      //   }).timeout(attemptTimeout);
+
+      //   it('should handle authentication errors', (done) => {
+      //     // Mock the moveEntitiesToDB function to throw an auth error
+      //     entitiesToDB.moveEntitiesToDB = td.func();
+      //     td.when(entitiesToDB.moveEntitiesToDB(td.matchers.anything(), td.matchers.anything()))
+      //       .thenReject(new Error('Authentication failed'));
+
+      //     // Set properties without any sensitive data
+      //     a.allProps.mongo = {
+      //       host: 'localhost',
+      //       port: 27017,
+      //       database: 'testdb',
+      //       dbAuth: true
+      //     };
+
+      //     a.iapMoveAdapterEntitiesToDB((result, error) => {
+      //       try {
+      //         assert.equal(null, result);
+      //         assert.notEqual(null, error);
+      //         assert.equal('Authentication failed', error);
+      //         done();
+      //       } catch (err) {
+      //         done(err);
+      //       }
+      //     });
+      //   }).timeout(attemptTimeout);
+
+      //   it('should handle missing connection properties', (done) => {
+      //     // Mock the moveEntitiesToDB function to throw an error
+      //     entitiesToDB.moveEntitiesToDB = td.func();
+      //     td.when(entitiesToDB.moveEntitiesToDB(td.matchers.anything(), td.matchers.anything()))
+      //       .thenReject(new Error('No connection properties provided'));
+
+      //     // Clear all connection properties
+      //     a.allProps.mongo = {};
+
+      //     a.iapMoveAdapterEntitiesToDB((result, error) => {
+      //       try {
+      //         assert.equal(null, result);
+      //         assert.notEqual(null, error);
+      //         assert.equal('No connection properties provided', error);
+      //         done();
+      //       } catch (err) {
+      //         done(err);
+      //       }
+      //     });
+      //   }).timeout(attemptTimeout);
+      // });
     });
 
     describe('#iapDeactivateTasks', () => {

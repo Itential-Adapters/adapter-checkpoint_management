@@ -7,14 +7,11 @@ const assert = require('assert');
 const https = require('https');
 const mocha = require('mocha');
 const ping = require('ping');
-const dnsLookup = require('dns-lookup-promise');
+const dns = require('dns');
+const { parseArgs } = require('../../utils/argParser');
 
-let host;
-process.argv.forEach((val) => {
-  if (val.indexOf('--HOST') === 0) {
-    [, host] = val.split('=');
-  }
-});
+const dnsPromises = dns.promises;
+const { host } = parseArgs();
 
 describe('[integration] Adapter Test', () => {
   context(`Testing network connection on ${host}`, () => {
@@ -23,10 +20,10 @@ describe('[integration] Adapter Test', () => {
     });
 
     it('DNS resolve', (done) => {
-      dnsLookup(host)
-        .then((addresses) => {
+      dnsPromises.lookup(host, { all: true })
+        .then((result) => {
           try {
-            assert.ok(addresses.length > 0);
+            assert.ok(result.length > 0);
             done();
           } catch (error) {
             done(error);
@@ -78,12 +75,13 @@ describe('[integration] Adapter Test', () => {
     it('Support IPv4', (done) => {
       const options = {
         family: 4,
-        hints: dnsLookup.ADDRCONFIG
+        hints: dns.ADDRCONFIG
       };
 
-      dnsLookup.lookup(host, options)
-        .then((address, family) => {
+      dnsPromises.lookup(host, options)
+        .then((result) => {
           try {
+            const { address, family } = result;
             assert.ok(address !== null && family === 4);
             done();
           } catch (error) {
@@ -98,12 +96,13 @@ describe('[integration] Adapter Test', () => {
     it('Support IPv6', (done) => {
       const options = {
         family: 6,
-        hints: dnsLookup.ADDRCONFIG
+        hints: dns.ADDRCONFIG
       };
 
-      dnsLookup.lookup(host, options)
-        .then((address, family) => {
+      dnsPromises.lookup(host, options)
+        .then((result) => {
           try {
+            const { address, family } = result;
             assert.ok(address !== null && family === 6);
             done();
           } catch (error) {

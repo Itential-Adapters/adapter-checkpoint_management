@@ -5,7 +5,7 @@
   "main": "adapter.js",
   "systemName": "Checkpoint Management",
   "wizardVersion": "2.44.7",
-  "engineVersion": "1.68.2",
+  "engineVersion": "1.69.14",
   "adapterType": "http",
   "scripts": {
     "artifactize": "npm i && node utils/packModificationScript.js",
@@ -40,7 +40,8 @@
     "Security",
     "Checkpoint",
     "Checkpoint Management",
-    "Pre-Release"
+    "Pre-Release",
+    "Itential Platform"
   ],
   "license": "Apache-2.0",
   "engines": {
@@ -54,30 +55,30 @@
   "author": "Itential",
   "homepage": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management#readme",
   "dependencies": {
-    "@itentialopensource/adapter-utils": "^5.10.1",
-    "acorn": "^8.14.0",
-    "ajv": "^8.17.1",
-    "axios": "^1.8.2",
-    "commander": "^11.0.0",
+    "@itentialopensource/adapter-utils": "5.10.16",
+    "acorn": "8.14.1",
+    "ajv": "8.17.1",
+    "axios": "1.9.0",
+    "commander": "11.1.0",
     "dns-lookup-promise": "^1.0.4",
-    "fs-extra": "^11.2.0",
-    "json-query": "^2.2.2",
-    "mocha": "^10.8.2",
-    "mocha-param": "^2.0.1",
-    "mongodb": "^4.17.2",
-    "ping": "^0.4.4",
-    "prompts": "^2.4.2",
-    "readline-sync": "^1.4.10",
-    "semver": "^7.6.3",
-    "winston": "^3.17.0"
+    "fs-extra": "11.3.0",
+    "json-query": "2.2.2",
+    "mocha": "10.8.2",
+    "mocha-param": "2.0.1",
+    "mongodb": "4.17.2",
+    "ping": "0.4.4",
+    "prompts": "2.4.2",
+    "readline-sync": "1.4.10",
+    "semver": "7.7.2",
+    "winston": "3.17.0"
   },
   "devDependencies": {
-    "chai": "^4.3.7",
-    "eslint": "^8.44.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-json": "^3.1.0",
-    "testdouble": "^3.18.0"
+    "chai": "4.5.0",
+    "eslint": "8.57.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-json": "3.1.0",
+    "testdouble": "3.18.0"
   },
   "private": false
 }

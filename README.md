@@ -12,13 +12,14 @@ Some of the page links in this document and links to other GitLab files do not w
 - [Generic Adapter Information](#generic-adapter-information)
   - [Overview](./SUMMARY.md)
   - [Versioning](#versioning)
-  - [Supported IAP Versions](#supported-iap-versions)
+  - [Supported Platform Versions](#supported-platform-versions)
   - [Getting Started](#getting-started)
     - [Helpful Background Information](#helpful-background-information)
     - [Prerequisites](#prerequisites)
     - [How to Install](#how-to-install)
     - [Testing](#testing)
   - [Configuration](./PROPERTIES.md)
+  - [Utilities](./UTILITIES.md)
   - [Additional Information](#additional-information)
     - [Enhancements](./ENHANCE.md)
     - [Contributing](./CONTRIBUTING.md)
@@ -48,19 +49,19 @@ Some of the page links in this document and links to other GitLab files do not w
 
 ### Versioning
 
-Itential Product and opensource adapters utilize SemVer for versioning. The current version of the adapter can be found in the `package.json` file or viewed in the IAP GUI on the System page. All Itential opensource adapters can be found in the <a href="https://gitlab.com/itentialopensource/adapters" target="_blank">Itential OpenSource Repository</a>.
+Itential Product and opensource adapters utilize SemVer for versioning. The current version of the adapter can be found in the `package.json` file or viewed in the Platform GUI on the System page. All Itential opensource adapters can be found in the <a href="https://gitlab.com/itentialopensource/adapters" target="_blank">Itential OpenSource Repository</a>.
 
 Any release prior to 1.0.0 is a pre-release. Initial builds of adapters are generally set up as pre-releases as there is often work that needs to be done to configure the adapter and make sure the authentication process to Checkpoint_Management works appropriately.
 
 Release notes can be viewed in CHANGELOG.md.
 
-### Supported IAP Versions
+### Supported Platform Versions
 
-Itential Product adapters are built for particular versions of IAP and packaged with the versions they work with. 
+Itential Product adapters are built for particular versions of Platform and packaged with the versions they work with. 
 
-Itential opensource adapter as well as custom adapters built with the Itential Adapter Builder work acoss many releases of IAP. As a result, it is not often necessary to modify an adapter when upgrading IAP. If IAP has changes that impact the pronghorn.json, like adding a new required section, this will most likely require changes to all adapters when upgrading IAP.
+Itential opensource adapter as well as custom adapters built with the Itential Adapter Builder work acoss many releases of Platform. As a result, it is not often necessary to modify an adapter when upgrading Platform. If Platform has changes that impact the pronghorn.json, like adding a new required section, this will most likely require changes to all adapters when upgrading Platform.
 
-Many of the scripts that come with all adapters built using the Itential Adapter Builder do have some dependencies on IAP or the IAP database schema and so it is possible these scripts could stop working in different versions of IAP. If you notify Itential of any issues, the Adapter Team will attempt to fix the scripts for newer releases of IAP.
+Many of the scripts that come with all adapters built using the Itential Adapter Builder do have some dependencies on Platform or the Platform database schema and so it is possible these scripts could stop working in different versions of Platform. If you notify Itential of any issues, the Adapter Team will attempt to fix the scripts for newer releases of Platform.
 
 ### Getting Started
 
@@ -72,7 +73,7 @@ There is <a href="https://docs.itential.com/opensource/docs/adapters" target="_b
 
 ```text
 Authentication
-IAP Service Instance Configuration
+Platform Service Instance Configuration
 Code Files
 Endpoint Configuration (Action & Schema)
 Mock Data
@@ -118,10 +119,6 @@ The following list of packages are required for Itential opensource adapters or 
   </tr>
   <tr>
     <td style="padding:15px">commander</td>
-    <td style="padding:15px">Utilized by the node scripts that are included with the adapter; helps to build and extend the functionality.</td>
-  </tr>
-  <tr>
-    <td style="padding:15px">dns-lookup-promise</td>
     <td style="padding:15px">Utilized by the node scripts that are included with the adapter; helps to build and extend the functionality.</td>
   </tr>
   <tr>
@@ -176,18 +173,24 @@ testdouble
 
 #### How to Install
 
-1. Set up the name space location in your IAP node_modules.
+1a. If you are working on Itential Platform 2023.2 or earlier versions, set up the name space location in your Itential Platform node_modules.
 
 ```bash
 cd /opt/pronghorn/current/node_modules (* could be in a different place)
 if the @itentialopensource directory does not exist, create it:
     mkdir @itentialopensource
+cd @itentialopensource
 ```
 
-2. Clone/unzip/tar the adapter into your IAP environment.
+1b. If you are working on Platform 6, you need to install the adapter in the services directory.
 
 ```bash
-cd @itentialopensource
+cd /opt/itential/platform/services (* you may have configured it to be in a different place)
+```
+
+2. Clone/unzip/tar the adapter into your Platform environment.
+
+```bash
 git clone git@gitlab.com:@itentialopensource/adapters/adapter-checkpoint_management
 or
 unzip adapter-checkpoint_management.zip
@@ -195,7 +198,7 @@ or
 tar -xvf adapter-checkpoint_management.tar
 ```
 
-3. Run the adapter install script.
+3. install the adapter dependencies.
 
 ```bash
 cd adapter-checkpoint_management
@@ -204,17 +207,17 @@ npm run lint:errors
 npm run test
 ```
 
-4. Restart IAP
+4. Restart Platform
 
 ```bash
 systemctl restart pronghorn
 ```
 
-5. Create an adapter service instance configuration in IAP Admin Essentials GUI
+5. Create an adapter service instance configuration in Platform Admin Essentials GUI
 
 6. Copy the properties from the sampleProperties.json and paste them into the service instance configuration in the inner/second properties field.
 
-7. Change the adapter service instance configuration (host, port, credentials, etc) in IAP Admin Essentials GUI
+7. Change the adapter service instance configuration (host, port, credentials, etc) in Platform Admin Essentials GUI
 
 #### Testing
 
@@ -266,6 +269,8 @@ Test should also be written to clean up after themselves. However, it is importa
 
 ### [Configuration](./PROPERTIES.md)
 
+### [Utilities](./UTILITIES.md)
+
 ### Additional Information
 
 #### [Enhancements](./ENHANCE.md)
@@ -278,16 +283,12 @@ Test should also be written to clean up after themselves. However, it is importa
 
 #### Node Scripts
 
-There are several node scripts that now accompany the adapter. These scripts are provided to make several activities easier. Many of these scripts can have issues with different versions of IAP as they have dependencies on IAP and Mongo. If you have issues with the scripts please report them to the Itential Adapter Team. Each of these scripts are described below.
+There are several node scripts that now accompany the adapter. These scripts are provided to make several activities easier. Many of these scripts can have issues with different versions of Platform as they have dependencies on Platform and Mongo. If you have issues with the scripts please report them to the Itential Adapter Team. Each of these scripts are described below.
 
 <table border="1" class="bordered-table">
   <tr>
     <th bgcolor="lightgrey" style="padding:15px"><span style="font-size:12.0pt">Run</span></th>
     <th bgcolor="lightgrey" style="padding:15px"><span style="font-size:12.0pt">Description</span></th>
-  </tr>
-  <tr>
-    <td style="padding:15px">npm run adapter:install</td>
-    <td style="padding:15px">Provides an easier way to install the adapter.</td>
   </tr>
   <tr>
     <td style="padding:15px">npm run adapter:checkMigrate</td>

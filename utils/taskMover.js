@@ -9,29 +9,31 @@ const blacklistTasks = [
 ];
 
 const adapterBaseTasks = [
-    'getDevicesFiltered',
-    'isAlive',
-    'getConfig',
-    'getDevice',
-    'iapUpdateAdapterConfiguration',
-    'iapFindAdapterPath',
-    'iapSuspendAdapter',
-    'iapUnsuspendAdapter',
-    'iapGetAdapterQueue',
-    'iapTroubleshootAdapter',
-    'iapRunAdapterHealthcheck',
-    'iapRunAdapterConnectivity',
-    'iapRunAdapterBasicGet',
-    'iapMoveAdapterEntitiesToDB',
-    'getDevice',
-    'getDevicesFiltered',
-    'isAlive',
-    'getConfig',
-    'iapGetDeviceCount',
-    'iapRunAdapterLint',
-    'iapRunAdapterTests',
-    'iapGetAdapterInventory'
+  'getDevicesFiltered',
+  'isAlive',
+  'getConfig',
+  'getDevice',
+  'iapUpdateAdapterConfiguration',
+  'iapFindAdapterPath',
+  'iapSuspendAdapter',
+  'iapUnsuspendAdapter',
+  'iapGetAdapterQueue',
+  'iapTroubleshootAdapter',
+  'iapRunAdapterHealthcheck',
+  'iapRunAdapterConnectivity',
+  'iapRunAdapterBasicGet',
+  'iapMoveAdapterEntitiesToDB',
+  'getDevice',
+  'getDevicesFiltered',
+  'isAlive',
+  'getConfig',
+  'iapGetDeviceCount',
+  'iapRunAdapterLint',
+  'iapRunAdapterTests',
+  'iapGetAdapterInventory'
 ];
+
+let shouldExitWithFailure = false;
 
 function updatePronghorn(tasks, original, updated) {
   const originalFile = require(original);
@@ -57,15 +59,13 @@ function updatePronghorn(tasks, original, updated) {
   return 'Done';
 }
 
-function flipTaskFlag(task, pronghornPath, value)
-{
+function flipTaskFlag(task, pronghornPath, value) {
   const pronghorn = require(pronghornPath);
   const index = pronghorn.methods.findIndex((method) => method.name === task);
   pronghorn.methods[index] = { ...pronghorn.methods[index], task: value };
   fs.writeFileSync(pronghornPath, JSON.stringify(pronghorn, null, 2));
 }
 
-//Return array of relevant paths given adapter directory
 function createPaths(currentAdapter) {
   const paths = [];
   const filePaths = [
@@ -86,12 +86,8 @@ function insert(str, index, value) {
   return str.substr(0, index) + value + str.substr(index);
 }
 
-//modify adapter js
-//original - path to file containing tasks we want to remove
-// updated - path to file we want to move the tasks to
 function updateAdapterJs(tasks, original, updated, adapterDir) {
   if (!fs.existsSync(original)) {
-    //could do this or just let the error ocurr lower down and catch in warpper
     throw new Error(`Original file ${original} does not exist.`);
   }
   let originalFile = fs.readFileSync(original, 'utf8');
@@ -99,7 +95,6 @@ function updateAdapterJs(tasks, original, updated, adapterDir) {
   if (!fs.existsSync(updated)) {
     const adapterExport = require(`${adapterDir}/pronghorn.json`).export;
     updatedFile = `/* @copyright Itential, LLC 2019 */\n\n/* eslint import/no-dynamic-require: warn */\n/* eslint no-unused-vars: warn */\n/* global log */\n\nconst path = require('path');\n\nconst AdapterBaseCl = require(path.join(__dirname, 'adapterBase.js'));\n\nclass ${adapterExport}Inactive extends AdapterBaseCl {}\n`;
-    //To do handles backup files where og doesn't exist
   } else {
     updatedFile = fs.readFileSync(updated, 'utf8');
   }
@@ -223,6 +218,7 @@ function activateTasks(adapterDir, tasks) {
     return 'success';
   } catch (e) {
     console.log(`Error: ${e} ocurred during execution. Rolling back changes.`);
+    shouldExitWithFailure = true;
     for (let i = 0; i < backupFiles.length; i++) {
       const file = fs.readFileSync(backupFiles[i], 'utf8');
       fs.writeFileSync(filePaths[i], file, 'utf8');
@@ -233,7 +229,6 @@ function activateTasks(adapterDir, tasks) {
       }
     });
     deleteBackups(adapterDir);
-    process.exit(1);
   }
 }
 
@@ -290,6 +285,7 @@ function deactivateTasks(adapterDir, tasks) {
     return 'success';
   } catch (e) {
     console.log(`Error: ${e} ocurred during execution. Rolling back changes.`);
+    shouldExitWithFailure = true;
     for (let i = 0; i < backupFiles.length; i++) {
       const file = fs.readFileSync(backupFiles[i], 'utf8');
       fs.writeFileSync(filePaths[i], file, 'utf8');
@@ -300,8 +296,11 @@ function deactivateTasks(adapterDir, tasks) {
       }
     });
     deleteBackups(adapterDir);
-    process.exit(1);
   }
+}
+
+if (shouldExitWithFailure) {
+  process.exit(1);
 }
 
 module.exports = {

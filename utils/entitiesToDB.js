@@ -16,18 +16,19 @@
 
 const fs = require('fs');
 const path = require('path');
-const utils = require('./tbUtils');
+const tbUtils = require('./tbUtils');
+const mongoUtils = require('./mongoUtils');
 
-// get the pronghorn database information
-const getPronghornProps = async (iapDir) => {
-  log.trace('Retrieving properties.json file...');
-  const rawProps = require(path.join(iapDir, 'properties.json'));
-  log.trace('Decrypting properties...');
-  const { PropertyEncryption } = require('@itential/itential-utils');
-  const propertyEncryption = new PropertyEncryption();
-  const pronghornProps = await propertyEncryption.decryptProps(rawProps);
-  log.trace('Found properties.\n');
-  return pronghornProps;
+/**
+ * Function to load sample properties from the file system
+ */
+const loadSampleProperties = async () => {
+  const samplePath = path.join(__dirname, '../sampleProperties.json');
+  if (fs.existsSync(samplePath)) {
+    const fullProps = JSON.parse(fs.readFileSync(samplePath, 'utf-8'));
+    return fullProps.properties.mongo;
+  }
+  throw new Error('sampleProperties.json not found');
 };
 
 /**
@@ -77,22 +78,23 @@ const buildDoc = (pathstring) => {
 /**
  *  Function used to get the database from the options or a provided directory
  */
-const optionsHandler = (options) => {
-  // if the database properties were provided in the options - return them
-  if (options.pronghornProps) {
-    if (typeof options.pronghornProps === 'string') {
-      return JSON.parse(options.pronghornProps);
-    }
-    return new Promise((resolve, reject) => resolve(options.pronghornProps));
-  }
+const optionsHandler = async (options) => {
+  try {
+    // Try mongo properties from service config first
+    const mongoPronghornProps = options?.pronghornProps?.mongo;
+    const validatedPronghornProps = mongoPronghornProps ? mongoUtils.getAndValidateMongoProps(mongoPronghornProps) : undefined;
+    if (validatedPronghornProps) return validatedPronghornProps;
 
-  // if the directory was provided, get the pronghorn props from the directory
-  if (options.iapDir) {
-    return getPronghornProps(options.iapDir);
-  }
+    // Fallback to sample properties
+    const sampleProps = await loadSampleProperties();
+    const validatedSampleProps = mongoUtils.getAndValidateMongoProps(sampleProps);
+    if (validatedSampleProps) return validatedSampleProps;
 
-  // if nothing was provided, error
-  return new Promise((resolve, reject) => reject(new Error('Neither pronghornProps nor iapDir defined in options!')));
+    throw new Error('No mongo properties provided! Need either a complete URL or both host and database');
+  } catch (error) {
+    log.error('Error in optionsHandler:', error.message);
+    throw error;
+  }
 };
 
 /**
@@ -102,6 +104,7 @@ const moveEntitiesToDB = async (targetPath, options) => {
   // set local variables
   let myOpts = options;
   let myPath = targetPath;
+  let mongoConnection = null;
 
   // if we got a string parse into a JSON object
   if (typeof myOpts === 'string') {
@@ -118,15 +121,17 @@ const moveEntitiesToDB = async (targetPath, options) => {
     throw new Error('Adapter ID required!');
   }
 
-  // get the pronghorn database properties
-  return optionsHandler(options).then(async (currentProps) => {
-    // Check valid filepath provided
-    if (!myPath) {
-      // if no path use the current directory without the utils
-      myPath = path.join(__dirname, '../');
-    } else if (myPath.slice(-1) === '/') {
-      myPath = myPath.slice(0, -1);
-    }
+  // Check valid filepath provided
+  if (!myPath) {
+    // if no path use the current directory without the utils
+    myPath = path.join(__dirname, '../');
+  } else if (myPath.slice(-1) === '/') {
+    myPath = myPath.slice(0, -1);
+  }
+
+  try {
+    // get the database properties from adapter service instance configs
+    const currentProps = await optionsHandler(options);
 
     // verify set the entity path
     const entitiesPath = `${myPath}/entities`;
@@ -165,15 +170,21 @@ const moveEntitiesToDB = async (targetPath, options) => {
     });
 
     // Upload documents to db collection
-    const db = await utils.connect(currentProps).catch((err) => { console.error(err); throw err; });
-    if (!db) {
-      console.error('Error occured when connectiong to database', currentProps);
+    mongoConnection = await tbUtils.connect(currentProps).catch((err) => { log.error(err); throw err; });
+    if (!mongoConnection) {
+      log.error('Error occurred when connecting to database', currentProps);
       throw new Error('Database not found');
     }
-    const collection = db.collection(myOpts.targetCollection);
-    const res = await collection.insertMany(docs, { checkKeys: false }).catch((err) => { console.error(err); throw err; });
+
+    const collection = mongoConnection.db.collection(myOpts.targetCollection);
+    const res = await collection.insertMany(docs, { checkKeys: false }).catch((err) => { log.error(err); throw err; });
     return res;
-  });
+  } finally {
+    // Ensure connection is closed even if an error occurs
+    if (mongoConnection) {
+      await tbUtils.closeConnection(mongoConnection);
+    }
+  }
 };
 
 module.exports = { moveEntitiesToDB };
