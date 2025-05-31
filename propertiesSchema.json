@@ -764,6 +764,14 @@
             "security/ca.pem"
           ]
         },
+        "ca_file_content": {
+          "type": "string",
+          "description": "The content of the CA file used for SSL",
+          "default": "",
+          "examples": [
+            "-----BEGIN CERTIFICATE-----"
+          ]
+        },
         "key_file": {
           "type": "string",
           "description": "The fully qualified path name to the key file used for SSL",
@@ -795,14 +803,6 @@
           "default": "",
           "examples": [
             "DHE-RSA-AES256-SHA"
-          ]
-        },
-        "ca_file_content": {
-          "type": "string",
-          "description": "The content of the CA file used for SSL",
-          "default": "",
-          "examples": [
-            "-----BEGIN CERTIFICATE-----"
           ]
         }
       },
@@ -861,6 +861,15 @@
     "mongo": {
       "type": "object",
       "properties": {
+        "url": {
+          "type": "string",
+          "description": "Mongo's complete connection URL. This property overrides host, port, database, username, password and replSet settings.",
+          "examples": [
+            "mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]",
+            "mongodb+srv://[username:password@]cluster0.xxxxx.mongodb.net/[defaultauthdb][?options]",
+            "mongodb+srv://cluster0.xxxxx.mongodb.net/[defaultauthdb][?options]"
+          ]
+        },
         "host": {
           "type": "string",
           "description": "Host information for the Mongo server",
@@ -886,6 +895,11 @@
             "adapter-xyz"
           ]
         },
+        "dbAuth": {
+          "type": "boolean",
+          "description": "Whether to use authentication for MongoDB connection. Default is false.",
+          "default": false
+        },
         "username": {
           "type": "string",
           "description": "If credentials are required to access Mongo, this is the user to login as.",
@@ -909,6 +923,11 @@
           "examples": [
             "my_repolica_set"
           ]
+        },
+        "addSrv": {
+          "type": "boolean",
+          "description": "Whether the connection requires the mongodb+srv:// protocol. If true, uses mongodb+srv:// protocol. Note: mongodb+srv:// can also be used for non-Atlas deployments that support DNS SRV records",
+          "default": false
         },
         "db_ssl": {
           "type": "object",
@@ -949,25 +968,38 @@
               ]
             }
           }
-        },
-        "url": {
-          "type": "string",
-          "description": "Mongo's complete connection URL. This property overrides host, port, database, username, password and replSet settings.",
-          "examples": [
-            "mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]",
-            "mongodb+srv://[username:password@]cluster0.xxxxx.mongodb.net/[defaultauthdb][?options]",
-            "mongodb+srv://cluster0.xxxxx.mongodb.net/[defaultauthdb][?options]"
-          ]
-        },
+        }
+      },
+      "dependencies": {
         "dbAuth": {
-          "type": "boolean",
-          "description": "Whether to use authentication for MongoDB connection. Default is false.",
-          "default": false
-        },
-        "addSrv": {
-          "type": "boolean",
-          "description": "Whether the connection requires the mongodb+srv:// protocol. If true, uses mongodb+srv:// protocol. Note: mongodb+srv:// can also be used for non-Atlas deployments that support DNS SRV records",
-          "default": false
+          "oneOf": [
+            {
+              "properties": {
+                "dbAuth": {
+                  "const": false
+                }
+              }
+            },
+            {
+              "properties": {
+                "dbAuth": {
+                  "const": true
+                },
+                "username": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "password": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "username",
+                "password"
+              ]
+            }
+          ]
         }
       }
     },

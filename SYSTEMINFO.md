@@ -15,7 +15,7 @@ We classify Check Point Management into the Security/SASE domain as Check Point 
 The Check Point Management adapter can be integrated to the Itential Device Broker which will allow your Check Point Managed Gateways to be managed within the Itential Configuration Manager Application.
 
 ## Why Integrate
-The Check Point Management adapter from Itential is used to integrate the Itential Automation Platform (IAP) with Check Point Management. With this adapter you have the ability to perform operations such as:
+The Check Point Management adapter from Itential is used to integrate the Itential Platform with Check Point Management. With this adapter you have the ability to perform operations such as:
 
 - Configure and Manage Check Point Managed Gateways. 
 - Networks

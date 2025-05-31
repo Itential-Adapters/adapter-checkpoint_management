@@ -193,21 +193,20 @@ class CheckpointManagement extends AdapterBaseCl {
   }
 
   /**
-  * @summary Runs troubleshoot scripts for adapter
-  *
-  * @function iapTroubleshootAdapter
-  * @param {Object} props - the connection, healthcheck and authentication properties
-  *
-  * @param {boolean} persistFlag - whether the adapter properties should be updated
-  * @param {Callback} callback - The results of the call
-  */
-  iapTroubleshootAdapter(props, persistFlag, callback) {
+   * @summary Runs troubleshoot scripts for adapter
+   *
+   * @function iapTroubleshootAdapter
+   * @param {Object} props - the connection, healthcheck and authentication properties
+   *
+   * @param {Callback} callback - The results of the call
+   */
+  iapTroubleshootAdapter(props, callback) {
     const meth = 'adapter-iapTroubleshootAdapter';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
     try {
-      return super.iapTroubleshootAdapter(props, persistFlag, this, callback);
+      return super.iapTroubleshootAdapter(props, this, callback);
     } catch (error) {
       log.error(`${origin}: ${error}`);
       return callback(null, error);
@@ -257,15 +256,16 @@ class CheckpointManagement extends AdapterBaseCl {
     * @summary runs basicGet script for adapter
     *
     * @function iapRunAdapterBasicGet
+    * @param {number} maxCalls - how many GET endpoints to test (optional)
     * @param {Callback} callback - callback function
     */
-  iapRunAdapterBasicGet(callback) {
+  iapRunAdapterBasicGet(maxCalls, callback) {
     const meth = 'adapter-iapRunAdapterBasicGet';
     const origin = `${this.id}-${meth}`;
     log.trace(origin);
 
     try {
-      return super.iapRunAdapterBasicGet(callback);
+      return super.iapRunAdapterBasicGet(maxCalls, callback);
     } catch (error) {
       log.error(`${origin}: ${error}`);
       return callback(null, error);

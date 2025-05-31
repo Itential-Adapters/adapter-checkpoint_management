@@ -8,7 +8,6 @@
   "engineVersion": "1.69.14",
   "adapterType": "http",
   "scripts": {
-    "artifactize": "npm i && node utils/packModificationScript.js",
     "preinstall": "node utils/setup.js",
     "deinstall": "node utils/removeHooks.js",
     "lint": "node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js . --ext .json --ext .js",
@@ -17,7 +16,6 @@
     "test:unit": "mocha test/unit/adapterTestUnit.js --LOG=error",
     "test:integration": "mocha test/integration/adapterTestIntegration.js --LOG=error",
     "test": "npm run test:baseunit && npm run test:unit && npm run test:integration",
-    "adapter:install": "npm i && node utils/tbScript.js install",
     "adapter:checkMigrate": "node utils/checkMigrate.js",
     "adapter:findPath": "node utils/findPath.js",
     "adapter:migrate": "node utils/modify.js -m",
@@ -32,7 +30,7 @@
   },
   "keywords": [
     "Itential",
-    "IAP",
+    "Itential Platform",
     "Automation",
     "Integration",
     "App-Artifacts",
@@ -40,8 +38,7 @@
     "Security",
     "Checkpoint",
     "Checkpoint Management",
-    "Pre-Release",
-    "Itential Platform"
+    "Pre-Release"
   ],
   "license": "Apache-2.0",
   "engines": {
@@ -60,7 +57,6 @@
     "ajv": "8.17.1",
     "axios": "1.9.0",
     "commander": "11.1.0",
-    "dns-lookup-promise": "^1.0.4",
     "fs-extra": "11.3.0",
     "json-query": "2.2.2",
     "mocha": "10.8.2",
