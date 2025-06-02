@@ -14,7 +14,7 @@ These are adapter methods that Itential Platform or you might use. There are som
   </tr>
   <tr>
     <td style="padding:15px">connect()</td>
-    <td style="padding:15px">This call is run when the Adapter is first loaded by he Itential Platform. It validates the properties have been provided correctly.</td>
+    <td style="padding:15px">This call is run when the Adapter is first loaded by the Itential Platform. It validates the properties have been provided correctly.</td>
     <td style="padding:15px">No</td>
   </tr>
   <tr>
