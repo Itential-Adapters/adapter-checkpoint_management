@@ -1,29 +1,7 @@
 const { execSync } = require('child_process');
 const fs = require('fs-extra');
-const Ajv = require('ajv');
 const rls = require('readline-sync');
 const { existsSync } = require('fs-extra');
-const { getAdapterConfig } = require('./tbUtils');
-const { name } = require('../package.json');
-const propertiesSchema = require('../propertiesSchema.json');
-
-const flags = process.argv[2];
-
-/**
- * @summary Updates database instance with new adapter properties
- *
- * @function updateServiceItem
- */
-async function updateServiceItem() {
-  const { database, serviceItem } = await getAdapterConfig();
-  const currentProps = serviceItem.properties.properties;
-  const ajv = new Ajv({ allErrors: true, useDefaults: true });
-  const validate = ajv.compile(propertiesSchema);
-  validate(currentProps);
-  console.log('Updating Properties...');
-  await database.collection('service_configs').updateOne({ model: name }, { $set: serviceItem });
-  console.log('Properties Updated');
-}
 
 /**
  * @summary Creates a backup zip file of current adapter
@@ -70,21 +48,20 @@ function revertMod() {
       fs.removeSync(file);
     }
   });
-  // // unzip previousVersion, reinstall dependencies and delete zipfile
+  // unzip previousVersion, reinstall dependencies and delete zipfile
   execSync('unzip -o previousVersion.zip && rm -rf node_modules && rm package-lock.json && npm install', { maxBuffer: 1024 * 1024 * 2 });
   execSync('rm previousVersion.zip');
   console.log('Changes have been reverted');
 }
 
-// Main Script
-
-// Migrate
-if (flags === '-m') {
-  if (!fs.existsSync('migrationPackage.zip')) {
-    console.log('Migration Package not found. Download and place migrationPackage in the adapter root directory');
-    process.exit();
+/**
+ * @summary Handle migration logic
+ */
+function handleMigration() {
+  if (!existsSync('migrationPackage.zip')) {
+    throw new Error('Migration Package not found. Download and place migrationPackage in the adapter root directory');
   }
-  // Backup current adapter
+
   backup();
   console.log('Migrating adapter and running tests...');
   const migrateCmd = 'unzip -o migrationPackage.zip'
@@ -92,61 +69,85 @@ if (flags === '-m') {
     + ' && node migrate';
   const migrateOutput = execSync(migrateCmd, { encoding: 'utf-8' });
   console.log(migrateOutput);
-  if (migrateOutput.indexOf('Lint exited with code 1') >= 0
-    || migrateOutput.indexOf('Tests exited with code 1') >= 0) {
+
+  if (migrateOutput.includes('Lint exited with code 1') || migrateOutput.includes('Tests exited with code 1')) {
     if (rls.keyInYN('Adapter failed tests or lint after migrating. Would you like to revert the changes?')) {
       console.log('Reverting changes...');
       revertMod();
-      process.exit();
+      throw new Error('Adapter failed tests or lint after migrating. Changes reverted');
     }
     console.log('Adapter Migration will continue. If you want to revert the changes, run the command npm run adapter:revert');
   }
+
   console.log('Installing new dependencies..');
   const updatePackageCmd = 'rm -rf node_modules && rm package-lock.json && npm install';
   const updatePackageOutput = execSync(updatePackageCmd, { encoding: 'utf-8' });
   console.log(updatePackageOutput);
   console.log('New dependencies installed');
-  console.log('Updating adapter properties..');
-  updateServiceItem().then(() => {
-    console.log('Adapter Successfully Migrated. Restart adapter in IAP to apply the changes');
-    archiveMod('MIG');
-    process.exit();
-  });
+  archiveMod('MIG');
 }
 
-// Update
-if (flags === '-u') {
-  if (!fs.existsSync('updatePackage.zip')) {
-    console.log('Update Package not found. Download and place updateAdapter.zip in the adapter root directory');
-    process.exit();
+/**
+ * @summary Handle update logic
+ */
+function handleUpdate() {
+  if (!existsSync('updatePackage.zip')) {
+    throw new Error('Update Package not found. Download and place updateAdapter.zip in the adapter root directory');
   }
-  // Backup current adapter
+
   backup();
   const updateCmd = 'unzip -o updatePackage.zip'
     + ' && cd adapter_modifications'
     + ' && node update.js updateFiles';
   execSync(updateCmd, { encoding: 'utf-8' });
   const updateOutput = execSync(updateCmd, { encoding: 'utf-8' });
-  if (updateOutput.indexOf('Lint exited with code 1') >= 0
-    || updateOutput.indexOf('Tests exited with code 1') >= 0) {
+
+  if (updateOutput.includes('Lint exited with code 1') || updateOutput.includes('Tests exited with code 1')) {
     if (rls.keyInYN('Adapter failed tests or lint after updating. Would you like to revert the changes?')) {
       console.log('Reverting changes...');
       revertMod();
-      process.exit();
+      throw new Error('Adapter failed tests or lint after updating. Changes reverted');
     }
     console.log('Adapter Update will continue. If you want to revert the changes, run the command npm run adapter:revert');
   }
+
   console.log(updateOutput);
   console.log('Adapter Successfully Updated. Restart adapter in IAP to apply the changes');
   archiveMod('UPD');
-  process.exit();
 }
 
-// Revert
-if (flags === '-r') {
-  if (!fs.existsSync('previousVersion.zip')) {
-    console.log('Previous adapter version not found. There are no changes to revert');
-    process.exit();
+/**
+ * @summary Handle revert logic
+ */
+function handleRevert() {
+  if (!existsSync('previousVersion.zip')) {
+    throw new Error('Previous adapter version not found. There are no changes to revert');
   }
   revertMod();
+}
+
+/**
+ * @summary Entrypoint for the script
+ */
+function main() {
+  const flags = process.argv[2];
+
+  switch (flags) {
+    case '-m':
+      return handleMigration();
+    case '-u':
+      return handleUpdate();
+    case '-r':
+      return handleRevert();
+    default:
+      throw new Error('Invalid flag. Use -m for migrate, -u for update, or -r for revert.');
+  }
+}
+
+try {
+  main();
+  process.exit(0);
+} catch (error) {
+  console.error(error.message || error);
+  process.exit(1);
 }

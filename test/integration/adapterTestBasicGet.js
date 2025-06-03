@@ -1,83 +1,117 @@
 /* @copyright Itential, LLC 2020 */
 
-/* global describe context before after */
+/* global describe it log before after */
 /* eslint global-require: warn */
 /* eslint no-unused-vars: warn */
 /* eslint import/no-extraneous-dependencies: warn */
 /* eslint import/no-dynamic-require: warn */
 /* eslint import/no-unresolved: warn */
+/* eslint no-loop-func: warn */
 
-const path = require('path');
+/* This performs a number of GET calls (defaults to 5 calls) which do not reuire an input, to test connectivity and functionality.
+The number of calls can be modified if running from CLI. */
+
 const assert = require('assert');
-const mocha = require('mocha');
-const itParam = require('mocha-param');
 
-const utils = require('../../utils/tbUtils');
-const basicGet = require('../../utils/basicGet');
-const { name } = require('../../package.json');
+const log = require('../../utils/logger');
+const { id } = require('../../package.json');
 const { methods } = require('../../pronghorn.json');
+const { parseArgs } = require('../../utils/argParser');
 
-const getPronghornProps = (iapDir) => {
-  console.log('Retrieving properties.json file...');
-  const rawProps = require(path.join(iapDir, 'properties.json'));
-  console.log('Decrypting properties...');
-  const pronghornProps = utils.decryptProperties(rawProps, iapDir);
-  console.log('Found properties.\n');
-  return pronghornProps;
-};
+const {
+  properties, maxCalls
+} = parseArgs();
 
-let a;
+// require the adapter that we are going to be using
+const TestAdapter = require('../../adapter');
+
+if (!properties) {
+  log.warn('No properties provided. Exiting process.');
+  process.exit(1);
+}
+
+let successCount = 0;
+let calls = 0;
+let attemptTimeout = 60000;
+if (properties.request && properties.request.attempt_timeout) {
+  attemptTimeout = properties.request.attempt_timeout;
+}
+
+// turn off stub mode - basic get should not be run in stub mode
+properties.stub = false;
 
 describe('[integration] Adapter BasicGET Test', () => {
-  context('Testing GET calls without query parameters', () => {
-    before(async () => {
-      const iapDir = path.join(__dirname, '../../../../../');
-      if (!utils.areWeUnderIAPinstallationDirectory()) {
-        const sampleProperties = require('../../sampleProperties.json');
-        const adapter = { properties: sampleProperties };
-        a = basicGet.getAdapterInstance(adapter);
-      } else {
-        const pronghornProps = getPronghornProps(iapDir);
-        console.log('Connecting to Database...');
-        const database = await basicGet.connect(pronghornProps);
-        console.log('Connection established.');
-        const adapter = await database.collection(utils.SERVICE_CONFIGS_COLLECTION).findOne(
-          { model: name }
-        );
-        a = basicGet.getAdapterInstance(adapter);
-      }
-    });
+  describe('Class Tests', () => {
+    const testAdapter = new TestAdapter(
+      id,
+      properties
+    );
 
     after((done) => {
+      if (successCount === calls) {
+        log.info('\x1b[32m%s\x1b[0m', `\n\nSUCCESS: ${successCount} test(s) passed of ${calls} executed!`);
+      } else if (successCount > 0) {
+        log.error('\x1b[32m%s\x1b[0m', `\n\nPARTIAL SUCCESS: ${successCount} test(s) passed of ${calls} executed!`);
+      } else {
+        log.error('\x1b[31m%s\x1b[0m', '\n\nFAILURE: All tests failed.');
+      }
       done();
     });
 
-    const basicGets = methods.filter((method) => (method.route.verb === 'GET' && method.input.length === 0));
-    if (basicGets.length === 0) {
-      console.log('No non-parameter GET calls found.');
-      process.exit(0);
-    }
-    const functionNames = basicGets.map((g) => g.name);
-    const request = function request(f, ad) {
-      return new Promise((resolve, reject) => {
-        const getRespCode = (resp) => {
-          if (resp) {
-            if (resp.metrics.code !== 200) {
-              console.log('\x1b[31m', `Testing ${f} \nResponseCode: ${resp.metrics.code}`);
-            }
-            resolve(resp.metrics.code);
-          } else {
-            console.log('\x1b[31m', `call ${f} results in failure`);
-            reject(new Error(`${f} failed`));
-          }
-        };
-        ad[f](getRespCode, console.log);
-      });
-    };
-
-    itParam('GET call should return 200', functionNames, (fname) => {
-      console.log(`\t ${fname}`);
-      return request(fname, a).then((result) => assert.equal(result, 200));
+    const basicGets = methods.filter((method) => {
+      // ignore iapMetadata as the input since its optional and all functions will have it
+      const inputKeys = (method.input || [])
+        .map((param) => param.name)
+        .filter((name) => name !== 'iapMetadata');
+      return method.route.verb === 'GET' && inputKeys.length === 0 && !method.name.startsWith('iap');
     });
+
+    if (basicGets.length === 0) {
+      log.warn('No non-parameter GET calls found.');
+      process.exitCode = 0;
+      return;
+    }
+
+    const functionNames = basicGets.map((g) => g.name);
+    calls = functionNames.length;
+    if (calls > maxCalls) {
+      calls = maxCalls;
+    }
+
+    // test up to the first 5 get calls without parameters
+    for (let f = 0; f < calls; f += 1) {
+      const fnName = functionNames[f];
+      const method = basicGets.find((m) => m.name === fnName);
+      const hasIapMetadata = Array.isArray(method.input) && method.input.some((param) => param.name === 'iapMetadata');
+      describe(`#${functionNames[f]}`, () => {
+        it('should return valid response without error', (done) => {
+          const callback = (data, error) => {
+            try {
+              assert.equal(undefined, error);
+              assert.notEqual(undefined, data);
+              assert.notEqual(null, data);
+              assert.notEqual(undefined, data.response);
+              assert.notEqual(null, data.response);
+              successCount += 1;
+              done();
+            } catch (err) {
+              log.error(`Test Failure in ${fnName}: ${err}`);
+              done(err);
+            }
+          };
+
+          try {
+            if (hasIapMetadata) {
+              testAdapter[fnName](null, callback);
+            } else {
+              testAdapter[fnName](callback);
+            }
+          } catch (err) {
+            log.error(`Unexpected error in test for ${fnName}: ${err}`);
+            done(err);
+          }
+        }).timeout(attemptTimeout);
+      });
+    }
   });
 });

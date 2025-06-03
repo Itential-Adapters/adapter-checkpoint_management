@@ -98,20 +98,24 @@
     "ssl": {
       "ecdhCurve": "",
       "enabled": false,
-      "accept_invalid_cert": true,
+      "accept_invalid_cert": false,
       "ca_file": "",
+      "ca_file_content": "",
       "key_file": "",
       "cert_file": "",
       "secure_protocol": "",
       "ciphers": ""
     },
     "mongo": {
+      "url": "",
       "host": "",
       "port": 0,
       "database": "",
+      "dbAuth": false,
       "username": "",
       "password": "",
       "replSet": "",
+      "addSrv": false,
       "db_ssl": {
         "enabled": false,
         "accept_invalid_cert": false,

@@ -32,6 +32,7 @@ const entitiesToDB = require(path.join(__dirname, 'utils/entitiesToDB'));
 const troubleshootingAdapter = require(path.join(__dirname, 'utils/troubleshootingAdapter'));
 const tbUtils = require(path.join(__dirname, 'utils/tbUtils'));
 const taskMover = require(path.join(__dirname, 'utils/taskMover'));
+const { updateMongoDBConfig } = require(path.join(__dirname, 'utils/updateAdapterConfig'));
 
 let propUtil = null;
 let choosepath = null;
@@ -366,7 +367,6 @@ class AdapterBase extends EventEmitterCl {
         // if we were healthy, toggle health
         if (this.healthy) {
           this.emit('OFFLINE', { id: this.id });
-          this.emit('DEGRADED', { id: this.id });
           this.healthy = false;
           if (typeof error === 'object') {
             log.error(`${origin}: HEALTH CHECK - Error ${JSON.stringify(error)}`);
@@ -385,7 +385,6 @@ class AdapterBase extends EventEmitterCl {
 
       // if we were unhealthy, toggle health
       if (!this.healthy) {
-        this.emit('FIXED', { id: this.id });
         this.emit('ONLINE', { id: this.id });
         this.healthy = true;
         log.info(`${origin}: HEALTH CHECK SUCCESSFUL`);
@@ -583,21 +582,32 @@ class AdapterBase extends EventEmitterCl {
 
     // take action based on type of file being changed
     if (type === 'action') {
-      // BACKUP???
       const ares = updateAction(epath, action, changes);
       if (ares) {
         const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, `Incomplete Configuration Change: ${ares}`, [], null, null, null);
         log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
         return callback(null, errorObj);
       }
-      // AJV CHECK???
-      // RESTORE IF NEEDED???
+      // Update MongoDB if possible
+      updateMongoDBConfig({
+        id: this.id,
+        mongoProps: this.allProps.mongo,
+        entity,
+        type,
+        configFile,
+        changes,
+        action,
+        replace
+      }).catch((error) => {
+        log.error(`${origin}: Error updating MongoDB configuration: ${error.message}`);
+      });
       const result = {
         response: `Action updates completed to entity: ${entity} - ${action}`
       };
       log.info(result.response);
       return callback(result, null);
     }
+
     if (type === 'schema') {
       const sres = updateSchema(epath, configFile, changes);
       if (sres) {
@@ -605,12 +615,26 @@ class AdapterBase extends EventEmitterCl {
         log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
         return callback(null, errorObj);
       }
+      // Update MongoDB if possible
+      updateMongoDBConfig({
+        id: this.id,
+        mongoProps: this.allProps.mongo,
+        entity,
+        type,
+        configFile,
+        changes,
+        action,
+        replace
+      }).catch((error) => {
+        log.error(`${origin}: Error updating MongoDB configuration: ${error.message}`);
+      });
       const result = {
         response: `Schema updates completed to entity: ${entity} - ${configFile}`
       };
       log.info(result.response);
       return callback(result, null);
     }
+
     if (type === 'mock') {
       // if the mock directory does not exist - error
       const mpath = `${__dirname}/entities/${entity}/mockdatafiles`;
@@ -624,18 +648,31 @@ class AdapterBase extends EventEmitterCl {
         return callback(null, errorObj);
       }
       const mres = updateMock(mpath, configFile, changes, replace);
-
       if (mres) {
         const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, `Incomplete Configuration Change: ${mres}`, [], null, null, null);
         log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
         return callback(null, errorObj);
       }
+      // Update MongoDB if possible
+      updateMongoDBConfig({
+        id: this.id,
+        mongoProps: this.allProps.mongo,
+        entity,
+        type,
+        configFile,
+        changes,
+        action,
+        replace
+      }).catch((error) => {
+        log.error(`${origin}: Error updating MongoDB configuration: ${error.message}`);
+      });
       const result = {
         response: `Mock data updates completed to entity: ${entity} - ${configFile}`
       };
       log.info(result.response);
       return callback(result, null);
     }
+
     const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, `Incomplete Configuration Change: Unsupported Type - ${type}`, [], null, null, null);
     log.error(`${origin}: ${errorObj.IAPerror.displayString}`);
     return callback(null, errorObj);
@@ -831,14 +868,13 @@ class AdapterBase extends EventEmitterCl {
    *
    * @function iapTroubleshootAdapter
    * @param {Object} props - the connection, healthcheck and authentication properties
-   * @param {boolean} persistFlag - whether the adapter properties should be updated
    * @param {Adapter} adapter - adapter instance to troubleshoot
    * @param {Callback} callback - callback function to return troubleshoot results
    */
-  async iapTroubleshootAdapter(props, persistFlag, adapter, callback) {
+  async iapTroubleshootAdapter(props, adapter, callback) {
     try {
-      const result = await troubleshootingAdapter.troubleshoot(props, false, persistFlag, adapter);
-      if (result.healthCheck && result.connectivity.failCount === 0 && result.basicGet.failCount === 0) {
+      const result = await troubleshootingAdapter.troubleshoot(props, false, adapter);
+      if (result.healthCheck && result.connectivity.failCount === 0 && result.basicGet.passCount !== 0) {
         return callback(result);
       }
       return callback(null, result);
@@ -875,8 +911,7 @@ class AdapterBase extends EventEmitterCl {
    */
   async iapRunAdapterConnectivity(callback) {
     try {
-      const { host } = this.allProps;
-      const result = tbUtils.runConnectivity(host, false);
+      const result = tbUtils.runConnectivity(this.allProps.host, false);
       if (result.failCount > 0) {
         return callback(null, result);
       }
@@ -890,12 +925,13 @@ class AdapterBase extends EventEmitterCl {
    * @summary runs basicGet script for adapter
    *
    * @function iapRunAdapterBasicGet
+   * @param {number} maxCalls  - how many GETs to run (optional)
    * @param {Callback} callback - callback function to return basicGet result
    */
-  iapRunAdapterBasicGet(callback) {
+  iapRunAdapterBasicGet(maxCalls, callback) {
     try {
-      const result = tbUtils.runBasicGet(false);
-      if (result.failCount > 0) {
+      const result = tbUtils.runBasicGet(this.allProps, false, maxCalls);
+      if (result.passCount === 0) {
         return callback(null, result);
       }
       return callback(result);
@@ -917,7 +953,7 @@ class AdapterBase extends EventEmitterCl {
     log.trace(origin);
 
     try {
-      const result = await entitiesToDB.moveEntitiesToDB(__dirname, { pronghornProps: this.allProps, id: this.id });
+      const result = await entitiesToDB.moveEntitiesToDB(__dirname, { pronghornProps: { mongo: this.allProps && this.allProps.mongo }, id: this.id });
       return callback(result, null);
     } catch (err) {
       const errorObj = this.requestHandlerInst.formatErrorObject(this.id, meth, 'Caught Exception', null, null, null, err);

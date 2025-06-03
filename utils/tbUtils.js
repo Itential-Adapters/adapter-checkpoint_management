@@ -1,17 +1,58 @@
-/* @copyright Itential, LLC 2020 */
+/* @copyright Itential, LLC 2025 */
 
 /* eslint import/no-extraneous-dependencies: warn */
 /* eslint global-require: warn */
 /* eslint import/no-dynamic-require: warn */
 /* eslint-disable no-console */
 
+/**
+ * This script contains manhy of the basic troubleshooting scripts. In addition, it contains helper functions
+ * that are utilized by other utilities.
+ *
+ * This utility is utilized by tbScript when the troubleshooting scripts are run via the CLI. It is also utilized
+ * by the adapterBase.js when the troubleshooting scripts are exposed by the adapter and run through Platform
+ * Workflow or any other Platform component.
+ */
+
 const path = require('path');
 const cp = require('child_process');
-const fs = require('fs-extra');
+const axios = require('axios');
+const log = require('./logger');
+const MongoDBConnection = require('./mongoDbConnection');
 
 module.exports = {
   SERVICE_CONFIGS_COLLECTION: 'service_configs',
   IAP_PROFILES_COLLECTION: 'iap_profiles',
+
+  /**
+   * @summary create Adapter instance
+   *
+   * @function getAdapterInstance
+   * @param {Object} adapter - adaper configuration object required by IAP
+   */
+  getAdapterInstance: (adapter) => {
+    const Adapter = require('../adapter');
+    const adapterProps = JSON.parse(JSON.stringify(adapter.properties.properties));
+    adapterProps.stub = false;
+    return new Adapter(
+      adapter.id,
+      adapterProps
+    );
+  },
+
+  /**
+   * @summary Makes a GET call using axios
+   *
+   * @function get
+   * @param {String} url - url to make the call to
+   */
+  get: (url) => {
+    const config = {
+      method: 'get',
+      url
+    };
+    return axios(config);
+  },
 
   /**
    * @summary update newConnection properties in adapter config
@@ -37,28 +78,20 @@ module.exports = {
    */
   getHealthCheckEndpointURL: (endpoint, config) => {
     const p = config.properties.properties;
-    const healthCheckEndpointURL = `${p.protocol}://${p.host}${p.base_path}${p.version}${endpoint.healthCheckEndpoint}`;
-    console.log({ healthCheckEndpointURL });
-    return healthCheckEndpointURL;
-  },
-
-  /**
-   * @summary persist healthcheck endpoint when user make update
-   *
-   * @function updateHealthCheckEndpoint
-   * @param {Object} newHealthCheckEndpoint - user confirmed healthcheck object
-   * @param {Object} healthCheckEndpoint - existing healthcheck object
-   * @param {Object} healthcheck - ./entities/.system/action.json object
-   */
-  updateHealthCheckEndpoint: (newHealthCheckEndpoint, healthCheckEndpoint, healthcheck) => {
-    if (newHealthCheckEndpoint.healthCheckEndpoint !== healthCheckEndpoint.healthCheckEndpoint) {
-      const p = healthcheck.actions[1].entitypath;
-      const newEntitypath = p.slice(0, 21) + newHealthCheckEndpoint.healthCheckEndpoint + p.slice(p.length - 8);
-      const updatedHealthcheck = JSON.parse(JSON.stringify(healthcheck));
-      updatedHealthcheck.actions[1].entitypath = newEntitypath;
-      console.log('updating healthcheck setting');
-      fs.writeFileSync('./entities/.system/action.json', JSON.stringify(updatedHealthcheck, null, 2));
+    // Handle base_path and version properly
+    let basePath = '';
+    if (p.base_path && p.base_path !== '/') {
+      basePath = p.base_path.startsWith('/') ? p.base_path : `/${p.base_path}`;
     }
+
+    let version = '';
+    if (p.version) {
+      version = p.version.startsWith('/') ? p.version : `/${p.version}`;
+    }
+
+    const healthCheckEndpointURL = `${p.protocol}://${p.host}${basePath}${version}${endpoint.healthCheckEndpoint}`;
+    log.info({ healthCheckEndpointURL });
+    return healthCheckEndpointURL;
   },
 
   /**
@@ -78,7 +111,7 @@ module.exports = {
     Object.keys(newAuth).forEach((key) => {
       updatedConfig.properties.properties.authentication[key] = newAuth[key];
     });
-    console.log(updatedConfig.properties.properties.authentication);
+    log.info(updatedConfig.properties.properties.authentication);
     return updatedConfig;
   },
 
@@ -93,22 +126,6 @@ module.exports = {
     const displayAuthOptions = JSON.parse(JSON.stringify(authOptions));
     displayAuthOptions[authOptions.indexOf(currentAuth)] += ' (current)';
     return displayAuthOptions;
-  },
-
-  /**
-   * @summary decrypt IAP properties
-   *          code from pronghorn-core/migration_scripts/installService.js
-   *
-   * @function decryptProperties
-   */
-  decryptProperties: (props, iapDir) => {
-    const { PropertyEncryption } = require(path.join(iapDir, 'node_modules/@itential/itential-utils'));
-    const propertyEncryption = new PropertyEncryption({
-      algorithm: 'aes-256-ctr',
-      key: 'TG9uZ0Rpc3RhbmNlUnVubmVyUHJvbmdob3JuCg==',
-      encoding: 'utf-8'
-    });
-    return propertyEncryption.decryptProps(props);
   },
 
   /**
@@ -163,31 +180,6 @@ module.exports = {
   },
 
   /**
-   * @summary Verify that the adapter is in the correct directory
-   *          - Within IAP
-   *          - In node_modules/@ namespace
-   *          verify the adapter is installed under node_modules/
-   *          and is consistent with the name property of package.json
-   *          and the node_modules/ is in the correct path within IAP
-   * @param {String} dirname - current path
-   * @param {String} name - name property from package.json
-   */
-  verifyInstallationDir: (dirname, name) => {
-    const pathArray = dirname.split(path.sep);
-    const expectedPath = `node_modules/${name}`;
-    const currentPath = pathArray.slice(pathArray.length - 3, pathArray.length).join('/');
-    if (currentPath.trim() !== expectedPath.trim()) {
-      throw new Error(`adapter should be installed under ${expectedPath} but is installed under ${currentPath}`);
-    }
-
-    const serverFile = path.join(dirname, '../../../', 'server.js');
-    if (!fs.existsSync(serverFile)) {
-      throw new Error(`adapter should be installed under IAP/${expectedPath}`);
-    }
-    console.log(`adapter correctly installed at ${currentPath}`);
-  },
-
-  /**
    * @summary execute command and preserve the output the same as run command in shell
    *
    * @function systemSync
@@ -200,7 +192,7 @@ module.exports = {
       try {
         stdout = cp.execSync(cmd).toString();
       } catch (error) {
-        console.log('execute command error', error.stdout.toString(), error.stderr.toString());
+        log.info('execute command error', error.stdout.toString(), error.stderr.toString());
         stdout = error.stdout.toString();
       }
       const output = this.getTestCount(stdout);
@@ -248,17 +240,6 @@ module.exports = {
   },
 
   /**
-   * @summary remove package-lock.json and node_modules directory if exists
-   * run npm install and print result to stdout
-   */
-  npmInstall: function npmInstall() {
-    fs.removeSync('../package-lock.json');
-    fs.removeSync('../node_modules/');
-    console.log('Run npm install ...');
-    this.systemSync('npm install');
-  },
-
-  /**
    * @summary run lint, unit test and integration test
    * print result to stdout
    */
@@ -271,12 +252,21 @@ module.exports = {
   /**
    * @summary run basicget with mocha
    * @param {boolean} scriptFlag - whether the function is ran from a script
+   * @param {number} maxCalls - how many GETs to run (defaults to 5)
    * print result to stdout
    * returns mocha test results otherwise
    */
-  runBasicGet: function runBasicGet(scriptFlag) {
-    const testPath = path.resolve(__dirname, '..', 'test/integration/adapterTestBasicGet.js');
-    return this.systemSync(`mocha ${testPath} --exit`, !scriptFlag);
+  runBasicGet: function runBasicGet(props, scriptFlag, maxCalls = 5) {
+    let testPath = 'test/integration/adapterTestBasicGet.js';
+    let executable = 'mocha';
+    if (!scriptFlag) {
+      testPath = path.resolve(__dirname, '..', testPath);
+      executable = path.join(__dirname, '..', 'node_modules/mocha/bin/mocha.js');
+    }
+    // if caller passed a number, add the flag
+    const mcFlag = Number.isInteger(maxCalls) ? ` --MAXCALLS=${maxCalls}` : '';
+    const cmd = `${executable} ${testPath} --PROPS='${JSON.stringify(props)}'${mcFlag} --timeout 60000 --exit`;
+    return this.systemSync(cmd, !scriptFlag);
   },
 
   /**
@@ -291,92 +281,9 @@ module.exports = {
     let executable = 'mocha';
     if (!scriptFlag) {
       testPath = path.resolve(__dirname, '..', testPath);
-      executable = path.join(__dirname, '..', 'node_modules/mocha/bin/mocha');
+      executable = path.join(__dirname, '..', 'node_modules/mocha/bin/mocha.js');
     }
     return this.systemSync(`${executable} ${testPath} --HOST=${host} --timeout 10000 --exit`, !scriptFlag);
-  },
-
-  /**
-   * @summary create Adapter property
-   *
-   * @function createAdapter
-   * @param {Object} pronghornProps - decrypted 'properties.json' from IAP root directory
-   * @param {Object} profileItem - pronghorn props saved in database
-   * @param {Object} adapterPronghorn - ./pronghorn.json in adapter dir
-   * @param {Object} sampleProperties - './sampleProperties.json' in adapter dir
-   */
-  createAdapter: function createAdapter(pronghornProps, profileItem, sampleProperties, adapterPronghorn) {
-    const iapDir = this.getIAPHome();
-    const packageFile = path.join(iapDir, 'package.json');
-    const info = JSON.parse(fs.readFileSync(packageFile));
-    const version = parseInt(info.version.split('.')[0], 10);
-
-    let adapter = {};
-    if (version >= 2020) {
-      adapter = {
-        isEncrypted: pronghornProps.pathProps.encrypted,
-        model: adapterPronghorn.id,
-        name: sampleProperties.id,
-        type: adapterPronghorn.type,
-        properties: sampleProperties,
-        loggerProps: profileItem.loggerProps
-      };
-    } else {
-      adapter = {
-        mongoProps: pronghornProps.mongoProps,
-        isEncrypted: pronghornProps.pathProps.encrypted,
-        model: adapterPronghorn.id,
-        name: sampleProperties.id,
-        type: adapterPronghorn.type,
-        properties: sampleProperties,
-        redisProps: profileItem.redisProps,
-        loggerProps: profileItem.loggerProps,
-        rabbitmq: profileItem.rabbitmq
-      };
-      adapter.mongoProps.pdb = true;
-    }
-
-    adapter.loggerProps.log_filename = `adapter-${adapter.name}.log`;
-    return adapter;
-  },
-
-  getPronghornProps: function getPronghornProps() {
-    const iapDir = this.getIAPHome();
-    console.log('Retrieving properties.json file...');
-    const rawProps = require(path.join(iapDir, 'properties.json'));
-    console.log('Decrypting properties...');
-    const pronghornProps = this.decryptProperties(rawProps, iapDir);
-    console.log('Found properties.\n');
-    return pronghornProps;
-  },
-
-  getAllAdapterInstances: async function getAllAdapterInstances() {
-    const database = await this.getIAPDatabaseConnection();
-    const { name } = require(path.join(__dirname, '..', 'package.json'));
-    const query = { model: name };
-    const options = { projection: { name: 1 } };
-    const adapterInstancesNames = await database.collection(this.SERVICE_CONFIGS_COLLECTION).find(
-      query,
-      options
-    ).toArray();
-    return adapterInstancesNames;
-  },
-
-  // get database connection and existing adapter config
-  getAdapterConfig: async function getAdapterConfig(adapterId) {
-    const database = await this.getIAPDatabaseConnection();
-    const { name } = require(path.join(__dirname, '..', 'package.json'));
-    let query = {};
-    if (!adapterId) {
-      query = { model: name };
-    } else {
-      query = { _id: adapterId };
-    }
-    const serviceItem = await database.collection(this.SERVICE_CONFIGS_COLLECTION).findOne(
-      query
-    );
-    const pronghornProps = await this.getPronghornProps();
-    return { database, serviceItem, pronghornProps };
   },
 
   /**
@@ -403,7 +310,7 @@ module.exports = {
   healthCheck: async function healthCheck(a) {
     const result = await this.request(a)
       .then((res) => {
-        console.log('healthCheckEndpoint OK');
+        log.info('healthCheckEndpoint OK');
         return res;
       })
       .catch((error) => {
@@ -414,76 +321,27 @@ module.exports = {
   },
 
   /**
-   * @summary Obtain the IAP installation directory depending on how adapter is used:
-   * by IAP, or by npm run CLI interface
-   * @returns IAP installation directory or null if adapter running without IAP
-   * @function getIAPHome
-   */
-  getIAPHome: function getIAPHome() {
-    let IAPHomePath = null;
-    // check if adapter started via IAP, use path injected by core
-    if (process.env.iap_home) IAPHomePath = process.env.iap_home;
-    // check if adapter started via CLI `npm run <command>` so we have to be located under
-    // <IAP_HOME>/node_modules/@itentialopensource/<adapter_name>/ directory
-    const currentExecutionPath = this.getCurrentExecutionPath();
-    if (currentExecutionPath.indexOf('/node_modules') >= 0) {
-      [IAPHomePath] = currentExecutionPath.split('/node_modules');
-    }
-    return IAPHomePath;
-  },
-
-  /**
-   * @summary get current execution path without resolving symbolic links,
-   * use `pwd` command wihout '-P' option (resolving symlinks) https://linux.die.net/man/1/pwd
-   * @returns
-   * @function getCurrentExecutionPAth
-   */
-  getCurrentExecutionPath: function getCurrentExecutionPAth() {
-    const { stdout } = this.systemSync('pwd', true);
-    return stdout.trim();
-  },
-
-  /**
-   * @summary checks if command executed from <IAP_HOME>/node_modules/@itentialopensource/<adapter_name>/ location
-   * @returns true if command executed under <IAP_HOME>/node_modules/@itentialopensource/<adapter_name>/ path
-   * @function areWeUnderIAPinstallationDirectory
-   */
-  areWeUnderIAPinstallationDirectory: function areWeUnderIAPinstallationDirectory() {
-    return path.join(this.getCurrentExecutionPath(), '../../..') === this.getIAPHome();
-  },
-
-  getIAPDatabaseConnection: async function getIAPDatabaseConnection() {
-    const pronghornProps = await this.getPronghornProps();
-    const database = await this.connect(pronghornProps);
-    return database;
-  },
-
-  /**
    * @summary connect to mongodb
    *
    * @function connect
    * @param {Object} properties - pronghornProps
    */
   connect: async function connect(properties) {
-    let dbConnectionProperties = {};
-    if (properties.mongoProps) {
-      dbConnectionProperties = properties.mongoProps;
-    } else if (properties.mongo) {
-      if (properties.mongo.url) {
-        dbConnectionProperties.url = properties.mongo.url;
-      } else {
-        dbConnectionProperties.url = `mongodb://${properties.mongo.host}:${properties.mongo.port}`;
-      }
-      dbConnectionProperties.db = properties.mongo.database;
-    }
-    if (!dbConnectionProperties.url || !dbConnectionProperties.db) {
-      throw new Error('Mongo properties are not specified in IAP configuration!');
-    }
-    const iapDir = this.getIAPHome();
-    const { MongoDBConnection } = require(path.join(iapDir, 'node_modules/@itential/database'));
-    const connection = new MongoDBConnection(dbConnectionProperties);
-    const database = await connection.connect(true);
+    const connection = new MongoDBConnection(properties);
+    const database = await connection.connect();
     return database;
+  },
+
+  /**
+   * @summary close mongodb connection
+   *
+   * @function closeConnection
+   * @param {Object} connection - MongoDB connection instance
+   */
+  closeConnection: async function closeConnection(connection) {
+    if (connection && connection.closeConnection) {
+      await connection.closeConnection();
+    }
   }
 
 };

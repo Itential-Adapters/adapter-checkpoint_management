@@ -4,7 +4,7 @@ The `adapter.js` file contains the calls the adapter makes available to the rest
 
 ### Generic Adapter Calls
 
-These are adapter methods that IAP or you might use. There are some other methods not shown here that might be used for internal adapter functionality.
+These are adapter methods that Itential Platform or you might use. There are some other methods not shown here that might be used for internal adapter functionality.
 
 <table border="1" class="bordered-table">
   <tr>
@@ -14,7 +14,7 @@ These are adapter methods that IAP or you might use. There are some other method
   </tr>
   <tr>
     <td style="padding:15px">connect()</td>
-    <td style="padding:15px">This call is run when the Adapter is first loaded by he Itential Platform. It validates the properties have been provided correctly.</td>
+    <td style="padding:15px">This call is run when the Adapter is first loaded by the Itential Platform. It validates the properties have been provided correctly.</td>
     <td style="padding:15px">No</td>
   </tr>
   <tr>
@@ -34,7 +34,7 @@ These are adapter methods that IAP or you might use. There are some other method
   </tr>
   <tr>
     <td style="padding:15px">iapUpdateAdapterConfiguration(configFile, changes, entity, type, action, callback)</td>
-    <td style="padding:15px">This call provides the ability to update the adapter configuration from IAP - includes actions, schema, mockdata and other configurations.</td>
+    <td style="padding:15px">This call provides the ability to update the adapter configuration from Itential Platform - includes actions, schema, mockdata and other configurations.</td>
     <td style="padding:15px">Yes</td>
   </tr>
   <tr>
@@ -58,7 +58,7 @@ These are adapter methods that IAP or you might use. There are some other method
     <td style="padding:15px">Yes</td>
   </tr>
   <tr>
-    <td style="padding:15px">iapTroubleshootAdapter(props, persistFlag, adapter, callback)</td>
+    <td style="padding:15px">iapTroubleshootAdapter(props, adapter, callback)</td>
     <td style="padding:15px">This call can be used to check on the performance of the adapter - it checks connectivity, healthcheck and basic get calls.</td>
     <td style="padding:15px">Yes</td>
   </tr>
@@ -73,13 +73,13 @@ These are adapter methods that IAP or you might use. There are some other method
     <td style="padding:15px">Yes</td>
   </tr>
   <tr>
-    <td style="padding:15px">iapRunAdapterBasicGet(callback)</td>
-    <td style="padding:15px">This call will return the results of running basic get API calls.</td>
+    <td style="padding:15px">iapRunAdapterBasicGet(maxCalls, callback)</td>
+    <td style="padding:15px">This call will return the results of running basic get API calls. By default 5 get calls without parameters will be run. You can ask for more or less by setting maxCalls.</td>
     <td style="padding:15px">Yes</td>
   </tr>
   <tr>
     <td style="padding:15px">iapMoveAdapterEntitiesToDB(callback)</td>
-    <td style="padding:15px">This call will push the adapter configuration from the entities directory into the Adapter or IAP Database.</td>
+    <td style="padding:15px">This call will push the adapter configuration from the entities directory into the Adapter or Itential Platform Database.</td>
     <td style="padding:15px">Yes</td>
   </tr>
   <tr>
@@ -150,7 +150,7 @@ These are adapter methods that are used for adapter caching. If configured, the 
   
 ### Adapter Broker Calls
 
-These are adapter methods that are used to integrate to IAP Brokers. This adapter currently supports the following broker calls.
+These are adapter methods that are used to integrate to Itential Platform Brokers. This adapter currently supports the following broker calls.
 
 <table border="1" class="bordered-table">
   <tr>
@@ -160,7 +160,7 @@ These are adapter methods that are used to integrate to IAP Brokers. This adapte
   </tr>
   <tr>
     <td style="padding:15px">hasEntities(entityType, entityList, callback)</td>
-    <td style="padding:15px">This call is utilized by the IAP Device Broker to determine if the adapter has a specific entity and item of the entity.</td>
+    <td style="padding:15px">This call is utilized by the Itential Platform Device Broker to determine if the adapter has a specific entity and item of the entity.</td>
     <td style="padding:15px">No</td>
   </tr>
   <tr>

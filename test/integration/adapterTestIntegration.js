@@ -16,11 +16,11 @@ const winston = require('winston');
 const { expect } = require('chai');
 const { use } = require('chai');
 const td = require('testdouble');
+const log = require('../../utils/logger');
 
 const anything = td.matchers.anything();
 
 // stub and attemptTimeout are used throughout the code so set them here
-let logLevel = 'none';
 const isRapidFail = false;
 const isSaveMockData = false;
 
@@ -36,13 +36,17 @@ const samProps = require(`${adaptdir}/sampleProperties.json`).properties;
 // these variables can be changed to run in integrated mode so easier to set them here
 // always check these in with bogus data!!!
 samProps.stub = true;
-samProps.host = 'replace.hostorip.here';
-samProps.authentication.username = 'username';
-samProps.authentication.password = 'password';
-samProps.protocol = 'http';
-samProps.port = 80;
-samProps.ssl.enabled = false;
-samProps.ssl.accept_invalid_cert = false;
+
+// uncomment if connecting
+// samProps.host = 'replace.hostorip.here';
+// samProps.authentication.username = 'username';
+// samProps.authentication.password = 'password';
+// samProps.authentication.token = 'password';
+// samProps.protocol = 'http';
+// samProps.port = 80;
+// samProps.ssl.enabled = false;
+// samProps.ssl.accept_invalid_cert = false;
+
 if (samProps.request.attempt_timeout < 30000) {
   samProps.request.attempt_timeout = 30000;
 }
@@ -66,43 +70,6 @@ global.pronghornProps = {
 };
 
 global.$HOME = `${__dirname}/../..`;
-
-// set the log levels that Pronghorn uses, spam and trace are not defaulted in so without
-// this you may error on log.trace calls.
-const myCustomLevels = {
-  levels: {
-    spam: 6,
-    trace: 5,
-    debug: 4,
-    info: 3,
-    warn: 2,
-    error: 1,
-    none: 0
-  }
-};
-
-// need to see if there is a log level passed in
-process.argv.forEach((val) => {
-  // is there a log level defined to be passed in?
-  if (val.indexOf('--LOG') === 0) {
-    // get the desired log level
-    const inputVal = val.split('=')[1];
-
-    // validate the log level is supported, if so set it
-    if (Object.hasOwnProperty.call(myCustomLevels.levels, inputVal)) {
-      logLevel = inputVal;
-    }
-  }
-});
-
-// need to set global logging
-global.log = winston.createLogger({
-  level: logLevel,
-  levels: myCustomLevels.levels,
-  transports: [
-    new winston.transports.Console()
-  ]
-});
 
 /**
  * Runs the common asserts for test

@@ -1,6 +1,6 @@
-## Integrating Checkpoint_Management Adapter with IAP Device Broker
+## Integrating Checkpoint_Management Adapter with Itential Platform Device Broker
 
-This document will go through the steps for integrating the Checkpoint_Management adapter with IAP's Device Broker. IAP Device Broker integration allows for easier interation into several of IAPs applications (e.g. Configuration Manager). Properly configuring the properties for the adapter in IAP is critical for getting the device broker integration to work. Their is additional information in the configuration section of the adapter readme. This document will go through each of the calls that are utilized by the Device Broker.
+This document will go through the steps for integrating the Checkpoint_Management adapter with Itential Platform's Device Broker. Itential Platform Device Broker integration allows for easier interation into several of Itential Platform's applications (e.g. Configuration Manager). Properly configuring the properties for the adapter in Itential Platform is critical for getting the device broker integration to work. Their is additional information in the configuration section of the adapter readme. This document will go through each of the calls that are utilized by the Device Broker.
 
 ### getDevicesFiltered
 getDevicesFiltered(options, callback) → This call returns all of the devices within Checkpoint_Management that match the provided filter.
@@ -13,7 +13,7 @@ options {object}: defines the options for the search. At current filter is the m
 
 An Object containing the total number of matching devices and a list containing an array of the details for each device. For example, { total: 2, list: [ { name: ‘abc’, ostype: ‘type’, port: 80, ipaddress: ‘10.10.10.10’ }, { name: ‘def’, ostype: ‘type2’, port: 443, ipaddress: ‘10.10.10.15’ }] }
 
-The fields name and ostype are required by the broker and should be mapped through properties to data from the other system. In addition, ipaddress and port should also be mapped as it is utilized by some north bound IAP applications (e.g. Config Manager). There are other fields that can be set as well but consider these the minimal fields.
+The fields name and ostype are required by the broker and should be mapped through properties to data from the other system. In addition, ipaddress and port should also be mapped as it is utilized by some north bound Itential Platform applications (e.g. Config Manager). There are other fields that can be set as well but consider these the minimal fields.
 
 Below is an example of how you may set up the properties for this call.
 
@@ -69,7 +69,7 @@ Below is an example of how you may set up the properties for this call.
 
 Notice with the path, there is a variable in it ({org}). This variable must be provided in the data available to the call. For getDevicesFiltered this means the requestFields as a static value. In other calls, it may also come from the result of the getDevicesFiltered call.
 
-Notice with the responseFields, it wants the IAP data key as the key and where it is supposed to find the data in the response as the value. You can use nested fields in the response object using standard object notation. You can also add static data as shown in the port field. Finally, you can append data to the response from the requestInformation using its key (e.g. org). The ostypePrefix is a special field that allows you to add static data to the ostype to help define the system you are getting the device from.
+Notice with the responseFields, it wants the Itential Platform data key as the key and where it is supposed to find the data in the response as the value. You can use nested fields in the response object using standard object notation. You can also add static data as shown in the port field. Finally, you can append data to the response from the requestInformation using its key (e.g. org). The ostypePrefix is a special field that allows you to add static data to the ostype to help define the system you are getting the device from.
 
 Notice here that you can also have multiple calls that make up the results provided to the Device Broker. In this example we are making calls to two different organizations and returning the results from both. 
 

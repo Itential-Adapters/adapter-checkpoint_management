@@ -6,10 +6,8 @@
 
 const path = require('path');
 const rls = require('readline-sync');
-const fs = require('fs-extra');
 
-const utils = require(path.join(__dirname, 'tbUtils'));
-const basicGet = require(path.join(__dirname, 'basicGet'));
+const tbUtils = require(path.join(__dirname, 'tbUtils'));
 const { name } = require(path.join(__dirname, '..', 'package.json'));
 const sampleProperties = require(path.join(__dirname, '..', 'sampleProperties.json'));
 
@@ -21,7 +19,7 @@ const collectAnswersSync = (questions, props) => {
     const answer = rls.question(q);
     answers.push(answer);
   });
-  return utils.getNewProps(answers, props);
+  return tbUtils.getNewProps(answers, props);
 };
 
 // change object into array of questions
@@ -33,7 +31,7 @@ const confirm = (props) => {
 // allow user to change auth_method
 const confirmAuthOptions = (authentication) => {
   const authOptions = ['basic user_password', 'request_token', 'static_token', 'no_authentication'];
-  const displayAuthOptions = utils.getDisplayAuthOptions(authentication.auth_method, authOptions);
+  const displayAuthOptions = tbUtils.getDisplayAuthOptions(authentication.auth_method, authOptions);
   const index = rls.keyInSelect(displayAuthOptions, 'Which authentication?');
   if (index === -1) {
     return authentication.auth_method;
@@ -45,7 +43,7 @@ const confirmAuthOptions = (authentication) => {
 // helper function to update auth properties
 const confirmAndUpdate = (auth, config) => {
   const newAuth = confirm(auth);
-  return utils.updateAuth(newAuth, auth, config);
+  return tbUtils.updateAuth(newAuth, auth, config);
 };
 
 // extract basic auth properties
@@ -69,34 +67,40 @@ const updateStaticAuth = (config, authentication) => {
 
 // troubleshooting connection and healthcheck endpoint setting of adapter
 const VerifyHealthCheckEndpoint = (serviceItem, props, scriptFlag) => {
-  // Updates connectivity params and runs connectivity
   let connConfig;
   const result = {};
+
   if (scriptFlag) {
-    const connection = utils.getConnection(serviceItem.properties);
+    const connection = tbUtils.getConnection(serviceItem.properties);
     const newConnection = confirm(connection);
-    utils.runConnectivity(newConnection.host, scriptFlag);
-    connConfig = utils.updateNewConnection(serviceItem, newConnection);
+    tbUtils.runConnectivity(newConnection.host, scriptFlag);
+    connConfig = tbUtils.updateNewConnection(serviceItem, newConnection);
   } else {
     let { properties: { properties: { host } } } = serviceItem;
+
+    connConfig = props.connProps
+      ? tbUtils.updateNewConnection(serviceItem, props.connProps)
+      : serviceItem;
+
     if (props.connProps) {
-      connConfig = utils.updateNewConnection(serviceItem, props.connProps);
       host = connConfig.properties.properties.host;
-    } else {
-      connConfig = serviceItem;
     }
-    result.connectivity = utils.runConnectivity(host, scriptFlag);
+
+    result.connectivity = tbUtils.runConnectivity(host, scriptFlag);
   }
-  // Updates the healthcheck endpoing
-  const healthcheck = require('../entities/.system/action.json');
-  const healthCheckEndpoint = utils.getHealthCheckEndpoint(healthcheck);
+
+  // Updates the healthcheck endpoint
+  const healthcheck = require(path.resolve(__dirname, '../entities/.system/action.json'));
+  const healthCheckEndpoint = tbUtils.getHealthCheckEndpoint(healthcheck);
   let newHealthCheckEndpoint = healthCheckEndpoint;
+
   if (scriptFlag) {
     newHealthCheckEndpoint = confirm(healthCheckEndpoint);
-    utils.getHealthCheckEndpointURL(newHealthCheckEndpoint, connConfig);
+    tbUtils.getHealthCheckEndpointURL(newHealthCheckEndpoint, connConfig);
   } else if (props.healthCheckEndpoint) {
     newHealthCheckEndpoint = props.healthCheckEndpoint;
   }
+
   // Updates the authorization params
   const { authentication } = connConfig.properties.properties;
   let updatedAdapter = connConfig;
@@ -110,84 +114,64 @@ const VerifyHealthCheckEndpoint = (serviceItem, props, scriptFlag) => {
       console.log('current troubleshooting script does not support updating request_token authentication');
     }
   } else if (props.auth) {
-    updatedAdapter = utils.updateAuth(props.auth, authentication, connConfig);
+    updatedAdapter = tbUtils.updateAuth(props.auth, authentication, connConfig);
   }
-  // Writes the new healthcheck endpoint into action.json
-  utils.updateHealthCheckEndpoint(newHealthCheckEndpoint, healthCheckEndpoint, healthcheck);
   return { result, updatedAdapter };
 };
 
-const offline = async () => {
-  console.log('Start offline troubleshooting');
-  const { updatedAdapter } = VerifyHealthCheckEndpoint({ properties: sampleProperties }, {}, true);
-  const a = basicGet.getAdapterInstance(updatedAdapter);
-  const res = await utils.healthCheck(a);
-  if (!res) {
-    console.log('run `npm run troubleshoot` again to update settings');
-    process.exit(0);
-  }
-  console.log('Save changes to sampleProperties.json');
-  await fs.writeFile('sampleProperties.json', JSON.stringify(updatedAdapter.properties, null, 2));
-  if (rls.keyInYN('Test with more GET request')) {
-    await utils.runBasicGet(true);
-  }
-};
-
-const troubleshoot = async (props, scriptFlag, persistFlag, adapter) => {
+const troubleshoot = async (props, scriptFlag, adapter) => {
   let serviceItem;
+
   if (adapter && adapter.allProps) {
     serviceItem = { properties: { properties: adapter.allProps } };
-  }
-  if (adapter && adapter.properties && adapter.properties.properties) {
+  } else if (adapter && adapter.properties && adapter.properties.properties) {
     serviceItem = adapter.properties;
-  }
-  if (serviceItem) {
-    if (!scriptFlag || rls.keyInYN(`Start verifying the connection and authentication properties for ${name}?`)) {
-      const { result, updatedAdapter } = VerifyHealthCheckEndpoint(serviceItem, props, scriptFlag);
-      let a;
-      if (scriptFlag) {
-        a = basicGet.getAdapterInstance(updatedAdapter);
-      } else {
-        a = adapter;
-      }
-      const healthRes = await utils.healthCheck(a);
-      result.healthCheck = healthRes;
-      if (scriptFlag && !healthRes) {
-        console.log('run `npm run troubleshoot` again to update settings');
-        process.exit(0);
-      }
-
-      if (persistFlag && healthRes) {
-        const { database } = await utils.getIAPDatabaseConnection();
-        const update = { $set: { properties: updatedAdapter.properties } };
-        await database.collection(utils.SERVICE_CONFIGS_COLLECTION).updateOne({ model: name }, update);
-        if (scriptFlag) {
-          console.log(`${name} updated.`);
-        }
-      }
-      if (scriptFlag) {
-        if (rls.keyInYN('Test with more GET request')) {
-          await utils.runBasicGet(scriptFlag);
-          process.exit(0);
-        } else {
-          console.log('Exiting');
-          process.exit(0);
-        }
-      } else {
-        result.basicGet = await utils.runBasicGet(scriptFlag);
-        return result;
-      }
-    } else {
-      console.log('You can update healthCheckEndpoint in ./entities/.system/action.json');
-      console.log('You can update authentication credientials under Settings/Services');
-      console.log('Exiting');
-      process.exit(0);
-    }
   } else {
+    serviceItem = { properties: sampleProperties };
+  }
+
+  if (!serviceItem) {
     console.log(`${name} not installed`);
     console.log('run `npm run install:adapter` to install current adapter to IAP first. Exiting...');
+    if (scriptFlag) {
+      process.exit(1);
+    }
+    return null;
   }
-  return null;
+
+  const shouldRun = !scriptFlag || rls.keyInYN(`Start verifying the connection and authentication properties for ${name}?`);
+  if (!shouldRun) {
+    console.log('You can update healthCheckEndpoint in ./entities/.system/action.json');
+    console.log('You can update authentication credientials under Settings/Services');
+    if (scriptFlag) {
+      process.exit(0);
+    }
+    return null;
+  }
+
+  const { result, updatedAdapter } = VerifyHealthCheckEndpoint(serviceItem, props, scriptFlag);
+  const a = scriptFlag ? tbUtils.getAdapterInstance(updatedAdapter) : adapter;
+
+  const healthRes = await tbUtils.healthCheck(a);
+  result.healthCheck = healthRes;
+
+  if (scriptFlag && !healthRes) {
+    console.log('run `npm run troubleshoot` again to update settings');
+    process.exit(1);
+  }
+
+  if (scriptFlag) {
+    if (rls.keyInYN('Test with more GET request')) {
+      await tbUtils.runBasicGet(serviceItem.properties.properties, true);
+    } else {
+      console.log('Exiting');
+    }
+    process.exit(0);
+  }
+
+  result.basicGet = await tbUtils.runBasicGet(serviceItem.properties.properties, false);
+
+  return result;
 };
 
-module.exports = { troubleshoot, offline };
+module.exports = { troubleshoot };
