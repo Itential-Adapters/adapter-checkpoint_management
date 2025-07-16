@@ -51,7 +51,7 @@
   "author": "Itential",
   "homepage": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management#readme",
   "dependencies": {
-    "@itentialopensource/adapter-utils": "5.10.19",
+    "@itentialopensource/adapter-utils": "5.10.20",
     "acorn": "8.14.1",
     "ajv": "8.17.1",
     "axios": "1.9.0",
