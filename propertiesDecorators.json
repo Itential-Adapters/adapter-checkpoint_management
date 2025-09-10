@@ -9,6 +9,10 @@
   },
   {
     "type": "encryption",
+    "pointer": "/authentication/client_secret"
+  },
+  {
+    "type": "encryption",
     "pointer": "/mongo/password"
   }
 ]

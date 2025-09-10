@@ -956,14 +956,16 @@ describe('[unit] Adapter Base Test', () => {
       });
       it('should get information for all of the requests currently in the queue', (done) => {
         try {
-          const expectedFunctions = a.iapGetAdapterQueue();
-          try {
-            assert.equal(0, expectedFunctions.length);
-            done();
-          } catch (err) {
-            log.error(`Test Failure: ${err}`);
-            done(err);
-          }
+          a.iapGetAdapterQueue((data, error) => {
+            try {
+              assert.notEqual(null, data);
+              assert.equal(0, data.length);
+              done();
+            } catch (err) {
+              log.error(`Test Failure: ${err}`);
+              done(err);
+            }
+          });
         } catch (error) {
           log.error(`Adapter Exception: ${error}`);
           done(error);
