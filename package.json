@@ -24,9 +24,7 @@
     "troubleshoot": "node utils/tbScript.js troubleshoot",
     "healthcheck": "node utils/tbScript.js healthcheck",
     "basicget": "node utils/tbScript.js basicget",
-    "connectivity": "node utils/tbScript.js connectivity",
-    "deploy": "npm publish --registry=https://registry.npmjs.org --access=public",
-    "build": "npm run deploy"
+    "connectivity": "node utils/tbScript.js connectivity"
   },
   "keywords": [
     "Itential",
