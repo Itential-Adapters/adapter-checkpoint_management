@@ -5,7 +5,7 @@
   "main": "adapter.js",
   "systemName": "Checkpoint Management",
   "wizardVersion": "2.44.7",
-  "engineVersion": "1.69.14",
+  "engineVersion": "1.71.2",
   "adapterType": "http",
   "scripts": {
     "preinstall": "node utils/setup.js",
@@ -24,9 +24,7 @@
     "troubleshoot": "node utils/tbScript.js troubleshoot",
     "healthcheck": "node utils/tbScript.js healthcheck",
     "basicget": "node utils/tbScript.js basicget",
-    "connectivity": "node utils/tbScript.js connectivity",
-    "deploy": "npm publish --registry=https://registry.npmjs.org --access=public",
-    "build": "npm run deploy"
+    "connectivity": "node utils/tbScript.js connectivity"
   },
   "keywords": [
     "Itential",

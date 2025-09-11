@@ -252,8 +252,6 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('mocha test/unit/adapterTestUnit.js --LOG=error', packageDotJson.scripts['test:unit']);
           assert.equal('mocha test/integration/adapterTestIntegration.js --LOG=error', packageDotJson.scripts['test:integration']);
           assert.equal('npm run test:baseunit && npm run test:unit && npm run test:integration', packageDotJson.scripts.test);
-          assert.equal('npm publish --registry=https://registry.npmjs.org --access=public', packageDotJson.scripts.deploy);
-          assert.equal('npm run deploy', packageDotJson.scripts.build);
           done();
         } catch (error) {
           log.error(`Test Failure: ${error}`);
