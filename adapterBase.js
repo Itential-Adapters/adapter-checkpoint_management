@@ -1246,6 +1246,44 @@ class AdapterBase extends EventEmitterCl {
     return this.requestHandlerInst.iapGetDeviceCountAuth(callOptions, callback);
   }
 
+  /**
+   * @summary Parse and merge iapMetadata fields into reqObj
+   *
+   * @function parseIapMetadata
+   * @param {Object} reqObj - the request object to merge metadata into
+   * @param {Object} iapMetadata - the metadata object to parse and merge
+   */
+  parseIapMetadata(reqObj, iapMetadata) {
+    const reqFields = ['payload', 'uriPathVars', 'uriQuery', 'uriOptions', 'addlHeaders', 'authData', 'callProperties', 'filter', 'priority', 'event'];
+
+    const result = { ...reqObj };
+
+    // Merge and add new iapMetadata fields in result
+    Object.keys(iapMetadata).forEach((iapField) => {
+      if (reqFields.includes(iapField) && iapMetadata[iapField]) {
+        if (Array.isArray(result[iapField]) && Array.isArray(iapMetadata[iapField])) {
+          result[iapField] = result[iapField].concat(iapMetadata[iapField]); // Merge arrays
+        } else if (
+          result[iapField]
+          && iapMetadata[iapField]
+          && typeof result[iapField] === 'object'
+          && typeof iapMetadata[iapField] === 'object'
+          && !Array.isArray(result[iapField])
+          && !Array.isArray(iapMetadata[iapField])
+        ) {
+          result[iapField] = { ...result[iapField], ...iapMetadata[iapField] }; // Merge objects
+        } else {
+          // Otherwise, add new iapMetadata fields to result
+          result[iapField] = iapMetadata[iapField];
+        }
+      }
+    });
+    // Add iapMetadata to result for further work
+    result.iapMetadata = iapMetadata;
+
+    return result;
+  }
+
   /* ********************************************** */
   /*                                                */
   /*          EXPOSES GENERIC HANDLER               */

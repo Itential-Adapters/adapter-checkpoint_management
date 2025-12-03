@@ -77,7 +77,7 @@
     "protocol": {
       "type": "string",
       "description": "the protocol to use to connect to server",
-      "default": "http",
+      "default": "https",
       "enum": [
         "http",
         "https"
@@ -273,6 +273,44 @@
           "type": "string",
           "description": "The grant type for OAuth requests - can also provide in schema",
           "default": ""
+        },
+        "auth_request_datatype": {
+          "type": "string",
+          "description": "Override the request data type for token authentication requests. When set, this overrides the schema's requestDatatype",
+          "default": "",
+          "enum": [
+            "",
+            "JSON",
+            "JSON2XML",
+            "PLAIN",
+            "XML",
+            "URLENCODE",
+            "URLQUERY",
+            "FORM"
+          ]
+        },
+        "auth_response_datatype": {
+          "type": "string",
+          "description": "Override the response data type for token authentication requests. When set, this overrides the schema's responseDatatype",
+          "default": "",
+          "enum": [
+            "",
+            "JSON",
+            "XML2JSON",
+            "PLAIN",
+            "XML",
+            "URLENCODE"
+          ]
+        },
+        "token_response_placement": {
+          "type": "string",
+          "description": "Override where to extract the token from the authentication response (HEADER or BODY). When set, this overrides the schema's token placement setting",
+          "default": "",
+          "enum": [
+            "",
+            "HEADER",
+            "BODY"
+          ]
         },
         "sensitive": {
           "type": "array",
@@ -692,7 +730,7 @@
         "protocol": {
           "type": "string",
           "description": "the protocol to use to connect to the proxy",
-          "default": "http",
+          "default": "https",
           "enum": [
             "http",
             "https",

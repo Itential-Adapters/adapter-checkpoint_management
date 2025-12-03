@@ -579,6 +579,9 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.equal('string', propertiesDotJson.definitions.authentication.properties.client_id.type);
           assert.equal('string', propertiesDotJson.definitions.authentication.properties.client_secret.type);
           assert.equal('string', propertiesDotJson.definitions.authentication.properties.grant_type.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.auth_request_datatype.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.auth_response_datatype.type);
+          assert.equal('string', propertiesDotJson.definitions.authentication.properties.token_response_placement.type);
           assert.notEqual(undefined, propertiesDotJson.definitions.ssl);
           assert.notEqual(null, propertiesDotJson.definitions.ssl);
           assert.notEqual('', propertiesDotJson.definitions.ssl);
@@ -769,6 +772,9 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, sampleDotJson.properties.authentication.client_id);
           assert.notEqual(undefined, sampleDotJson.properties.authentication.client_secret);
           assert.notEqual(undefined, sampleDotJson.properties.authentication.grant_type);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.auth_request_datatype);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.auth_response_datatype);
+          assert.notEqual(undefined, sampleDotJson.properties.authentication.token_response_placement);
           assert.notEqual(undefined, sampleDotJson.properties.ssl);
           assert.notEqual(null, sampleDotJson.properties.ssl);
           assert.notEqual('', sampleDotJson.properties.ssl);

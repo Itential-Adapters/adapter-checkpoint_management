@@ -387,7 +387,7 @@ describe('[unit] Adapter Base Test', () => {
           'healthCheck', 'iapActivateTasks', 'iapDeactivateTasks', 'iapExpandedGenericAdapterRequest', 'iapFindAdapterPath', 'iapGetAdapterInventory', 'iapGetAdapterQueue',
           'iapGetAdapterWorkflowFunctions', 'iapGetDeviceCount', 'iapGetDeviceCountAuth', 'iapMoveAdapterEntitiesToDB', 'iapPopulateEntityCache', 'iapRetrieveEntitiesCache',
           'iapRunAdapterBasicGet', 'iapRunAdapterConnectivity', 'iapRunAdapterHealthcheck', 'iapRunAdapterLint', 'iapRunAdapterTests', 'iapSuspendAdapter', 'iapTroubleshootAdapter',
-          'iapUnsuspendAdapter', 'iapUpdateAdapterConfiguration', 'isAlive', 'isAliveAuth', 'refreshProperties', 'addListener', 'emit', 'eventNames', 'getMaxListeners',
+          'iapUnsuspendAdapter', 'iapUpdateAdapterConfiguration', 'isAlive', 'isAliveAuth', 'parseIapMetadata', 'refreshProperties', 'addListener', 'emit', 'eventNames', 'getMaxListeners',
           'listenerCount', 'listeners', 'off', 'on', 'once', 'prependListener', 'prependOnceListener', 'rawListeners', 'removeAllListeners', 'removeListener', 'setMaxListeners'];
         try {
           const expectedFunctions = a.getAllFunctions();
