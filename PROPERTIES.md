@@ -29,7 +29,10 @@ This section defines **all** the properties that are available for the adapter, 
         "auth_logging": false,
         "client_id": "",
         "client_secret": "",
-        "grant_type": ""
+        "grant_type": "",
+        "auth_request_datatype": "",
+        "auth_response_datatype": "",
+        "token_response_placement": ""
       },
       "healthcheck": {
         "type": "startup",
@@ -282,6 +285,18 @@ The following properties are used to define the authentication process to Checkp
   <tr>
     <td style="padding:15px">grant_type</td>
     <td style="padding:15px">Provide a grant type when needed, this is common on some types of OAuth.</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">auth_request_datatype</td>
+    <td style="padding:15px">Override the request data type for token authentication requests. When set, this overrides the schema's requestDatatype (JSON, JSON2XML, PLAIN, XML, URLENCODE, URLQUERY, FORM).</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">auth_response_datatype</td>
+    <td style="padding:15px">Override the response data type for token authentication requests. When set, this overrides the schema's responseDatatype (JSON, XML2JSON, PLAIN, XML, URLENCODE).</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">token_response_placement</td>
+    <td style="padding:15px">Override where to extract the token from the authentication response (HEADER or BODY). When set, this overrides the schema's token placement setting.</td>
   </tr>
 </table>
 <br>

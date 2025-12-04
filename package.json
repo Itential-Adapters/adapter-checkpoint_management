@@ -4,8 +4,8 @@
   "description": "This adapter integrates with system described as: checkpointManagementApi.",
   "main": "adapter.js",
   "systemName": "Checkpoint Management",
-  "wizardVersion": "2.44.7",
-  "engineVersion": "1.71.2",
+  "wizardVersion": "3.8.0",
+  "engineVersion": "1.79.2",
   "adapterType": "http",
   "scripts": {
     "preinstall": "node utils/setup.js",
@@ -49,7 +49,7 @@
   "author": "Itential",
   "homepage": "https://gitlab.com/itentialopensource/adapters/adapter-checkpoint_management#readme",
   "dependencies": {
-    "@itentialopensource/adapter-utils": "5.10.28",
+    "@itentialopensource/adapter-utils": "6.0.2",
     "acorn": "8.14.1",
     "ajv": "8.17.1",
     "axios": "1.12.2",
