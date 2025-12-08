@@ -54,7 +54,7 @@ you can leave all of the other properties in the authentication section, they wi
 
 ### Sample Properties
 
-Sample Properties can be used to help you configure the adapter in the Itential Automation Platform. You will need to update connectivity information such as the host, port, protocol and credentials.
+Sample Properties can be used to help you configure the adapter in the Itential Platform. You will need to update connectivity information such as the host, port, protocol and credentials.
 
 ```json
   "properties": {
@@ -87,6 +87,9 @@ Sample Properties can be used to help you configure the adapter in the Itential 
       "client_id": "",
       "client_secret": "",
       "grant_type": "",
+      "auth_request_datatype": "",
+      "auth_response_datatype": "",
+      "token_response_placement": "",
       "sensitive": [],
       "sso": {
         "protocol": "",
