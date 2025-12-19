@@ -54,7 +54,8 @@ This section defines **all** the properties that are available for the adapter, 
         "healthcheck_on_timeout": false,
         "return_raw": false,
         "archiving": false,
-        "return_request": false
+        "return_request": false,
+        "keep_alive_interval": 0
       },
       "ssl": {
         "ecdhCurve": "",
@@ -402,6 +403,10 @@ The request section defines properties to help handle requests.
   <tr>
     <td style="padding:15px">return_request</td>
     <td style="padding:15px">Optional flag. Default is false. Will return the actual request that is made including headers. This should only be used during debugging issues as there could be credentials in the actual request.</td>
+  </tr>
+  <tr>
+    <td style="padding:15px">keep_alive_interval</td>
+    <td style="padding:15px">Optional. TCP keep-alive interval in seconds for long-lived connections. Set to 0 to disable keep-alive (default). When enabled, minimum value is 30 seconds.</td>
   </tr>
 </table>
 <br>

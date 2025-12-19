@@ -144,7 +144,8 @@ Sample Properties can be used to help you configure the adapter in the Itential 
       "healthcheck_on_timeout": true,
       "return_raw": false,
       "archiving": false,
-      "return_request": false
+      "return_request": false,
+      "keep_alive_interval": 0
     },
     "proxy": {
       "enabled": false,

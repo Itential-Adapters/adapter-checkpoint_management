@@ -695,6 +695,12 @@
           "type": "boolean",
           "description": "This property turns on returning the response information - need to be carefull in case credentials are in the path",
           "default": false
+        },
+        "keep_alive_interval": {
+          "type": "integer",
+          "description": "TCP keep-alive interval in seconds for long-lived connections. Set to 0 to disable (default). Minimum 30 seconds when enabled.",
+          "default": 0,
+          "minimum": 0
         }
       },
       "required": [
