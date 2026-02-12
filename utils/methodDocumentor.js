@@ -19,17 +19,14 @@ function createObjectForFunction(
   workflow
 ) {
   const funcObject = {};
-  // if the entity path is not set, then the object is not created.
-  if (entityPath !== undefined) {
-    funcObject.method_signature = `${funcName}(${funcArgs.join(', ')})`;
-    funcObject.path = entityPath;
-    if (description === undefined) {
-      funcObject.description = '';
-      funcObject.workflow = 'No';
-    } else {
-      funcObject.description = description;
-      funcObject.workflow = workflow;
-    }
+  funcObject.method_signature = `${funcName}(${funcArgs.join(', ')})`;
+  funcObject.path = entityPath !== undefined ? entityPath : '';
+  if (description === undefined) {
+    funcObject.description = '';
+    funcObject.workflow = 'No';
+  } else {
+    funcObject.description = description;
+    funcObject.workflow = workflow;
   }
   return funcObject;
 }
@@ -77,7 +74,8 @@ function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
   // parsing the file to get the function and class declarations.
   const aFileFuncArgs = acorn.parse(aFile, { ecmaVersion: 2020 });
 
-  let callName = 'identifyRequest';
+  // Track all method names that can be called (identifyRequest + any proxy methods)
+  const allowedCallNames = new Set(['identifyRequest']);
   // Looping through all the declarations parsed:
   aFileFuncArgs.body.forEach((e) => {
     // Getting only the class declaration as it has our required functions.
@@ -103,9 +101,10 @@ function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
         method.value.body.body.forEach((statement) => {
           recurseCallExpressions(statement, callList);
         });
+        // Find calls to identifyRequest OR any discovered proxy methods
         const requests = [];
         for (let i = 0; i < callList.length; i += 1) {
-          if (callList[i].callee.property && callList[i].callee.property.name === callName) {
+          if (callList[i].callee.property && allowedCallNames.has(callList[i].callee.property.name)) {
             requests.push(callList[i]);
           }
         }
@@ -114,34 +113,60 @@ function readFileUsingLib(filename, descriptionObj, workflowObj, functionList) {
           if (expr.arguments.length < 2) {
             throw new Error(`Bad inputs in method ${funcName}`);
           }
-          const entity = expr.arguments[0].value;
-          const actionName = expr.arguments[1].value;
-          if (expr !== undefined && (expr.arguments[0].type !== 'Literal' || expr.arguments[1].type !== 'Literal')) {
-            const param1 = method.value.params[0];
-            const param2 = method.value.params[1];
-            if (param1.type !== 'Identifier' || param2.type !== 'Identifier'
-                || expr.arguments[0].type !== 'Identifier' || expr.arguments[1].type !== 'Identifier'
-                || param1.name !== expr.arguments[0].name || param2.name !== expr.arguments[1].name) {
-              throw new Error(`identifyRequest proxy method ${funcName} unknown format`);
-            } else if (callName !== 'identifyRequest') {
-              throw new Error(`MethodDocumentor not yet programmed to handle multiple helper methods: 1) ${callName}, 2) ${funcName}`);
+
+          const arg0Type = expr.arguments[0].type;
+          const arg1Type = expr.arguments[1].type;
+
+          let entityPath;
+
+          if (arg0Type === 'Literal' && arg1Type === 'Literal') {
+            const entity = expr.arguments[0].value;
+            const actionName = expr.arguments[1].value;
+            entityPath = getPathFromEntity(entity, actionName);
+          } else {
+            // Non-standard format: anything that's not both literals
+            // Special handling for proxy methods (both args are identifiers matching first 2 params)
+            if (arg0Type === 'Identifier' && arg1Type === 'Identifier') {
+              const param1 = method.value.params[0];
+              const param2 = method.value.params[1];
+              const arg0Name = expr.arguments[0].name;
+              const arg1Name = expr.arguments[1].name;
+
+              // Check if this is a valid proxy method
+              const isValidProxy = param1 && param2
+                  && param1.type === 'Identifier' && param2.type === 'Identifier'
+                  && param1.name === arg0Name && param2.name === arg1Name;
+
+              // Only process valid proxy methods
+              if (isValidProxy) {
+                const calledMethod = expr.callee.property.name;
+
+                // Skip nested proxies (proxies calling other proxies)
+                if (calledMethod !== 'identifyRequest') {
+                  console.log(`Skipping nested proxy method: ${funcName} (calls ${calledMethod})`);
+                  return;
+                }
+
+                // First-level proxy: calls identifyRequest directly
+                // Add this proxy to the set so other methods can call it
+                allowedCallNames.add(funcName);
+              }
             }
-            callName = funcName;
+
+            // All non-standard formats get documented without path
+            entityPath = undefined;
           }
-          const entityPath = getPathFromEntity(entity, actionName);
 
           // Creating and storing the object for the method.
-          if (entityPath !== undefined) {
-            functionList.push(
-              createObjectForFunction(
-                funcName,
-                funcArgs,
-                entityPath,
-                descriptionObj[funcName],
-                workflowObj[funcName]
-              )
-            );
-          }
+          functionList.push(
+            createObjectForFunction(
+              funcName,
+              funcArgs,
+              entityPath,
+              descriptionObj[funcName],
+              workflowObj[funcName]
+            )
+          );
         }
       });
     }
