@@ -66,7 +66,7 @@
         "boolean",
         "string"
       ],
-      "description": "When true the metrics collected by the adapter will be stored in mongo or on the filesystem",
+      "description": "When true the metrics collected by the adapter will be stored in mongo or in the adapter. If a full path is provided, metrics will be saved in the path provided.",
       "default": false
     },
     "stub": {
@@ -460,7 +460,7 @@
           "type": "integer",
           "description": "How often the healthcheck should run (in milliseconds).",
           "default": 300000,
-          "minimum": 60000,
+          "minimum": 30000,
           "maximum": 3600000
         },
         "protocol": {
@@ -698,9 +698,10 @@
         },
         "keep_alive_interval": {
           "type": "integer",
-          "description": "TCP keep-alive interval in seconds for long-lived connections. Set to 0 to disable (default). Minimum 30 seconds when enabled.",
+          "description": "TCP keep-alive interval in milliseconds to prevent connection timeout during long-running requests. 0 = disabled (default). Minimum value when enabled is 30000ms (30 seconds). Values below 30000ms will be auto-corrected to 30000ms with a warning.",
           "default": 0,
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 3600000
         }
       },
       "required": [
@@ -1112,7 +1113,7 @@
               },
               "requestFields": {
                 "type": "object",
-                "description": "The json object with response fields of the call to getDevice",
+                "description": "The json object with request fields of the call to getDevice",
                 "additionalProperties": {
                   "type": [
                     "string",
@@ -1255,7 +1256,7 @@
               },
               "requestFields": {
                 "type": "object",
-                "description": "The json object with response fields of the call to getDevice",
+                "description": "The json object with request fields of the call to getDevice",
                 "additionalProperties": {
                   "type": [
                     "string",
@@ -1366,7 +1367,7 @@
               },
               "requestFields": {
                 "type": "object",
-                "description": "The json object with response fields of the call to getDevice",
+                "description": "The json object with request fields of the call to getDevice",
                 "additionalProperties": {
                   "type": [
                     "string",
@@ -1462,7 +1463,7 @@
               },
               "requestFields": {
                 "type": "object",
-                "description": "The json object with response fields of the call to getDevice",
+                "description": "The json object with request fields of the call to getDevice",
                 "additionalProperties": {
                   "type": [
                     "string",
@@ -1547,7 +1548,7 @@
               },
               "requestFields": {
                 "type": "object",
-                "description": "The json object with response fields of the call to getDevice",
+                "description": "The json object with request fields of the call to getDevice",
                 "additionalProperties": {
                   "type": [
                     "string",
@@ -1630,12 +1631,12 @@
                   "properties": {
                     "path": {
                       "type": "string",
-                      "description": "The fully qualified path of the call to getDevice (e.g. /rest/api/device/{deviceid})",
+                      "description": "The fully qualified path of the call to populate the cache (e.g. /rest/api/devices)",
                       "default": ""
                     },
                     "method": {
                       "type": "string",
-                      "description": "The method of the call to getDevice",
+                      "description": "The method of the call to populate the cache",
                       "default": "GET"
                     },
                     "pagination": {
@@ -1672,7 +1673,7 @@
                     },
                     "query": {
                       "type": "object",
-                      "description": "The json object with query parameters of the call to getDevice",
+                      "description": "The json object with query parameters of the call to populate the cache",
                       "additionalProperties": {
                         "type": [
                           "string",
@@ -1682,7 +1683,7 @@
                     },
                     "body": {
                       "type": "object",
-                      "description": "The json object with body of the call to getDevice",
+                      "description": "The json object with body of the call to populate the cache",
                       "additionalProperties": {
                         "type": [
                           "string",
@@ -1692,7 +1693,7 @@
                     },
                     "headers": {
                       "type": "object",
-                      "description": "The json object with headers of the call to getDevice",
+                      "description": "The json object with headers of the call to populate the cache",
                       "additionalProperties": {
                         "type": [
                           "string",
@@ -1711,7 +1712,7 @@
                     },
                     "requestFields": {
                       "type": "object",
-                      "description": "The json object with response fields of the call to getDevice",
+                      "description": "The json object with request fields of the call to populate the cache",
                       "additionalProperties": {
                         "type": [
                           "string",
@@ -1727,7 +1728,7 @@
                     },
                     "responseFields": {
                       "type": "object",
-                      "description": "The json object with response fields of the call to getDevice",
+                      "description": "The json object with response fields of the call to populate the cache",
                       "additionalProperties": {
                         "type": [
                           "string",
