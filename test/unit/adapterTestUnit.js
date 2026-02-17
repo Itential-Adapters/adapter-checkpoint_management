@@ -279,7 +279,7 @@ describe('[unit] Checkpoint_Management Adapter Test', () => {
           assert.notEqual(undefined, packageDotJson.dependencies);
           assert.notEqual(null, packageDotJson.dependencies);
           assert.notEqual('', packageDotJson.dependencies);
-          assert.equal('8.17.1', packageDotJson.dependencies.ajv);
+          assert.equal('8.18.0', packageDotJson.dependencies.ajv);
           assert.equal('1.13.5', packageDotJson.dependencies.axios);
           assert.equal('11.1.0', packageDotJson.dependencies.commander);
           assert.equal('11.3.0', packageDotJson.dependencies['fs-extra']);
