@@ -52,7 +52,7 @@
     "@itentialopensource/adapter-utils": "6.1.15",
     "acorn": "8.14.1",
     "ajv": "8.18.0",
-    "axios": "1.13.5",
+    "axios": "1.13.6",
     "commander": "11.1.0",
     "fs-extra": "11.3.3",
     "json-query": "2.2.2",
