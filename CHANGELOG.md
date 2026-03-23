@@ -1,4 +1,12 @@
 
+## 0.15.4 [03-23-2026]
+
+* Changes made at 2026.03.23_12:35PM
+
+See merge request itentialopensource/adapters/adapter-checkpoint_management!49
+
+---
+
 ## 0.15.3 [03-04-2026]
 
 * Changes made at 2026.03.04_09:55AM
