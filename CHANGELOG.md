@@ -1,4 +1,12 @@
 
+## 1.0.0 [04-13-2026]
+
+* Security Fixes Requiring Node >= 20.19.x made at 2026.04.13_09:26AM
+
+See merge request itentialopensource/adapters/adapter-checkpoint_management!50
+
+---
+
 ## 0.15.4 [03-23-2026]
 
 * Changes made at 2026.03.23_12:35PM
