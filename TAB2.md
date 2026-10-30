@@ -394,6 +394,19 @@ Sample Properties can be used to help you configure the adapter in the Itential 
           ]
         }
       ]
+    },
+    "gatewayRouting": {
+      "enabled": false,
+      "cluster": "",
+      "executionMode": "cluster_no_proxy",
+      "proxy": {
+        "enabled": false,
+        "host": "",
+        "port": 1,
+        "protocol": "http",
+        "username": "",
+        "password": ""
+      }
     }
   }
 ```
