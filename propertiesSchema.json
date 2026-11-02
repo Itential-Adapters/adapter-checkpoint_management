@@ -117,6 +117,9 @@
         "ec2",
         "route53"
       ]
+    },
+    "gatewayRouting": {
+      "$ref": "#/definitions/gatewayRouting"
     }
   },
   "required": [
@@ -1767,6 +1770,116 @@
           }
         }
       }
+    },
+    "gatewayRouting": {
+      "type": "object",
+      "description": "Route requests through a Gateway Manager cluster instead of connecting directly.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "When true, requests from this adapter are routed through a Gateway Manager cluster instead of connecting directly.",
+          "default": false
+        },
+        "cluster": {
+          "type": "string",
+          "description": "The Gateway Manager cluster (gateway id) to route requests through. Required when enabled is true.",
+          "default": ""
+        },
+        "executionMode": {
+          "type": "string",
+          "description": "How to route once enabled. 'cluster_no_proxy' routes through the cluster directly; 'proxy' also routes through an outbound proxy server on that cluster.",
+          "default": "cluster_no_proxy",
+          "enum": [
+            "cluster_no_proxy",
+            "proxy"
+          ]
+        },
+        "proxy": {
+          "type": "object",
+          "description": "Proxy server the cluster should use when relaying this request. Applies only when executionMode is 'proxy'.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether or not there is a proxy for the gateway to use",
+              "default": false
+            },
+            "host": {
+              "type": "string",
+              "description": "hostname of the proxy for the gateway to use",
+              "default": ""
+            },
+            "port": {
+              "type": "integer",
+              "description": "port on which the gateway should connect to the proxy",
+              "default": 1,
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "protocol": {
+              "type": "string",
+              "description": "the protocol the gateway should use to connect to the proxy",
+              "default": "http",
+              "enum": [
+                "http",
+                "https"
+              ]
+            },
+            "username": {
+              "type": "string",
+              "description": "username for proxy authentication",
+              "default": ""
+            },
+            "password": {
+              "type": "string",
+              "description": "password for proxy authentication",
+              "default": ""
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "enabled": {
+                    "enum": [
+                      true
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "host",
+                  "port"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "enabled"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "enabled": {
+                "enum": [
+                  true
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "cluster"
+            ]
+          }
+        }
+      ]
     }
   }
 }
